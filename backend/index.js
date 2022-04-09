@@ -1,47 +1,49 @@
 const express = require("express");
-const mongoConnection = require("./database/mongoConnection");
-const sqlConnection = require("./database/sqlConnection");
-
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
-const session = require("express-session");
-const mysql = require("mysql");
-const router = require("./src/router");
-
-const connection = require("./database/mongoConnection");
-
-// Passport js
-// const passport = require("passport");
-// const { auth } = require("./src/utils/auth");
-
+const bodyParser = require("body-parser");
 const app = express();
-app.use(
-  cors({
-    origin: ["http://localhost:3000"], // add to constants file or configuration file.
-    // origin: '*',
-    methods: ["GET", "POST", "PUT"],
-    credentials: true,
-  })
-);
+const cors = require("cors");
 
-app.use(express.json());
-app.use(cookieParser());
+app.use(cors({ origin: "*", credentials: true }));
+const connection = require("./database/mongoConnection");
+var userRoute = require("./routes/userRoute");
+var vendorRoute = require("./routes/vendorRoute");
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
-// app.use(passport.initialize());
+app.use(express.json());
+app.use(cors({ origin: process.env.REACT_URL, credentials: true }));
 
-app.use("/", router);
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", process.env.REACT_URL);
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+  );
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"
+  );
+  next();
+});
 
-// MongoDB connection.
-//await connection.createConnection();
+async function initializeApplication() {
+  try {
+    app.use("/loca/user", userRoute);
+    app.use("/loca/vendor", vendorRoute);
 
-if (!module.parent) {
-  app.listen(5000, () => {
-    try {
-      console.log("Node Started");
-    } catch (error) {
-      console.log("Error");
-    }
-  });
+    await connection.createConnection();
+    app.listen(process.env.PORT || 8080, () => {
+      console.log("App listening on port 8080");
+    });
+  } catch (error) {
+    return Promise.reject(error.message);
+  }
 }
 
-exports.app = app;
+initializeApplication()
+  .then((response) => console.log("Server Running"))
+  .catch((error) => console.log(error));
+
+module.exports = app;
