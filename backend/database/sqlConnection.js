@@ -4,10 +4,10 @@ const dotenv = require("dotenv");
 dotenv.config();
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: "lokards.ca8dkfnnxkfc.us-east-1.rds.amazonaws.com",
-  user: "asps",
-  password: "h4VgQsX9ouLBBEi9z45S",
-  database: "loka",
+  host: process.env.SQL_CONN_URL,
+  user: process.env.SQL_USERNAME,
+  password: process.env.SQL_PASSWORD,
+  database: process.env.SQL_DB,
 });
 
 pool.getConnection((error, connection) => {
