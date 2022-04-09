@@ -1,0 +1,22 @@
+{
+  "name": "loka",
+  "version": "1.0.0",
+  "description": "Hyperlocal Shopping Platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saitejayeniganti/Loka.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/saitejayeniganti/Loka/issues"
+  },
+  "homepage": "https://github.com/saitejayeniganti/Loka#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
