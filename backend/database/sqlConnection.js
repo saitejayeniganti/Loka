@@ -2,7 +2,8 @@ const mysql = require("mysql");
 const util = require("util");
 const dotenv = require("dotenv");
 dotenv.config();
-const pool = mysql.createPool({
+
+const connector = mysql.createPool({
   connectionLimit: 10,
   host: process.env.SQL_CONN_URL,
   user: process.env.SQL_USERNAME,
@@ -10,7 +11,7 @@ const pool = mysql.createPool({
   database: process.env.SQL_DB,
 });
 
-pool.getConnection((error, connection) => {
+connector.getConnection((error, connection) => {
   if (error) {
     if (error.code === "ECONNREFUSED") {
       console.error("Connection refused by Database");
@@ -22,9 +23,24 @@ pool.getConnection((error, connection) => {
       console.error("Connection was closed.");
     }
   }
-  if (connection) connection.release();
+  if (connection) {
+    console.log("SQL connection working");
+    connection.release();
+  }
 });
 
-pool.query = util.promisify(pool.query);
+const db = {
+  query: (query, values, callback) => {
+    connector.query(query, values, (err, result) => {
+      if (err) {
+        console.log(err);
+        return callback(err);
+      }
+      return callback(null, result);
+    });
+  },
+};
 
-module.exports = pool;
+module.exports = db;
+
+// Usage: import db, then use db.query to query database
