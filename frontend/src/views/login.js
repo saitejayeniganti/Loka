@@ -3,13 +3,8 @@ import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import '../App.js';
-
+import loginGroceryProducts from '../animations/login-grocery-products.json';
 import Grid from '@mui/material/Grid';
-import img from "../images/theme/grocery.jpeg"
-import ban from "../images/theme/ban.jpeg"
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import KeyIcon from '@mui/icons-material/Key';
@@ -17,13 +12,10 @@ import Paper from '@mui/material/Paper';
 import Lottie from 'react-lottie';
 import loginAnimation from '../animations/login.json';
 import mapAnimation from '../animations/loginmap.json';
-import { requirePropFactory } from "@mui/material";
+import loginImage from '../images/theme/login.png';
+import loginShoppingDelivery from '../animations/shopping-delivery.json';
 
 function Login() {
-
-  const animationLogin=useRef(null)
-  const isStopped=useState(false)
-  const isPaused=useState(false)
 
  const defaultOptions = {
       loop: false,
@@ -35,9 +27,9 @@ function Login() {
     };
 
     const defaultOptions1 = {
-      loop: false,
+      loop: true,
       autoplay: true,
-      animationData: mapAnimation,
+      animationData: loginShoppingDelivery,
       rendererSettings: {
         preserveAspectRatio: "xMidYMid slice"
       }
@@ -52,14 +44,19 @@ function Login() {
         <Grid item xs={6} sx={{ backgroundColor: "white" }}>
         </Grid>
       </Grid>
-      <div style={{ zIndex: 1, position: "relative", height: "100%", marginTop: "10%" }}>
+      <div style={{ zIndex: 1, position: "relative", height: "100%", marginTop: "5%" }}>
         <Grid container spacing={20}>
           <Grid item xs={4}>
+                    <Lottie 
+	    options={defaultOptions1}
+        height={850}
+        width={850}
+      />
           </Grid>
           <Grid item xs={4}>
           <Paper elevation={3} sx={{padding:"25px",borderRadius:"12px"}}> 
           <div style={{margin:"10px"}}>
-
+    <img src={loginImage} width="350" height="350"></img>
   <div className="appHeadings">
   Login as a Customer into LOKA
 </div>
@@ -104,8 +101,8 @@ function Login() {
           <Grid item xs={4}>
                <Lottie 
 	    options={defaultOptions}
-        height={400}
-        width={400}
+        height={500}
+        width={500}
       />
           </Grid>
         </Grid>
