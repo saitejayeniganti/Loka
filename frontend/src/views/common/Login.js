@@ -2,19 +2,19 @@ import React, { useEffect, useState, useRef } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import "../App.js";
-import loginGroceryProducts from "../animations/login-grocery-products.json";
+import "../../App.js";
+import loginGroceryProducts from "../../animations/login-grocery-products.json";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import KeyIcon from "@mui/icons-material/Key";
 import Paper from "@mui/material/Paper";
 import Lottie from "react-lottie";
-import loginAnimation from "../animations/login.json";
-import mapAnimation from "../animations/loginmap.json";
+import loginAnimation from "../../animations/login.json";
+import mapAnimation from "../../animations/loginmap.json";
 import loginImage from "../images/theme/login.png";
-import loginShoppingDelivery from "../animations/shopping-delivery.json";
-import { get } from "../utils/serverCall.js";
+import loginShoppingDelivery from "../../animations/shopping-delivery.json";
+import { get } from "../../utils/serverCall.js";
 
 function Login() {
   const defaultOptions = {
