@@ -12,7 +12,15 @@ const gAuth = () => {
         scope: ["profile", "email"],
       },
       function (accessToken, refreshToken, profile, callback) {
-        callback(null, profile);
+        const user = (({ displayName, id, provider, emails, name }) => ({
+          displayName,
+          id,
+          provider,
+          emails,
+          name,
+        }))(profile);
+        user.temp = 0;
+        callback(null, user);
       }
     )
   );
@@ -27,7 +35,15 @@ const gAuth = () => {
         scope: ["profile", "email"],
       },
       function (accessToken, refreshToken, profile, callback) {
-        callback(null, profile);
+        const user = (({ displayName, id, provider, emails, name }) => ({
+          displayName,
+          id,
+          provider,
+          emails,
+          name,
+        }))(profile);
+        user.temp = 1;
+        callback(null, user);
       }
     )
   );

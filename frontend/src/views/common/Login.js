@@ -40,11 +40,6 @@ function Login() {
     window.open(process.env.REACT_APP_NODE_SERVER + "/auth/gLogin", "_self");
   };
 
-  const gSignup = (event) => {
-    event.preventDefault();
-    window.open(process.env.REACT_APP_NODE_SERVER + "/auth/gSignup", "_self");
-  };
-
   return (
     <>
       <Grid container sx={{ height: "100%", position: "absolute" }}>
