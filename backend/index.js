@@ -8,8 +8,8 @@ const connection = require("./database/mongoConnection");
 var userRoute = require("./routes/userRoute");
 var vendorRoute = require("./routes/vendorRoute");
 const productRoute = require("./routes/product");
-var auth = require("./routes/auth");
-require('./config/passport')(app);
+// var auth = require("./routes/auth");
+require("./config/passport")(app);
 //const authRoute = require("./routes/authentication");
 //var auth = require("./routes/auth");
 const passport = require("passport");
@@ -81,7 +81,7 @@ async function initializeApplication() {
   try {
     app.use("/loca/user", userRoute);
     app.use("/loca/vendor", vendorRoute);
-    app.use("/user", auth);
+    // app.use("/user", auth);
     app.use("/product", productRoute);
     app.use("/auth/", authrouter);
 
