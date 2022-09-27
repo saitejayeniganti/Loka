@@ -6,7 +6,7 @@ import { get } from "./utils/serverCall";
 import AdminHome from "./views/admin/adminHome";
 import CustomerHome from "./views/customer/customerHome";
 import Home from "./views/common/Home";
-import Login from "./views/Login";
+import Login from "./views/common/Login";
 import MerchantHome from "./views/merchant/merchantHome";
 
 function App() {

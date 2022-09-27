@@ -12,7 +12,7 @@ import Paper from "@mui/material/Paper";
 import Lottie from "react-lottie";
 import loginAnimation from "../../animations/login.json";
 import mapAnimation from "../../animations/loginmap.json";
-import loginImage from "../images/theme/login.png";
+import loginImage from "../../images/theme/login.png";
 import loginShoppingDelivery from "../../animations/shopping-delivery.json";
 import { get } from "../../utils/serverCall.js";
 
