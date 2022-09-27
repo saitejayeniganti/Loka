@@ -1,5 +1,32 @@
 .App {
   text-align: center;
+  
+  
+}
+
+/* .bck-img{
+  background-image: url('s.png');
+  z-index: 1;
+} */
+
+.linkHighlight{
+  color: #08B512;
+}
+.linkHighlight:hover{
+    color: #1170d6;
+}
+
+
+
+.appHeadings{
+  font-size: "20px"; 
+  margin:"10px"; 
+  font-weight:"600";
+}
+
+.loginInput::hover{
+  border-color:"#063970";
+  border-radius: "20px";
 }
 
 .App-logo {

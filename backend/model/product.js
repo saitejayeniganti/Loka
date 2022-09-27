@@ -24,25 +24,30 @@ const ProductSchema = new Schema({
     slug: 'name',
     unique: true
   },
-  imageUrl: {
-    type: String
-  },
-  imageKey: {
-    type: String
+  image: {
+    type: String,
+    required: true,
   },
   description: {
     type: String,
     trim: true
   },
   quantity: {
-    type: Number
+    type: Number,
+    required: true,
+    default: 0,
   },
   price: {
-    type: Number
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  rating: {
+    type: Number,
   },
   taxable: {
     type: Boolean,
-    default: false
+    default: true
   },
   isActive: {
     type: Boolean,
@@ -53,11 +58,11 @@ const ProductSchema = new Schema({
     ref: 'Brand',
     default: null
   },
-  updated: Date,
-  created: {
-    type: Date,
-    default: Date.now
-  }
-});
+  numReviews: {
+    type: Number,
+    require: true,
+    default: 0,
+  },
+},{ timestamps: true });
 
 module.exports = Mongoose.model('Product', ProductSchema);
