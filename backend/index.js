@@ -7,8 +7,9 @@ app.use(cors({ origin: "*", credentials: true }));
 const connection = require("./database/mongoConnection");
 var userRoute = require("./routes/userRoute");
 var vendorRoute = require("./routes/vendorRoute");
+const productRoute = require("./routes/product");
 var auth = require("./routes/auth");
-
+require('./config/passport')(app);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
@@ -33,7 +34,8 @@ async function initializeApplication() {
   try {
     app.use("/loca/user", userRoute);
     app.use("/loca/vendor", vendorRoute);
-    app.use("/user",auth);
+    app.use("/user", auth);
+    app.use("/product", productRoute);
 
     await connection.createConnection();
     app.listen(process.env.PORT || 8080, () => {

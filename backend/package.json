@@ -28,7 +28,9 @@
     "mongoose": "^6.2.10",
     "mysql": "^2.18.1",
     "passport": "^0.5.2",
-    "util": "^0.12.4"
+    "util": "^0.12.4",
+    "mongoose-slug-generator": "1.0.4",
+    "passport-jwt": "^4.0.0"
   },
   "devDependencies": {
     "jsonwebtoken": "^8.5.1"
