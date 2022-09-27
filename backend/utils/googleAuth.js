@@ -20,6 +20,9 @@ const gAuth = () => {
           name,
         }))(profile);
         user.temp = 0;
+        user.email = profile.emails[0].value;
+        user.firstName = profile.name.givenName;
+        user.lastName = profile.name.familyName;
         callback(null, user);
       }
     )
@@ -43,6 +46,9 @@ const gAuth = () => {
           name,
         }))(profile);
         user.temp = 1;
+        user.email = profile.emails[0].value;
+        user.firstName = profile.name.givenName;
+        user.lastName = profile.name.familyName;
         callback(null, user);
       }
     )

@@ -19,14 +19,12 @@ router.get("/gLogin", passport.authenticate("gLogin", ["profile", "email"]));
 // router.get("/gLogin", passport.authenticate("gLogin", ["profile", "email"]));
 
 router.get(
+  // check if user is there in our database. https://stackoverflow.com/questions/64622098/passportjs-google-auth-saves-existing-user-as-a-new-user-in-the-database-how-ca
   "/gLogin/callback",
   passport.authenticate("gLogin", {
     successRedirect: process.env.REACT_URL,
     failureRedirect: "/login/failed",
-  }),
-  (req, res) => {
-    // set jwt here
-  }
+  })
 );
 
 router.get(
@@ -34,10 +32,7 @@ router.get(
   passport.authenticate("gSignup", {
     successRedirect: process.env.REACT_SIGNUP,
     failureRedirect: "/signup/failed",
-  }),
-  (req, res) => {
-    // set jwt here
-  }
+  })
 );
 
 router.get("/loggedUser", (req, res) => {
@@ -58,6 +53,12 @@ router.get("/logout", (req, res) => {
 
 router.post("/signup", (req, res) => {
   //signup here
+  //using email
+  //using google
+});
+
+router.post("/login", (req, res) => {
+  // for email & password
 });
 
 router.get("/reset", (req, res) => {

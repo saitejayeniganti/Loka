@@ -28,8 +28,8 @@ function Signup(userDetails) {
     setFilledData((prev) => {
       return {
         ...prev,
-        firstName: user ? user.name.givenName : "",
-        lastName: user ? user.name.familyName : "",
+        firstName: user ? user.firstName : "",
+        lastName: user ? user.lastName : "",
         email: user ? user.emails[0].value : "",
         externalId: user ? user.id : "",
         provider: user ? user.provider : "",
