@@ -18,6 +18,7 @@ import Signup from "./views/common/Signup";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   // const location = useLocation();
   // location.pathname;
 
@@ -37,6 +38,7 @@ function App() {
           }
         } else {
           setUser(response.user);
+          setIsLoggedIn(true);
         }
         //store in local storage ?
         //store in redux
@@ -55,16 +57,22 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navigator />
+        <Navigator isLoggedIn={isLoggedIn} user={user} />
         <Routes>
           <Route path="/" exact element={<Home />}></Route>
           <Route path="/home" exact element={<Home />}></Route>
           <Route
             path="/login"
             exact
-            element={user ? <Navigate to="/" /> : <Login />}
+            element={
+              user ? <Navigate to="/" /> : <Login isLoggedIn={isLoggedIn} />
+            }
           ></Route>
-          <Route path="/signup" exact element={<Signup user={user} />}></Route>
+          <Route
+            path="/signup"
+            exact
+            element={<Signup user={user} isLoggedIn={isLoggedIn} />}
+          ></Route>
           <Route path="/customerhome" exact element={<CustomerHome />}></Route>
           <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
           <Route path="/adminhome" exact element={<AdminHome />}></Route>

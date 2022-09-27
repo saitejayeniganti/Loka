@@ -52,7 +52,12 @@ router.get("/loggedUser", (req, res) => {
 
 router.get("/logout", (req, res) => {
   req.logout();
+  // res.redirect(process.env.REACT_URL);
   res.send();
+});
+
+router.post("/signup", (req, res) => {
+  //signup here
 });
 
 router.get("/reset", (req, res) => {

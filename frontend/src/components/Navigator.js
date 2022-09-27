@@ -1,19 +1,21 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import Switch from '@mui/material/Switch';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
-import MenuItem from '@mui/material/MenuItem';
-import AddBusinessRoundedIcon from '@mui/icons-material/AddBusinessRounded';
-import Menu from '@mui/material/Menu';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import MenuItem from "@mui/material/MenuItem";
+import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
+import Menu from "@mui/material/Menu";
+import PropTypes from "prop-types";
+import { get } from "../utils/serverCall";
 
-export default function MenuAppBar() {
+export default function MenuAppBar(props) {
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -29,9 +31,18 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+  const handleLogout = () => {
+    get("/auth/logout").then((res) => {
+      setAnchorEl(null);
+      console.log("loggedOut");
+      window.location.reload();
+    });
+  };
+  console.log(props);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{background:"#063970"}}>
+      <AppBar position="static" style={{ background: "#063970" }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -42,9 +53,14 @@ export default function MenuAppBar() {
           >
             <AddBusinessRoundedIcon />
           </IconButton>
-          <Typography variant="h5" component="div" >
+          <Typography variant="h5" component="div">
             LOKA
           </Typography>
+          {props.user && (
+            <Typography variant="h5" component="div">
+              {props.user.name.givenName}
+            </Typography>
+          )}
           {auth && (
             <div>
               <IconButton
@@ -61,19 +77,22 @@ export default function MenuAppBar() {
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 keepMounted
                 transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
+                  vertical: "top",
+                  horizontal: "right",
                 }}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
+                {props.isLoggedIn && (
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                )}
               </Menu>
             </div>
           )}
@@ -82,3 +101,8 @@ export default function MenuAppBar() {
     </Box>
   );
 }
+
+MenuAppBar.propTypes = {
+  isLoggedIn: PropTypes.bool.isRequired,
+  user: PropTypes.object,
+};

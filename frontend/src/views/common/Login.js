@@ -15,8 +15,9 @@ import mapAnimation from "../../animations/loginmap.json";
 import loginImage from "../../images/theme/login.png";
 import loginShoppingDelivery from "../../animations/shopping-delivery.json";
 import { get } from "../../utils/serverCall.js";
+import { Navigate } from "react-router-dom";
 
-function Login() {
+function Login(userDetails) {
   const defaultOptions = {
     loop: false,
     autoplay: true,
@@ -39,6 +40,28 @@ function Login() {
     event.preventDefault();
     window.open(process.env.REACT_APP_NODE_SERVER + "/auth/gLogin", "_self");
   };
+
+  const defaultFilledData = {
+    email: "",
+    password: "",
+  };
+
+  const [filledData, setFilledData] = useState(defaultFilledData);
+
+  const eventHandler = (e) => {
+    setFilledData({ ...filledData, [e.target.name]: e.target.value });
+  };
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (userDetails.user && userDetails.user.temp === 0) {
+      setIsLoggedIn(true);
+    }
+  }, [userDetails.user]);
+
+  if (userDetails.isLoggedIn || isLoggedIn) {
+    <Navigate to={"/"} />;
+  }
 
   return (
     <>
@@ -117,6 +140,8 @@ function Login() {
                     }}
                     placeholder="Email"
                     size="small"
+                    name="email"
+                    onChange={eventHandler}
                   />
                 </div>
                 <div style={{ marginTop: "20px" }}>
@@ -132,6 +157,8 @@ function Login() {
                     }}
                     placeholder="Password"
                     size="small"
+                    name="password"
+                    onChange={eventHandler}
                   />
                 </div>
                 <div style={{ marginTop: "20px" }}>

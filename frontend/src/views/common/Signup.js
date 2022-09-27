@@ -1,5 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import { get, post } from "../../utils/serverCall";
 
 function Signup(userDetails) {
@@ -46,6 +47,10 @@ function Signup(userDetails) {
       console.log(res);
     });
   };
+
+  if (userDetails.isLoggedIn) {
+    <Navigate to={"/"} />;
+  }
 
   return (
     <div>
