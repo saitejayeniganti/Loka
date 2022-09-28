@@ -147,6 +147,10 @@ const setSession = (req, res, userInfo) => {
 
 router.post("/login", (req, res) => {
   // for email & password
+  if (req.user) {
+    res.status(400).send({ err: "Please logout to signin to another account" });
+    return;
+  }
   const body = req.body;
   UserModel.findOne({ email: body.email })
     .then((result) => {

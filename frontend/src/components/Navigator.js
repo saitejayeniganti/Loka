@@ -19,8 +19,10 @@ import { REDUCER } from "../utils/consts";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Alert } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function MenuAppBar(props) {
+  const navigate = useNavigate();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -46,7 +48,10 @@ export default function MenuAppBar(props) {
       window.location.reload();
     });
   };
-  console.log(props);
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
 
   const [showError, setShowError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
@@ -131,6 +136,9 @@ export default function MenuAppBar(props) {
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My account</MenuItem>
+                {!props.isLoggedIn && (
+                  <MenuItem onClick={handleLogin}>Login</MenuItem>
+                )}
                 {props.isLoggedIn && (
                   <MenuItem onClick={handleLogout}>Logout</MenuItem>
                 )}
