@@ -1,10 +1,11 @@
 import { Button, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { displayError, displayMessage } from "../../utils/messages";
 import { get, post } from "../../utils/serverCall";
 
 function Signup(userDetails) {
+  const navigate = useNavigate();
   const user = userDetails.user;
   const [externalSignup, setExternalSignUp] = useState(false);
   const defaultFilledData = {
@@ -49,12 +50,10 @@ function Signup(userDetails) {
     post("/auth/signup", filledData)
       .then((res) => {
         console.log(res);
-        displayMessage("Successfully Registered");
+        displayMessage("Registered Successfully");
+        navigate("/");
       })
-      .catch((err) => {
-        // displayError(err);
-        // console.log(err);
-      });
+      .catch((err) => {});
   };
 
   if (userDetails.isLoggedIn) {
