@@ -4,6 +4,8 @@ const router = express.Router();
 
 const dotenv = require("dotenv");
 const dotenvExpand = require("dotenv-expand");
+const { doExec } = require("../../utils/doQuery");
+const UserModel = require("../../model/user");
 const myEnv = dotenv.config();
 dotenvExpand.expand(myEnv);
 
@@ -15,16 +17,44 @@ router.get("/login/failed", (req, res) => {
 });
 
 router.get("/gLogin", passport.authenticate("gLogin", ["profile", "email"]));
-// router.get("/gSignup", passport.authenticate("gSignup", ["profile", "email"]));
+router.get("/gSignup", passport.authenticate("gSignup", ["profile", "email"]));
 // router.get("/gLogin", passport.authenticate("gLogin", ["profile", "email"]));
 
-router.get(
-  // check if user is there in our database. https://stackoverflow.com/questions/64622098/passportjs-google-auth-saves-existing-user-as-a-new-user-in-the-database-how-ca
-  "/gLogin/callback",
-  passport.authenticate("gLogin", {
-    successRedirect: process.env.REACT_URL,
-    failureRedirect: "/login/failed",
-  })
+// router.get(
+//   // check if user is there in our database. https://stackoverflow.com/questions/64622098/passportjs-google-auth-saves-existing-user-as-a-new-user-in-the-database-how-ca
+//   "/gLogin/callback",
+//   passport.authenticate("gLogin", {
+//     successRedirect: process.env.REACT_URL,
+//     failureRedirect: "/login/failed",
+//   })
+// );
+
+router.get("/gLogin/callback", (req, res, next) =>
+  passport.authenticate("gLogin", (err, user, info) => {
+    if (err) return next(err);
+    if (!user) return res.redirect("/login/failed");
+    UserModel.findOne({ email: user.emails[0].value })
+      .then((result) => {
+        console.log(result);
+        if (!result) {
+          req.logIn(user, (err) => {
+            if (err) return next(err);
+            return res.redirect(process.env.REACT_SIGNUP);
+          });
+        } else {
+          req.logIn(user, (err) => {
+            if (err) return next(err);
+            return res.redirect(process.env.REACT_URL);
+          });
+        }
+      })
+      .catch((err) => {
+        req.logIn(user, (err) => {
+          if (err) return next(err);
+          return res.redirect(process.env.REACT_URL);
+        });
+      });
+  })(req, res, next)
 );
 
 router.get(
@@ -51,7 +81,46 @@ router.get("/logout", (req, res) => {
   res.send();
 });
 
+const checkRegistration = () => {};
+
 router.post("/signup", (req, res) => {
+  const body = req.body; //frontend sent params must must else reassign here
+  // const body = (({ firstName,
+  //   lastName,
+  //   email,
+  //   location,
+  //   latitude,
+  //   longitude,
+  //   phone,
+  //   provider,
+  //   externalId,
+  //   password, }) => ({ firstName,
+  //     lastName,
+  //     email,
+  //     location,
+  //     latitude,
+  //     longitude,
+  //     phone,
+  //     provider,
+  //     externalId,
+  //     password, }))(req.body);
+
+  // check registration
+  const insertUser = new UserModel(body);
+  insertUser.save((err, result) => {
+    if (err) {
+      res.status(409).send({
+        err: err.code === 11000 ? "email already registered" : err.code,
+      });
+    } else {
+      res.status(200).send({ _id: result });
+    }
+  });
+  // user
+  //   .findOne({ email }, ["password"])
+  //   .then((res) => {})
+  //   .catch((err) => {});
+  // res.send();
   //signup here
   //using email
   //using google

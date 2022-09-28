@@ -1,9 +1,11 @@
 import { Button, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { displayError, displayMessage } from "../../utils/messages";
 import { get, post } from "../../utils/serverCall";
 
 function Signup(userDetails) {
+  const navigate = useNavigate();
   const user = userDetails.user;
   const [externalSignup, setExternalSignUp] = useState(false);
   const defaultFilledData = {
@@ -12,7 +14,9 @@ function Signup(userDetails) {
     email: "",
     externalId: "",
     provider: "",
+    phone: "",
   };
+
   const [filledData, setFilledData] = useState(defaultFilledData);
 
   const gSignup = (e) => {
@@ -43,9 +47,13 @@ function Signup(userDetails) {
 
   const signup = (e) => {
     e.preventDefault();
-    post("/auth/signup", filledData).then((res) => {
-      console.log(res);
-    });
+    post("/auth/signup", filledData)
+      .then((res) => {
+        console.log(res);
+        displayMessage("Registered Successfully");
+        navigate("/");
+      })
+      .catch((err) => {});
   };
 
   if (userDetails.isLoggedIn) {
@@ -55,7 +63,7 @@ function Signup(userDetails) {
   return (
     <div>
       <h1>This is Signup page.</h1>
-      <Button variant="outlined" onClick={gSignup} disabled={externalSignup}>
+      <Button variant="outlined" onClick={gSignup}>
         Continue with Google
       </Button>
 
@@ -76,11 +84,19 @@ function Signup(userDetails) {
       />
 
       <TextField
-        id="signup-name"
+        id="signup-email"
         label="Email"
         name="email"
         disabled={externalSignup}
         value={filledData.email}
+        onChange={eventHandler}
+      />
+
+      <TextField
+        id="signup-phone"
+        label="Phone"
+        name="phone"
+        value={filledData.phone}
         onChange={eventHandler}
       />
 

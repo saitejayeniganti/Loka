@@ -1,7 +1,11 @@
 .App {
   text-align: center;
-  
-  
+}
+
+
+
+.homecolor:hover{
+background-color: #9fafcf;
 }
 
 /* .bck-img{
