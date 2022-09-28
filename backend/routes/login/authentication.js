@@ -41,6 +41,7 @@ router.get("/gLogin/callback", (req, res, next) =>
         console.log(result);
         if (!result) {
           user.temp = 1;
+          user.role = result.role;
           req.logIn(user, (err) => {
             if (err) return next(err);
             return res.redirect(process.env.REACT_SIGNUP);
@@ -126,8 +127,46 @@ router.post("/signup", (req, res) => {
   //using google
 });
 
+const setSession = (req, res, userInfo) => {
+  const { provider, email, firstName, lastName, role } = userInfo;
+  const user = {
+    provider,
+    email,
+    firstName,
+    lastName,
+    role,
+  };
+  // var user = newDataObj;
+  req.logIn(user, function (error) {
+    if (!error) {
+      console.log("succcessfully updated user session");
+    }
+  });
+  res.end();
+};
+
 router.post("/login", (req, res) => {
   // for email & password
+  const body = req.body;
+  UserModel.findOne({ email: body.email })
+    .then((result) => {
+      if (result) {
+        bcrypt.compare(body.password, result.password, (error, response) => {
+          if (response) {
+            setSession(req, res, result);
+          } else {
+            res
+              .status(404)
+              .send({ err: "Wrong username/password combination!" });
+          }
+        });
+      } else {
+        res.status(404).send({ err: "User doesn't exist" });
+      }
+    })
+    .catch((err) => {
+      res.status(400).send({ err: "server side error" });
+    });
 });
 
 router.get("/reset", (req, res) => {

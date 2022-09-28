@@ -97,11 +97,11 @@ export default function MenuAppBar(props) {
           <Typography variant="h5" component="div">
             LOKA
           </Typography>
-          {props.user && (
+          {/* {props.user && (
             <Typography variant="h5" component="div">
-              {props.user.name.givenName}
+              {props.user.firstName}
             </Typography>
-          )}
+          )} */}
           {auth && (
             <div>
               <IconButton
