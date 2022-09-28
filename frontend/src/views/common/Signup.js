@@ -1,6 +1,7 @@
 import { Button, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { displayError, displayMessage } from "../../utils/messages";
 import { get, post } from "../../utils/serverCall";
 
 function Signup(userDetails) {
@@ -45,9 +46,15 @@ function Signup(userDetails) {
 
   const signup = (e) => {
     e.preventDefault();
-    post("/auth/signup", filledData).then((res) => {
-      console.log(res);
-    });
+    post("/auth/signup", filledData)
+      .then((res) => {
+        console.log(res);
+        displayMessage("Successfully Registered");
+      })
+      .catch((err) => {
+        // displayError(err);
+        // console.log(err);
+      });
   };
 
   if (userDetails.isLoggedIn) {

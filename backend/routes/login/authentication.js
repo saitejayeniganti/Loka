@@ -56,10 +56,8 @@ router.get("/logout", (req, res) => {
 const checkRegistration = () => {};
 
 router.post("/signup", (req, res) => {
-  console.log(req.body);
-  const body = req.body;
-  // const {
-  //   firstName,
+  const body = req.body; //frontend sent params must must else reassign here
+  // const body = (({ firstName,
   //   lastName,
   //   email,
   //   location,
@@ -68,8 +66,16 @@ router.post("/signup", (req, res) => {
   //   phone,
   //   provider,
   //   externalId,
-  //   password,
-  // } = req.body;
+  //   password, }) => ({ firstName,
+  //     lastName,
+  //     email,
+  //     location,
+  //     latitude,
+  //     longitude,
+  //     phone,
+  //     provider,
+  //     externalId,
+  //     password, }))(req.body);
 
   // check registration
   const insertUser = new user(body);
