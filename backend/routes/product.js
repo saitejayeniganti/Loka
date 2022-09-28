@@ -20,8 +20,8 @@ const checkAuth = require('../utils/auth');
 // const upload = multer({ storage });
 router.post(
   '/add',
-  auth,
-  role.checkRole(role.ROLES.Admin, role.ROLES.Merchant, role.ROLES.Customer),
+  // auth,
+  // role.checkRole(role.ROLES.Admin, role.ROLES.Merchant, role.ROLES.Customer),
   async (req, res) => {
     try {
       const sku = req.body.sku;
@@ -82,6 +82,105 @@ router.post(
     } catch (error) {
       console.log(error);
       return res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
+  }
+);
+
+// fetch products api
+router.get(
+  '/',
+  // auth,
+  // role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  async (req, res) => {
+    try {
+      let products = [];
+      products = await Product.find({})
+      console.log("Here B");
+      // if (req.user.merchant) {
+      //   console.log("Here");
+      //   const brands = await Brand.find({
+      //     merchant: req.user.merchant
+      //   }).populate('merchant', '_id');
+
+      //   const brandId = brands[0]?.['_id'];
+
+      //   products = await Product.find({})
+      //     .populate({
+      //       path: 'brand',
+      //       populate: {
+      //         path: 'merchant',
+      //         model: 'Merchant'
+      //       }
+      //     })
+      //     .where('brand', brandId);
+      // } else {
+      //   products = await Product.find({})//.populate({
+      //   //   path: 'brand',
+      //   //   populate: {
+      //   //     path: 'merchant',
+      //   //     model: 'Merchant'
+      //   //   }
+      //    //});
+      //    console.log("Here In");
+      // }
+      console.log("Here XX");
+      res.status(200).json({
+        products
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
+  }
+);
+
+router.get(
+  '/:id',
+  // auth,
+  // role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  async (req, res) => {
+    try {
+      const productId = req.params.id;
+      console.log(req.params);
+      let productDoc = null;
+
+      if (req?.user?.merchant) {
+        const brands = await Brand.find({
+          merchant: req.user.merchant
+        }).populate('merchant', '_id');
+
+        const brandId = brands[0]['_id'];
+
+        productDoc = await Product.findOne({ _id: productId })
+          .populate({
+            path: 'brand',
+            select: 'name'
+          })
+          .where('brand', brandId);
+      } else {
+         productDoc = await Product.findOne({ _id: productId })//.populate({
+        //   path: 'brand',
+        //   select: 'name'
+        // });
+      }
+
+      if (!productDoc) {
+        return res.status(404).json({
+          message: 'No product found.'
+        });
+      }
+      
+
+      res.status(200).json({
+        product: productDoc
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({
         error: 'Your request could not be processed. Please try again.'
       });
     }
