@@ -4,7 +4,7 @@ dotenv.config();
 
 const createConnection = async function () {
   const options = {
-    autoIndex: false,
+    autoIndex: true,
     connectTimeoutMS: 10000,
     useNewUrlParser: true,
     useUnifiedTopology: true,

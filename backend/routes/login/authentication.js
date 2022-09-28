@@ -4,6 +4,8 @@ const router = express.Router();
 
 const dotenv = require("dotenv");
 const dotenvExpand = require("dotenv-expand");
+const { doExec } = require("../../utils/doQuery");
+const user = require("../../model/user");
 const myEnv = dotenv.config();
 dotenvExpand.expand(myEnv);
 
@@ -51,7 +53,40 @@ router.get("/logout", (req, res) => {
   res.send();
 });
 
+const checkRegistration = () => {};
+
 router.post("/signup", (req, res) => {
+  console.log(req.body);
+  const body = req.body;
+  // const {
+  //   firstName,
+  //   lastName,
+  //   email,
+  //   location,
+  //   latitude,
+  //   longitude,
+  //   phone,
+  //   provider,
+  //   externalId,
+  //   password,
+  // } = req.body;
+
+  // check registration
+  const insertUser = new user(body);
+  insertUser.save((err, result) => {
+    if (err) {
+      res.status(409).send({
+        err: err.code === 11000 ? "email already registered" : err.code,
+      });
+    } else {
+      res.status(200).send({ _id: result });
+    }
+  });
+  // user
+  //   .findOne({ email }, ["password"])
+  //   .then((res) => {})
+  //   .catch((err) => {});
+  // res.send();
   //signup here
   //using email
   //using google

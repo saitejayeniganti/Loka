@@ -12,7 +12,9 @@ function Signup(userDetails) {
     email: "",
     externalId: "",
     provider: "",
+    phone: "",
   };
+
   const [filledData, setFilledData] = useState(defaultFilledData);
 
   const gSignup = (e) => {
@@ -55,7 +57,7 @@ function Signup(userDetails) {
   return (
     <div>
       <h1>This is Signup page.</h1>
-      <Button variant="outlined" onClick={gSignup} disabled={externalSignup}>
+      <Button variant="outlined" onClick={gSignup}>
         Continue with Google
       </Button>
 
@@ -76,11 +78,19 @@ function Signup(userDetails) {
       />
 
       <TextField
-        id="signup-name"
+        id="signup-email"
         label="Email"
         name="email"
         disabled={externalSignup}
         value={filledData.email}
+        onChange={eventHandler}
+      />
+
+      <TextField
+        id="signup-phone"
+        label="Phone"
+        name="phone"
+        value={filledData.phone}
         onChange={eventHandler}
       />
 
