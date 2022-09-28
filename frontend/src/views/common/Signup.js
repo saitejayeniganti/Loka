@@ -1,4 +1,4 @@
-import { Button, TextField } from "@mui/material";
+import { Button, MenuItem, Select, TextField } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { displayError, displayMessage } from "../../utils/messages";
@@ -13,8 +13,10 @@ function Signup(userDetails) {
     lastName: "",
     email: "",
     externalId: "",
-    provider: "",
+    provider: "email",
     phone: "",
+    password: "",
+    role: 0,
   };
 
   const [filledData, setFilledData] = useState(defaultFilledData);
@@ -32,11 +34,11 @@ function Signup(userDetails) {
     setFilledData((prev) => {
       return {
         ...prev,
-        firstName: user ? user.firstName : "",
-        lastName: user ? user.lastName : "",
-        email: user ? user.emails[0].value : "",
-        externalId: user ? user.id : "",
-        provider: user ? user.provider : "",
+        firstName: user ? user.firstName : defaultFilledData.firstName,
+        lastName: user ? user.lastName : defaultFilledData.lastName,
+        email: user ? user.emails[0].value : defaultFilledData.email,
+        externalId: user ? user.id : defaultFilledData.externalId,
+        provider: user ? user.provider : defaultFilledData.provider,
       };
     });
   }, [userDetails.user]);
@@ -53,7 +55,9 @@ function Signup(userDetails) {
         displayMessage("Registered Successfully");
         navigate("/");
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   if (userDetails.isLoggedIn) {
@@ -99,6 +103,28 @@ function Signup(userDetails) {
         value={filledData.phone}
         onChange={eventHandler}
       />
+
+      <TextField
+        id="signup-password"
+        label="Password"
+        name="password"
+        value={filledData.password}
+        disabled={externalSignup}
+        onChange={eventHandler}
+      />
+
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={filledData.role}
+        label="Account Role"
+        onChange={eventHandler}
+        name="role"
+      >
+        <MenuItem value={0}>Customer</MenuItem>
+        <MenuItem value={1}>Vendor</MenuItem>
+        <MenuItem value={2}>Admin</MenuItem>
+      </Select>
 
       <Button variant="outlined" onClick={signup}>
         Submit

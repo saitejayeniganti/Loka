@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import "./App.css";
 
-import './App.css';
+import "./App.css";
 import ItemCard from "./components/itemCard";
 import Navigator from "./components/Navigator";
 import { get } from "./utils/serverCall";
@@ -71,6 +71,8 @@ function App() {
               user ? <Navigate to="/" /> : <Login isLoggedIn={isLoggedIn} />
             }
           ></Route>
+
+          <Route path="/itemcard" exact element={<ItemCard />}></Route>
           <Route
             path="/signup"
             exact
@@ -81,17 +83,6 @@ function App() {
           <Route path="/adminhome" exact element={<AdminHome />}></Route>
         </Routes>
       </Router>
-     <Router>
-     <Navigator />
-     <Routes>
-     <Route path="/home" exact element={<Home />}></Route>
-     <Route path="/itemcard" exact element={<ItemCard />}></Route>
-     <Route path="/login" exact element={<Login />}></Route>
-     <Route path="/customerhome" exact element={<CustomerHome />}></Route>
-     <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
-     <Route path="/adminhome" exact element={<AdminHome />}></Route>
-     </Routes>
-     </Router>
     </div>
   );
 }

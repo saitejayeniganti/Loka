@@ -41,9 +41,8 @@ const UserSchema = new Schema({
     type: String,
   },
   role: {
-    type: String,
-    default: "ROLE_ADMIN",
-    enum: ["ROLE_MEMBER", "ROLE_ADMIN", "ROLE_MERCHANT"],
+    type: Number,
+    default: 0,
   },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
@@ -56,5 +55,7 @@ const UserSchema = new Schema({
   latitude: { type: Number },
   longitude: { type: Number },
 });
+const User = Mongoose.model("User", UserSchema);
+User.syncIndexes();
 
-module.exports = Mongoose.model("User", UserSchema);
+module.exports = User;
