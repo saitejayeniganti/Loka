@@ -16,6 +16,7 @@ import AdminHome from "./views/admin/adminHome";
 import CustomerHome from "./views/customer/customerHome";
 import Home from "./views/common/Home";
 import Login from "./views/common/Login";
+import ProductList from "./views/common/ProductList";
 import MerchantHome from "./views/merchant/merchantHome";
 import Signup from "./views/common/Signup";
 
@@ -80,6 +81,7 @@ function App() {
           ></Route>
           <Route path="/customerhome" exact element={<CustomerHome />}></Route>
           <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
+          <Route path="/productList" exact element={<ProductList />}></Route>
           <Route path="/adminhome" exact element={<AdminHome />}></Route>
         </Routes>
       </Router>

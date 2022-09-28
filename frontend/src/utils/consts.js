@@ -9,6 +9,7 @@ export const REDUCER = {
   ERR_MSG: "errMsg",
   MESSAGE: "message",
   TOKEN: "token",
+  PRODUCTS: "products",
 };
 
 export const ACTION = {
@@ -18,4 +19,5 @@ export const ACTION = {
   RESET: "RESET",
   SHOWERROR: "ERROR",
   MESSAGE: "MESSAGE",
+  FETCH_PRODUCTS: 'FETCH_PRODUCTS',
 };
