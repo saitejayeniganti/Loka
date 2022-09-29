@@ -91,10 +91,9 @@ function App() {
      <Route path="/adminhome" exact element={<AdminHome />}></Route>
      <Route path="/loc" exact element={<LocationTest />}></Route>
      <Route path="/loca" exact element={<LocationSearch />}></Route>
-      <Route path="/customerhome" exact element={<CustomerHome />}></Route>
-          <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
+      
           <Route path="/productList" exact element={<ProductList />}></Route>
-          <Route path="/adminhome" exact element={<AdminHome />}></Route>
+      
           
         </Routes>
   
