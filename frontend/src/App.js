@@ -6,10 +6,10 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import "./App.css";
+
 
 import './App.css';
-import ItemCard from "./components/itemCard";
+
 import Navigator from "./components/Navigator";
 import { get } from "./utils/serverCall";
 import AdminHome from "./views/admin/adminHome";
@@ -18,6 +18,10 @@ import Home from "./views/common/Home";
 import Login from "./views/common/Login";
 import MerchantHome from "./views/merchant/merchantHome";
 import Signup from "./views/common/Signup";
+import LocationSearch from "./components/LocationSearch";
+import LocationTest from "./components/LocationTest";
+
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -63,7 +67,7 @@ function App() {
         <Navigator isLoggedIn={isLoggedIn} user={user} />
         <Routes>
           <Route path="/" exact element={<Home />}></Route>
-          <Route path="/home" exact element={<Home />}></Route>
+          
           <Route
             path="/login"
             exact
@@ -76,22 +80,18 @@ function App() {
             exact
             element={<Signup user={user} isLoggedIn={isLoggedIn} />}
           ></Route>
-          <Route path="/customerhome" exact element={<CustomerHome />}></Route>
-          <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
-          <Route path="/adminhome" exact element={<AdminHome />}></Route>
-        </Routes>
-      </Router>
-     <Router>
-     <Navigator />
-     <Routes>
-     <Route path="/home" exact element={<Home />}></Route>
-     <Route path="/itemcard" exact element={<ItemCard />}></Route>
-     <Route path="/login" exact element={<Login />}></Route>
+          <Route path="/home" exact element={<Home />}></Route>
+     
+     
      <Route path="/customerhome" exact element={<CustomerHome />}></Route>
      <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
      <Route path="/adminhome" exact element={<AdminHome />}></Route>
-     </Routes>
-     </Router>
+     <Route path="/loc" exact element={<LocationTest />}></Route>
+     <Route path="/loca" exact element={<LocationSearch />}></Route>
+          
+        </Routes>
+      </Router>
+   
     </div>
   );
 }
