@@ -20,8 +20,9 @@ const get = (path, data) => {
         store.dispatch(showError(error.response.data.err));
         throw error.response.data.err;
       } else {
-        store.dispatch(showError("Server Side Error Occured"));
-        throw "Server Side Error Occured";
+        // store.dispatch(showError("Server Side Error Occured"));
+        // throw "Server Side Error Occured";
+        throw error.response.data;
       }
     });
 };
@@ -36,8 +37,9 @@ const post = (path, data) => {
         store.dispatch(showError(error.response.data.err));
         throw error.response.data.err;
       } else {
-        store.dispatch(showError("Server Side Error Occured"));
-        throw "Server Side Error Occured";
+        // store.dispatch(showError("Server Side Error Occured"));
+        // throw "Server Side Error Occured";
+        throw error.response.data;
       }
     });
 };
@@ -53,8 +55,9 @@ const put = (path, data) => {
         store.dispatch(showError(error.response.data.err));
         throw error.response.data.err;
       } else {
-        store.dispatch(showError("Server Side Error Occured"));
-        throw "Server Side Error Occured";
+        // store.dispatch(showError("Server Side Error Occured"));
+        // throw "Server Side Error Occured";
+        throw error.response.data;
       }
     });
 };
@@ -70,8 +73,9 @@ const remove = (path, data) => {
         store.dispatch(showError(error.response.data.err));
         throw error.response.data.err;
       } else {
-        store.dispatch(showError("Server Side Error Occured"));
-        throw "Server Side Error Occured";
+        // store.dispatch(showError("Server Side Error Occured"));
+        // throw "Server Side Error Occured";
+        throw error.response.data;
       }
     });
 };

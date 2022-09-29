@@ -14,10 +14,12 @@ import loginAnimation from "../../animations/login.json";
 import mapAnimation from "../../animations/loginmap.json";
 import loginImage from "../../images/theme/login.png";
 import loginShoppingDelivery from "../../animations/shopping-delivery.json";
-import { get } from "../../utils/serverCall.js";
-import { Navigate } from "react-router-dom";
+import { get, post } from "../../utils/serverCall.js";
+import { useNavigate } from "react-router-dom";
+import { showMessage } from "../../reducers/actions.js";
 
 function Login(userDetails) {
+  const navigate = useNavigate();
   const defaultOptions = {
     loop: false,
     autoplay: true,
@@ -39,6 +41,18 @@ function Login(userDetails) {
   const gLogin = (event) => {
     event.preventDefault();
     window.open(process.env.REACT_APP_NODE_SERVER + "/auth/gLogin", "_self");
+  };
+
+  const doLogin = (e) => {
+    e.preventDefault();
+    post("/auth/login", filledData)
+      .then((result) => {
+        showMessage("Login Success");
+        navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const defaultFilledData = {
@@ -162,7 +176,11 @@ function Login(userDetails) {
                   />
                 </div>
                 <div style={{ marginTop: "20px" }}>
-                  <Button variant="contained" sx={{ width: "100%" }}>
+                  <Button
+                    variant="contained"
+                    sx={{ width: "100%" }}
+                    onClick={doLogin}
+                  >
                     Login
                   </Button>
                 </div>

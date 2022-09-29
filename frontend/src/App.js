@@ -16,6 +16,7 @@ import AdminHome from "./views/admin/adminHome";
 import CustomerHome from "./views/customer/customerHome";
 import Home from "./views/common/Home";
 import Login from "./views/common/Login";
+import ProductList from "./views/common/ProductList";
 import MerchantHome from "./views/merchant/merchantHome";
 import Signup from "./views/common/Signup";
 import LocationSearch from "./components/LocationSearch";
@@ -75,6 +76,8 @@ function App() {
               user ? <Navigate to="/" /> : <Login isLoggedIn={isLoggedIn} />
             }
           ></Route>
+
+          
           <Route
             path="/signup"
             exact
@@ -88,10 +91,14 @@ function App() {
      <Route path="/adminhome" exact element={<AdminHome />}></Route>
      <Route path="/loc" exact element={<LocationTest />}></Route>
      <Route path="/loca" exact element={<LocationSearch />}></Route>
+      <Route path="/customerhome" exact element={<CustomerHome />}></Route>
+          <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
+          <Route path="/productList" exact element={<ProductList />}></Route>
+          <Route path="/adminhome" exact element={<AdminHome />}></Route>
           
         </Routes>
+  
       </Router>
-   
     </div>
   );
 }

@@ -45,7 +45,7 @@ const gAuth = () => {
           emails,
           name,
         }))(profile);
-        user.temp = 1;
+        user.temp = 1; //used in authentication js as well
         user.email = profile.emails[0].value;
         user.firstName = profile.name.givenName;
         user.lastName = profile.name.familyName;
