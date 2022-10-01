@@ -11,19 +11,28 @@ import KeyIcon from "@mui/icons-material/Key";
 import Paper from "@mui/material/Paper";
 import Lottie from "react-lottie";
 import loginAnimation from "../../animations/login.json";
-import mapAnimation from "../../animations/loginmap.json";
-import loginImage from "../../images/theme/login.png";
-import loginShoppingDelivery from "../../animations/shopping-delivery.json";
+import shop from "../../images/merchant/shop.png";
+import shopAnimation from "../../animations/shop.json";
+import merchant1 from "../../animations/m1.json";
+import merchant2 from "../../animations/m2.json";
+import merchant3 from "../../animations/m3.json";
+import merchant4 from "../../animations/m4.json";
+import merchant5 from "../../animations/m5.json";
+
+
+
+
 import { get, post } from "../../utils/serverCall.js";
 import { useNavigate } from "react-router-dom";
 import { showMessage } from "../../reducers/actions.js";
 
-function Login(userDetails) {
-  const navigate = useNavigate();
-  const defaultOptions = {
+
+function MerchantLogin(userDetails) {
+
+ const defaultOptions = {
     loop: false,
     autoplay: true,
-    animationData: loginAnimation,
+    animationData: merchant1,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
@@ -32,13 +41,110 @@ function Login(userDetails) {
   const defaultOptions1 = {
     loop: true,
     autoplay: true,
-    animationData: loginShoppingDelivery,
+    animationData: merchant2,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+};
+
+ const defaultOptions2 = {
+    loop: false,
+    autoplay: true,
+    animationData: merchant3,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
 
-  const gLogin = (event) => {
+  const defaultOptions3 = {
+    loop: false,
+    autoplay: true,
+    animationData: merchant4,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
+
+  const defaultOptions4 = {
+    loop: false,
+    autoplay: true,
+    animationData: merchant5,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
+    const defaultOptions5 = {
+    loop: false,
+    autoplay: true,
+    animationData: shopAnimation,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
+const [lottieToggle, setLottieToggle] = useState(true);
+const [lottieToggle1, setLottieToggle1] = useState(false);
+const [lottieToggle2, setLottieToggle2] = useState(false);
+const [lottieToggle3, setLottieToggle3] = useState(false);
+const [lottieToggle4, setLottieToggle4] = useState(false);
+
+const arr=[lottieToggle,lottieToggle1,lottieToggle2,lottieToggle3,lottieToggle4]
+
+
+useEffect(() => {
+
+  const intervalID = setInterval(() => {
+
+    if(lottieToggle)
+    {
+        setLottieToggle(false);
+        setLottieToggle1(true);
+        setLottieToggle2(false);
+        setLottieToggle3(false);
+        setLottieToggle4(false);
+    }
+    
+    if(lottieToggle1)
+    {
+        setLottieToggle(false);
+        setLottieToggle1(false);
+        setLottieToggle2(true);
+        setLottieToggle3(false);
+        setLottieToggle4(false);
+    }
+
+    if(lottieToggle2)
+    {
+        setLottieToggle(false);
+        setLottieToggle1(false);
+        setLottieToggle2(false);
+        setLottieToggle3(true);
+        setLottieToggle4(false);
+    }
+    if(lottieToggle3)
+    {
+        setLottieToggle(false);
+        setLottieToggle1(false);
+        setLottieToggle2(false);
+        setLottieToggle3(false);
+        setLottieToggle4(true);
+    }
+     if(lottieToggle4)
+    {
+        setLottieToggle(true);
+        setLottieToggle1(false);
+        setLottieToggle2(false);
+        setLottieToggle3(false);
+        setLottieToggle4(false);
+    }
+
+  }, 3000);
+  return () => clearInterval(intervalID);
+}, []);
+
+ const gLogin = (event) => {
     event.preventDefault();
     window.open(process.env.REACT_APP_NODE_SERVER + "/auth/gLogin", "_self");
   };
@@ -77,10 +183,11 @@ function Login(userDetails) {
     <Navigate to={"/"} />;
   }
 
-  return (
+
+return(
     <>
-      <Grid container sx={{ height: "100%", position: "absolute" }}>
-        <Grid item xs={6} sx={{ backgroundColor: "#FEBB15" }}></Grid>
+            <Grid container sx={{ height: "100%", position: "absolute" }}>
+        <Grid item xs={6} sx={{ backgroundColor: "rgb(207, 111, 105)" }}></Grid>
         <Grid item xs={6} sx={{ backgroundColor: "white" }}></Grid>
       </Grid>
       <div
@@ -93,13 +200,14 @@ function Login(userDetails) {
       >
         <Grid container spacing={30}>
           <Grid item xs={4} >
-            <Lottie options={defaultOptions1}  height={700} width={700} />
+            
+            <Lottie options={defaultOptions5} height={700} width={700} />
           </Grid>
           <Grid item xs={4}>
             <Paper elevation={3} sx={{ padding: "25px", borderRadius: "12px" }}>
               <div style={{ margin: "10px" }}>
-                <img src={loginImage} width="350" height="350"></img>
-                <div className="appHeadings">Login as a Customer into LOKA</div>
+                <img src={shop} width="350" height="350"></img>
+                <div className="appHeadings">Login as a Vendor into LOKA</div>
                 <div style={{ marginTop: "20px" }}>
                   <Button
                     variant="outlined"
@@ -186,18 +294,26 @@ function Login(userDetails) {
                 </div>
               </div>
               <div style={{ fontSize: "smaller" }}>
-                Not an existing customer ?{" "}
+                Not an existing vendor ?{" "}
                 <u className="linkHighlight">SignUp </u>
               </div>
             </Paper>
           </Grid>
           <Grid item xs={4} style={{marginTop:"130px"}}>
-            <Lottie options={defaultOptions} height={420} width={420} />
+            {lottieToggle?<Lottie options={defaultOptions}  height={420} width={420} />:<></>}
+            {lottieToggle1?<Lottie options={defaultOptions1}  height={420} width={420} />:<></>}
+            {lottieToggle2?<Lottie options={defaultOptions2}  height={420} width={420} />:<></>}
+            {lottieToggle3?<Lottie options={defaultOptions3}  height={420} width={420} />:<></>}
+            {lottieToggle4?<Lottie options={defaultOptions4}  height={420} width={420} />:<></>}
+            
+            
           </Grid>
         </Grid>
       </div>
     </>
-  );
+    
+    
+    )
 }
 
-export default Login;
+export default MerchantLogin;
