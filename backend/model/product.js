@@ -58,11 +58,22 @@ const ProductSchema = new Schema({
     ref: 'Brand',
     default: null
   },
+  merchant: {
+    type: Schema.Types.ObjectId,
+    ref: 'Merchant',
+    required: true
+  },
   numReviews: {
     type: Number,
     require: true,
     default: 0,
   },
-},{ timestamps: true });
+  category: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'category'
+    }
+  ]
+}, { timestamps: true });
 
 module.exports = Mongoose.model('Product', ProductSchema);
