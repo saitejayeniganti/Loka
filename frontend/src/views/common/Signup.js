@@ -4,7 +4,14 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { displayError, displayMessage } from "../../utils/messages";
 import { get, post } from "../../utils/serverCall";
 
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import LocationSearchInput from "../../components/LocationAuto";
+
 function Signup(userDetails) {
+  const [address, setAddress] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+
   const navigate = useNavigate();
   const user = userDetails.user;
   const [externalSignup, setExternalSignUp] = useState(false);
@@ -17,9 +24,35 @@ function Signup(userDetails) {
     phone: "",
     password: "",
     role: 0,
+    address: "",
+    latitude: "",
+    longitude: "",
   };
 
   const [filledData, setFilledData] = useState(defaultFilledData);
+
+  const handleChange = (address) => {
+    // setAddress(address);
+    setFilledData((prev) => {
+      return { ...prev, address };
+    });
+  };
+
+  const handleSelect = (address) => {
+    geocodeByAddress(address).then((results) => {
+      setAddress(address);
+      getLatLng(results[0])
+        .then((latLng) => {
+          console.log("Success", latLng);
+          setFilledData((prev) => {
+            return { ...prev, latitude: latLng.lat, longitude: latLng.lng };
+          });
+          // setLatitude(latLng.lat);
+          // setLongitude(latLng.lng);
+        })
+        .catch((error) => console.error("Error", error));
+    });
+  };
 
   const gSignup = (e) => {
     e.preventDefault();
@@ -125,6 +158,12 @@ function Signup(userDetails) {
         <MenuItem value={1}>Vendor</MenuItem>
         <MenuItem value={2}>Admin</MenuItem>
       </Select>
+
+      <LocationSearchInput
+        handleChange={handleChange}
+        handleSelect={handleSelect}
+        address={address}
+      />
 
       <Button variant="outlined" onClick={signup}>
         Submit

@@ -7,8 +7,7 @@ import {
   useLocation,
 } from "react-router-dom";
 
-
-import './App.css';
+import "./App.css";
 
 import Navigator from "./components/Navigator";
 import { get } from "./utils/serverCall";
@@ -21,15 +20,10 @@ import MerchantHome from "./views/merchant/merchantHome";
 import Signup from "./views/common/Signup";
 import LocationSearch from "./components/LocationSearch";
 
-
-
-
 import MapTest from "./views/maptest";
 
 import RouteMap from "./views/routeMap";
 import MerchantLogin from "./views/merchant/merchantLogin";
-
-
 
 function App() {
   const [user, setUser] = useState(null);
@@ -75,7 +69,7 @@ function App() {
         <Navigator isLoggedIn={isLoggedIn} user={user} />
         <Routes>
           <Route path="/" exact element={<Home />}></Route>
-          
+
           <Route
             path="/login"
             exact
@@ -84,27 +78,27 @@ function App() {
             }
           ></Route>
 
-          
           <Route
             path="/signup"
             exact
             element={<Signup user={user} isLoggedIn={isLoggedIn} />}
           ></Route>
           <Route path="/home" exact element={<Home />}></Route>
-     
-     
-     <Route path="/customerhome" exact element={<CustomerHome />}></Route>
-     <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
-     <Route path="/merchantlogin" exact element={<MerchantLogin />}></Route>
-     <Route path="/adminhome" exact element={<AdminHome />}></Route>
-     <Route path="/productList" exact element={<ProductList />}></Route>
 
-     <Route path="/route" exact element={<RouteMap />}></Route> 
-     <Route path="/map" exact element={<MapTest />}></Route>
-     <Route path="/location" exact element={<LocationSearch />}></Route>
-          
+          <Route path="/customerhome" exact element={<CustomerHome />}></Route>
+          <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
+          <Route
+            path="/merchantlogin"
+            exact
+            element={<MerchantLogin />}
+          ></Route>
+          <Route path="/adminhome" exact element={<AdminHome />}></Route>
+          <Route path="/productList" exact element={<ProductList />}></Route>
+
+          <Route path="/route" exact element={<RouteMap />}></Route>
+          <Route path="/map" exact element={<MapTest />}></Route>
+          <Route path="/location" exact element={<LocationSearch />}></Route>
         </Routes>
-  
       </Router>
     </div>
   );
