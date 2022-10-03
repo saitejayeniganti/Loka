@@ -15,7 +15,8 @@ import AdminHome from "./views/admin/adminHome";
 import CustomerHome from "./views/customer/customerHome";
 import Home from "./views/common/Home";
 import Login from "./views/common/Login";
-import ProductList from "./views/common/ProductList";
+import ProductList from "./views/product/ProductList";
+import Product from "./views/product/Product";
 import MerchantHome from "./views/merchant/merchantHome";
 import Signup from "./views/common/Signup";
 import LocationSearch from "./components/LocationSearch";
@@ -94,7 +95,7 @@ function App() {
           ></Route>
           <Route path="/adminhome" exact element={<AdminHome />}></Route>
           <Route path="/productList" exact element={<ProductList />}></Route>
-
+     <Route path="/product" exact element={<Product/>}></Route>
           <Route path="/route" exact element={<RouteMap />}></Route>
           <Route path="/map" exact element={<MapTest />}></Route>
           <Route path="/location" exact element={<LocationSearch />}></Route>

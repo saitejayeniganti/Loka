@@ -13,9 +13,6 @@ const MerchantSchema = new Schema({
   phoneNumber: {
     type: String
   },
-  brand: {
-    type: String
-  },
   business: {
     type: String,
     trim: true
