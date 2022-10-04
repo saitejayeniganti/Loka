@@ -3,12 +3,10 @@ const { Schema } = Mongoose;
 
 // Merchant Schema
 const MerchantSchema = new Schema({
-  storeName: {
-    type: String,
-    trim: true,
-  },
   email: {
     type: String,
+    unique: true,
+    required: true,
   },
   business: {
     type: String,

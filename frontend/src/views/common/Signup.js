@@ -141,14 +141,16 @@ function Signup(userDetails) {
         onChange={eventHandler}
       />
 
-      <TextField
-        id="signup-password"
-        label="Password"
-        name="password"
-        value={filledData.password}
-        disabled={externalSignup}
-        onChange={eventHandler}
-      />
+      {filledData.provider === "email" && (
+        <TextField
+          id="signup-password"
+          label="Password"
+          name="password"
+          value={filledData.password}
+          disabled={externalSignup}
+          onChange={eventHandler}
+        />
+      )}
 
       <Select
         labelId="demo-simple-select-label"

@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 const dotenvExpand = require("dotenv-expand");
 const { doExec } = require("../../utils/doQuery");
 const UserModel = require("../../model/user");
+const MerchantModel = require("../../model/merchant");
 const myEnv = dotenv.config();
 dotenvExpand.expand(myEnv);
 
@@ -88,6 +89,21 @@ router.get("/logout", (req, res) => {
 
 const checkRegistration = () => {};
 
+const insertMerchant = (body, res) => {
+  const merchant = {};
+  merchant.email = body.email;
+  const newMerchant = new MerchantModel(merchant);
+  newMerchant.save((err, result) => {
+    if (err) {
+      res.status(409).send({
+        err: err.code === 11000 ? "Merchant already registered" : err.code,
+      });
+    } else {
+      res.status(200).send({ _id: result });
+    }
+  });
+};
+
 const insertUser = (body, res) => {
   const insertUser = new UserModel(body);
   insertUser.save((err, result) => {
@@ -96,7 +112,11 @@ const insertUser = (body, res) => {
         err: err.code === 11000 ? "email already registered" : err.code,
       });
     } else {
-      res.status(200).send({ _id: result });
+      if (body.role == 1) {
+        insertMerchant(body, res);
+      } else {
+        res.status(200).send({ _id: result });
+      }
     }
   });
 };
