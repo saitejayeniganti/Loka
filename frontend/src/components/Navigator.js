@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Switch from "@mui/material/Switch";
@@ -20,7 +20,7 @@ import { useSelector } from "react-redux";
 import { REDUCER } from "../utils/consts";
 import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 function MenuAppBar(props) {
   const navigate = useNavigate();
@@ -109,7 +109,13 @@ function MenuAppBar(props) {
             </Typography>
           )} */}
 
-          <Box sx={{ display: "flex", alignItems: "center", justifyItems: "right" }}>
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyItems: "right",
+            }}
+          >
             {auth && (
               <div>
                 <IconButton
@@ -149,40 +155,37 @@ function MenuAppBar(props) {
               </div>
             )}
             <Badge badgeContent={props.items?.length} color="primary">
-              <ShoppingCartOutlinedIcon selfAlign="right">Cart</ShoppingCartOutlinedIcon>
+              <ShoppingCartOutlinedIcon selfalign="right">
+                Cart
+              </ShoppingCartOutlinedIcon>
             </Badge>
           </Box>
         </Toolbar>
       </AppBar>
-      {
-        showError && (
-          <div style={{ position: "fixed", bottom: "10px", zIndex: "2" }}>
-            <Alert severity="warning" dismissible="true">
-              {errorMsg}
-            </Alert>
-          </div>
-        )
-      }
-      {
-        showMessage && (
-          <div style={{ position: "fixed", bottom: "10px", zIndex: "2" }}>
-            <Alert severity="success" dismissible="true">
-              {message}
-            </Alert>
-          </div>
-        )
-      }
-    </Box >
+      {showError && (
+        <div style={{ position: "fixed", bottom: "10px", zIndex: "2" }}>
+          <Alert severity="warning" dismissible="true">
+            {errorMsg}
+          </Alert>
+        </div>
+      )}
+      {showMessage && (
+        <div style={{ position: "fixed", bottom: "10px", zIndex: "2" }}>
+          <Alert severity="success" dismissible="true">
+            {message}
+          </Alert>
+        </div>
+      )}
+    </Box>
   );
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     items: state.cartReducer.items,
   };
 };
 
-const actionCreators = {
-};
+const actionCreators = {};
 
 export default connect(mapStateToProps, actionCreators)(MenuAppBar);

@@ -44,6 +44,7 @@ function App() {
             // delete cookie
             get("/auth/reset").then(() => {
               setUser(null);
+              // cookies.remove("Token");
             });
           }
         } else {
@@ -56,7 +57,7 @@ function App() {
         //setUser()
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 
@@ -95,7 +96,7 @@ function App() {
           ></Route>
           <Route path="/adminhome" exact element={<AdminHome />}></Route>
           <Route path="/productList" exact element={<ProductList />}></Route>
-     <Route path="/product" exact element={<Product/>}></Route>
+          <Route path="/product" exact element={<Product />}></Route>
           <Route path="/route" exact element={<RouteMap />}></Route>
           <Route path="/map" exact element={<MapTest />}></Route>
           <Route path="/location" exact element={<LocationSearch />}></Route>

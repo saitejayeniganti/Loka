@@ -73,9 +73,17 @@ router.get(
 
 router.get("/loggedUser", (req, res) => {
   if (req.user) {
-    res.status(200).json({
-      user: req.user,
-    });
+    if (req.user.temp == 1) {
+      const user = req.user;
+      req.logout();
+      res.status(200).json({
+        user: user,
+      });
+    } else {
+      res.status(200).json({
+        user: req.user,
+      });
+    }
   } else {
     res.status(403).json({ error: true, message: "Not Authorized" });
   }
