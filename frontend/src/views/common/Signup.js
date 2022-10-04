@@ -6,6 +6,7 @@ import { get, post } from "../../utils/serverCall";
 
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import LocationSearchInput from "../../components/LocationAuto";
+import { showError, showMessage } from "../../reducers/errorActions";
 
 function Signup(userDetails) {
   const [address, setAddress] = useState("");
@@ -40,6 +41,41 @@ function Signup(userDetails) {
     });
   };
 
+  const trimInputs = () => {
+    Object.keys(filledData).forEach(function (key) {
+      if (typeof filledData[key] == "string") {
+        filledData[key] = filledData[key].trim();
+      }
+    });
+  };
+
+  const checkEmpty = () => {
+    let isValid = true;
+    Object.keys(filledData).some((key) => {
+      if (
+        filledData[key] === "" ||
+        filledData[key] === null ||
+        filledData[key] === undefined
+      ) {
+        isValid = false;
+        return true;
+      }
+    });
+    return isValid;
+  };
+
+  const checkValidation = () => {
+    let isValid = true;
+    trimInputs();
+    if (!checkEmpty()) {
+      displayError("Fill valid input");
+      // showError("Fill valid input");
+      // showMessage("hello");
+      isValid = false;
+    }
+    return isValid;
+  };
+
   const handleSelect = (address) => {
     geocodeByAddress(address).then((results) => {
       // setAddress(address);
@@ -69,17 +105,18 @@ function Signup(userDetails) {
 
   useEffect(() => {
     user && setExternalSignUp(true);
-    setFilledData((prev) => {
-      return {
-        ...prev,
-        firstName: user ? user.firstName : defaultFilledData.firstName,
-        lastName: user ? user.lastName : defaultFilledData.lastName,
-        email:
-          user && user.emails ? user.emails[0].value : defaultFilledData.email,
-        externalId: user ? user.id : defaultFilledData.externalId,
-        provider: user ? user.provider : defaultFilledData.provider,
-      };
-    });
+    if (user) {
+      setFilledData((prev) => {
+        return {
+          ...prev,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.emails ? user.emails[0].value : defaultFilledData.email,
+          externalId: user.id,
+          provider: user.provider,
+        };
+      });
+    }
   }, [userDetails.user]);
 
   // useEffect(() => {
@@ -92,15 +129,17 @@ function Signup(userDetails) {
 
   const signup = (e) => {
     e.preventDefault();
-    post("/auth/signup", filledData)
-      .then((res) => {
-        console.log(res);
-        displayMessage("Registered Successfully");
-        navigate("/");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (checkValidation()) {
+      post("/auth/signup", filledData)
+        .then((res) => {
+          console.log(res);
+          displayMessage("Registered Successfully");
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   if (userDetails.isLoggedIn) {

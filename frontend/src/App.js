@@ -70,7 +70,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log("login changed", loginState[REDUCER.SIGNEDIN]);
+    // console.log("login changed", loginState[REDUCER.SIGNEDIN]);
     if (loginState[REDUCER.SIGNEDIN] == "true") {
       getUser();
     }

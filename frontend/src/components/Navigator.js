@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 function MenuAppBar(props) {
-  console.log("props - ", props);
+  // console.log("props - ", props);
   const navigate = useNavigate();
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -46,7 +46,7 @@ function MenuAppBar(props) {
   const handleLogout = () => {
     get("/auth/logout").then((res) => {
       setAnchorEl(null);
-      console.log("loggedOut");
+      // console.log("loggedOut");
       window.location.reload();
     });
   };
