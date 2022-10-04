@@ -19,7 +19,7 @@ function Signup(userDetails) {
     firstName: "",
     lastName: "",
     email: "",
-    externalId: "",
+    // externalId: "",
     provider: "email",
     phone: "",
     password: "",
@@ -27,6 +27,7 @@ function Signup(userDetails) {
     address: "",
     latitude: "",
     longitude: "",
+    // storeName: "",
   };
 
   const [filledData, setFilledData] = useState(defaultFilledData);
@@ -40,7 +41,10 @@ function Signup(userDetails) {
 
   const handleSelect = (address) => {
     geocodeByAddress(address).then((results) => {
-      setAddress(address);
+      // setAddress(address);
+      setFilledData((prev) => {
+        return { ...prev, address };
+      });
       getLatLng(results[0])
         .then((latLng) => {
           console.log("Success", latLng);
@@ -156,13 +160,23 @@ function Signup(userDetails) {
       >
         <MenuItem value={0}>Customer</MenuItem>
         <MenuItem value={1}>Vendor</MenuItem>
-        <MenuItem value={2}>Admin</MenuItem>
+        {/* <MenuItem value={2}>Admin</MenuItem> */}
       </Select>
+
+      {filledData.role == 1 && (
+        <TextField
+          id="signup-name"
+          label="Store Name"
+          name="storeName"
+          value={filledData.storeName}
+          onChange={eventHandler}
+        />
+      )}
 
       <LocationSearchInput
         handleChange={handleChange}
         handleSelect={handleSelect}
-        address={address}
+        address={filledData.address}
       />
 
       <Button variant="outlined" onClick={signup}>

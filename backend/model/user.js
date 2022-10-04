@@ -11,31 +11,41 @@ const UserSchema = new Schema({
     // },
     required: true,
     unique: true,
+    trim: true,
   },
   phone: {
     type: String,
+    trim: true,
   },
   firstName: {
     type: String,
+    trim: true,
   },
   lastName: {
     type: String,
+    trim: true,
   },
   password: {
     type: String,
   },
+  storeName: {
+    type: String,
+    trim: true,
+  },
   merchant: {
     type: Schema.Types.ObjectId,
     ref: "Merchant",
-    default: null,
+    // default: null,
   },
   provider: {
     type: String,
     required: true,
     default: "email",
+    trim: true,
   },
   externalId: {
     type: String,
+    trim: true,
   },
   avatar: {
     type: String,
@@ -43,6 +53,7 @@ const UserSchema = new Schema({
   role: {
     type: Number,
     default: 0,
+    trim: true,
   },
   resetPasswordToken: { type: String },
   resetPasswordExpires: { type: Date },
@@ -51,9 +62,9 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  location: { type: String },
-  latitude: { type: Number },
-  longitude: { type: Number },
+  location: { type: String, trim: true },
+  latitude: { type: Number, trim: true },
+  longitude: { type: Number, trim: true },
 });
 const User = Mongoose.model("User", UserSchema);
 User.syncIndexes();

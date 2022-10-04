@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
-import '../App.css';
+import "../App.css";
 
 class LocationSearchInput extends React.Component {
   constructor(props) {
@@ -34,11 +34,14 @@ class LocationSearchInput extends React.Component {
           <div>
             <input
               {...getInputProps({
-                placeholder: "Location",
+                placeholder: "Address",
                 className: "location-search-input locationBox",
               })}
             />
-            <div className="autocomplete-dropdown-container" style={{position:"relative"}}>
+            <div
+              className="autocomplete-dropdown-container"
+              style={{ position: "relative" }}
+            >
               {loading && <div>Loading...</div>}
               {suggestions.map((suggestion) => {
                 const className = suggestion.active
@@ -62,7 +65,7 @@ class LocationSearchInput extends React.Component {
                   >
                     <span>{suggestion.description}</span>
                   </div>
-                )
+                );
               })}
             </div>
           </div>
@@ -72,4 +75,4 @@ class LocationSearchInput extends React.Component {
   }
 }
 
-export default LocationSearchInput
+export default LocationSearchInput;
