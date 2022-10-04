@@ -16,10 +16,17 @@ import loginImage from "../../images/theme/login.png";
 import loginShoppingDelivery from "../../animations/shopping-delivery.json";
 import { get, post } from "../../utils/serverCall.js";
 import { useNavigate } from "react-router-dom";
-import { showMessage } from "../../reducers/actions.js";
+import { doSignIn, showMessage } from "../../reducers/actions.js";
+import { actionCreators } from "../../reducers/actionCreators.js";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
 
 function Login(userDetails) {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const { doSignIn } = bindActionCreators(actionCreators, dispatch);
+
   const defaultOptions = {
     loop: false,
     autoplay: true,
@@ -47,7 +54,8 @@ function Login(userDetails) {
     e.preventDefault();
     post("/auth/login", filledData)
       .then((result) => {
-        showMessage("Login Success");
+        // showMessage("Login Success");
+        doSignIn("true");
         navigate("/");
       })
       .catch((err) => {
@@ -92,8 +100,8 @@ function Login(userDetails) {
         }}
       >
         <Grid container spacing={30}>
-          <Grid item xs={4} >
-            <Lottie options={defaultOptions1}  height={700} width={700} />
+          <Grid item xs={4}>
+            <Lottie options={defaultOptions1} height={700} width={700} />
           </Grid>
           <Grid item xs={4}>
             <Paper elevation={3} sx={{ padding: "25px", borderRadius: "12px" }}>
@@ -191,7 +199,7 @@ function Login(userDetails) {
               </div>
             </Paper>
           </Grid>
-          <Grid item xs={4} style={{marginTop:"130px"}}>
+          <Grid item xs={4} style={{ marginTop: "130px" }}>
             <Lottie options={defaultOptions} height={420} width={420} />
           </Grid>
         </Grid>

@@ -25,10 +25,13 @@ import MapTest from "./views/maptest";
 
 import RouteMap from "./views/routeMap";
 import MerchantLogin from "./views/merchant/merchantLogin";
+import { useSelector } from "react-redux";
+import { REDUCER } from "./utils/consts";
 
 function App() {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const loginState = useSelector((state) => state.loginReducer);
   // const location = useLocation();
   // location.pathname;
 
@@ -65,6 +68,13 @@ function App() {
   useEffect(() => {
     getUser();
   }, []);
+
+  useEffect(() => {
+    console.log("login changed", loginState[REDUCER.SIGNEDIN]);
+    if (loginState[REDUCER.SIGNEDIN] == "true") {
+      getUser();
+    }
+  }, [loginState]);
 
   return (
     <div className="App">
