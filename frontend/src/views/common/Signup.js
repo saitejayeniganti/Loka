@@ -11,6 +11,7 @@ function Signup(userDetails) {
   const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  // const [redirectHome, setRedirectHome] = useState(false);
 
   const navigate = useNavigate();
   const user = userDetails.user;
@@ -73,12 +74,17 @@ function Signup(userDetails) {
         ...prev,
         firstName: user ? user.firstName : defaultFilledData.firstName,
         lastName: user ? user.lastName : defaultFilledData.lastName,
-        email: user ? user.emails[0].value : defaultFilledData.email,
+        email:
+          user && user.emails ? user.emails[0].value : defaultFilledData.email,
         externalId: user ? user.id : defaultFilledData.externalId,
         provider: user ? user.provider : defaultFilledData.provider,
       };
     });
   }, [userDetails.user]);
+
+  // useEffect(() => {
+  //   setRedirectHome(true);
+  // }, [userDetails.isLoggedIn]);
 
   const eventHandler = (e) => {
     setFilledData({ ...filledData, [e.target.name]: e.target.value });
@@ -98,7 +104,8 @@ function Signup(userDetails) {
   };
 
   if (userDetails.isLoggedIn) {
-    <Navigate to={"/"} />;
+    // console.log("redirect");
+    return <Navigate to={"/"} />;
   }
 
   return (

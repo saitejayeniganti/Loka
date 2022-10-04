@@ -48,6 +48,7 @@ function App() {
             });
           }
         } else {
+          console.log("logged in - ", response.user);
           setUser(response.user);
           setIsLoggedIn(true);
         }

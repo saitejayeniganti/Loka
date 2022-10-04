@@ -33,22 +33,52 @@ router.get("/gSignup", passport.authenticate("gSignup", ["profile", "email"]));
 //   })
 // );
 
+const getUserData = (userInfo) => {
+  const {
+    provider,
+    email,
+    firstName,
+    lastName,
+    role,
+    latitude,
+    longitude,
+    location,
+  } = userInfo;
+  const user = {
+    provider,
+    email,
+    firstName,
+    lastName,
+    role,
+    latitude,
+    longitude,
+    location,
+  };
+  if (userInfo.role == 1) {
+    user.storeName = userInfo.storeName;
+  }
+  user.temp = 0;
+  return user;
+};
+
 router.get("/gLogin/callback", (req, res, next) =>
   passport.authenticate("gLogin", (err, user, info) => {
     if (err) return next(err);
     if (!user) return res.redirect("/login/failed");
     UserModel.findOne({ email: user.emails[0].value })
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         if (!result) {
           user.temp = 1;
-          user.role = result.role;
+          // user.role = result.role;
           req.logIn(user, (err) => {
+            // console.log("inside User");
             if (err) return next(err);
             return res.redirect(process.env.REACT_SIGNUP);
           });
         } else {
-          req.logIn(user, (err) => {
+          const userData = getUserData(result);
+          req.logIn(userData, (err) => {
             if (err) return next(err);
             return res.redirect(process.env.REACT_URL);
           });
@@ -156,15 +186,8 @@ router.post("/signup", (req, res) => {
 });
 
 const setSession = (req, res, userInfo) => {
-  const { provider, email, firstName, lastName, role } = userInfo;
-  const user = {
-    provider,
-    email,
-    firstName,
-    lastName,
-    role,
-  };
   // var user = newDataObj;
+  const user = getUserData(userInfo);
   req.logIn(user, function (error) {
     if (!error) {
       console.log("succcessfully updated user session");

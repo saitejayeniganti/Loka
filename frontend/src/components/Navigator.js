@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 function MenuAppBar(props) {
+  console.log("props - ", props);
   const navigate = useNavigate();
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -52,6 +53,7 @@ function MenuAppBar(props) {
 
   const handleLogin = () => {
     navigate("/login");
+    setAnchorEl(null);
   };
 
   const [showError, setShowError] = useState(false);

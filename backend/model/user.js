@@ -62,7 +62,7 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  location: { type: String, trim: true },
+  address: { type: String, trim: true },
   latitude: { type: Number, trim: true },
   longitude: { type: Number, trim: true },
 });
