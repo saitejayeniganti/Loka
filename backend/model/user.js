@@ -52,7 +52,7 @@ const UserSchema = new Schema({
   },
   role: {
     type: Number,
-    default: 0,
+    default: 0, //0: customer, 1: merchant, 2: admin
     trim: true,
   },
   resetPasswordToken: { type: String },
