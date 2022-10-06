@@ -27,6 +27,7 @@ import RouteMap from "./views/routeMap";
 import MerchantLogin from "./views/merchant/merchantLogin";
 import { useSelector } from "react-redux";
 import { REDUCER } from "./utils/consts";
+import CustomerSignup from "./views/customer/customerSignup";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -99,6 +100,7 @@ function App() {
           <Route path="/home" exact element={<Home />}></Route>
 
           <Route path="/customerhome" exact element={<CustomerHome />}></Route>
+          <Route path="/customersignup" exact element={<CustomerSignup />}></Route>
           <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
           <Route
             path="/merchantlogin"

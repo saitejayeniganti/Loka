@@ -11,15 +11,15 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import { showError, showMessage } from "../../reducers/errorActions";
 import Grid from "@mui/material/Grid";
 import Lottie from "react-lottie";
-import merchant from "../../animations/merchantLogin1.json";
-import yourStore from "../../animations/yourStore.json";
+import yourStore from "../../animations/customerLogin1.json";
+import merchant from "../../animations/customerLogin.json";
 import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
 import PhoneIcon from '@mui/icons-material/Phone';
 import KeyIcon from '@mui/icons-material/Key';
 import HomeIcon from '@mui/icons-material/Home';
 import Paper from "@mui/material/Paper";
 
-function Signup(userDetails) {
+function CustomerSignup(userDetails) {
   const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
@@ -181,17 +181,8 @@ function Signup(userDetails) {
     <>
       <Grid container sx={{ height: "100%", position: "absolute" }}>
 
-        <Grid item xs={4} sx={{ background:"linear-gradient(35deg, #F9EA8F 40%, #AFF1DA 70%)" }}>
-          <div style={{fontSize: "80px",fontFamily: "math",marginTop:"20px"}}>
-            Vendor <br/> Sign Up
-          </div>
-          <Lottie options={defaultOptions}  height={420} width={420} />
-
-           <div style={{fontSize: "20px",fontFamily: "math",marginTop:"20px",padding:"20px"}}>
-            To become a known vendor in the neighborhood, sign up on to the LOKA platform.
-          </div>
-        </Grid>
-        <Grid item xs={8} sx={{ background:"rgb(243, 233, 100)", padding:"20px" }}>
+       
+        <Grid item xs={8} sx={{ background:"linear-gradient(35deg, #F9EA8F 40%, #AFF1DA 70%)", padding:"20px" }}>
       <Grid container sx={{ height: "100%" }}>
         <Grid item xs={2.5} >
 
@@ -385,7 +376,7 @@ function Signup(userDetails) {
                   </Button>
                   </div>
                     <div style={{ fontSize: "smaller" ,marginBottom:"20px"}}>
-                Already a registered Vendor ?{" "}
+                Already a registered Customer ?{" "}
                 <u className="linkHighlight">SignIn </u>
               </div>
               </div>
@@ -393,10 +384,20 @@ function Signup(userDetails) {
       </Grid>
       </Grid>
         </Grid>
+         <Grid item xs={4} sx={{ background:"#FFFB7D" }}>
+          <div style={{fontSize: "80px",fontFamily: "math",marginTop:"20px"}}>
+            Sign Up <br/>as a<br/>Customer
+          </div>
+          <Lottie options={defaultOptions}  height={420} width={420} />
+
+           <div style={{fontSize: "20px",fontFamily: "math",marginTop:"20px",padding:"20px"}}>
+            Sign up as a customer to search and explore the products in your neighbourhood markets.
+          </div>
+        </Grid>
       </Grid>
 
     </>
   )
 }
 
-export default Signup;
+export default CustomerSignup;

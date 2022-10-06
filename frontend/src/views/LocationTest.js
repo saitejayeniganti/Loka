@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import LocationSearchInput from "./LocationAuto";
+import LocationSearchInput from "../components/LocationAuto";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,

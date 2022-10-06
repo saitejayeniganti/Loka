@@ -12,12 +12,10 @@ import Paper from "@mui/material/Paper";
 import Lottie from "react-lottie";
 import loginAnimation from "../../animations/login.json";
 import shop from "../../images/merchant/shop.png";
-import shopAnimation from "../../animations/shop.json";
-import merchant1 from "../../animations/m1.json";
-import merchant2 from "../../animations/m2.json";
+import shopAnimation from "../../animations/shop1.json";
+import merchant1 from "../../animations/loginmap.json";
 import merchant3 from "../../animations/m3.json";
-import merchant4 from "../../animations/m4.json";
-import merchant5 from "../../animations/m5.json";
+
 
 
 
@@ -30,7 +28,7 @@ import { showMessage } from "../../reducers/actions.js";
 function MerchantLogin(userDetails) {
 
  const defaultOptions = {
-    loop: false,
+    loop: true,
     autoplay: true,
     animationData: merchant1,
     rendererSettings: {
@@ -41,39 +39,11 @@ function MerchantLogin(userDetails) {
   const defaultOptions1 = {
     loop: true,
     autoplay: true,
-    animationData: merchant2,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-};
-
- const defaultOptions2 = {
-    loop: false,
-    autoplay: true,
     animationData: merchant3,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
-  };
-
-  const defaultOptions3 = {
-    loop: false,
-    autoplay: true,
-    animationData: merchant4,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
-
-
-  const defaultOptions4 = {
-    loop: false,
-    autoplay: true,
-    animationData: merchant5,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
+};
 
     const defaultOptions5 = {
     loop: false,
@@ -85,60 +55,15 @@ function MerchantLogin(userDetails) {
   };
 
 const [lottieToggle, setLottieToggle] = useState(true);
-const [lottieToggle1, setLottieToggle1] = useState(false);
-const [lottieToggle2, setLottieToggle2] = useState(false);
-const [lottieToggle3, setLottieToggle3] = useState(false);
-const [lottieToggle4, setLottieToggle4] = useState(false);
-
-const arr=[lottieToggle,lottieToggle1,lottieToggle2,lottieToggle3,lottieToggle4]
 
 
 useEffect(() => {
 
   const intervalID = setInterval(() => {
 
-    if(lottieToggle)
-    {
-        setLottieToggle(false);
-        setLottieToggle1(true);
-        setLottieToggle2(false);
-        setLottieToggle3(false);
-        setLottieToggle4(false);
-    }
-    
-    if(lottieToggle1)
-    {
-        setLottieToggle(false);
-        setLottieToggle1(false);
-        setLottieToggle2(true);
-        setLottieToggle3(false);
-        setLottieToggle4(false);
-    }
+    setLottieToggle(lottieToggle=>!lottieToggle)
 
-    if(lottieToggle2)
-    {
-        setLottieToggle(false);
-        setLottieToggle1(false);
-        setLottieToggle2(false);
-        setLottieToggle3(true);
-        setLottieToggle4(false);
-    }
-    if(lottieToggle3)
-    {
-        setLottieToggle(false);
-        setLottieToggle1(false);
-        setLottieToggle2(false);
-        setLottieToggle3(false);
-        setLottieToggle4(true);
-    }
-     if(lottieToggle4)
-    {
-        setLottieToggle(true);
-        setLottieToggle1(false);
-        setLottieToggle2(false);
-        setLottieToggle3(false);
-        setLottieToggle4(false);
-    }
+    
 
   }, 3000);
   return () => clearInterval(intervalID);
@@ -187,8 +112,8 @@ useEffect(() => {
 return(
     <>
             <Grid container sx={{ height: "100%", position: "absolute" }}>
-        <Grid item xs={6} sx={{ backgroundColor: "rgb(207, 111, 105)" }}></Grid>
         <Grid item xs={6} sx={{ backgroundColor: "white" }}></Grid>
+        <Grid item xs={6} sx={{ backgroundColor: "rgb(243, 233, 100)" }}></Grid>
       </Grid>
       <div
         style={{
@@ -199,14 +124,17 @@ return(
         }}
       >
         <Grid container spacing={30}>
-          <Grid item xs={4} >
+          <Grid item xs={4}  style={{marginTop:"130px"}}>
+            {lottieToggle?<Lottie options={defaultOptions}  height={420} width={420} />:
+            <Lottie options={defaultOptions1}  height={420} width={420} />
             
-            <Lottie options={defaultOptions5} height={700} width={700} />
+            }
+            
           </Grid>
           <Grid item xs={4}>
             <Paper elevation={3} sx={{ padding: "25px", borderRadius: "12px" }}>
               <div style={{ margin: "10px" }}>
-                <img src={shop} width="350" height="350"></img>
+                <img src={shop} style={{ maxWidth:"350px", maxHeight:"350px"}}></img>
                 <div className="appHeadings">Login as a Vendor into LOKA</div>
                 <div style={{ marginTop: "20px" }}>
                   <Button
@@ -299,12 +227,12 @@ return(
               </div>
             </Paper>
           </Grid>
-          <Grid item xs={4} style={{marginTop:"130px"}}>
-            {lottieToggle?<Lottie options={defaultOptions}  height={420} width={420} />:<></>}
-            {lottieToggle1?<Lottie options={defaultOptions1}  height={420} width={420} />:<></>}
-            {lottieToggle2?<Lottie options={defaultOptions2}  height={420} width={420} />:<></>}
-            {lottieToggle3?<Lottie options={defaultOptions3}  height={420} width={420} />:<></>}
-            {lottieToggle4?<Lottie options={defaultOptions4}  height={420} width={420} />:<></>}
+          <Grid item xs={4} style={{marginTop:"130px",marginLeft:"-100px"}}>
+           
+            
+            <Lottie options={defaultOptions5} 
+            height={500} width={500} 
+            />
             
             
           </Grid>
