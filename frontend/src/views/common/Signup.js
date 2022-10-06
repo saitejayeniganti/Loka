@@ -97,12 +97,12 @@ function Signup(userDetails) {
   const checkValidation = () => {
     let isValid = true;
     trimInputs();
-    if (!checkEmpty()) {
-      displayError("Fill valid input");
-      // showError("Fill valid input");
-      // showMessage("hello");
-      isValid = false;
-    }
+    // if (!checkEmpty()) {
+    //   displayError("Fill valid input");
+    //   // showError("Fill valid input");
+    //   // showMessage("hello");
+    //   isValid = false;
+    // }
     return isValid;
   };
 
