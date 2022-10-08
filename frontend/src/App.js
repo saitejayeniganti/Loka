@@ -25,6 +25,7 @@ import MapTest from "./views/maptest";
 
 import RouteMap from "./views/routeMap";
 import MerchantLogin from "./views/merchant/merchantLogin";
+import MerchantInventory from './views/merchant/merchantInventory'
 import { useSelector } from "react-redux";
 import { REDUCER } from "./utils/consts";
 import CustomerSignup from "./views/customer/customerSignup";
@@ -107,6 +108,7 @@ function App() {
             exact
             element={<MerchantLogin />}
           ></Route>
+          <Route path="/merchantinventory" exact element={<MerchantInventory />}></Route>
           <Route path="/adminhome" exact element={<AdminHome />}></Route>
           <Route path="/productList" exact element={<ProductList />}></Route>
           <Route path="/product" exact element={<Product />}></Route>
