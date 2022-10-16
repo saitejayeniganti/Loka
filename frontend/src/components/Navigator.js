@@ -21,6 +21,7 @@ import { REDUCER } from "../utils/consts";
 import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
+import SearchGMaps from "./SearchGMaps";
 
 function MenuAppBar(props) {
   // console.log("props - ", props);
@@ -105,6 +106,7 @@ function MenuAppBar(props) {
           <Typography variant="h5" component="div">
             LOKA
           </Typography>
+          <SearchGMaps></SearchGMaps>
           {/* {props.user && (
             <Typography variant="h5" component="div">
               {props.user.firstName}
@@ -116,6 +118,7 @@ function MenuAppBar(props) {
               display: "flex",
               alignItems: "center",
               justifyItems: "right",
+              marginLeft: "auto",
             }}
           >
             {auth && (
@@ -156,11 +159,13 @@ function MenuAppBar(props) {
                 </Menu>
               </div>
             )}
-            <Badge badgeContent={props.items?.length} color="primary">
-              <ShoppingCartOutlinedIcon selfalign="right">
-                Cart
-              </ShoppingCartOutlinedIcon>
-            </Badge>
+            {props.isLoggedIn && (
+              <Badge badgeContent={props.items?.length} color="primary">
+                <ShoppingCartOutlinedIcon selfalign="right">
+                  Cart
+                </ShoppingCartOutlinedIcon>
+              </Badge>
+            )}
           </Box>
         </Toolbar>
       </AppBar>

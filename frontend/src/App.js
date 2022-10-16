@@ -94,7 +94,11 @@ function App() {
             path="/login"
             exact
             element={
-              user ? <Navigate to="/" /> : <Login isLoggedIn={isLoggedIn} />
+              isLoggedIn ? (
+                <Navigate to="/" />
+              ) : (
+                <Login isLoggedIn={isLoggedIn} />
+              )
             }
           ></Route>
 
