@@ -186,14 +186,13 @@ router.post("/signup", (req, res) => {
 });
 
 const setSession = (req, res, userInfo) => {
-  // var user = newDataObj;
   const user = getUserData(userInfo);
   req.logIn(user, function (error) {
     if (!error) {
       console.log("succcessfully updated user session");
     }
   });
-  res.end();
+  res.send(user);
 };
 
 // if gauth and login as email send message.

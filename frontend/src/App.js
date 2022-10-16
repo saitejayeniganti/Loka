@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -25,7 +26,7 @@ import MapTest from "./views/maptest";
 
 import RouteMap from "./views/routeMap";
 import MerchantLogin from "./views/merchant/merchantLogin";
-import MerchantInventory from './views/merchant/merchantInventory'
+import MerchantInventory from "./views/merchant/merchantInventory";
 import { useSelector } from "react-redux";
 import { REDUCER } from "./utils/consts";
 import CustomerSignup from "./views/customer/customerSignup";
@@ -83,7 +84,11 @@ function App() {
       <Router>
         <Navigator isLoggedIn={isLoggedIn} user={user} />
         <Routes>
-          <Route path="/" exact element={<Home />}></Route>
+          <Route
+            path="/"
+            exact
+            element={<Home user={user} isLoggedIn={isLoggedIn} />}
+          ></Route>
 
           <Route
             path="/login"
@@ -98,17 +103,29 @@ function App() {
             exact
             element={<Signup user={user} isLoggedIn={isLoggedIn} />}
           ></Route>
-          <Route path="/home" exact element={<Home />}></Route>
+          <Route
+            path="/home"
+            exact
+            element={<Home user={user} isLoggedIn={isLoggedIn} />}
+          ></Route>
 
           <Route path="/customerhome" exact element={<CustomerHome />}></Route>
-          <Route path="/customersignup" exact element={<CustomerSignup />}></Route>
+          <Route
+            path="/customersignup"
+            exact
+            element={<CustomerSignup />}
+          ></Route>
           <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
           <Route
             path="/merchantlogin"
             exact
             element={<MerchantLogin />}
           ></Route>
-          <Route path="/merchantinventory" exact element={<MerchantInventory />}></Route>
+          <Route
+            path="/merchantinventory"
+            exact
+            element={<MerchantInventory />}
+          ></Route>
           <Route path="/adminhome" exact element={<AdminHome />}></Route>
           <Route path="/productList" exact element={<ProductList />}></Route>
           <Route path="/product" exact element={<Product />}></Route>

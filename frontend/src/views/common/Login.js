@@ -55,6 +55,7 @@ function Login(userDetails) {
     post("/auth/login", filledData)
       .then((result) => {
         // showMessage("Login Success");
+        console.log(result);
         doSignIn("true");
         navigate("/");
       })
@@ -82,7 +83,7 @@ function Login(userDetails) {
   }, [userDetails.user]);
 
   if (userDetails.isLoggedIn || isLoggedIn) {
-    <Navigate to={"/"} />;
+    return <Navigate to={"/"} />;
   }
 
   return (
