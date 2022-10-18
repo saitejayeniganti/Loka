@@ -22,6 +22,7 @@ import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import SearchGMaps from "./SearchGMaps";
+import SearchMain from "./SearchMain";
 
 function MenuAppBar(props) {
   // console.log("props - ", props);
@@ -107,6 +108,7 @@ function MenuAppBar(props) {
             LOKA
           </Typography>
           <SearchGMaps></SearchGMaps>
+          <SearchMain></SearchMain>
           {/* {props.user && (
             <Typography variant="h5" component="div">
               {props.user.firstName}

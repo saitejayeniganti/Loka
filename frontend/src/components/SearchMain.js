@@ -10,52 +10,26 @@ import throttle from "lodash/throttle";
 
 // This key was created specifically for the demo in mui.com.
 // You need to create a new one for your application.
-const GOOGLE_MAPS_API_KEY = "";
-
-function loadScript(src, position, id) {
-  if (!position) {
-    return;
-  }
-  const script = document.createElement("script");
-  script.setAttribute("async", "");
-  script.setAttribute("id", id);
-  script.src = src;
-  //   position.appendChild(script);
-}
+// const GOOGLE_MAPS_API_KEY = "AIzaSyC31s3f0dTY2VDdmPnA1xzEwjI-xA91f28";
 
 const autocompleteService = { current: null };
 
-export default function SearchGMaps() {
+export default function SearchMain() {
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState([]);
-  const loaded = React.useRef(false);
-
-  if (typeof window !== "undefined" && !loaded.current) {
-    if (!document.querySelector("#google-maps")) {
-      loadScript(
-        `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`,
-        document.querySelector("head"),
-        "google-maps"
-      );
-    }
-    loaded.current = true;
-  }
 
   const fetch = React.useMemo(
     () =>
       throttle((request, callback) => {
         autocompleteService.current.getPlacePredictions(request, callback);
-        // server call.
       }, 200),
     []
   );
 
-  // called when input is changing
   React.useEffect(() => {
     let active = true;
 
-    // can comment for other impls
     if (!autocompleteService.current && window.google) {
       autocompleteService.current =
         new window.google.maps.places.AutocompleteService();
@@ -70,6 +44,7 @@ export default function SearchGMaps() {
     }
 
     fetch({ input: inputValue }, (results) => {
+      // console.log("value", value);
       if (active) {
         let newOptions = [];
 
@@ -78,7 +53,6 @@ export default function SearchGMaps() {
         }
 
         if (results) {
-          console.log("results", results);
           newOptions = [...newOptions, ...results];
         }
 
@@ -111,7 +85,6 @@ export default function SearchGMaps() {
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
-        console.log("typing");
       }}
       renderInput={(params) => (
         <TextField {...params} label="Select location" fullWidth />
