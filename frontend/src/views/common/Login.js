@@ -196,7 +196,15 @@ function Login(userDetails) {
               </div>
               <div style={{ fontSize: "smaller" }}>
                 Not an existing customer ?{" "}
-                <u className="linkHighlight">SignUp </u>
+                <u
+                  style={{ cursor: "pointer" }}
+                  className="linkHighlight"
+                  onClick={() => {
+                    navigate("/signup");
+                  }}
+                >
+                  SignUp{" "}
+                </u>
               </div>
             </Paper>
           </Grid>

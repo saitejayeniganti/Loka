@@ -13,10 +13,10 @@ import Grid from "@mui/material/Grid";
 import Lottie from "react-lottie";
 import merchant from "../../animations/merchantLogin1.json";
 import yourStore from "../../animations/yourStore.json";
-import LocalPostOfficeIcon from '@mui/icons-material/LocalPostOffice';
-import PhoneIcon from '@mui/icons-material/Phone';
-import KeyIcon from '@mui/icons-material/Key';
-import HomeIcon from '@mui/icons-material/Home';
+import LocalPostOfficeIcon from "@mui/icons-material/LocalPostOffice";
+import PhoneIcon from "@mui/icons-material/Phone";
+import KeyIcon from "@mui/icons-material/Key";
+import HomeIcon from "@mui/icons-material/Home";
 import Paper from "@mui/material/Paper";
 
 function Signup(userDetails) {
@@ -25,8 +25,7 @@ function Signup(userDetails) {
   const [longitude, setLongitude] = useState("");
   // const [redirectHome, setRedirectHome] = useState(false);
 
-
-   const defaultOptions = {
+  const defaultOptions = {
     loop: false,
     autoplay: true,
     animationData: merchant,
@@ -180,223 +179,251 @@ function Signup(userDetails) {
   return (
     <>
       <Grid container sx={{ height: "100%", position: "absolute" }}>
-
-        <Grid item xs={4} sx={{ background:"linear-gradient(35deg, #F9EA8F 40%, #AFF1DA 70%)" }}>
-          <div style={{fontSize: "80px",fontFamily: "math",marginTop:"20px"}}>
-            Vendor <br/> Sign Up
+        <Grid
+          item
+          xs={4}
+          sx={{
+            background: "linear-gradient(35deg, #F9EA8F 40%, #AFF1DA 70%)",
+          }}
+        >
+          <div
+            style={{ fontSize: "80px", fontFamily: "math", marginTop: "20px" }}
+          >
+            Vendor <br /> Sign Up
           </div>
-          <Lottie options={defaultOptions}  height={420} width={420} />
+          <Lottie options={defaultOptions} height={420} width={420} />
 
-           <div style={{fontSize: "20px",fontFamily: "math",marginTop:"20px",padding:"20px"}}>
-            To become a known vendor in the neighborhood, sign up on to the LOKA platform.
+          <div
+            style={{
+              fontSize: "20px",
+              fontFamily: "math",
+              marginTop: "20px",
+              padding: "20px",
+            }}
+          >
+            To become a known vendor in the neighborhood, sign up on to the LOKA
+            platform.
           </div>
         </Grid>
-        <Grid item xs={8} sx={{ background:"rgb(243, 233, 100)", padding:"20px" }}>
-      <Grid container sx={{ height: "100%" }}>
-        <Grid item xs={2.5} >
-
-        </Grid>
-        <Grid item xs={7} >
-        <Paper elevation={10} sx={{  borderRadius: "10px"}}>
-      <div style={{background:"#84bbf4",borderTopLeftRadius: "10px",borderTopRightRadius:"10px"}}>
-      <Lottie options={defaultOptions1}  height={350} width={350} />
-      </div>
-      <div style={{ padding: "10px",overflowY:"scroll",position:"relative",height: "450px" }}>
-        <div style={{margin:"20px"}}>
-       <Button
-                    variant="outlined"
-                    onClick={gSignup}
-                    sx={{ width: "100%" }}
-                    startIcon={
-                      <svg
-                        width="32"
-                        height="32"
-                        viewBox="0 0 32 32"
-                        fill="#FFFFFF"
-                        xmlns="http://www.w3.org/2000/svg"
-                        color="systemGrayscale00"
-                        size="32"
-                        className="css-bao86z"
-                      >
-                        <path
-                          d="M28.667 16.292c0-.861-.071-1.727-.223-2.574H16.255v4.878h6.98a5.857 5.857 0 01-2.583 3.849v3.165h4.164c2.445-2.206 3.85-5.464 3.85-9.318z"
-                          fill="#4285F4"
-                        ></path>
-                        <path
-                          d="M16.255 28.668c3.485 0 6.424-1.122 8.566-3.058l-4.164-3.165c-1.159.772-2.654 1.21-4.397 1.21-3.371 0-6.23-2.23-7.255-5.227H4.708v3.263c2.194 4.277 6.662 6.977 11.547 6.977z"
-                          fill="#34A853"
-                        ></path>
-                        <path
-                          d="M9 18.428a7.445 7.445 0 010-4.85v-3.263H4.708a12.454 12.454 0 000 11.376L9 18.428z"
-                          fill="#FBBC04"
-                        ></path>
-                        <path
-                          d="M16.255 8.347a7.1 7.1 0 014.957 1.899l3.69-3.617a12.558 12.558 0 00-8.647-3.295c-4.885 0-9.353 2.7-11.547 6.982L9 13.578c1.021-3.002 3.884-5.231 7.255-5.231z"
-                          fill="#EA4335"
-                        ></path>
-                      </svg>
-                    }
-                  >
-                    Continue with Google
-       </Button>
-</div>
-<div style={{margin:"20px"}}>
-       <TextField
-                    fullWidth
-                    id="outlined-size-small"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <AccountCircle />
-                        </InputAdornment>
-                      ),
-                    }}
-                    value={filledData.firstName}
-                    placeholder="First Name"
-                    size="small"
-                    name="firstName"
-                    onChange={eventHandler}
-                  />
-</div>
-<div style={{margin:"20px"}}>
-                  <TextField
-                    fullWidth
-                    id="outlined-size-small"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <AccountCircle />
-                        </InputAdornment>
-                      ),
-                    }}
-                    value={filledData.lastName}
-                    placeholder="Last Name"
-                    size="small"
-                    name="lastName"
-                    onChange={eventHandler}
-                  />
+        <Grid
+          item
+          xs={8}
+          sx={{ background: "rgb(243, 233, 100)", padding: "20px" }}
+        >
+          <Grid container sx={{ height: "100%" }}>
+            <Grid item xs={2.5}></Grid>
+            <Grid item xs={7}>
+              <Paper elevation={10} sx={{ borderRadius: "10px" }}>
+                <div
+                  style={{
+                    background: "#84bbf4",
+                    borderTopLeftRadius: "10px",
+                    borderTopRightRadius: "10px",
+                  }}
+                >
+                  <Lottie options={defaultOptions1} height={350} width={350} />
+                </div>
+                <div
+                  style={{
+                    padding: "10px",
+                    overflowY: "scroll",
+                    position: "relative",
+                    height: "450px",
+                  }}
+                >
+                  <div style={{ margin: "20px" }}>
+                    <Button
+                      variant="outlined"
+                      onClick={gSignup}
+                      sx={{ width: "100%" }}
+                      startIcon={
+                        <svg
+                          width="32"
+                          height="32"
+                          viewBox="0 0 32 32"
+                          fill="#FFFFFF"
+                          xmlns="http://www.w3.org/2000/svg"
+                          color="systemGrayscale00"
+                          size="32"
+                          className="css-bao86z"
+                        >
+                          <path
+                            d="M28.667 16.292c0-.861-.071-1.727-.223-2.574H16.255v4.878h6.98a5.857 5.857 0 01-2.583 3.849v3.165h4.164c2.445-2.206 3.85-5.464 3.85-9.318z"
+                            fill="#4285F4"
+                          ></path>
+                          <path
+                            d="M16.255 28.668c3.485 0 6.424-1.122 8.566-3.058l-4.164-3.165c-1.159.772-2.654 1.21-4.397 1.21-3.371 0-6.23-2.23-7.255-5.227H4.708v3.263c2.194 4.277 6.662 6.977 11.547 6.977z"
+                            fill="#34A853"
+                          ></path>
+                          <path
+                            d="M9 18.428a7.445 7.445 0 010-4.85v-3.263H4.708a12.454 12.454 0 000 11.376L9 18.428z"
+                            fill="#FBBC04"
+                          ></path>
+                          <path
+                            d="M16.255 8.347a7.1 7.1 0 014.957 1.899l3.69-3.617a12.558 12.558 0 00-8.647-3.295c-4.885 0-9.353 2.7-11.547 6.982L9 13.578c1.021-3.002 3.884-5.231 7.255-5.231z"
+                            fill="#EA4335"
+                          ></path>
+                        </svg>
+                      }
+                    >
+                      Continue with Google
+                    </Button>
+                  </div>
+                  <div style={{ margin: "20px" }}>
+                    <TextField
+                      fullWidth
+                      id="outlined-size-small"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <AccountCircle />
+                          </InputAdornment>
+                        ),
+                      }}
+                      value={filledData.firstName}
+                      placeholder="First Name"
+                      size="small"
+                      name="firstName"
+                      onChange={eventHandler}
+                    />
+                  </div>
+                  <div style={{ margin: "20px" }}>
+                    <TextField
+                      fullWidth
+                      id="outlined-size-small"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <AccountCircle />
+                          </InputAdornment>
+                        ),
+                      }}
+                      value={filledData.lastName}
+                      placeholder="Last Name"
+                      size="small"
+                      name="lastName"
+                      onChange={eventHandler}
+                    />
                   </div>
 
-                  
-<div style={{margin:"20px"}}>
-             <TextField
-                    fullWidth
-                    id="outlined-size-small"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <LocalPostOfficeIcon/>
-                        </InputAdornment>
-                      ),
-                    }}
-                    value={filledData.email}
-                    placeholder="Email"
-                    size="small"
-                    name="email"
-                    onChange={eventHandler}
-                  />
-     </div>
-<div style={{margin:"20px"}}>
-       <TextField
-                    fullWidth
-                    id="outlined-size-small"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <PhoneIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    value={filledData.phone}
-                    placeholder="Phone"
-                    size="small"
-                    name="phone"
-                    onChange={eventHandler}
-                  />
-     
-</div>
-<div style={{margin:"20px"}}>
-      {filledData.provider === "email" && (
-       
-
-         <TextField
-                    fullWidth
-                    id="outlined-size-small"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <KeyIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    value={filledData.password}
-                    disabled={externalSignup}
-                    placeholder="Password"
-                    size="small"
-                    name="password"
-                    onChange={eventHandler}
-                  />
-
-
-      )}
-</div>
-<div style={{margin:"20px"}}>
-      <Select
-        labelId="demo-simple-select-label"
-        id="demo-simple-select"
-        value={filledData.role}
-        label="Account Role"
-        onChange={eventHandler}
-        name="role"
-      >
-        <MenuItem value={0}>Customer</MenuItem>
-        <MenuItem value={1}>Vendor</MenuItem>
-        {/* <MenuItem value={2}>Admin</MenuItem> */}
-      </Select>
-
-</div>
-<div style={{margin:"20px"}}>
-      {filledData.role == 1 && (
-        <TextField
-          id="signup-name"
-          label="Store Name"
-          name="storeName"
-          value={filledData.storeName}
-          onChange={eventHandler}
-        />
-      )}
-</div>
-<div style={{margin:"20px"}}>
-      <LocationSearchInput
-        handleChange={handleChange}
-        handleSelect={handleSelect}
-        address={filledData.address}
-      />
-
-     
-</div>
-<div style={{margin:"20px"}}>
-       <Button
-                    variant="contained"
-                    sx={{ width: "100%" }}
-                    onClick={signup}
-                  >
-                    SignUp
-                  </Button>
+                  <div style={{ margin: "20px" }}>
+                    <TextField
+                      fullWidth
+                      id="outlined-size-small"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <LocalPostOfficeIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      value={filledData.email}
+                      placeholder="Email"
+                      size="small"
+                      name="email"
+                      onChange={eventHandler}
+                    />
                   </div>
-                    <div style={{ fontSize: "smaller" ,marginBottom:"20px"}}>
-                Already a registered Vendor ?{" "}
-                <u className="linkHighlight">SignIn </u>
-              </div>
-              </div>
+                  <div style={{ margin: "20px" }}>
+                    <TextField
+                      fullWidth
+                      id="outlined-size-small"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <PhoneIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      value={filledData.phone}
+                      placeholder="Phone"
+                      size="small"
+                      name="phone"
+                      onChange={eventHandler}
+                    />
+                  </div>
+                  <div style={{ margin: "20px" }}>
+                    {filledData.provider === "email" && (
+                      <TextField
+                        fullWidth
+                        id="outlined-size-small"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <KeyIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                        value={filledData.password}
+                        disabled={externalSignup}
+                        placeholder="Password"
+                        size="small"
+                        name="password"
+                        onChange={eventHandler}
+                      />
+                    )}
+                  </div>
+                  <div style={{ margin: "20px" }}>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      id="demo-simple-select"
+                      value={filledData.role}
+                      label="Account Role"
+                      onChange={eventHandler}
+                      name="role"
+                    >
+                      <MenuItem value={0}>Customer</MenuItem>
+                      <MenuItem value={1}>Vendor</MenuItem>
+                      {/* <MenuItem value={2}>Admin</MenuItem> */}
+                    </Select>
+                  </div>
+                  <div style={{ margin: "20px" }}>
+                    {filledData.role == 1 && (
+                      <TextField
+                        id="signup-name"
+                        label="Store Name"
+                        name="storeName"
+                        value={filledData.storeName}
+                        onChange={eventHandler}
+                      />
+                    )}
+                  </div>
+                  <div style={{ margin: "20px" }}>
+                    <LocationSearchInput
+                      handleChange={handleChange}
+                      handleSelect={handleSelect}
+                      address={filledData.address}
+                    />
+                  </div>
+                  <div style={{ margin: "20px" }}>
+                    <Button
+                      variant="contained"
+                      sx={{ width: "100%" }}
+                      onClick={signup}
+                    >
+                      SignUp
+                    </Button>
+                  </div>
+                  <div style={{ fontSize: "smaller", marginBottom: "20px" }}>
+                    Already a registered Vendor ?{" "}
+                    <u
+                      style={{ cursor: "pointer" }}
+                      className="linkHighlight"
+                      onClick={() => {
+                        navigate("/login");
+                      }}
+                    >
+                      SignIn{" "}
+                    </u>
+                  </div>
+                </div>
               </Paper>
-      </Grid>
-      </Grid>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
-
     </>
-  )
+  );
 }
 
 export default Signup;
