@@ -18,10 +18,10 @@ router.get("/searchMain", (req, res) => {
     },
   ])
     .then((response) => {
-      res.send(200);
+      res.sendStatus(200);
     })
     .catch((error) => {
-      res.send(200);
+      res.sendStatus(200);
     });
 });
 
