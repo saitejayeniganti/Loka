@@ -96,32 +96,42 @@ export default function SearchMain() {
       }}
       renderInput={(params) => {
         // console.log("renderInput params", params);
+        const ref = params.InputProps.ref;
+        // delete params["InputLabelProps"];
+        // delete params["InputProps"];
+        console.log("input params", params);
+
         return (
-          <Paper
-            // component="form"
-            sx={{
-              p: "2px 4px",
-              display: "flex",
-              alignItems: "center",
-              width: 400,
-            }}
-            ref={params.InputProps.ref} // ref for appending suggestions.
-          >
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="Search"
-              // inputProps={{ "aria-label": "search google maps" }}
-              {...params}
-            />
-            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
-              <SearchIcon />
-            </IconButton>
-          </Paper>
+          // <Paper
+          //   // component="form"
+          //   sx={{
+          //     p: "2px 4px",
+          //     display: "flex",
+          //     alignItems: "center",
+          //     width: 400,
+          //   }}
+          //   ref={ref} // ref for appending suggestions.
+          // >
+          //   <InputBase
+          //     sx={{ ml: 1, flex: 1 }}
+          //     placeholder="Search"
+          //     // inputProps={{ "aria-label": "search google maps" }}
+          //     {...params}
+          //   />
+          //   <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+          //     <SearchIcon />
+          //   </IconButton>
+          // </Paper>
           // <div ref={params.InputProps.ref}>
           //   <input type="text" {...params.inputProps} />
           // </div>
+          <TextField
+            {...params}
+            label="Search Products"
+            fullWidth
+            variant="filled"
+          />
         );
-        // return <TextField {...params} label="Search Products" fullWidth />;
       }}
       renderOption={(props, option) => {
         // console.log("render suggestion");
@@ -135,7 +145,7 @@ export default function SearchMain() {
         //   matches.map((match) => [match.offset, match.offset + match.length])
         // );
         // console.log(parts); // list of object. [{highlight:true/false, text:"san"}]
-        // console.log("inside render", option);
+        console.log("inside render suggestion", option);
         return (
           <li {...props}>
             <Grid container alignItems="center">
