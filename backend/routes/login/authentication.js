@@ -195,7 +195,7 @@ const setSession = (req, res, userInfo) => {
   res.send(user);
 };
 
-// if gauth and login as email send message.
+// if gauth and login as email then send message.
 router.post("/login", (req, res) => {
   // for email & password
   if (req.user) {

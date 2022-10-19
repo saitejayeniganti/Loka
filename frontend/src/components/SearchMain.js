@@ -7,36 +7,37 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
-
-// This key was created specifically for the demo in mui.com.
-// You need to create a new one for your application.
-// const GOOGLE_MAPS_API_KEY = "AIzaSyC31s3f0dTY2VDdmPnA1xzEwjI-xA91f28";
-
-const autocompleteService = { current: null };
+import { get } from "../utils/serverCall";
 
 export default function SearchMain() {
+  // its selected suggestion  value
   const [value, setValue] = React.useState(null);
+  // input value
   const [inputValue, setInputValue] = React.useState("");
+  // suggestions
   const [options, setOptions] = React.useState([]);
 
+  //useMem because it will be called only if the request changes.
   const fetch = React.useMemo(
     () =>
       throttle((request, callback) => {
-        autocompleteService.current.getPlacePredictions(request, callback);
+        //autocompleteService.current.getPlacePredictions(request, callback);
+        //backend search call here.
+        get("/search/test", request).then((result) => {
+          const res = [
+            { _id: 1, name: "apple" },
+            { _id: 2, name: "orange" },
+            { _id: 2, name: "tomato" },
+          ];
+          callback(res);
+        });
       }, 200),
     []
   );
 
+  // is triggered on input change
   React.useEffect(() => {
     let active = true;
-
-    if (!autocompleteService.current && window.google) {
-      autocompleteService.current =
-        new window.google.maps.places.AutocompleteService();
-    }
-    if (!autocompleteService.current) {
-      return undefined;
-    }
 
     if (inputValue === "") {
       setOptions(value ? [value] : []);
@@ -45,17 +46,19 @@ export default function SearchMain() {
 
     fetch({ input: inputValue }, (results) => {
       // console.log("value", value);
+      console.log("hardcoded", results);
       if (active) {
+        console.log("inside active");
         let newOptions = [];
-
+        // user picked a suggestion but still typing extra data ?
         if (value) {
           newOptions = [value];
         }
-
         if (results) {
           newOptions = [...newOptions, ...results];
         }
-
+        // set suggestions.
+        console.log("result", newOptions);
         setOptions(newOptions);
       }
     });
@@ -67,59 +70,73 @@ export default function SearchMain() {
 
   return (
     <Autocomplete
-      id="google-map-demo"
+      id="search-main"
       sx={{ width: 300 }}
-      getOptionLabel={(option) =>
-        typeof option === "string" ? option : option.description
+      getOptionLabel={
+        (option) => (typeof option === "string" ? option : option.name)
+        // Second line of the suggestion.
       }
-      filterOptions={(x) => x}
-      options={options}
+      filterOptions={(x) => x} // if need filtering
+      options={options} // suggestions
       autoComplete
       includeInputInList
       filterSelectedOptions
       value={value}
       onChange={(event, newValue) => {
+        // on selecting suggestion.
         setOptions(newValue ? [newValue, ...options] : options);
         setValue(newValue);
-        console.log(newValue);
+        // console.log(newValue);
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
+        // input trigger this event
       }}
       renderInput={(params) => (
-        <TextField {...params} label="Select location" fullWidth />
+        <TextField {...params} label="Search Products" fullWidth />
       )}
       renderOption={(props, option) => {
-        const matches =
-          option.structured_formatting.main_text_matched_substrings;
-        const parts = parse(
-          option.structured_formatting.main_text,
-          matches.map((match) => [match.offset, match.offset + match.length])
-        );
+        // matches contain offset(start) & length of text that max exactly
+        // const matches =
+        //   option.structured_formatting.main_text_matched_substrings;
 
+        // parse divides text to highlight & text.
+        // const parts = parse(
+        //   option.structured_formatting.main_text, // main text is full text in result.
+        //   matches.map((match) => [match.offset, match.offset + match.length])
+        // );
+        // console.log(parts); // list of object. [{highlight:true/false, text:"san"}]
+        console.log("inside render", option);
+        console.log("inside render", props);
         return (
           <li {...props}>
             <Grid container alignItems="center">
               <Grid item>
+                {/*  //location icon        
                 <Box
                   component={LocationOnIcon}
                   sx={{ color: "text.secondary", mr: 2 }}
-                />
+                /> */}
               </Grid>
               <Grid item xs>
-                {parts.map((part, index) => (
+                {
+                  // option.map((part, index) => (
                   <span
-                    key={index}
+                    // key={index}
                     style={{
-                      fontWeight: part.highlight ? 700 : 400,
+                      // fontWeight: part.highlight ? 700 : 400,
+                      fontWeight: 400,
                     }}
                   >
-                    {part.text}
+                    {option.name}
                   </span>
-                ))}
+                  // ))
+                }
 
                 <Typography variant="body2" color="text.secondary">
-                  {option.structured_formatting.secondary_text}
+                  Add Description
+                  {/* {option.structured_formatting.secondary_text} */}
+                  {/* // this is description text */}
                 </Typography>
               </Grid>
             </Grid>

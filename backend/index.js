@@ -18,6 +18,7 @@ const { gAuth } = require("./utils/googleAuth");
 const authrouter = require("./routes/login/authentication");
 const { jwtAuth } = require("./utils/jwtAuth");
 const MongoStore = require("connect-mongo");
+const searchRouter = require("./routes/Home/search");
 
 app.use(
   session({
@@ -85,7 +86,8 @@ async function initializeApplication() {
     // app.use("/user", auth);
     app.use("/product", productRoute);
     app.use("/review", reviewRoute);
-    app.use("/auth/", authrouter);
+    app.use("/auth", authrouter);
+    app.use("/search", searchRouter);
 
     await connection.createConnection();
     app.listen(process.env.NODE_PORT, () => {
