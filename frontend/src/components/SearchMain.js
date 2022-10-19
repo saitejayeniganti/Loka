@@ -8,6 +8,8 @@ import Typography from "@mui/material/Typography";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 import { get } from "../utils/serverCall";
+import { IconButton, InputBase, Paper } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 
 export default function SearchMain() {
   // its selected suggestion  value
@@ -46,9 +48,9 @@ export default function SearchMain() {
 
     fetch({ input: inputValue }, (results) => {
       // console.log("value", value);
-      console.log("hardcoded", results);
+      // console.log("hardcoded", results);
       if (active) {
-        console.log("inside active");
+        // console.log("inside active");
         let newOptions = [];
         // user picked a suggestion but still typing extra data ?
         if (value) {
@@ -58,7 +60,7 @@ export default function SearchMain() {
           newOptions = [...newOptions, ...results];
         }
         // set suggestions.
-        console.log("result", newOptions);
+        console.log("suggestions updated", newOptions);
         setOptions(newOptions);
       }
     });
@@ -71,7 +73,7 @@ export default function SearchMain() {
   return (
     <Autocomplete
       id="search-main"
-      sx={{ width: 300 }}
+      sx={{ width: 300, background: "white" }}
       getOptionLabel={
         (option) => (typeof option === "string" ? option : option.name)
         // Second line of the suggestion.
@@ -92,10 +94,37 @@ export default function SearchMain() {
         setInputValue(newInputValue);
         // input trigger this event
       }}
-      renderInput={(params) => (
-        <TextField {...params} label="Search Products" fullWidth />
-      )}
+      renderInput={(params) => {
+        console.log("renderInput params", params);
+        return (
+          <Paper
+            component="form"
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: 400,
+            }}
+            ref={params.InputProps.ref}
+          >
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search"
+              // inputProps={{ "aria-label": "search google maps" }}
+              {...params}
+            />
+            <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+          </Paper>
+          // <div ref={params.InputProps.ref}>
+          //   <input type="text" {...params.inputProps} />
+          // </div>
+        );
+        // return <TextField {...params} label="Search Products" fullWidth />;
+      }}
       renderOption={(props, option) => {
+        console.log("render suggestion");
         // matches contain offset(start) & length of text that max exactly
         // const matches =
         //   option.structured_formatting.main_text_matched_substrings;
@@ -107,7 +136,6 @@ export default function SearchMain() {
         // );
         // console.log(parts); // list of object. [{highlight:true/false, text:"san"}]
         console.log("inside render", option);
-        console.log("inside render", props);
         return (
           <li {...props}>
             <Grid container alignItems="center">
