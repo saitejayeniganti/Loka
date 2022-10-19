@@ -62,9 +62,21 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
-  address: { type: String, trim: true },
-  latitude: { type: Number, trim: true },
-  longitude: { type: Number, trim: true },
+  // address: { type: String, trim: true },
+  // latitude: { type: Number, trim: true },
+  // longitude: { type: Number, trim: true },
+  location: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+    address: { type: String, trim: true },
+  },
 });
 const User = Mongoose.model("User", UserSchema);
 User.syncIndexes();

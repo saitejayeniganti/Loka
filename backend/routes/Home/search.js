@@ -27,7 +27,7 @@ router.get("/searchMain", (req, res) => {
 
 router.get("/test", (req, res) => {
   //   const quer = req.params.query;
-  res.send(200);
+  res.status(200);
 });
 
 module.exports = router;

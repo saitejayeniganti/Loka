@@ -142,7 +142,17 @@ const insertMerchant = (body, res) => {
   });
 };
 
+const getLocation = (body) => {
+  const location = { type: "Point" };
+  location.coordinates = [body.latitude, body.longitude];
+  location.address = body.address;
+  return location;
+};
+
 const insertUser = (body, res) => {
+  const location = getLocation(body);
+  body.location = location;
+
   const insertUser = new UserModel(body);
   insertUser.save((err, result) => {
     if (err) {

@@ -150,13 +150,30 @@ function MenuAppBar(props) {
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
                   {!props.isLoggedIn && (
-                    <MenuItem onClick={handleLogin}>Login</MenuItem>
+                    <div>
+                      <MenuItem
+                        onClick={() => {
+                          navigate("/login");
+                          setAnchorEl(null);
+                        }}
+                      >
+                        Login
+                      </MenuItem>
+                    </div>
                   )}
                   {props.isLoggedIn && (
-                    <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    <div>
+                      <MenuItem
+                        onClick={() => {
+                          navigate("/profile");
+                          setAnchorEl(null);
+                        }}
+                      >
+                        Profile
+                      </MenuItem>
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    </div>
                   )}
                 </Menu>
               </div>
