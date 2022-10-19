@@ -162,7 +162,7 @@ export default function SearchMain() {
                 }
 
                 <Typography variant="body2" color="text.secondary">
-                  Add Description
+                  Store/Product
                   {/* {option.structured_formatting.secondary_text} */}
                   {/* // this is description text */}
                 </Typography>
