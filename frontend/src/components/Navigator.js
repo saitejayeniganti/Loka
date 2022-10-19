@@ -48,6 +48,7 @@ function MenuAppBar(props) {
   const handleLogout = () => {
     get("/auth/logout").then((res) => {
       setAnchorEl(null);
+      navigate("/home");
       // console.log("loggedOut");
       window.location.reload();
     });
