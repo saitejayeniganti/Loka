@@ -31,6 +31,10 @@ import { REDUCER } from "./utils/consts";
 import CustomerSignup from "./views/customer/customerSignup";
 import { ErrorPath, Unknown } from "./views/common/ErrorPath";
 import Profile from "./views/common/Profile";
+import PayPalTest from "./views/paypalTest";
+import AdRequest from "./views/AdRequest";
+import MerchantMap from "./views/maptest";
+import SimpleMap from "./views/maptest";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -155,7 +159,7 @@ function App() {
             <Route path="/productList" exact element={<ProductList />}></Route>
             <Route path="/product" exact element={<Product />}></Route>
             <Route path="/route" exact element={<RouteMap />}></Route>
-            <Route path="/map" exact element={<MapTest />}></Route>
+            <Route path="/map" exact element={<SimpleMap />}></Route>
             <Route path="/location" exact element={<LocationSearch />}></Route>
             <Route path="/profile" exact element={<Profile />}></Route>
             <Route path="*" element={<ErrorPath></ErrorPath>}></Route>

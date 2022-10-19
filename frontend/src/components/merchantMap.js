@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 class GoogleMap extends Component {
-
-
+constructor(props) {
+    super(props);
+  }
   render() {
 
     return(<>
@@ -15,20 +16,14 @@ class GoogleMap extends Component {
             lat: 37.3347,
             lng: -121.8753
           }}>
- 
-
-
- 
+  
       <Marker
   title="Location"
   id={1}
   name={'SOMA'}
-  position={{lat: 37.778519, lng: -122.405640}}
-  
-  
+  position={{lat: 37.3347, lng: -121.8753}}
   >
-  <InfoWindow
-    
+  <InfoWindow id="infowin"
     >
       <div >
         <p>Click on the map or drag the marker to select location where the incident occurred</p>
