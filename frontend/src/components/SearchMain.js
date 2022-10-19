@@ -60,7 +60,7 @@ export default function SearchMain() {
           newOptions = [...newOptions, ...results];
         }
         // set suggestions.
-        console.log("suggestions updated", newOptions);
+        // console.log("suggestions updated", newOptions);
         setOptions(newOptions);
       }
     });
@@ -95,17 +95,17 @@ export default function SearchMain() {
         // input trigger this event
       }}
       renderInput={(params) => {
-        console.log("renderInput params", params);
+        // console.log("renderInput params", params);
         return (
           <Paper
-            component="form"
+            // component="form"
             sx={{
               p: "2px 4px",
               display: "flex",
               alignItems: "center",
               width: 400,
             }}
-            ref={params.InputProps.ref}
+            ref={params.InputProps.ref} // ref for appending suggestions.
           >
             <InputBase
               sx={{ ml: 1, flex: 1 }}
@@ -124,7 +124,7 @@ export default function SearchMain() {
         // return <TextField {...params} label="Search Products" fullWidth />;
       }}
       renderOption={(props, option) => {
-        console.log("render suggestion");
+        // console.log("render suggestion");
         // matches contain offset(start) & length of text that max exactly
         // const matches =
         //   option.structured_formatting.main_text_matched_substrings;
@@ -135,7 +135,7 @@ export default function SearchMain() {
         //   matches.map((match) => [match.offset, match.offset + match.length])
         // );
         // console.log(parts); // list of object. [{highlight:true/false, text:"san"}]
-        console.log("inside render", option);
+        // console.log("inside render", option);
         return (
           <li {...props}>
             <Grid container alignItems="center">
