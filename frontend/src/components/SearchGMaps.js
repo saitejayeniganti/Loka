@@ -65,7 +65,7 @@ export default function SearchGMaps() {
     }
 
     if (inputValue === "") {
-      console.log("inputempty", value);
+      // console.log("inputempty", value);
       setOptions(value ? [value] : []);
       return undefined;
     }
@@ -73,14 +73,14 @@ export default function SearchGMaps() {
     fetch({ input: inputValue }, (results) => {
       if (active) {
         let newOptions = [];
-        console.log("valu", value);
+        // console.log("valu", value);
 
         if (value) {
           newOptions = [value];
         }
 
         if (results) {
-          console.log("results", results);
+          // console.log("results", results);
           newOptions = [...newOptions, ...results];
         }
 
@@ -107,14 +107,14 @@ export default function SearchGMaps() {
       filterSelectedOptions
       value={value}
       onChange={(event, newValue) => {
-        console.log("changed");
+        // console.log("changed");
         setOptions(newValue ? [newValue, ...options] : options);
         setValue(newValue);
-        console.log(newValue);
+        // console.log(newValue);
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
-        console.log("typing");
+        // console.log("typing");
       }}
       renderInput={(params) => (
         <TextField {...params} label="Select location" fullWidth />
@@ -126,7 +126,7 @@ export default function SearchGMaps() {
           option.structured_formatting.main_text,
           matches.map((match) => [match.offset, match.offset + match.length])
         );
-        console.log("matches", parts);
+        // console.log("matches", parts);
 
         return (
           <li {...props}>

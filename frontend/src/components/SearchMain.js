@@ -99,7 +99,7 @@ export default function SearchMain() {
         const ref = params.InputProps.ref;
         // delete params["InputLabelProps"];
         // delete params["InputProps"];
-        console.log("input params", params);
+        // console.log("input params", params);
 
         return (
           // <Paper
@@ -145,7 +145,7 @@ export default function SearchMain() {
         //   matches.map((match) => [match.offset, match.offset + match.length])
         // );
         // console.log(parts); // list of object. [{highlight:true/false, text:"san"}]
-        console.log("inside render suggestion", option);
+        // console.log("inside render suggestion", option);
         return (
           <li {...props}>
             <Grid container alignItems="center">
