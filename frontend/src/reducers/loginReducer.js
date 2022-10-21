@@ -2,7 +2,6 @@ import { ACTION, REDUCER } from "../utils/consts";
 
 const initialState = {
   [REDUCER.SIGNEDIN]: false,
-  // [REDUCER.ISADMIN]: false,
 };
 
 const loginReducer = (state = initialState, action) => {
@@ -12,17 +11,6 @@ const loginReducer = (state = initialState, action) => {
       return {
         ...state,
         [REDUCER.SIGNEDIN]: action.payload,
-      };
-    case ACTION.CUSTOMER_SIGIN:
-      return {
-        ...state,
-        [REDUCER.SIGNEDIN]: true,
-      };
-    case ACTION.ADMIN_SIGIN:
-      return {
-        ...state,
-        [REDUCER.SIGNEDIN]: true,
-        [REDUCER.ISADMIN]: true,
       };
     case ACTION.RESET:
       return { ...initialState };

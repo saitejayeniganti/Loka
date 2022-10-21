@@ -32,35 +32,53 @@ import Profile from "./views/common/Profile";
 import SimpleMap from "./views/maptest";
 import Progress from "./components/Progress";
 
+import { actionCreators } from "./reducers/actionCreators";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+
 function App() {
   const [user, setUser] = useState(null);
   const [loadSpinner, setLoadSpinner] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const loginState = useSelector((state) => state.loginReducer);
-  // const location = useLocation();
-  // location.pathname;
+
+  const dispatch = useDispatch();
+  const { setSession, clearSession } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
+
+  const updateSessionState = (user, isLoggedIn) => {
+    setUser(user);
+    setIsLoggedIn(isLoggedIn);
+    setSession({ user, isLoggedIn });
+  };
 
   const getUser = async () => {
     setLoadSpinner(true);
     get("/auth/loggedUser")
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.user && response.user.temp === 1) {
-          console.log(window.location.pathname);
+          // console.log(window.location.pathname);
           if (window.location.pathname.includes("/signup")) {
-            setUser(response.user);
+            // setUser(response.user);
+            updateSessionState(response.user, false);
           } else {
             // delete cookie
             get("/auth/reset").then(() => {
-              setUser(null);
+              // setUser(null);
+              updateSessionState(null, false);
               // cookies.remove("Token");
             });
           }
         } else {
-          console.log("logged in - ", response.user);
-          setUser(response.user);
-          setIsLoggedIn(true);
+          // console.log("logged in - ", response.user);
+          updateSessionState(response.user, true);
+          // setUser(response.user);
+          // setIsLoggedIn(true);
         }
+        // setSession({ user, isLoggedIn });
         setLoadSpinner(false);
         //store in local storage ?
         //store in redux
@@ -68,10 +86,16 @@ function App() {
         //setUser()
       })
       .catch((error) => {
+        // setSession({ user, isLoggedIn });
         setLoadSpinner(false);
+
         // console.log(error);
       });
   };
+
+  // useEffect(() => {
+  //   setSession({ user, isLoggedIn });
+  // }, [user, isLoggedIn]);
 
   useEffect(() => {
     getUser();

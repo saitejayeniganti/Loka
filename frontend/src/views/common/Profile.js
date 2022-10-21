@@ -18,8 +18,11 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import KeyIcon from "@mui/icons-material/Key";
 import HomeIcon from "@mui/icons-material/Home";
 import Paper from "@mui/material/Paper";
+import { useSelector } from "react-redux";
 
-function Signup(userDetails) {
+function Profile(userDetails) {
+  const sessionState = useSelector((state) => state.sessionReducer);
+
   const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
@@ -113,7 +116,6 @@ function Signup(userDetails) {
       });
       getLatLng(results[0])
         .then((latLng) => {
-          console.log("Success", latLng);
           setFilledData((prev) => {
             return { ...prev, latitude: latLng.lat, longitude: latLng.lng };
           });
@@ -140,13 +142,29 @@ function Signup(userDetails) {
           ...prev,
           firstName: user.firstName,
           lastName: user.lastName,
-          email: user.emails ? user.emails[0].value : defaultFilledData.email,
-          externalId: user.id,
+          email: user.email,
           provider: user.provider,
         };
       });
     }
   }, [userDetails.user]);
+
+  useEffect(() => {
+    if (sessionState.isLoggedIn) {
+      const userInfo = sessionState.user;
+      setFilledData({
+        ...filledData,
+        firstName: userInfo.firstName,
+        lastName: userInfo.lastName,
+        email: userInfo.email,
+        provider: userInfo.provider,
+        role: userInfo.role,
+        address: userInfo.location.address,
+        latitude: userInfo.location.coordinates[0],
+        longitude: userInfo.location.coordinates[1],
+      });
+    }
+  }, [sessionState]);
 
   // useEffect(() => {
   //   setRedirectHome(true);
@@ -161,7 +179,6 @@ function Signup(userDetails) {
     if (checkValidation()) {
       post("/auth/signup", filledData)
         .then((res) => {
-          console.log(res);
           displayMessage("Registered Successfully");
           navigate("/");
         })
@@ -341,4 +358,4 @@ function Signup(userDetails) {
   );
 }
 
-export default Signup;
+export default Profile;

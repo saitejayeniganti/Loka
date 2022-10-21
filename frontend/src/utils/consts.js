@@ -3,7 +3,10 @@
 //   };
 
 export const REDUCER = {
-  SIGNEDIN: "isSignedIn",
+  SIGNEDIN: "loginRedirect",
+  SESSION: "session",
+  USER: "user",
+  ISLOGGEDIN: "isLoggedIn",
   ISADMIN: "isAdmin",
   ROLE: "role",
   ERR_MSG: "errMsg",
@@ -17,8 +20,10 @@ export const ACTION = {
   MERCHANT_SIGIN: "MERCHANT",
   ADMIN_SIGIN: "ADMIN",
   RESET: "RESET",
+  CLEARSESSION: "CLEAR_SESSION",
   SHOWERROR: "ERROR",
   MESSAGE: "MESSAGE",
+  SETSESSION: "SET_SESSION",
   FETCH_PRODUCTS: "FETCH_PRODUCTS",
   FETCH_PRODUCT: "FETCH_PRODUCT",
   FETCH_REVIEWS: "FETCH_REVIEWS",

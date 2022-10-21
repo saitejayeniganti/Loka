@@ -4,6 +4,7 @@ import productReducer from "./productReducer";
 import cartReducer from "./cartReducer";
 import errorReducer from "./errorReducer";
 import messageReducer from "./messageReducer";
+import sessionReducer from "./sessionReducer";
 
 const reducers = combineReducers({
   loginReducer,
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   messageReducer,
   productReducer,
   cartReducer,
+  sessionReducer,
 });
 
 export default reducers;
