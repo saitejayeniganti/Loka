@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import "../../App.js";
+import "../../App.css";
 import loginGroceryProducts from "../../animations/login-grocery-products.json";
 import Grid from "@mui/material/Grid";
 import InputAdornment from "@mui/material/InputAdornment";

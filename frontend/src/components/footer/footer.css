@@ -1,0 +1,553 @@
+    .div1{
+            font-family: Eina, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                text-size-adjust: none;
+                display: flex;
+                flex-direction: column;
+                max-width: 100%;
+                background-color: #FFFFFF;
+                -webkit-box-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                justify-content: center;
+                margin: 32px 0;
+                padding-left: 32px;
+                padding-right: 32px;
+}
+
+
+    .div2{
+    font-family: Eina, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        text-size-adjust: none;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .div3{
+            font-family: Eina, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                text-size-adjust: none;
+                background-color: #F6F7F8;
+                border-radius: 8px;
+                padding: 0;
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                min-width: inherit;
+                margin-right: 24px;
+    }
+
+
+    .div4{
+            font-family: Eina, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                text-size-adjust: none;
+                max-width: 950px;
+                margin: 0 auto;
+                padding: 32px 32px 60px;
+                padding-bottom: 100px;
+    }
+
+    .div5{
+            font-family: Eina, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                text-size-adjust: none;
+                padding: 0;
+    }
+
+    .div6{
+            font-family: Eina, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                text-size-adjust: none;
+                border-bottom: 1px solid #E8E9EB;
+                padding: 24px 0;
+    }
+
+    .div7{
+            text-size-adjust: none;
+                cursor: pointer;
+                font-weight: normal;
+                white-space: normal;
+                text-align: left;
+                font-family: Eina, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial;
+                -webkit-font-smoothing: antialiased;
+                font-size: 28px;
+                line-height: 32px;
+                display: flex;
+                -webkit-box-pack: center;
+                justify-content: center;
+                -webkit-box-align: center;
+                align-items: center;
+                margin: 24px 0 24px 15%;
+                color: #343538;
+                margin-left: 25%;
+    }
+
+  
+
+    .divButton{
+            text-size-adjust: none;
+                -webkit-box-align: center;
+                align-items: center;
+                background: none;
+                border: none;
+                cursor: pointer;
+                display: flex;
+                -webkit-box-pack: justify;
+                justify-content: space-between;
+                width: 100%;
+                color: #424242;
+                padding: 0;
+                height: auto;
+                font-weight: normal;
+                white-space: normal;
+                text-align: left;
+                font-family: Eina, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial;
+                -webkit-font-smoothing: antialiased;
+                font-size: 28px;
+                line-height: 32px;
+    }
+
+        .footer {
+            margin-top: 1rem;
+            background-color: black;
+            position: relative !important;
+            bottom: -100px !important;
+            left: 0;
+            width: 100%;
+            top:80%
+        }
+    
+        .txt {
+            color: white;
+            font-size: 14px;
+        }
+    
+        .txt16 {
+            color: white;
+            font-size: 18px;
+        }
+    
+        .uberlogo {
+            display: block !important;
+            height: 30px !important;
+            width: 134px !important;
+        }
+    
+        .alignRight {
+            text-align: right;
+        }
+    
+        .height15 {
+            height: 15px;
+        }
+    
+        .margin65 {
+            margin-top: 65px;
+        }
+    
+        .margin15 {
+            margin-top: 15px;
+        }
+    
+        .margin30 {
+            margin-top: 35px !important;
+            margin-bottom: 35px !important;
+            opacity: 70%;
+            font-size: 12px;
+        }
+    
+        .footerlogos {
+            font-family: sans-serif;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            display: grid;
+            padding-bottom: 12px;
+            padding-top: 12px;
+            grid-column: span 3;
+            grid-auto-flow: column;
+            transform: translateX(-12px);
+        }
+    
+        .location {
+            font-family: sans-serif;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            width: 100%;
+            transform: translateX(-12px);
+            justify-items: start;
+            grid-column: span 6;
+            display: flex;
+            grid-auto-flow: column;
+            -webkit-box-align: center;
+            align-items: center;
+            -webkit-box-pack: start;
+            justify-content: start;
+        }
+    
+        .footerButton {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-left: 0;
+            outline: none;
+            cursor: pointer;
+            margin-right: 0;
+            -webkit-box-align: center;
+            align-items: center;
+            font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial,
+                sans-serif;
+            font-weight: 500;
+            line-height: 16px;
+            font-size: 14px;
+            text-decoration: none;
+            border-bottom-width: 0;
+            background-color: #000000;
+            color: #ffffff;
+            -webkit-box-pack: center;
+            justify-content: center;
+            display: inline-flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            flex-direction: row;
+            border-left-width: 0;
+            border-top-width: 0;
+            border-right-width: 0;
+            border-left-style: none;
+            border-top-style: none;
+            border-right-style: none;
+            border-bottom-style: none;
+            box-shadow: none;
+            -webkit-appearance: none;
+            transition-property: background;
+            transition-duration: 200ms;
+            transition-timing-function: cubic-bezier(0, 0, 1, 1);
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 12px;
+            padding-right: 12px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+        }
+    
+        .androidImg {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            color: #000000;
+            font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial,
+                sans-serif;
+            font-weight: 500;
+            font-size: inherit;
+            line-height: inherit;
+            transition-property: backgroundSize;
+            transition-duration: 500ms;
+            transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+            text-underline-position: under;
+            will-change: background-size;
+            background-size: 0% 100%, 100% 100%;
+            background-repeat: no-repeat;
+            background-image: none;
+            text-decoration: underline;
+        }
+    
+        .appleImg {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            color: #000000;
+            font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial,
+                sans-serif;
+            font-weight: 500;
+            font-size: inherit;
+            line-height: inherit;
+            transition-property: backgroundSize;
+            transition-duration: 500ms;
+            transition-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+            text-underline-position: under;
+            will-change: background-size;
+            background-size: 0% 100%, 100% 100%;
+            background-repeat: no-repeat;
+            background-image: none;
+            text-decoration: underline;
+        }
+    
+        .fbButton {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-left: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            outline: none;
+            cursor: pointer;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+            -webkit-box-align: center;
+            align-items: center;
+            font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial,
+                sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            text-decoration: none;
+            border-bottom-width: 0;
+            background-color: #000000;
+            color: #ffffff;
+            -webkit-box-pack: center;
+            justify-content: center;
+            display: inline-flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            flex-direction: row;
+            border-left-width: 0;
+            border-top-width: 0;
+            border-right-width: 0;
+            border-left-style: none;
+            border-top-style: none;
+            border-right-style: none;
+            border-bottom-style: none;
+            box-shadow: none;
+            -webkit-appearance: none;
+            transition-property: background;
+            transition-duration: 200ms;
+            transition-timing-function: cubic-bezier(0, 0, 1, 1);
+            line-height: 20px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            height: 48px;
+            width: 48px;
+        }
+    
+        .twitterButton {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-left: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            outline: none;
+            cursor: pointer;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+            -webkit-box-align: center;
+            align-items: center;
+            font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial,
+                sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            text-decoration: none;
+            border-bottom-width: 0;
+            background-color: #000000;
+            color: #ffffff;
+            -webkit-box-pack: center;
+            justify-content: center;
+            display: inline-flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            flex-direction: row;
+            border-left-width: 0;
+            border-top-width: 0;
+            border-right-width: 0;
+            border-left-style: none;
+            border-top-style: none;
+            border-right-style: none;
+            border-bottom-style: none;
+            box-shadow: none;
+            -webkit-appearance: none;
+            transition-property: background;
+            transition-duration: 200ms;
+            transition-timing-function: cubic-bezier(0, 0, 1, 1);
+            line-height: 20px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            height: 48px;
+            width: 48px;
+        }
+    
+        .youtubeButton {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-left: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            outline: none;
+            cursor: pointer;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+            -webkit-box-align: center;
+            align-items: center;
+            font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial,
+                sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            text-decoration: none;
+            border-bottom-width: 0;
+            background-color: #000000;
+            color: #ffffff;
+            -webkit-box-pack: center;
+            justify-content: center;
+            display: inline-flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            flex-direction: row;
+            border-left-width: 0;
+            border-top-width: 0;
+            border-right-width: 0;
+            border-left-style: none;
+            border-top-style: none;
+            border-right-style: none;
+            border-bottom-style: none;
+            box-shadow: none;
+            -webkit-appearance: none;
+            transition-property: background;
+            transition-duration: 200ms;
+            transition-timing-function: cubic-bezier(0, 0, 1, 1);
+            line-height: 20px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            height: 48px;
+            width: 48px;
+        }
+    
+        .linkedinButton {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-left: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            outline: none;
+            cursor: pointer;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+            -webkit-box-align: center;
+            align-items: center;
+            font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial,
+                sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            text-decoration: none;
+            border-bottom-width: 0;
+            background-color: #000000;
+            color: #ffffff;
+            -webkit-box-pack: center;
+            justify-content: center;
+            display: inline-flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            flex-direction: row;
+            border-left-width: 0;
+            border-top-width: 0;
+            border-right-width: 0;
+            border-left-style: none;
+            border-top-style: none;
+            border-right-style: none;
+            border-bottom-style: none;
+            box-shadow: none;
+            -webkit-appearance: none;
+            transition-property: background;
+            transition-duration: 200ms;
+            transition-timing-function: cubic-bezier(0, 0, 1, 1);
+            line-height: 20px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            height: 48px;
+            width: 48px;
+        }
+    
+        .instagramButton {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            margin-top: 0;
+            margin-bottom: 0;
+            margin-left: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            outline: none;
+            cursor: pointer;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+            -webkit-box-align: center;
+            align-items: center;
+            font-family: UberMoveText, system-ui, "Helvetica Neue", Helvetica, Arial,
+                sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            text-decoration: none;
+            border-bottom-width: 0;
+            background-color: #000000;
+            color: #ffffff;
+            -webkit-box-pack: center;
+            justify-content: center;
+            display: inline-flex;
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: normal;
+            flex-direction: row;
+            border-left-width: 0;
+            border-top-width: 0;
+            border-right-width: 0;
+            border-left-style: none;
+            border-top-style: none;
+            border-right-style: none;
+            border-bottom-style: none;
+            box-shadow: none;
+            -webkit-appearance: none;
+            transition-property: background;
+            transition-duration: 200ms;
+            transition-timing-function: cubic-bezier(0, 0, 1, 1);
+            line-height: 20px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            height: 48px;
+            width: 48px;
+        }
+    
+        .logosAndLinks {
+            font-family: sans-serif;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            height: 100%;
+            display: grid;
+            justify-items: inherit;
+            grid-column-gap: 36px;
+            grid-row-gap: 36px;
+            grid-template-columns: repeat(12, 1fr);
+        }
+    
+        .logosAndLinksContainer {
+            font-family: sans-serif;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            width: 100%;
+            display: grid;
+            align-self: center;
+            grid-column: 1/-1;
+            order: 0;
+            margin-top: 50px !important;
+        }
+
+        .divImage{
+                font-family: Eina, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                    text-size-adjust: none;
+                    display: flex;
+                    flex-direction: row;
+                    width: 100%;
+        }

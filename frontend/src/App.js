@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import React from "react";
+import "bootstrap/dist/css/bootstrap.css";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -29,12 +30,15 @@ import { REDUCER } from "./utils/consts";
 import CustomerSignup from "./views/customer/customerSignup";
 import { ErrorPath } from "./views/common/ErrorPath";
 import Profile from "./views/common/Profile";
-import SimpleMap from "./views/maptest";
+
 import Progress from "./components/Progress";
 
 import { actionCreators } from "./reducers/actionCreators";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
+import MapsWithIcon from "../src/components/merchantMap";
+
+
 
 function App() {
   const [user, setUser] = useState(null);
