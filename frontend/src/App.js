@@ -37,6 +37,7 @@ import { actionCreators } from "./reducers/actionCreators";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import MapsWithIcon from "../src/components/merchantMap";
+import AdRequest from "./views/AdRequest";
 
 
 
@@ -161,10 +162,11 @@ function App() {
         <Route path="/productList" exact element={<ProductList />}></Route>
         <Route path="/product" exact element={<Product />}></Route>
         <Route path="/route" exact element={<RouteMap />}></Route>
-        <Route path="/map" exact element={<SimpleMap />}></Route>
+        {/* <Route path="/map" exact element={<SimpleMap />}></Route> */}
         <Route path="/location" exact element={<LocationSearch />}></Route>
         <Route path="/profile" exact element={<Profile />}></Route>
         <Route path="/progress" element={<Progress></Progress>}></Route>
+        <Route path="/adrequest" element={<AdRequest/>}></Route>
         <Route path="*" element={<ErrorPath></ErrorPath>}></Route>
       </Routes>
     );

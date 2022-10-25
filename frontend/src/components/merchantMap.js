@@ -7,14 +7,15 @@ import {
   InfoWindow,
 } from "react-google-maps";
 import { Card } from "antd";
-import pic from "../images/theme/s.png"
+
 
 const GOOGLE_MAPS_API_KEY = "AIzaSyAsQ0gdrgDdXMXryiPxhhswaOT6jAYpAKs";
 
 function Map() {
   const [locations, setLocations] = useState(null);
   const [selectedlocation, setSelectedLocation] = useState(null);
-  
+  const [state, setState] = useState("All");
+  const [city, setCity] = useState("All");
 
    useEffect(() => {
     let data = {
@@ -27,7 +28,7 @@ function Map() {
     };
     
     // axios
-    //   .post(backendServer + "/", data)
+    //   .post(backendServer + "/searchPets", data)
     //   .then((response) => {
     //     setLocations(response.data);
     //   })
@@ -58,7 +59,7 @@ function Map() {
           }}
         >
           
-            {/* <Marker
+            <Marker
               key={location.id}
               position={{
                 lat: 37.3352,
@@ -68,10 +69,28 @@ function Map() {
                 setSelectedLocation(location);
               }}
               icon={{
-                url:{pic},
+                url:
+                  String(location.pet_type) === "Dog"
+                    ? "/dog.png"
+                    : String(location.pet_type) === "Cat"
+                    ? "/cat.png"
+                    : String(location.pet_type) === "Bird"
+                    ? "/bird.png"
+                    : String(location.pet_type) === "Goat"
+                    ? "/goat.png"
+                    : String(location.pet_type) === "Horse"
+                    ? "/horse.png"
+                    : String(location.pet_type) === "Tortoise"
+                    ? "/tortoise.png"
+                    : String(location.pet_type) === "Rabbit"
+                    ? "/rabbit.png"
+                    : String(location.pet_type) === "Pig"
+                    ? "/pig.png"
+                    : "/other.png",
+
                 scaledSize: new window.google.maps.Size(48, 48),
               }}
-            /> */}
+            />
           {/* {selectedlocation && (
             <InfoWindow
               onCloseClick={() => {
@@ -139,6 +158,7 @@ const MapWrapped = withScriptjs(withGoogleMap(Map));
 
 export default function MapsWithIcon() {
   
+
   return (
     <div>
       <div style={{ marginBottom: "2%" }}></div>

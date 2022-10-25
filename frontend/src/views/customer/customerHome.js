@@ -31,6 +31,15 @@ const vendors=[
     categories:["Dairy","Meat"],
     driveTime:"21 - 25 min"
   }
+  ,
+   {
+    id:2,
+    name:"Walmart",
+    image:cost,
+    rating:"3.5",
+    categories:["Dairy","Meat"],
+    driveTime:"21 - 25 min"
+  }
 ]
 
  const onVendorClick = (vendorId) => {
