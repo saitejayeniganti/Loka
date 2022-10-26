@@ -24,7 +24,7 @@ import LocationSearch from "./components/LocationSearch";
 
 import RouteMap from "./views/routeMap";
 import MerchantLogin from "./views/merchant/merchantLogin";
-import MerchantInventory from "./views/merchant/merchantInventory";
+import MerchantAddProducts from "./views/merchant/merchantAddProducts";
 import { useSelector } from "react-redux";
 import { REDUCER } from "./utils/consts";
 import CustomerSignup from "./views/customer/customerSignup";
@@ -154,9 +154,9 @@ function App() {
         <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
         <Route path="/merchantlogin" exact element={<MerchantLogin />}></Route>
         <Route
-          path="/merchantinventory"
+          path="/merchantaddproducts"
           exact
-          element={<MerchantInventory />}
+          element={<MerchantAddProducts />}
         ></Route>
         <Route path="/adminhome" exact element={<AdminHome />}></Route>
         <Route path="/productList" exact element={<ProductList />}></Route>
@@ -166,7 +166,7 @@ function App() {
         <Route path="/location" exact element={<LocationSearch />}></Route>
         <Route path="/profile" exact element={<Profile />}></Route>
         <Route path="/progress" element={<Progress></Progress>}></Route>
-        <Route path="/adrequest" element={<AdRequest/>}></Route>
+        <Route path="/adrequest" element={<AdRequest />}></Route>
         <Route path="*" element={<ErrorPath></ErrorPath>}></Route>
       </Routes>
     );
