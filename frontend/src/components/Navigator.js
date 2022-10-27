@@ -23,6 +23,10 @@ import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import SearchGMaps from "./SearchGMaps";
 import SearchMain from "./SearchMain";
+import Drawer from '@mui/material/Drawer';
+import Cart from "../views/cart/Cart";
+import * as actions from '../reducers/actions';
+
 
 function MenuAppBar(props) {
   // console.log("props - ", props);
@@ -179,12 +183,25 @@ function MenuAppBar(props) {
                 </Menu>
               </div>
             )}
-            {props.isLoggedIn && (
-              <Badge badgeContent={props.items?.length} color="primary">
-                <ShoppingCartOutlinedIcon selfalign="right">
-                  Cart
+            {!props.isLoggedIn && (
+              <>
+                <Badge badgeContent={props.items?.length} color="primary">
+                  <ShoppingCartOutlinedIcon selfalign="right" onClick={() => props.openCart()}>
+                    Cart
                 </ShoppingCartOutlinedIcon>
-              </Badge>
+                </Badge>
+                <Drawer anchor="right" open={props.cartOpen} onClose={() => props.closeCart()}>
+                  <Box
+                    sx={{ width: 250 }}
+                    role="presentation"
+                    onClick={() => props.cartOpen ? props.closeCart() : props.openCart()}
+                    onKeyDown={() => props.cartOpen ? props.closeCart() : props.openCart()}
+                  >
+                    <Cart
+                    />
+                  </Box>
+                </Drawer>
+              </>
             )}
           </Box>
         </Toolbar>
@@ -210,9 +227,13 @@ function MenuAppBar(props) {
 const mapStateToProps = (state) => {
   return {
     items: state.cartReducer.items,
+    cartOpen: state.cartReducer.cartOpen,
   };
 };
 
-const actionCreators = {};
+const actionCreators = {
+  openCart: actions.openCart,
+  closeCart: actions.closeCart,
+};
 
 export default connect(mapStateToProps, actionCreators)(MenuAppBar);
