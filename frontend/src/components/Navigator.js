@@ -192,13 +192,12 @@ function MenuAppBar(props) {
                 </Badge>
                 <Drawer anchor="right" open={props.cartOpen} onClose={() => props.closeCart()}>
                   <Box
-                    sx={{ width: 250 }}
+                    sx={{ width: 500 }}
                     role="presentation"
-                    onClick={() => props.cartOpen ? props.closeCart() : props.openCart()}
-                    onKeyDown={() => props.cartOpen ? props.closeCart() : props.openCart()}
+                    // onClick={() => props.cartOpen ? props.closeCart() : props.openCart()}
+                    // onKeyDown={() => props.cartOpen ? props.closeCart() : props.openCart()}
                   >
-                    <Cart
-                    />
+                    <Cart/>
                   </Box>
                 </Drawer>
               </>

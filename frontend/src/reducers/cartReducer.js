@@ -15,6 +15,22 @@ const cartReducer = (state = initialState, action) => {
       };
       localStorage.setItem('items', JSON.stringify(temp.items));
       return temp;
+    case ACTION.REMOVE_FROM_CART:
+      const items = state.items;
+      const newItems = [];
+      let cnt = 0;
+      for (var i = 0; i < state.items.length; i++) {
+        if (cnt == 0 && items[i]._id === action.product._id) {
+          cnt++;
+          continue;
+        }
+        newItems.push(items[i]);
+      }
+      localStorage.setItem('items', JSON.stringify(items));
+      return {
+        ...state,
+        items: newItems,
+      };
     case ACTION.OPEN_CART:
       return {
         ...state,
