@@ -1,6 +1,4 @@
-
-// import { Wrapper } from "./CartItem.styles";
-import { Grid, Rating, Typography, Link, Button, Divider, Input, TextField, Snackbar } from "@mui/material";
+import { Button } from "@mui/material";
 import productImage from "../../images/products/apple.jpeg";
 import { Wrapper } from "./CartItem.styles";
 import { connect } from "react-redux";
@@ -14,7 +12,7 @@ const CartItem = (props) => {
         <h3>{props.item.name}</h3>
         <div className="information">
           <p>Price: ${props.item.price}</p>
-          {/* <p>Total: ${(props.item.amount * props.addToCartitem.price).toFixed(2)}</p> */}
+          { <p>Total: ${(props.item.count * props.item.price).toFixed(2)}</p> }
         </div>
         <div className="buttons">
           <Button

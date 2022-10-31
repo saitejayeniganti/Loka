@@ -5,7 +5,6 @@ export const fetchProducts = () => {
   return async (dispatch, getState) => {
     try {
       //dispatch(setProductLoading(true));
-      console.log("Here");
       const response = await get(`/product`);
       console.log(response);
       dispatch({
@@ -24,7 +23,6 @@ export const fetchProductById = (id) => {
   return async (dispatch, getState) => {
     try {
       //dispatch(setProductLoading(true));
-      console.log("Here");
       const response = await get(`/product/` + id);
       console.log(response);
       dispatch({
@@ -44,7 +42,6 @@ export const fetchReviewById = (id) => {
   return async (dispatch, getState) => {
     try {
       //dispatch(setProductLoading(true));
-      console.log("Here");
       const response = await get(`/review/` + id);
       console.log(response);
       dispatch({

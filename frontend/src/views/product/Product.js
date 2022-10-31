@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import productImage from "../../images/products/apple.jpeg";
 import * as actions from '../../reducers/actions';
 import { connect } from 'react-redux';
-import { addToCart } from "../../reducers/actions";
 
 const Product = (props) => {
 

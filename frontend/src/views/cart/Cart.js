@@ -1,13 +1,14 @@
 import CartItem from "./CartItem";
 import { connect } from "react-redux";
 import { Wrapper } from "./Cart.styles";
-import { useEffect } from "react";
+import { Button, Link } from "@mui/material";
 
 
 const Cart = (props) => {
 
   const allItems = props.items;
   var allItemMap = new Map();
+  let totalPrice = 0.0;
   for (var x of allItems) {
     if (allItemMap.has(x._id)) {
       let item = allItemMap.get(x._id);
@@ -17,6 +18,7 @@ const Cart = (props) => {
       x.count = 1;
       allItemMap.set(x._id, x);
     }
+    totalPrice += x.price;
   }
   const items = Array.from(allItemMap.values());
   return (
@@ -30,7 +32,13 @@ const Cart = (props) => {
           item={item}
         />
       ))}
-      <h2>Total: ${10.0}</h2>
+      <h2>Total: {totalPrice == 0 ? "$0.00" : totalPrice}</h2>
+      <Link
+        href={"/bill"}
+        underline="none" color="inherit"
+      >
+        <Button variant="contained">Proceed to checkout</Button>
+      </Link>
     </Wrapper>
   );
 };

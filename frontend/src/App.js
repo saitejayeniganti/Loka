@@ -18,6 +18,7 @@ import Home from "./views/common/Home";
 import Login from "./views/common/Login";
 import ProductList from "./views/product/ProductList";
 import Product from "./views/product/Product";
+import Bill from "./views/bill/Bill";
 import MerchantHome from "./views/merchant/merchantHome";
 import Signup from "./views/common/Signup";
 import LocationSearch from "./components/LocationSearch";
@@ -161,6 +162,7 @@ function App() {
         <Route path="/adminhome" exact element={<AdminHome />}></Route>
         <Route path="/productList" exact element={<ProductList />}></Route>
         <Route path="/product" exact element={<Product />}></Route>
+        <Route path="/bill" exact element={<Bill />}></Route>
         <Route path="/route" exact element={<RouteMap />}></Route>
         {/* <Route path="/map" exact element={<SimpleMap />}></Route> */}
         <Route path="/location" exact element={<LocationSearch />}></Route>

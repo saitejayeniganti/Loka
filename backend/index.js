@@ -9,6 +9,7 @@ var userRoute = require("./routes/userRoute");
 var vendorRoute = require("./routes/vendorRoute");
 const productRoute = require("./routes/product");
 const reviewRoute = require("./routes/review");
+const orderRoute = require("./routes/order");
 // var auth = require("./routes/auth");
 require("./config/passport")(app);
 //const authRoute = require("./routes/authentication");
@@ -86,6 +87,7 @@ async function initializeApplication() {
     // app.use("/user", auth);
     app.use("/product", productRoute);
     app.use("/review", reviewRoute);
+    app.use("/order", orderRoute);
     app.use("/auth", authrouter);
     app.use("/search", searchRouter);
 
