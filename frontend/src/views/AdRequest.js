@@ -12,6 +12,8 @@ import { UploadOutlined } from "@ant-design/icons";
 // import S3 from 'react-aws-s3';
 import { uploadFile } from "react-s3";
 
+import FileUpload from "../components/FileUpload.js";
+
 import { v4 as uuidv4 } from "uuid";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
@@ -38,28 +40,6 @@ function AdRequest() {
   const [file, setFile] = useState("");
 
   const doLogin = (e) => {};
-
-  //     let obj={img: data.location,title:"test"}
-  //     let arr=[...imageList]
-  //     arr.push(obj)
-  //     setImageList(arr)
-  //   if (data.status === 204) {
-  //     console.log("image to S3 success");
-  //   } else {
-  //     console.log("image to S3 fail");
-  //   }
-
-  // const fileSelected = (e) => {
-  //    if (
-  //     e.target.files[0].type === "image/png" ||
-  //     e.target.files[0].type === "image/jpeg"
-  //   ) {
-  //     setFile( e.target.files[0]);
-  //     console.log("file set")
-  //   } else {
-
-  //   }
-  // };
 
   const handleFileInput = (e) => {
     setFile(e.target.files[0]);
@@ -157,6 +137,13 @@ function AdRequest() {
 
       <input type="file" onChange={handleFileInput} />
       <button onClick={() => handleUpload(file)}> Upload to S3</button>
+      <FileUpload
+        onUpload={(e) => {
+          console.log("location", e);
+          console.log("do other operation");
+        }}
+        // fileName={"dynamicName"}
+      />
       {imageList.length == 0 ? (
         ""
       ) : (
