@@ -37,10 +37,8 @@ import Progress from "./components/Progress";
 import { actionCreators } from "./reducers/actionCreators";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
-import MapsWithIcon from "../src/components/merchantMap";
+// import MapsWithIcon from "../src/components/merchantMap";
 import AdRequest from "./views/AdRequest";
-
-
 
 function App() {
   const [user, setUser] = useState(null);
