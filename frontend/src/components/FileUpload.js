@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import AWS from "aws-sdk";
 
-function FileUpload({ onUpload, fileName }) {
+function FileUpload({ callback, fileName = "", folderPath = "" }) {
   const fileInput = useRef();
   const handleClick = (event) => {
     event.preventDefault();
@@ -11,10 +11,8 @@ function FileUpload({ onUpload, fileName }) {
       const newFileName = fileName
         ? fileName.replace(/\..+$/, "") + "." + fileExtension
         : file.name;
-
       const config = {
         bucketName: "loka1",
-        dirName: "test",
         region: "us-east-1",
         accessKeyId: "AKIA5SITFOMDAEMEKQ5B",
         secretAccessKey: "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",
@@ -32,7 +30,7 @@ function FileUpload({ onUpload, fileName }) {
         ACL: "public-read",
         Body: file,
         Bucket: config.bucketName,
-        Key: "test/" + newFileName,
+        Key: folderPath + newFileName,
       };
       myBucket
         .putObject(params)
@@ -42,15 +40,15 @@ function FileUpload({ onUpload, fileName }) {
           console.log("progress", (evt.loaded / evt.total) * 100);
         })
         .send((err, data) => {
+          if (err) {
+            console.log(err);
+          }
           const signedUrl = myBucket.getSignedUrl("getObject", {
             Bucket: config.bucketName,
             Key: params.Key,
           });
           const url = signedUrl.split("?")[0];
-          onUpload(url);
-          // console.log(myBucket.getSignedUrl getResourceUrl(config.bucketName, params.Key));
-          // if (err) console.log(err);
-          // else onUpload(data);
+          callback(url);
         });
     }
   };

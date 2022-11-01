@@ -138,11 +138,12 @@ function AdRequest() {
       <input type="file" onChange={handleFileInput} />
       <button onClick={() => handleUpload(file)}> Upload to S3</button>
       <FileUpload
-        onUpload={(e) => {
+        callback={(e) => {
           console.log("location", e);
           console.log("do other operation");
         }}
-        // fileName={"dynamicName"}
+        fileName="dynamicName"
+        folderPath="hello/"
       />
       {imageList.length == 0 ? (
         ""
