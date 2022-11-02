@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import "bootstrap/dist/css/bootstrap.css";
+import "../src/styles/mapView.css";
 import {
   BrowserRouter as Router,
   Navigate,
@@ -39,6 +40,7 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 // import MapsWithIcon from "../src/components/merchantMap";
 import AdRequest from "./views/AdRequest";
+import MapView from "./components/MapView";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -167,6 +169,7 @@ function App() {
         <Route path="/profile" exact element={<Profile />}></Route>
         <Route path="/progress" element={<Progress></Progress>}></Route>
         <Route path="/adrequest" element={<AdRequest />}></Route>
+        <Route path="/mapview" element={<MapView />}></Route>
         <Route path="*" element={<ErrorPath></ErrorPath>}></Route>
       </Routes>
     );
