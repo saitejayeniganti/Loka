@@ -11,7 +11,7 @@ import { get } from "../utils/serverCall";
 import { IconButton, InputAdornment, InputBase, Paper } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
-export default function SearchMain() {
+export default function SearchMain({ input, callback }) {
   // its selected suggestion  value
   const [value, setValue] = React.useState(null);
   // input value
@@ -78,6 +78,10 @@ export default function SearchMain() {
     );
   };
 
+  React.useEffect(() => {
+    setInputValue(input);
+  }, [input]);
+
   return (
     <Autocomplete
       id="search-main"
@@ -95,8 +99,12 @@ export default function SearchMain() {
       value={value}
       onChange={(event, newValue) => {
         // on selecting suggestion.
+        // console.log("new Value", newValue);
+        // if (newValue && newValue.description) {
         setOptions(newValue ? [newValue, ...options] : options);
         setValue(newValue);
+        callback(newValue);
+        // }
         // console.log(newValue);
       }}
       onInputChange={(event, newInputValue) => {

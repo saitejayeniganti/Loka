@@ -85,7 +85,7 @@ export default function SearchGMaps({ input, callback }) {
         }
 
         if (results) {
-          console.log("results", results);
+          // console.log("results", results);
           newOptions = [...newOptions, ...results];
         }
 

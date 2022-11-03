@@ -42,12 +42,13 @@ function MenuAppBar(props) {
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
   const [location, setLocation] = useState(defaultLocation);
+  const [searchInput, setSearchInput] = useState("");
 
   const errorState = useSelector((state) => state.errorReducer);
   const messageState = useSelector((state) => state.messageReducer);
 
   const dispatch = useDispatch();
-  const { updateLocation, updateSearch } = bindActionCreators(
+  const { updateLocation, updateSearchInput } = bindActionCreators(
     aCreators,
     dispatch
   );
@@ -121,6 +122,9 @@ function MenuAppBar(props) {
   useEffect(() => {
     updateLocation(location);
   }, [location]);
+  useEffect(() => {
+    updateSearchInput(searchInput);
+  }, [searchInput]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -162,7 +166,12 @@ function MenuAppBar(props) {
             />
           </div> */}
           <div style={{ margin: "auto" }}>
-            <SearchMain></SearchMain>
+            <SearchMain
+              input=""
+              callback={(data) => {
+                setSearchInput(data);
+              }}
+            ></SearchMain>
           </div>
           {/* {props.user && (
             <Typography variant="h5" component="div">
