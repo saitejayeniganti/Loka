@@ -39,3 +39,10 @@ export const ACTION = {
   UPDATE_LOCATION: "updateLocation",
   NAVI_RESET: "naviReset",
 };
+
+export const CONSTANTS = {
+  DEFAULT_ADDRESS: {
+    coordinates: [37.33, -121.88],
+    address: "San José State University, Washington Sq, San Jose",
+  },
+};

@@ -17,7 +17,7 @@ import Menu from "@mui/material/Menu";
 import logoicon from "../images/theme/grocery-bag.png";
 import { get } from "../utils/serverCall.js";
 import { useDispatch, useSelector } from "react-redux";
-import { REDUCER } from "../utils/consts";
+import { CONSTANTS, REDUCER } from "../utils/consts";
 import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
@@ -34,10 +34,7 @@ import { actionCreators as aCreators } from "../reducers/actionCreators";
 
 function MenuAppBar(props) {
   // console.log("props - ", props);
-  const defaultLocation = {
-    coordinates: [37.33, -121.88],
-    address: "San José State University, Washington Sq, San Jose",
-  };
+  const defaultLocation = CONSTANTS.DEFAULT_ADDRESS;
   const navigate = useNavigate();
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -127,28 +124,31 @@ function MenuAppBar(props) {
   }, [searchInput]);
 
   const searchBoxes = () => {
-    <div style={{ marginLeft: "16px" }}>
-      <SearchGMaps
-        input={location.address}
-        callback={(data) => {
-          getCoordinates(data.description).then((data) => {
-            setLocation({
-              address: data.description,
-              coordinates: [data.lat, data.lng],
-            });
-          });
-        }}
-      ></SearchGMaps>
-    </div>;
-
-    <div style={{ margin: "auto" }}>
-      <SearchMain
-        input=""
-        callback={(data) => {
-          setSearchInput(data);
-        }}
-      ></SearchMain>
-    </div>;
+    return (
+      <>
+        <div style={{ marginLeft: "16px" }}>
+          <SearchGMaps
+            input={location.address}
+            callback={(data) => {
+              getCoordinates(data.description).then((data) => {
+                setLocation({
+                  address: data.description,
+                  coordinates: [data.lat, data.lng],
+                });
+              });
+            }}
+          ></SearchGMaps>
+        </div>
+        <div style={{ margin: "auto" }}>
+          <SearchMain
+            input=""
+            callback={(data) => {
+              setSearchInput(data);
+            }}
+          ></SearchMain>
+        </div>
+      </>
+    );
   };
 
   return (
@@ -167,7 +167,7 @@ function MenuAppBar(props) {
           <Typography variant="h5" component="div">
             LOKA
           </Typography>
-          {props.isLoggedIn && props.user.role == 1 && searchBoxes()}
+          {props.isLoggedIn && props.user.role == 0 && searchBoxes()}
           {/* {props.user && (
             <Typography variant="h5" component="div">
               {props.user.firstName}

@@ -1,8 +1,8 @@
-import { ACTION, REDUCER } from "../utils/consts";
+import { ACTION, CONSTANTS, REDUCER } from "../utils/consts";
 
 const initialState = {
   [REDUCER.SEARCHINPUT]: "",
-  [REDUCER.LOCATION]: "",
+  [REDUCER.LOCATION]: CONSTANTS.DEFAULT_ADDRESS,
 };
 
 const navigatorReducer = (state = initialState, action) => {

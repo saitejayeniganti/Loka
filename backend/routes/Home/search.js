@@ -3,7 +3,7 @@ const router = express.Router();
 const ProductModel = require("../../model/product");
 
 router.get("/searchMain", (req, res) => {
-  const query = req.params.query;
+  const query = req.query;
   ProductModel.aggregate([
     {
       $search: {

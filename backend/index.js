@@ -20,6 +20,7 @@ const authrouter = require("./routes/login/authentication");
 const { jwtAuth } = require("./utils/jwtAuth");
 const MongoStore = require("connect-mongo");
 const searchRouter = require("./routes/Home/search");
+const customerRouter = require("./routes/Home/customer");
 
 app.use(
   session({
@@ -90,6 +91,7 @@ async function initializeApplication() {
     app.use("/order", orderRoute);
     app.use("/auth", authrouter);
     app.use("/search", searchRouter);
+    app.use("/customer", customerRouter);
 
     await connection.createConnection();
     app.listen(process.env.NODE_PORT, () => {
