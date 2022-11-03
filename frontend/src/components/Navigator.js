@@ -23,16 +23,21 @@ import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import SearchGMaps from "./SearchGMaps";
 import SearchMain from "./SearchMain";
-import Drawer from '@mui/material/Drawer';
+import Drawer from "@mui/material/Drawer";
 import Cart from "../views/cart/Cart";
-import * as actions from '../reducers/actions';
-
+import * as actions from "../reducers/actions";
+import LocationSearchInput from "./LocationAuto";
+import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
 function MenuAppBar(props) {
   // console.log("props - ", props);
   const navigate = useNavigate();
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [location, setLocation] = useState({
+    coordinates: [37.33, -121.88],
+    address: "San José State University, 1 Washington Sq, San Jose",
+  });
 
   const errorState = useSelector((state) => state.errorReducer);
   const messageState = useSelector((state) => state.messageReducer);
@@ -96,6 +101,32 @@ function MenuAppBar(props) {
     }
   }, [messageState]);
 
+  const handleLocationChange = (address) => {
+    // setAddress(address);
+    setLocation((prev) => {
+      return { ...prev, address };
+    });
+  };
+
+  const handleLocationSelect = (address) => {
+    geocodeByAddress(address).then((results) => {
+      // setAddress(address);
+      setLocation((prev) => {
+        return { ...prev, address };
+      });
+      getLatLng(results[0])
+        .then((latLng) => {
+          console.log("Success", latLng);
+          setLocation((prev) => {
+            return { ...prev, coordinates: [latLng.lat, latLng.lng] };
+          });
+          // setLatitude(latLng.lat);
+          // setLongitude(latLng.lng);
+        })
+        .catch((error) => console.error("Error", error));
+    });
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ background: "#063970" }}>
@@ -112,8 +143,19 @@ function MenuAppBar(props) {
           <Typography variant="h5" component="div">
             LOKA
           </Typography>
-          <SearchGMaps></SearchGMaps>
-          <SearchMain></SearchMain>
+          <div style={{ marginLeft: "16px" }}>
+            <SearchGMaps></SearchGMaps>
+          </div>
+          {/* <div style={{ marginLeft: "16px" }}>
+            <LocationSearchInput
+              handleChange={handleLocationChange}
+              handleSelect={handleLocationSelect}
+              address={location.address}
+            />
+          </div> */}
+          <div style={{ margin: "auto" }}>
+            <SearchMain></SearchMain>
+          </div>
           {/* {props.user && (
             <Typography variant="h5" component="div">
               {props.user.firstName}
@@ -186,18 +228,25 @@ function MenuAppBar(props) {
             {!props.isLoggedIn && (
               <>
                 <Badge badgeContent={props.items?.length} color="primary">
-                  <ShoppingCartOutlinedIcon selfalign="right" onClick={() => props.openCart()}>
+                  <ShoppingCartOutlinedIcon
+                    selfalign="right"
+                    onClick={() => props.openCart()}
+                  >
                     Cart
-                </ShoppingCartOutlinedIcon>
+                  </ShoppingCartOutlinedIcon>
                 </Badge>
-                <Drawer anchor="right" open={props.cartOpen} onClose={() => props.closeCart()}>
+                <Drawer
+                  anchor="right"
+                  open={props.cartOpen}
+                  onClose={() => props.closeCart()}
+                >
                   <Box
                     sx={{ width: 500 }}
                     role="presentation"
                     // onClick={() => props.cartOpen ? props.closeCart() : props.openCart()}
                     // onKeyDown={() => props.cartOpen ? props.closeCart() : props.openCart()}
                   >
-                    <Cart/>
+                    <Cart />
                   </Box>
                 </Drawer>
               </>

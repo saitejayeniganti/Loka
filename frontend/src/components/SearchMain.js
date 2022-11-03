@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 import { get } from "../utils/serverCall";
-import { IconButton, InputBase, Paper } from "@mui/material";
+import { IconButton, InputAdornment, InputBase, Paper } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 export default function SearchMain() {
@@ -70,6 +70,14 @@ export default function SearchMain() {
     };
   }, [value, inputValue, fetch]);
 
+  const createSearchIcon = () => {
+    return (
+      <InputAdornment position="start">
+        <SearchIcon />
+      </InputAdornment>
+    );
+  };
+
   return (
     <Autocomplete
       id="search-main"
@@ -83,6 +91,7 @@ export default function SearchMain() {
       autoComplete
       includeInputInList
       filterSelectedOptions
+      freeSolo
       value={value}
       onChange={(event, newValue) => {
         // on selecting suggestion.
@@ -97,6 +106,7 @@ export default function SearchMain() {
       renderInput={(params) => {
         // console.log("renderInput params", params);
         const ref = params.InputProps.ref;
+        params.InputProps.startAdornment = createSearchIcon();
         // delete params["InputLabelProps"];
         // delete params["InputProps"];
         // console.log("input params", params);
@@ -125,12 +135,7 @@ export default function SearchMain() {
           // <div ref={params.InputProps.ref}>
           //   <input type="text" {...params.inputProps} />
           // </div>
-          <TextField
-            {...params}
-            label="Search Products"
-            fullWidth
-            variant="filled"
-          />
+          <TextField {...params} label="Search" fullWidth variant="filled" />
         );
       }}
       renderOption={(props, option) => {

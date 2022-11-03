@@ -7,6 +7,9 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
+import { InputAdornment } from "@mui/material";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import SearchIcon from "@mui/icons-material/Search";
 
 // This key was created specifically for the demo in mui.com.
 // You need to create a new one for your application.
@@ -96,7 +99,7 @@ export default function SearchGMaps() {
   return (
     <Autocomplete
       id="google-map-demo"
-      sx={{ width: 300 }}
+      sx={{ width: 300, background: "white" }}
       getOptionLabel={(option) =>
         typeof option === "string" ? option : option.description
       }
@@ -105,6 +108,7 @@ export default function SearchGMaps() {
       autoComplete
       includeInputInList
       filterSelectedOptions
+      freeSolo
       value={value}
       onChange={(event, newValue) => {
         // console.log("changed");
@@ -116,9 +120,20 @@ export default function SearchGMaps() {
         setInputValue(newInputValue);
         // console.log("typing");
       }}
-      renderInput={(params) => (
-        <TextField {...params} label="Select location" fullWidth />
-      )}
+      renderInput={(params) => {
+        // console.log("params", params);
+        return (
+          <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+            {/* <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} /> */}
+            <TextField
+              {...params}
+              label="Location"
+              fullWidth
+              variant="filled"
+            />
+          </Box>
+        );
+      }}
       renderOption={(props, option) => {
         const matches =
           option.structured_formatting.main_text_matched_substrings;

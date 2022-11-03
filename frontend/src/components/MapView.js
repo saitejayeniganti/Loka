@@ -6,14 +6,16 @@ import {
   Circle,
   MarkerClusterer,
 } from "@react-google-maps/api";
+import React from "react";
 // import Places from "./places";
 // import Distance from "./distance";
 
+//home is dynamic but center is fixed. we can merge the both to same.
 export default function MapView() {
-  const [office, setOffice] = useState();
+  const [home, setHome] = useState(); // delivery address. set by getting location from navigator.
   const [directions, setDirections] = useState();
   const mapRef = useRef();
-  const center = useMemo(() => ({ lat: 37.33, lng: -121.88 }), []);
+  const center = useMemo(() => ({ lat: 37.33, lng: -121.88 }), []); // It is the map center ? San Jose by Default or same as the home.
   const options = useMemo(
     () => ({
       mapId: "b181cac70f27f5e6",
@@ -23,16 +25,16 @@ export default function MapView() {
     []
   );
   const onLoad = useCallback((map) => (mapRef.current = map), []);
-  const houses = useMemo(() => generateHouses(center), [center]);
+  const houses = useMemo(() => generateHouses(center), [center]); // need to get nearby restaurants here.
 
   const fetchDirections = (house) => {
-    if (!office) return;
+    if (!home) return; // if home is not set then no directions.
 
     const service = new google.maps.DirectionsService();
     service.route(
       {
         origin: house,
-        destination: office,
+        destination: home,
         travelMode: google.maps.TravelMode.DRIVING,
       },
       (result, status) => {
@@ -48,12 +50,12 @@ export default function MapView() {
       <div className="controls">
         <h1>Commute?</h1>
         {/* <Places
-          setOffice={(position) => {
-            setOffice(position);
+          setHome={(position) => {
+            setHome(position);
             mapRef.current?.panTo(position);
           }}
         /> */}
-        {!office && <p>Enter the address of your office.</p>}
+        {!home && <p>Enter the address of your home.</p>}
         {/* {directions && <Distance leg={directions.routes[0].legs[0]} />} */}
       </div>
       <div className="map">
@@ -76,14 +78,12 @@ export default function MapView() {
               }}
             />
           )}
-
-          {office && (
+          {home && (
             <>
               <Marker
-                position={office}
+                position={home}
                 icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
               />
-
               <MarkerClusterer>
                 {(clusterer) =>
                   houses.map((house) => (
@@ -98,10 +98,9 @@ export default function MapView() {
                   ))
                 }
               </MarkerClusterer>
-
-              <Circle center={office} radius={15000} options={closeOptions} />
-              <Circle center={office} radius={30000} options={middleOptions} />
-              <Circle center={office} radius={45000} options={farOptions} />
+              <Circle center={home} radius={15000} options={closeOptions} />
+              <Circle center={home} radius={30000} options={middleOptions} />
+              <Circle center={home} radius={45000} options={farOptions} />
             </>
           )}
         </GoogleMap>
@@ -140,8 +139,8 @@ const farOptions = {
   fillColor: "#FF5252",
 };
 
-const generateHouses = (position: LatLngLiteral) => {
-  const _houses: Array<LatLngLiteral> = [];
+const generateHouses = (position) => {
+  const _houses = [];
   for (let i = 0; i < 100; i++) {
     const direction = Math.random() < 0.5 ? -2 : 2;
     _houses.push({
