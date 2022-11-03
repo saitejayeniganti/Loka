@@ -1,7 +1,9 @@
-import { Grid, Paper, TextField, InputAdornment, Autocomplete, Button, Stack, Typography, Divider } from '@mui/material'
+import { useState } from 'react'
+import { Grid, Paper, TextField, InputAdornment, Autocomplete, Button, Stack, Typography, Divider, Alert } from '@mui/material'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Lottie from "react-lottie";
 import addProducts from '../../animations/addProductsVendor.json'
+import FileUpload from "../../components/FileUpload";
 
 const defaultOptions = {
     loop: true,
@@ -12,9 +14,52 @@ const defaultOptions = {
     },
 };
 
+const defaultProductData = {
+    sku: "",
+    name: "",
+    description: "",
+    quantity: "",
+    price: "",
+    brand: "",
+    image: ""
+}
+
 export default function MerchantAddProducts() {
+    const [productData, setProductData] = useState(defaultProductData)
+    const [incompleteFieldFlag, setIncompleteFieldFlag] = useState(false)
+    const [imageUploadFlag, setImageUploadFlag] = useState(false)
+
+    const handleProductDataChange = (event) => {
+        console.log(productData)
+        setProductData({ ...productData, [event.target.name]: event.target.value })
+    }
+
+    const handleBrandAutoComplete = (event, newValue) => {
+        console.log(productData)
+        setProductData({ ...productData, brand: newValue })
+    }
+
+    const onAddProduct = () => {
+        console.log(productData)
+        if (productData.sku === "" ||
+            productData.name === "" ||
+            productData.description === "" ||
+            productData.quantity === "" ||
+            productData.price === "" ||
+            productData.brand === "" ||
+            productData.image === "") {
+            setIncompleteFieldFlag(true)
+            return
+        }
+        console.log("No Empty Data")
+    }
+
     return (
         <>
+            <div style={{ width: "50%", margin: "auto", paddingTop: "10px" }}>
+                {incompleteFieldFlag && <Alert onClose={() => setIncompleteFieldFlag(false)} severity="error">Please Enter All The Details</Alert>}
+                {imageUploadFlag && <Alert onClose={() => setImageUploadFlag(false)} severity="success">Image Uploaded Successfully</Alert>}
+            </div>
             <Grid container sx={{ paddingTop: '20px' }}>
                 <Grid xs={6}>
                     <Grid><Lottie options={defaultOptions} height={500} width={500} /></Grid>
@@ -25,21 +70,28 @@ export default function MerchantAddProducts() {
                         <Divider variant="middle" />
                         <Stack spacing={3} sx={{ marginTop: '20px' }}>
                             <Stack direction="row" spacing={2}>
-                                <TextField fullWidth required label="SKU" variant="outlined" />
-                                <TextField fullWidth required label="Name" variant="outlined" />
+                                <TextField fullWidth required label="SKU" name="sku" variant="outlined" onChange={handleProductDataChange} />
+                                <TextField fullWidth required label="Name" name="name" variant="outlined" onChange={handleProductDataChange} />
                             </Stack>
-                            <TextField fullWidth required multiline maxRows={3} label="Description" variant="outlined" />
+                            <TextField fullWidth required multiline maxRows={3} label="Description" name="description" variant="outlined" onChange={handleProductDataChange} />
                             <Stack direction="row" spacing={2}>
-                                <TextField fullWidth required type="number" label="Quantity" variant="outlined" />
-                                <TextField fullWidth required type="number" label="Price"
-                                    InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment>, }} />
+                                <TextField fullWidth required type="number" label="Quantity" name="quantity" variant="outlined" onChange={handleProductDataChange} />
+                                <TextField fullWidth required type="number" label="Price" name="price"
+                                    InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment>, }} onChange={handleProductDataChange} />
                             </Stack>
                             <Stack direction="row" spacing={2}>
-                                <Autocomplete fullWidth required freeSolo options={options} renderInput={(params) => <TextField {...params} label="Brand" />} />
-                                <Button fullWidth variant="contained" component="label" endIcon={<AddPhotoAlternateIcon />}><input hidden accept="image/*" type="file" />Upload Image</Button>
+                                <Autocomplete fullWidth required freeSolo options={options} renderInput={(params) => <TextField {...params} label="Brand" />} onInputChange={handleBrandAutoComplete} />
+                                <FileUpload
+                                    callback={(imageURL) => {
+                                        setImageUploadFlag(true)
+                                        setProductData({ ...productData, image: imageURL })
+                                    }}
+                                    fileName={productData.brand + productData.name + productData.sku}
+                                    folderPath="merchantProductsImages/"
+                                />
                             </Stack>
                             <Divider variant="middle" />
-                            <Button fullWidth variant="contained" color="success">Add Product</Button>
+                            <Button fullWidth variant="contained" color="success" onClick={onAddProduct}>Add Product</Button>
                         </Stack>
                     </Paper>
                 </Grid>
