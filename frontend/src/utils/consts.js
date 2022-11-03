@@ -13,6 +13,8 @@ export const REDUCER = {
   MESSAGE: "message",
   TOKEN: "token",
   PRODUCTS: "products",
+  SEARCHINPUT: "searchInput",
+  LOCATION: "location",
 };
 
 export const ACTION = {
@@ -33,4 +35,7 @@ export const ACTION = {
   OPEN_CART: "OPEN_CART",
   CREATE_NEW_ORDER: "CREATE_NEW_ORDER",
   DO_SIGNIN: "DO_SIGNIN",
+  UPDATE_SEARCH: "updateSearch",
+  UPDATE_LOCATION: "updateLocation",
+  NAVI_RESET: "naviReset",
 };

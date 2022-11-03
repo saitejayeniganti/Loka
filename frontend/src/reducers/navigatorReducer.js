@@ -15,9 +15,9 @@ const navigatorReducer = (state = initialState, action) => {
     case ACTION.UPDATE_LOCATION:
       return {
         ...state,
-        [REDUCER.SEARCHINPUT]: action.payload,
+        [REDUCER.LOCATION]: action.payload,
       };
-    case ACTION.RESET:
+    case ACTION.NAVI_RESET:
       return { ...initialState };
     default:
       return state;

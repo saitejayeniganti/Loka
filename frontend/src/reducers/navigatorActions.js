@@ -9,5 +9,5 @@ export const updateLocation = (payload) => (dispatch) => {
 };
 
 export const navigatorReset = (payload) => (dispatch) => {
-  dispatch({ type: ACTION.RESET, payload });
+  dispatch({ type: ACTION.NAVI_RESET, payload });
 };

@@ -6,6 +6,7 @@ import errorReducer from "./errorReducer";
 import messageReducer from "./messageReducer";
 import sessionReducer from "./sessionReducer";
 import orderReducer from "./orderReducer";
+import navigatorReducer from "./navigatorReducer";
 
 const reducers = combineReducers({
   loginReducer,
@@ -15,6 +16,7 @@ const reducers = combineReducers({
   cartReducer,
   sessionReducer,
   orderReducer,
+  navigatorReducer,
 });
 
 export default reducers;

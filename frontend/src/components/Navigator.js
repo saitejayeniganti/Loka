@@ -16,7 +16,7 @@ import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
 import Menu from "@mui/material/Menu";
 import logoicon from "../images/theme/grocery-bag.png";
 import { get } from "../utils/serverCall.js";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { REDUCER } from "../utils/consts";
 import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +29,8 @@ import * as actions from "../reducers/actions";
 import LocationSearchInput from "./LocationAuto";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { getCoordinates } from "../utils/mapsHelper";
+import { bindActionCreators } from "redux";
+import { actionCreators as aCreators } from "../reducers/actionCreators";
 
 function MenuAppBar(props) {
   // console.log("props - ", props);
@@ -43,6 +45,12 @@ function MenuAppBar(props) {
 
   const errorState = useSelector((state) => state.errorReducer);
   const messageState = useSelector((state) => state.messageReducer);
+
+  const dispatch = useDispatch();
+  const { updateLocation, updateSearch } = bindActionCreators(
+    aCreators,
+    dispatch
+  );
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -110,6 +118,10 @@ function MenuAppBar(props) {
     }
   }, [props]);
 
+  useEffect(() => {
+    updateLocation(location);
+  }, [location]);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ background: "#063970" }}>
@@ -132,7 +144,12 @@ function MenuAppBar(props) {
               callback={(data) => {
                 // console.log("location", data);
                 getCoordinates(data.description).then((data) => {
-                  console.log(data);
+                  // console.log("newLocation", data);
+                  setLocation({
+                    address: data.description,
+                    coordinates: [data.lat, data.lng],
+                  });
+                  // updateLocation(data);
                 });
               }}
             ></SearchGMaps>
