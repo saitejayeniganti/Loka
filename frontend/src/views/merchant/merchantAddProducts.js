@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Grid, Paper, TextField, InputAdornment, Autocomplete, Button, Stack, Typography, Divider, Alert } from '@mui/material'
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
 import Lottie from "react-lottie";
 import addProducts from '../../animations/addProductsVendor.json'
 import FileUpload from "../../components/FileUpload";
+import { useBrand } from "./customhooks/index"
 
 const defaultOptions = {
     loop: true,
@@ -28,19 +29,17 @@ export default function MerchantAddProducts() {
     const [productData, setProductData] = useState(defaultProductData)
     const [incompleteFieldFlag, setIncompleteFieldFlag] = useState(false)
     const [imageUploadFlag, setImageUploadFlag] = useState(false)
+    const { brandData } = useBrand()
 
     const handleProductDataChange = (event) => {
-        console.log(productData)
         setProductData({ ...productData, [event.target.name]: event.target.value })
     }
 
     const handleBrandAutoComplete = (event, newValue) => {
-        console.log(productData)
         setProductData({ ...productData, brand: newValue })
     }
 
     const onAddProduct = () => {
-        console.log(productData)
         if (productData.sku === "" ||
             productData.name === "" ||
             productData.description === "" ||
@@ -51,7 +50,6 @@ export default function MerchantAddProducts() {
             setIncompleteFieldFlag(true)
             return
         }
-        console.log("No Empty Data")
     }
 
     return (
@@ -80,7 +78,7 @@ export default function MerchantAddProducts() {
                                     InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment>, }} onChange={handleProductDataChange} />
                             </Stack>
                             <Stack direction="row" spacing={2}>
-                                <Autocomplete fullWidth required freeSolo options={options} renderInput={(params) => <TextField {...params} label="Brand" />} onInputChange={handleBrandAutoComplete} />
+                                <Autocomplete fullWidth required freeSolo options={brandData} renderInput={(params) => <TextField {...params} label="Brand" />} onInputChange={handleBrandAutoComplete} />
                                 <FileUpload
                                     callback={(imageURL) => {
                                         setImageUploadFlag(true)
