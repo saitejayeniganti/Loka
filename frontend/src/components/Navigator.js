@@ -126,6 +126,31 @@ function MenuAppBar(props) {
     updateSearchInput(searchInput);
   }, [searchInput]);
 
+  const searchBoxes = () => {
+    <div style={{ marginLeft: "16px" }}>
+      <SearchGMaps
+        input={location.address}
+        callback={(data) => {
+          getCoordinates(data.description).then((data) => {
+            setLocation({
+              address: data.description,
+              coordinates: [data.lat, data.lng],
+            });
+          });
+        }}
+      ></SearchGMaps>
+    </div>;
+
+    <div style={{ margin: "auto" }}>
+      <SearchMain
+        input=""
+        callback={(data) => {
+          setSearchInput(data);
+        }}
+      ></SearchMain>
+    </div>;
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" style={{ background: "#063970" }}>
@@ -142,37 +167,7 @@ function MenuAppBar(props) {
           <Typography variant="h5" component="div">
             LOKA
           </Typography>
-          <div style={{ marginLeft: "16px" }}>
-            <SearchGMaps
-              input={location.address}
-              callback={(data) => {
-                // console.log("location", data);
-                getCoordinates(data.description).then((data) => {
-                  // console.log("newLocation", data);
-                  setLocation({
-                    address: data.description,
-                    coordinates: [data.lat, data.lng],
-                  });
-                  // updateLocation(data);
-                });
-              }}
-            ></SearchGMaps>
-          </div>
-          {/* <div style={{ marginLeft: "16px" }}>
-            <LocationSearchInput
-              handleChange={handleLocationChange}
-              handleSelect={handleLocationSelect}
-              address={location.address}
-            />
-          </div> */}
-          <div style={{ margin: "auto" }}>
-            <SearchMain
-              input=""
-              callback={(data) => {
-                setSearchInput(data);
-              }}
-            ></SearchMain>
-          </div>
+          {props.isLoggedIn && props.user.role == 1 && searchBoxes()}
           {/* {props.user && (
             <Typography variant="h5" component="div">
               {props.user.firstName}
@@ -223,6 +218,14 @@ function MenuAppBar(props) {
                         }}
                       >
                         Login
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          navigate("/signup");
+                          setAnchorEl(null);
+                        }}
+                      >
+                        Signup
                       </MenuItem>
                     </div>
                   )}
