@@ -28,7 +28,9 @@ function loadScript(src, position, id) {
 
 const autocompleteService = { current: null };
 
-export default function SearchGMaps() {
+export default function SearchGMaps({ input, callback }) {
+  // console.log(input, "input ");
+
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState("");
   const [options, setOptions] = React.useState([]);
@@ -83,7 +85,7 @@ export default function SearchGMaps() {
         }
 
         if (results) {
-          // console.log("results", results);
+          console.log("results", results);
           newOptions = [...newOptions, ...results];
         }
 
@@ -95,6 +97,10 @@ export default function SearchGMaps() {
       active = false;
     };
   }, [value, inputValue, fetch]);
+
+  React.useEffect(() => {
+    setInputValue(input);
+  }, [input]);
 
   return (
     <Autocomplete
@@ -110,18 +116,26 @@ export default function SearchGMaps() {
       filterSelectedOptions
       freeSolo
       value={value}
+      inputValue={inputValue}
       onChange={(event, newValue) => {
-        // console.log("changed");
-        setOptions(newValue ? [newValue, ...options] : options);
-        setValue(newValue);
-        // console.log(newValue);
+        // console.log(options, value, inputValue);
+        if (newValue && newValue.description) {
+          setOptions(newValue ? [newValue, ...options] : options);
+          setValue(newValue);
+          callback(newValue);
+        } else {
+          // console.log(value.description);
+          // setInputValue(value.description);
+          // setValue("h");
+          // setOptions([]);
+        }
       }}
       onInputChange={(event, newInputValue) => {
         setInputValue(newInputValue);
         // console.log("typing");
       }}
       renderInput={(params) => {
-        // console.log("params", params);
+        // console.log("render input", params);
         return (
           <Box sx={{ display: "flex", alignItems: "flex-end" }}>
             {/* <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} /> */}

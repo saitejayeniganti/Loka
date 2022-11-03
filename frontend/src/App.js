@@ -177,23 +177,27 @@ function App() {
 
   return (
     <div className="App">
-      <Router>
-        <div
-          style={{
-            position: "fixed",
-            width: "100%",
-            height: "64px",
-            zIndex: "100",
-          }}
-        >
-          <Navigator isLoggedIn={isLoggedIn} user={user} />
-        </div>
+      {loadSpinner ? (
+        inProgressComponent()
+      ) : (
+        <Router>
+          <div
+            style={{
+              position: "fixed",
+              width: "100%",
+              height: "64px",
+              zIndex: "100",
+            }}
+          >
+            <Navigator isLoggedIn={isLoggedIn} user={user} />
+          </div>
 
-        <div style={{ paddingTop: "64px" }}>
-          {/* padding relative to navigator height*/}
-          {loadSpinner ? inProgressComponent() : routes()}
-        </div>
-      </Router>
+          <div style={{ paddingTop: "64px" }}>
+            {/* padding relative to navigator height*/}
+            {routes()}
+          </div>
+        </Router>
+      )}
     </div>
   );
 }

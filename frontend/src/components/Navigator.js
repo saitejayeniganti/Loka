@@ -28,16 +28,18 @@ import Cart from "../views/cart/Cart";
 import * as actions from "../reducers/actions";
 import LocationSearchInput from "./LocationAuto";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import { getCoordinates } from "../utils/mapsHelper";
 
 function MenuAppBar(props) {
   // console.log("props - ", props);
+  const defaultLocation = {
+    coordinates: [37.33, -121.88],
+    address: "San José State University, Washington Sq, San Jose",
+  };
   const navigate = useNavigate();
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [location, setLocation] = useState({
-    coordinates: [37.33, -121.88],
-    address: "San José State University, 1 Washington Sq, San Jose",
-  });
+  const [location, setLocation] = useState(defaultLocation);
 
   const errorState = useSelector((state) => state.errorReducer);
   const messageState = useSelector((state) => state.messageReducer);
@@ -101,31 +103,12 @@ function MenuAppBar(props) {
     }
   }, [messageState]);
 
-  const handleLocationChange = (address) => {
-    // setAddress(address);
-    setLocation((prev) => {
-      return { ...prev, address };
-    });
-  };
-
-  const handleLocationSelect = (address) => {
-    geocodeByAddress(address).then((results) => {
-      // setAddress(address);
-      setLocation((prev) => {
-        return { ...prev, address };
-      });
-      getLatLng(results[0])
-        .then((latLng) => {
-          console.log("Success", latLng);
-          setLocation((prev) => {
-            return { ...prev, coordinates: [latLng.lat, latLng.lng] };
-          });
-          // setLatitude(latLng.lat);
-          // setLongitude(latLng.lng);
-        })
-        .catch((error) => console.error("Error", error));
-    });
-  };
+  useEffect(() => {
+    if (props.isLoggedIn) {
+      console.log("update location");
+      setLocation(props.user.location);
+    }
+  }, [props]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -144,7 +127,15 @@ function MenuAppBar(props) {
             LOKA
           </Typography>
           <div style={{ marginLeft: "16px" }}>
-            <SearchGMaps></SearchGMaps>
+            <SearchGMaps
+              input={location.address}
+              callback={(data) => {
+                // console.log("location", data);
+                getCoordinates(data.description).then((data) => {
+                  console.log(data);
+                });
+              }}
+            ></SearchGMaps>
           </div>
           {/* <div style={{ marginLeft: "16px" }}>
             <LocationSearchInput
