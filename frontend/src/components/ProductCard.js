@@ -1,4 +1,4 @@
-import { Card, CardContent, CardMedia, CardActions, Button, Typography, CardHeader, Grid, Stack, Divider } from '@mui/material'
+import { Card, CardMedia, CardActions, Button, Typography, Grid, Stack, Divider } from '@mui/material'
 
 export default function ProductCard(props) {
     return (
