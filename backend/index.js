@@ -8,6 +8,7 @@ const connection = require("./database/mongoConnection");
 var userRoute = require("./routes/userRoute");
 var vendorRoute = require("./routes/vendorRoute");
 const productRoute = require("./routes/product");
+const brandRoute = require("./routes/brand")
 const reviewRoute = require("./routes/review");
 const orderRoute = require("./routes/order");
 // var auth = require("./routes/auth");
@@ -87,6 +88,7 @@ async function initializeApplication() {
     app.use("/loca/vendor", vendorRoute);
     // app.use("/user", auth);
     app.use("/product", productRoute);
+    app.use("/brand", brandRoute);
     app.use("/review", reviewRoute);
     app.use("/order", orderRoute);
     app.use("/auth", authrouter);
