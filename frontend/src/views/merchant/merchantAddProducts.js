@@ -5,6 +5,8 @@ import Lottie from "react-lottie";
 import addProducts from '../../animations/addProductsVendor.json'
 import FileUpload from "../../components/FileUpload";
 import { useBrand } from "./customhooks/index"
+import { addProduct } from '../../reducers/actions'
+import { displayMessage, displayError } from '../../utils/messages'
 
 const defaultOptions = {
     loop: true,
@@ -22,13 +24,12 @@ const defaultProductData = {
     quantity: "",
     price: "",
     brand: "",
-    image: ""
+    image: "",
+    merchant: "636458aacdca6561d00fe6e4"
 }
 
 export default function MerchantAddProducts() {
     const [productData, setProductData] = useState(defaultProductData)
-    const [incompleteFieldFlag, setIncompleteFieldFlag] = useState(false)
-    const [imageUploadFlag, setImageUploadFlag] = useState(false)
     const { brandData } = useBrand()
 
     const handleProductDataChange = (event) => {
@@ -36,10 +37,10 @@ export default function MerchantAddProducts() {
     }
 
     const handleBrandAutoComplete = (event, newValue) => {
-        setProductData({ ...productData, brand: newValue })
+        setProductData({ ...productData, brand: newValue.id })
     }
 
-    const onAddProduct = () => {
+    const onAddProduct = async () => {
         if (productData.sku === "" ||
             productData.name === "" ||
             productData.description === "" ||
@@ -47,17 +48,19 @@ export default function MerchantAddProducts() {
             productData.price === "" ||
             productData.brand === "" ||
             productData.image === "") {
-            setIncompleteFieldFlag(true)
+            displayError("Please Enter All The Details")
             return
+        }
+        try {
+            const addProductResult = await addProduct(productData)
+            displayMessage(addProductResult.message)
+        } catch (e) {
+            displayError(e.error)
         }
     }
 
     return (
         <>
-            <div style={{ width: "50%", margin: "auto", paddingTop: "10px" }}>
-                {incompleteFieldFlag && <Alert onClose={() => setIncompleteFieldFlag(false)} severity="error">Please Enter All The Details</Alert>}
-                {imageUploadFlag && <Alert onClose={() => setImageUploadFlag(false)} severity="success">Image Uploaded Successfully</Alert>}
-            </div>
             <Grid container sx={{ paddingTop: '20px' }}>
                 <Grid xs={6}>
                     <Grid><Lottie options={defaultOptions} height={500} width={500} /></Grid>
@@ -78,10 +81,10 @@ export default function MerchantAddProducts() {
                                     InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment>, }} onChange={handleProductDataChange} />
                             </Stack>
                             <Stack direction="row" spacing={2}>
-                                <Autocomplete fullWidth required freeSolo options={brandData} renderInput={(params) => <TextField {...params} label="Brand" />} onInputChange={handleBrandAutoComplete} />
+                                <Autocomplete fullWidth required freeSolo options={brandData} renderInput={(params) => <TextField {...params} label="Brand" />} onChange={handleBrandAutoComplete} />
                                 <FileUpload
                                     callback={(imageURL) => {
-                                        setImageUploadFlag(true)
+                                        displayMessage("Image Uploaded Successfully")
                                         setProductData({ ...productData, image: imageURL })
                                     }}
                                     fileName={productData.brand + productData.name + productData.sku}

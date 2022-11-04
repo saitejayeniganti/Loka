@@ -38,7 +38,12 @@ export const fetchProductById = (id) => {
 };
 
 export const addProduct = async (productData) => {
-  const addProductResult = await post(`/product/add/`, productData)
+  try {
+    const addProductResult = await post(`/product/add/`, productData)
+    return addProductResult
+  } catch (e) {
+    throw e
+  }
 }
 
 // fetch review by ID api
