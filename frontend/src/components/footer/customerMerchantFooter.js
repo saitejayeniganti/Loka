@@ -9,7 +9,7 @@ import deliveryHome from "../../animations/deliveryHome.json";
 import Lottie from "react-lottie";
 import nearBy from "../../images/theme/nearby.jpeg";
 
-function Footer() {
+function CustomerMerchantFooter() {
 
     const [q1,setQ1]=useState(false)
     const [q2,setQ2]=useState(false)
@@ -32,13 +32,17 @@ function Footer() {
                     <h2 class="css-1u4uyso">Product delivery you can count on</h2>
                     <div className="div2">
 
-                          {/* <div className="div3">
+                       
+
+                       <div className="div3">
                             <div>
                                 <div style={{padding:"5px"}}><h3>Check out near by markets</h3></div>
-                                <p>Get to know your nearby markets and find out if the products are available.</p>
+                                <div style={{paddingLeft:"5px",paddingRight:"5px"}}>
+                                <p>Get to know your nearby markets and find out if the products are available.</p></div>
                                 </div>
-                                <img src={nearBy} width="376px" height="232px" marginBottonLeftRadius="20px" marginBottonRightRadius="20px"></img>
-                        </div> */}
+                                <img src={footer1}></img>
+                        </div>
+
 
                         <div className="div3">
                             <div>
@@ -59,7 +63,7 @@ function Footer() {
                        <div className="div3">
                             <div style={{padding:"5px"}}>
                                 <div ><h3>Get your products delivered </h3></div>
-                                <p>Select items from your nearby stores at Loka.com to get them delivered to you or pick them up quickly.</p>
+                                <p>Select items from your nearby stores at Loka.com to get them delivered to you.</p>
                                 </div>
                                 <img src={footer3}></img>
                         </div>
@@ -430,4 +434,4 @@ function Footer() {
     )
 }
 
-export default Footer;
+export default CustomerMerchantFooter;
