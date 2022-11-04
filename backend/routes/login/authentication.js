@@ -130,6 +130,8 @@ const checkRegistration = () => {};
 const insertMerchant = (body, res) => {
   const merchant = {};
   merchant.email = body.email;
+  merchant.location = body.location;
+  merchant.storeName = body.storeName;
   const newMerchant = new MerchantModel(merchant);
   newMerchant.save((err, result) => {
     if (err) {

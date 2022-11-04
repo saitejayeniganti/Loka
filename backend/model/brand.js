@@ -22,8 +22,8 @@ const BrandSchema = new Schema({
     unique: true
   },
   image: {
-    data: Buffer,
-    contentType: String
+    type: String,
+    required: true,
   },
   description: {
     type: String,

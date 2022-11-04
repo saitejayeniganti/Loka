@@ -26,6 +26,23 @@ const MerchantSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  location: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+    address: { type: String, trim: true },
+  },
+  storeName: {
+    type: String,
+    trim: true,
+    required: true,
+  },
 });
 
 module.exports = Mongoose.model("Merchant", MerchantSchema);

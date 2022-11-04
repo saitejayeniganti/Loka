@@ -8,6 +8,7 @@ const connection = require("./database/mongoConnection");
 var userRoute = require("./routes/userRoute");
 var vendorRoute = require("./routes/vendorRoute");
 const productRoute = require("./routes/product");
+const brandRoute = require("./routes/brand")
 const reviewRoute = require("./routes/review");
 const orderRoute = require("./routes/order");
 // var auth = require("./routes/auth");
@@ -20,6 +21,7 @@ const authrouter = require("./routes/login/authentication");
 const { jwtAuth } = require("./utils/jwtAuth");
 const MongoStore = require("connect-mongo");
 const searchRouter = require("./routes/Home/search");
+const customerRouter = require("./routes/Home/customer");
 
 app.use(
   session({
@@ -86,10 +88,12 @@ async function initializeApplication() {
     app.use("/loca/vendor", vendorRoute);
     // app.use("/user", auth);
     app.use("/product", productRoute);
+    app.use("/brand", brandRoute);
     app.use("/review", reviewRoute);
     app.use("/order", orderRoute);
     app.use("/auth", authrouter);
     app.use("/search", searchRouter);
+    app.use("/customer", customerRouter);
 
     await connection.createConnection();
     app.listen(process.env.NODE_PORT, () => {

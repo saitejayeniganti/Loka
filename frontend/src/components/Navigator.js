@@ -16,8 +16,8 @@ import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
 import Menu from "@mui/material/Menu";
 import logoicon from "../images/theme/grocery-bag.png";
 import { get } from "../utils/serverCall.js";
-import { useSelector } from "react-redux";
-import { REDUCER } from "../utils/consts";
+import { useDispatch, useSelector } from "react-redux";
+import { CONSTANTS, REDUCER } from "../utils/consts";
 import { Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
@@ -28,19 +28,27 @@ import Cart from "../views/cart/Cart";
 import * as actions from "../reducers/actions";
 import LocationSearchInput from "./LocationAuto";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
+import { getCoordinates } from "../utils/mapsHelper";
+import { bindActionCreators } from "redux";
+import { actionCreators as aCreators } from "../reducers/actionCreators";
 
 function MenuAppBar(props) {
   // console.log("props - ", props);
+  const defaultLocation = CONSTANTS.DEFAULT_ADDRESS;
   const navigate = useNavigate();
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [location, setLocation] = useState({
-    coordinates: [37.33, -121.88],
-    address: "San José State University, 1 Washington Sq, San Jose",
-  });
+  const [location, setLocation] = useState(defaultLocation);
+  const [searchInput, setSearchInput] = useState("");
 
   const errorState = useSelector((state) => state.errorReducer);
   const messageState = useSelector((state) => state.messageReducer);
+
+  const dispatch = useDispatch();
+  const { updateLocation, updateSearchInput } = bindActionCreators(
+    aCreators,
+    dispatch
+  );
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -101,30 +109,46 @@ function MenuAppBar(props) {
     }
   }, [messageState]);
 
-  const handleLocationChange = (address) => {
-    // setAddress(address);
-    setLocation((prev) => {
-      return { ...prev, address };
-    });
-  };
+  useEffect(() => {
+    if (props.isLoggedIn) {
+      console.log("update location");
+      setLocation(props.user.location);
+    }
+  }, [props]);
 
-  const handleLocationSelect = (address) => {
-    geocodeByAddress(address).then((results) => {
-      // setAddress(address);
-      setLocation((prev) => {
-        return { ...prev, address };
-      });
-      getLatLng(results[0])
-        .then((latLng) => {
-          console.log("Success", latLng);
-          setLocation((prev) => {
-            return { ...prev, coordinates: [latLng.lat, latLng.lng] };
-          });
-          // setLatitude(latLng.lat);
-          // setLongitude(latLng.lng);
-        })
-        .catch((error) => console.error("Error", error));
-    });
+  useEffect(() => {
+    updateLocation(location);
+  }, [location]);
+  useEffect(() => {
+    updateSearchInput(searchInput);
+  }, [searchInput]);
+
+  const searchBoxes = () => {
+    return (
+      <>
+        <div style={{ marginLeft: "16px" }}>
+          <SearchGMaps
+            input={location.address}
+            callback={(data) => {
+              getCoordinates(data.description).then((data) => {
+                setLocation({
+                  address: data.description,
+                  coordinates: [data.lat, data.lng],
+                });
+              });
+            }}
+          ></SearchGMaps>
+        </div>
+        <div style={{ margin: "auto" }}>
+          <SearchMain
+            input=""
+            callback={(data) => {
+              setSearchInput(data);
+            }}
+          ></SearchMain>
+        </div>
+      </>
+    );
   };
 
   return (
@@ -143,19 +167,7 @@ function MenuAppBar(props) {
           <Typography variant="h5" component="div">
             LOKA
           </Typography>
-          <div style={{ marginLeft: "16px" }}>
-            <SearchGMaps></SearchGMaps>
-          </div>
-          {/* <div style={{ marginLeft: "16px" }}>
-            <LocationSearchInput
-              handleChange={handleLocationChange}
-              handleSelect={handleLocationSelect}
-              address={location.address}
-            />
-          </div> */}
-          <div style={{ margin: "auto" }}>
-            <SearchMain></SearchMain>
-          </div>
+          {props.isLoggedIn && props.user.role == 0 && searchBoxes()}
           {/* {props.user && (
             <Typography variant="h5" component="div">
               {props.user.firstName}
@@ -206,6 +218,14 @@ function MenuAppBar(props) {
                         }}
                       >
                         Login
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          navigate("/signup");
+                          setAnchorEl(null);
+                        }}
+                      >
+                        Signup
                       </MenuItem>
                     </div>
                   )}
