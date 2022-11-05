@@ -1,8 +1,11 @@
 import React, { useRef } from "react";
 import AWS from "aws-sdk";
+import { Button, MenuItem, Select, TextField } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 function FileUpload({ callback, fileName = "", folderPath = "" }) {
   const fileInput = useRef();
+
   const handleClick = (event) => {
     event.preventDefault();
     if (fileInput.current) {
@@ -52,12 +55,17 @@ function FileUpload({ callback, fileName = "", folderPath = "" }) {
         });
     }
   };
+  
   return (
     <>
-      <input type="file" ref={fileInput} style={{ margin: "8px" }} />
-      <button type="button" onClick={handleClick} style={{ margin: "8px" }}>
-        Upload2
-      </button>
+    <Grid container spacing={2}>
+      <Grid item xs={8} sx={{textAlign:"left"}}>
+          <input type="file" ref={fileInput} style={{ margin: "8px" }} />
+      </Grid>
+      <Grid item xs={4}>
+          <Button variant="outlined" onClick={handleClick}>Upload</Button>
+      </Grid>
+    </Grid>
     </>
   );
 }
