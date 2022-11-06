@@ -33,6 +33,7 @@ router.post(
       const isActive = req.body.isActive;
       const brand = req.body.brand;
       const image = req.body.image;
+      const merchant = req.body.merchant
 
       if (!sku) {
         return res.status(400).json({ error: 'You must enter sku.' });
@@ -70,6 +71,7 @@ router.post(
         isActive,
         brand,
         image,
+        merchant
       });
 
       const savedProduct = await product.save();
@@ -162,7 +164,7 @@ router.get(
           })
           .where('brand', brandId);
       } else {
-         productDoc = await Product.findOne({ _id: productId })//.populate({
+        productDoc = await Product.findOne({ _id: productId })//.populate({
         //   path: 'brand',
         //   select: 'name'
         // });
@@ -173,7 +175,7 @@ router.get(
           message: 'No product found.'
         });
       }
-      
+
 
       res.status(200).json({
         product: productDoc

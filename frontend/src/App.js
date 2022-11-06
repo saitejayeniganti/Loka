@@ -42,6 +42,22 @@ import { bindActionCreators } from "redux";
 // import MapsWithIcon from "../src/components/merchantMap";
 import AdRequest from "./views/AdRequest";
 import MapView from "./components/MapView";
+import PayPalTest from "./views/paypalTest";
+import ProductReviews from "./components/reviews/ProductReviews";
+import ReviewsTest from "./views/ReviewsTest";
+import AdminUsers from "./views/admin/adminUsers";
+import AdminUserDetail from "./views/admin/adminUserDetail";
+import AdminUserOrders from "./views/admin/adminUserOrders";
+import AdminUserReviews from "./views/admin/adminUserReviews";
+import AdminVendors from "./views/admin/adminVendors";
+import AdminVendorDetail from "./views/admin/adminVendorDetail";
+import AdminVendorOrders from "./views/admin/adminVendorOrders";
+import CustomerMerchantView from "./views/customer/customerMerchantView";
+import Fb from "./components/fb";
+
+
+
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -161,6 +177,14 @@ function App() {
           element={<MerchantAddProducts />}
         ></Route>
         <Route path="/adminhome" exact element={<AdminHome />}></Route>
+        <Route path="/adminusers" exact element={<AdminUsers />}></Route>
+        <Route path="/adminuserdetail" exact element={<AdminUserDetail />}></Route>
+        <Route path="/adminuserorders" exact element={<AdminUserOrders />}></Route>
+        <Route path="/adminvendors" exact element={<AdminVendors />}></Route>
+        <Route path="/adminvendordetail" exact element={<AdminVendorDetail />}></Route>
+        <Route path="/adminvendororders" exact element={<AdminVendorOrders />}></Route>
+        <Route path="/adminuserreviews" exact element={<AdminUserReviews />}></Route>
+        <Route path="/customermerchant" exact element={<CustomerMerchantView />}></Route>
         <Route path="/productList" exact element={<ProductList />}></Route>
         <Route path="/product" exact element={<Product />}></Route>
         <Route path="/bill" exact element={<Bill />}></Route>
@@ -170,8 +194,13 @@ function App() {
         <Route path="/location" exact element={<LocationSearch />}></Route>
         <Route path="/profile" exact element={<Profile />}></Route>
         <Route path="/progress" element={<Progress></Progress>}></Route>
-        <Route path="/adrequest" element={<AdRequest />}></Route>
+        
         <Route path="/mapview" element={<MapView />}></Route>
+        <Route path="/adrequest" element={<AdRequest/>}></Route>
+        <Route path="/paypal" element={<PayPalTest/>}></Route>
+        <Route path="/rew" element={<ProductReviews/>}></Route>
+        <Route path="/review" element={<ReviewsTest/>}></Route>
+        <Route path="/fb" element={<Fb/>}></Route>
         <Route path="*" element={<ErrorPath></ErrorPath>}></Route>
       </Routes>
     );
