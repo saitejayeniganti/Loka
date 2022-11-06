@@ -12,3 +12,7 @@ export const openCart = () => (dispatch) => {
 export const closeCart = () => (dispatch) => {
   dispatch({ type: ACTION.CLOSE_CART });
 };
+export const clearCart = () => (dispatch) => {
+  dispatch({ type: ACTION.CLEAR_CART });
+};
+

@@ -1,4 +1,4 @@
-import { Grid, Rating, Typography, Link, Button, Divider, Input, TextField, Snackbar } from "@mui/material";
+import { Grid, Rating, Typography, Button, Divider, TextField, Snackbar } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import productImage from "../../images/products/apple.jpeg";

@@ -16,10 +16,6 @@ import shopAnimation from "../../animations/shop1.json";
 import merchant1 from "../../animations/loginmap.json";
 import merchant3 from "../../animations/m3.json";
 
-
-
-
-
 import { get, post } from "../../utils/serverCall.js";
 import { useNavigate } from "react-router-dom";
 import { showMessage } from "../../reducers/actions.js";

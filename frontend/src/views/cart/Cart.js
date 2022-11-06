@@ -21,6 +21,18 @@ const Cart = (props) => {
     totalPrice += x.price;
   }
   const items = Array.from(allItemMap.values());
+
+  const addNewOrder = (e) => {
+    e.preventDefault();
+    props.addNewOrder(props.items)
+      .then((result) => {
+        showMessage("Order Confirmed");
+        navigate("/Bill");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   return (
     <Wrapper>
       <h2>Your Cart</h2>

@@ -59,6 +59,65 @@ router.post('/add', async (req, res) => {
   }
 });
 
+// fetch order id 
+router.get('/:orderId', auth, async (req, res) => {
+  try {
+    const orderId = req.params.orderId;
+
+    let orderDoc = null;
+
+    if (req.user.role === role.ROLES.Admin) {
+      orderDoc = await Order.findOne({ _id: orderId }).populate({
+        path: 'cart',
+        populate: {
+          path: 'products.product',
+          populate: {
+            path: 'brand'
+          }
+        }
+      });
+    } else {
+      const user = req.user._id;
+      orderDoc = await Order.findOne({ _id: orderId, user }).populate({
+        path: 'cart',
+        populate: {
+          path: 'products.product',
+          // populate: {
+          //   path: 'brand'
+          // }
+        }
+      });
+    }
+
+    if (!orderDoc || !orderDoc.cart) {
+      return res.status(404).json({
+        message: `Cannot find order with the id: ${orderId}.`
+      });
+    }
+
+    let order = {
+      _id: orderDoc._id,
+      total: orderDoc.total,
+      created: orderDoc.created,
+      totalTax: 0,
+      products: orderDoc?.cart?.products,
+      cartId: orderDoc.cart._id
+    };
+
+    order = store.caculateTaxAmount(order);
+
+    res.status(200).json({
+      order
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+
+
 const decreaseQuantity = products => {
   let bulkOptions = products.map(item => {
     return {
@@ -71,4 +130,6 @@ const decreaseQuantity = products => {
 
   Product.bulkWrite(bulkOptions);
 };
+
+
 module.exports = router;
