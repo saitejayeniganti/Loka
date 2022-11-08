@@ -31,6 +31,8 @@ import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { getCoordinates } from "../utils/mapsHelper";
 import { bindActionCreators } from "redux";
 import { actionCreators as aCreators } from "../reducers/actionCreators";
+import lokamarketlogo from "../images/admin/online-marketplace.png";
+
 
 function MenuAppBar(props) {
   // console.log("props - ", props);
@@ -162,7 +164,7 @@ function MenuAppBar(props) {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <img src={logoicon} width="28" height="28" />
+            <img src={lokamarketlogo} width="30" height="30" />
           </IconButton>
           <Typography variant="h5" component="div">
             LOKA

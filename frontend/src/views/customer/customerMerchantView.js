@@ -151,11 +151,10 @@ const renderProducts = () => {
                           style={{ padding: "10px", paddingBottom: "20px" }}
                         //   onClick={() => this.handleOpen(dish)}
                         >
-                          <Card sx={{ width: "14vw",height:"30vh",padding:"5px",borderWidth:"2px",backgroundColor:"#f3f3ea",cursor:"pointer" }}>
+                          <Card sx={{ width: "14vw",height:"30vh",borderWidth:"2px",backgroundColor:"#f3f3ea",cursor:"pointer",borderRadius:"10px" }}>
                             <CardMedia
                                 component="img"
-                                alt="green iguana"
-                                height="200"
+                                height="190vh"
                                 image={kiwi}
                             />
                                 <CardContent>
@@ -172,11 +171,10 @@ const renderProducts = () => {
                                             Lizards are a widespread group of squamate reptiles
                                      </Typography>
                                 </CardContent>
-                            {/* <CardActions>
-                                <Button size="small">Share</Button>
-                                <Button size="small">Learn More</Button>
-                            </CardActions> */}
+                        
                           </Card>
+                      
+
                         </div>
                       </>
                     );

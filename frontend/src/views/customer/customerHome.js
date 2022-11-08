@@ -10,11 +10,24 @@ import banner from "../../images/theme/banner.jpeg";
 import banner1 from "../../images/theme/banner1.jpeg";
 import banner2 from "../../images/theme/banner2.jpeg";
 import { buttonUnstyledClasses } from "@mui/base";
+import Lottie from "react-lottie";
 import { useSelector } from "react-redux";
 import { CONSTANTS, REDUCER } from "../../utils/consts";
 import { get } from "../../utils/serverCall";
+import shoppingOrderConfirm from "../../animations/shopping-order-confirm.json";
+
 
 function CustomerHome() {
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: shoppingOrderConfirm,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
   const vendors = [
     {
       id: 1,
@@ -79,14 +92,19 @@ function CustomerHome() {
 
   return (
     <>
-      <div className="homeBanner" style={{ textAlign: "right" }}>
+ 
+    
+
+      <div className="homeBanner" style={{ textAlign: "left" }}>
         <img src={banner1} height="220px"></img>
       </div>
-
+     
       <div className="homeBanner1">
         <h1>Order products for pickup or delivery today</h1>
         <p>Whatever you want from local stores, brought right to your door.</p>
       </div>
+
+
 
       <div
         style={{

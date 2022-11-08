@@ -91,6 +91,7 @@ const defaultOptions = {
     <div style={{backgroundColor:"#24476a",position:"fixed",height:"100vh",width:"70vw"}}></div>
     <div style={{height:"100vh",backgroundColor:"#e7e4e4",width:"50vw",marginLeft:"50vw",position:"fixed",borderTopLeftRadius:"70%"}}></div>
     <div style={{position:"relative"}}>
+      
     <Grid container spacing={2} sx={{backgroundColor:"#aedbde",padding:"10px",top:0}}>
       <Grid item xs={3}>
           <Lottie options={defaultOptions} height={200} width={280} />
