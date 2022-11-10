@@ -60,7 +60,7 @@ router.post('/add', async (req, res) => {
 });
 
 // fetch order id 
-router.get('/:orderId', auth, async (req, res) => {
+router.get('/:orderId', async (req, res) => {
   try {
     const orderId = req.params.orderId;
 

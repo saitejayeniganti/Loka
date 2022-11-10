@@ -21,8 +21,9 @@ export default function ProductCard(props) {
                     </Typography>
                     <Divider sx={{ opacity: '1' }} />
                     <CardActions>
-                        <Grid container justifyContent="flex-end">
-                            {props.isMerchant && <Button size="small" variant="outlined" >Edit</Button>}
+                        <Grid container spacing={1} justifyContent="flex-end">
+                            <Grid item>{props.isMerchant && <Button size="small" variant="outlined" >Edit</Button>}</Grid>
+                            <Grid item> {props.isMerchant && <Button size="small" variant="outlined" color="error">Delete</Button>}</Grid>
                         </Grid>
                     </CardActions>
                 </Stack>
