@@ -46,6 +46,15 @@ export const addProduct = async (productData) => {
   }
 }
 
+export const getProductsByMerchantId = async (merchantId) => {
+  try {
+    const merchantProducts = await get(`/product/merchant/` + id);
+    return merchantProducts
+  } catch (e) {
+    throw e
+  }
+}
+
 // fetch review by ID api
 export const fetchReviewById = (id) => {
   return async (dispatch, getState) => {

@@ -4,7 +4,7 @@ export default function ProductCard(props) {
     return (
         <>
             <Card sx={{ maxWidth: 300, textAlign: 'left' }} raised>
-                <CardMedia component="img" height="200" image={props.image} />
+                <CardMedia component="img" height="200" src={props.image} />
                 <Stack spacing={1} sx={{ padding: "15px" }}>
                     <Typography variant="h5" >{props.title}</Typography>
                     <Stack

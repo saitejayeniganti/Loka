@@ -3,8 +3,17 @@ import shopInventory from '../../images/merchant/shopInventory.jpg'
 import sampleProduct from '../../images/merchant/sampleProduct.jpg'
 import ProductCard from '../../components/ProductCard';
 import { Grid } from '@mui/material'
+import { useInventory } from './customhooks/index'
+import { useEffect } from 'react'
 
 export default function MerchantInventory() {
+    const { inventory, fetchAllProductsByMerchantId } = useInventory()
+    console.log(inventory)
+
+    useEffect(() => {
+        fetchAllProductsByMerchantId("636458aacdca6561d00fe6e4")
+    }, [])
+
     return (
         <>
             <div style={{ position: "relative" }}>
@@ -13,12 +22,10 @@ export default function MerchantInventory() {
             </div>
             <div>
                 <Grid container spacing={1} sx={{ padding: '10px' }}>
-                    <Grid item xs={3} lg={2}><ProductCard title={'Tomato'} description={'The tomato is the edible berry of the plant Solanum lycopersicum, commonly known as the tomato plant. The species originated in western South America, Mexico, and Central America.'} image={sampleProduct} price={10} quantity={20} brand={'SpanishGreens'} isMerchant /></Grid>
-                    <Grid item xs={3} lg={2}><ProductCard title={'Tomato'} description={'The tomato is the edible berry of the plant Solanum lycopersicum, commonly known as the tomato plant. The species originated in western South America, Mexico, and Central America.'} image={sampleProduct} price={10} quantity={20} brand={'SpanishGreens'} /></Grid>
-                    <Grid item xs={3} lg={2}><ProductCard title={'Tomato'} description={'The tomato is the edible berry of the plant Solanum lycopersicum, commonly known as the tomato plant. The species originated in western South America, Mexico, and Central America.'} image={sampleProduct} price={10} quantity={20} brand={'SpanishGreens'} /></Grid>
-                    <Grid item xs={3} lg={2}><ProductCard title={'Tomato'} description={'The tomato is the edible berry of the plant Solanum lycopersicum, commonly known as the tomato plant. The species originated in western South America, Mexico, and Central America.'} image={sampleProduct} price={10} quantity={20} brand={'SpanishGreens'} /></Grid>
-                    <Grid item xs={3} lg={2}><ProductCard title={'Tomato'} description={'The tomato is the edible berry of the plant Solanum lycopersicum, commonly known as the tomato plant. The species originated in western South America, Mexico, and Central America.'} image={sampleProduct} price={10} quantity={20} brand={'SpanishGreens'} /></Grid>
-                    <Grid item xs={3} lg={2}><ProductCard title={'Tomato'} description={'The tomato is the edible berry of the plant Solanum lycopersicum, commonly known as the tomato plant. The species originated in western South America, Mexico, and Central America.'} image={sampleProduct} price={10} quantity={20} brand={'SpanishGreens'} /></Grid>
+                    {inventory.map((singleItem) => {
+                        return (<Grid item xs={3} lg={2} key={singleItem._id}><ProductCard title={singleItem.name} description={singleItem.description} image={singleItem.image} price={singleItem.price} quantity={singleItem.quantity} brand={singleItem.brand.name} isMerchant /></Grid>)
+                    })
+                    }
                 </Grid>
             </div>
             <a href="https://www.freepik.com/free-vector/warehouse-interior-with-cardboard-boxes-racks_7741532.htm#query=inventory&position=0&from_view=search&track=sph">Image by upklyak</a> on Freepik
