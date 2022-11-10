@@ -28,6 +28,7 @@ import LocationSearch from "./components/LocationSearch";
 import RouteMap from "./views/routeMap";
 import MerchantLogin from "./views/merchant/merchantLogin";
 import MerchantAddProducts from "./views/merchant/merchantAddProducts";
+import MerchantInventory from "./views/merchant/merchantInventory"
 import { useSelector } from "react-redux";
 import { REDUCER } from "./utils/consts";
 import CustomerSignup from "./views/customer/customerSignup";
@@ -169,6 +170,7 @@ function App() {
           exact
           element={<CustomerSignup />}
         ></Route>
+        <Route path="/merchantinventory" exact element={<MerchantInventory />}></Route>
         <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
         <Route path="/merchantlogin" exact element={<MerchantLogin />}></Route>
         <Route
@@ -194,13 +196,13 @@ function App() {
         <Route path="/location" exact element={<LocationSearch />}></Route>
         <Route path="/profile" exact element={<Profile />}></Route>
         <Route path="/progress" element={<Progress></Progress>}></Route>
-        
+
         <Route path="/mapview" element={<MapView />}></Route>
-        <Route path="/adrequest" element={<AdRequest/>}></Route>
-        <Route path="/paypal" element={<PayPalTest/>}></Route>
-        <Route path="/rew" element={<ProductReviews/>}></Route>
-        <Route path="/review" element={<ReviewsTest/>}></Route>
-        <Route path="/fb" element={<Fb/>}></Route>
+        <Route path="/adrequest" element={<AdRequest />}></Route>
+        <Route path="/paypal" element={<PayPalTest />}></Route>
+        <Route path="/rew" element={<ProductReviews />}></Route>
+        <Route path="/review" element={<ReviewsTest />}></Route>
+        <Route path="/fb" element={<Fb />}></Route>
         <Route path="*" element={<ErrorPath></ErrorPath>}></Route>
       </Routes>
     );
@@ -211,24 +213,24 @@ function App() {
       {loadSpinner ? (
         inProgressComponent()
       ) : (
-        <Router>
-          <div
-            style={{
-              position: "fixed",
-              width: "100%",
-              height: "64px",
-              zIndex: "100",
-            }}
-          >
-            <Navigator isLoggedIn={isLoggedIn} user={user} />
-          </div>
+          <Router>
+            <div
+              style={{
+                position: "fixed",
+                width: "100%",
+                height: "64px",
+                zIndex: "100",
+              }}
+            >
+              <Navigator isLoggedIn={isLoggedIn} user={user} />
+            </div>
 
-          <div style={{ paddingTop: "64px" }}>
-            {/* padding relative to navigator height*/}
-            {routes()}
-          </div>
-        </Router>
-      )}
+            <div style={{ paddingTop: "64px" }}>
+              {/* padding relative to navigator height*/}
+              {routes()}
+            </div>
+          </Router>
+        )}
     </div>
   );
 }

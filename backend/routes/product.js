@@ -186,4 +186,37 @@ router.get(
     }
   }
 );
+
+router.get(
+  '/merchant/:id',
+  // auth,
+  // role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  async (req, res) => {
+    try {
+      const merchantId = req.params.id;
+      console.log(req.params);
+
+      const productsDoc = await Product.find({ merchant: merchantId }).populate({
+        path: 'brand',
+        select: 'name'
+      });
+
+      if (!productsDoc) {
+        return res.status(404).json({
+          message: 'No products found.'
+        });
+      }
+
+      res.status(200).json({
+        product: productsDoc
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
+  }
+);
+
 module.exports = router;

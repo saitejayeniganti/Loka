@@ -80,8 +80,8 @@ export default function MerchantAddProducts() {
                                 <TextField fullWidth required type="number" label="Price" name="price"
                                     InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment>, }} onChange={handleProductDataChange} />
                             </Stack>
-                            <Stack direction="row" spacing={2}>
-                                <Autocomplete fullWidth required freeSolo options={brandData} renderInput={(params) => <TextField {...params} label="Brand" />} onChange={handleBrandAutoComplete} />
+                            <Autocomplete fullWidth required freeSolo options={brandData} renderInput={(params) => <TextField {...params} label="Brand" />} onChange={handleBrandAutoComplete} />
+                            <div><p>Image Upload</p>
                                 <FileUpload
                                     callback={(imageURL) => {
                                         displayMessage("Image Uploaded Successfully")
@@ -89,8 +89,7 @@ export default function MerchantAddProducts() {
                                     }}
                                     fileName={productData.brand + productData.name + productData.sku}
                                     folderPath="merchantProductsImages/"
-                                />
-                            </Stack>
+                                /></div>
                             <Divider variant="middle" />
                             <Button fullWidth variant="contained" color="success" onClick={onAddProduct}>Add Product</Button>
                         </Stack>
