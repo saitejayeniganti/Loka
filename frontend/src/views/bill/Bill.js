@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import billImage from "../../images/products/Bill.gif";
 import { Grid, Typography, Box } from "@mui/material";
 import OrderItems from "./OrderItems";
-import { showMessage } from "../../reducers/actions.js";
+import { displayError, displayMessage } from "../../utils/messages";
 const store = require('../../utils/store');
 import { useNavigate } from "react-router-dom";
 
@@ -28,12 +28,12 @@ const Bill = (props) => {
   }
 
   const items = Array.from(allItemMap.values());
-  console.log(items);
-  const addNewOrder = (e) => {
+  const addNewOrder = async (e) => {
     e.preventDefault();
     props.addNewOrder(props.items)
       .then((result) => {
-        showMessage("Order Confirmed");
+        displayMessage("Order Confirmed");
+        // console.log("order id", props.order_id._i);
         navigate("/order");
       })
       .catch((err) => {
@@ -74,6 +74,7 @@ const Bill = (props) => {
 const mapStateToProps = (state) => {
   return {
     items: state.cartReducer.items,
+    order_id: state.orderReducer.order_id,
   };
 };
 

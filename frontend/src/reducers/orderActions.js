@@ -1,5 +1,6 @@
 import { get, post } from "../utils/serverCall";
 import { ACTION } from '../utils/consts';
+
 export const addNewOrder = (items) => {
   return async (dispatch, getState) => {
     try {
@@ -28,24 +29,23 @@ export const addNewOrder = (items) => {
   };
 };
 
-export const fetchOrder = (id, withLoading = true) => {
+export const fetchOrderById = (id, withLoading = true) => {
   return async (dispatch, getState) => {
     try {
       if (withLoading) {
         // dispatch(setOrderLoading(true));
       }
-
-      const response = await axios.get(`/api/order/${id}`);
-
+      const response = await get(`/order/${id}`);
       dispatch({
-        type: FETCH_ORDER,
-        payload: response.data.order
+        type: ACTION.FETCH_ORDER,
+        payload: response.order
       });
     } catch (error) {
-      handleError(error, dispatch);
+      console.log(error);
+      // handleError(error, dispatch);
     } finally {
       if (withLoading) {
-        dispatch(setOrderLoading(false));
+        // dispatch(setOrderLoading(false));
       }
     }
   };

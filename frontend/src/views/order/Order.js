@@ -7,9 +7,15 @@ import { connect } from 'react-redux';
 
 
 const Order = (props) => {
-  // useEffect(() => {
-  //   props.fetchOrders();
-  // }, []);
+  const windowUrl = window.location.search;
+  const params = new URLSearchParams(windowUrl);
+  const id = params.get("id");
+  const orderId = id == null ? props.order_id?._id : id;
+
+  useEffect(() => {
+    props.fetchOrderById(orderId);
+  }, []);
+
   const Img = styled('img')({
     margin: 'auto',
     display: 'block',
@@ -20,7 +26,7 @@ const Order = (props) => {
     <>
       <Grid >
         <Box>
-          <Typography variant="h4"> Your Orders </Typography>
+          <Typography variant="h4"> Your Order Detail </Typography>
         </Box>
         <Grid container spacing={2} mt={1} >
           <Grid xs={3}>
@@ -37,39 +43,48 @@ const Order = (props) => {
                   theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
               }}
             >
-              <Grid container spacing={2} >
+              {props.order?.products.map((product, index) => (
+                <Grid container spacing={2} key={index} >
 
-                <Grid item>
-                  <ButtonBase sx={{ width: 128, height: 128 }}>
-                    <Img alt="complex" src={productImage} />
-                  </ButtonBase>
-                </Grid>
-                <Grid item xs={12} sm container textAlign="left">
-                  <Grid item xs container direction="column" spacing={2}>
-                    <Grid item xs>
-                      <Typography gutterBottom variant="subtitle1" component="div">
-                        Standard license
-            </Typography>
-                      <Typography variant="body2" gutterBottom>
-                        Full resolution 1920x1080 • JPEG
-            </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        ID: 1030114
-            </Typography>
+                  <Grid item>
+                    <ButtonBase sx={{ width: 128, height: 128 }}>
+                      <Img alt="complex" src={productImage} />
+                    </ButtonBase>
+                  </Grid>
+                  <Grid item xs={12} sm container textAlign="left">
+                    <Grid item xs container direction="column" spacing={2}>
+                      <Grid item xs>
+                        <Typography gutterBottom variant="subtitle1" component="div">
+                          {product.name}
+                        </Typography>
+                        <Typography variant="body2" gutterBottom>
+                          {product.description}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {product.quantity}
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2">
+                          Cancel
+                      </Typography>
+                      </Grid>
                     </Grid>
                     <Grid item>
-                      <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                        Remove
-            </Typography>
+                      <Typography variant="subtitle1" component="div">
+                        <Grid item>
+                          <Typography variant="subtitle1" component="div">
+                            Status: {product.status}
+                          </Typography>
+                          <Typography variant="subtitle1" component="div" sx={{fontWeight: 'bold'}} marginLeft="100px">
+                             ${product.priceWithTax}
+                          </Typography>
+                        </Grid>
+                      </Typography>
                     </Grid>
                   </Grid>
-                  <Grid item>
-                    <Typography variant="subtitle1" component="div">
-                      $19.00
-          </Typography>
-                  </Grid>
                 </Grid>
-              </Grid>
+              ))}
             </Paper>
           </Grid>
         </Grid>
@@ -77,14 +92,14 @@ const Order = (props) => {
     </>
   );
 };
-// export default ProductList;
 const mapStateToProps = state => {
   return {
-    products: state.productReducer.products,
+    order_id: state.orderReducer.order_id,
+    order: state.orderReducer.order,
   };
 };
 
 const actionCreators = {
-  fetchProducts: actions.fetchProducts,
+  fetchOrderById: actions.fetchOrderById,
 };
 export default connect(mapStateToProps, actionCreators)(Order);
