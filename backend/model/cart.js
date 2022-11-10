@@ -7,6 +7,18 @@ const CartItemSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Product'
   },
+  name: {
+    type: String,
+    trim: true
+  },
+  image: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    trim: true
+  },
   quantity: Number,
   purchasePrice: {
     type: Number,

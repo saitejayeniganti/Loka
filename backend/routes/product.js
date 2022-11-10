@@ -99,7 +99,6 @@ router.get(
     try {
       let products = [];
       products = await Product.find({})
-      console.log("Here B");
       // if (req.user.merchant) {
       //   console.log("Here");
       //   const brands = await Brand.find({
@@ -127,7 +126,6 @@ router.get(
       //    //});
       //    console.log("Here In");
       // }
-      console.log("Here XX");
       res.status(200).json({
         products
       });

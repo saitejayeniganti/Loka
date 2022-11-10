@@ -2,7 +2,7 @@ import productImage from "../../images/products/apple.jpeg";
 import { Wrapper } from "../cart/CartItem.styles";
 import { connect } from "react-redux";
 import * as actions from '../../reducers/actions';
-import { Grid, Rating, Typography, Link, Button, Divider, Input, TextField, Snackbar } from "@mui/material";
+import { Grid, Rating, Typography, Link, Button, Divider, Input, TextField, Snackbar, Card } from "@mui/material";
 import { Box } from "@mui/system";
 
 const OrderItems = (props) => {
