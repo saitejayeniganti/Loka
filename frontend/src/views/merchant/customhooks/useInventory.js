@@ -6,7 +6,6 @@ export const useInventory = () => {
 
     const fetchAllProductsByMerchantId = (merchantId) => {
         get(`/product/merchant/` + merchantId).then(data => {
-            console.log(data)
             setInventory(data.product)
         })
     }
