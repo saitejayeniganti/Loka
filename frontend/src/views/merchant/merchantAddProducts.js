@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Grid, Paper, TextField, InputAdornment, Autocomplete, Button, Stack, Typography, Divider, Alert } from '@mui/material'
-import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
+import { useState } from 'react'
+import { Grid, Paper, TextField, InputAdornment, Autocomplete, Button, Stack, Typography, Divider } from '@mui/material'
 import Lottie from "react-lottie";
 import addProducts from '../../animations/addProductsVendor.json'
 import FileUpload from "../../components/FileUpload";
