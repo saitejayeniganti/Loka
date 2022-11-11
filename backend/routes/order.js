@@ -3,6 +3,7 @@ const router = express.Router();
 const Order = require('../model/order');
 const Product = require('../model/product');
 const store = require('../utils/store');
+const auth = require('../middleware/auth');
 
 router.post('/add', async (req, res) => {
   try {

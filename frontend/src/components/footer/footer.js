@@ -40,29 +40,32 @@ function Footer() {
                                 <img src={nearBy} width="376px" height="232px" marginBottonLeftRadius="20px" marginBottonRightRadius="20px"></img>
                         </div> */}
 
-            <div className="div3">
-              <div>
-                <div style={{ padding: "5px" }}><h3>Choose what you want</h3></div>
-                <p>Personal shoppers pick items with care. Chat as they shop and manage your order.</p>
-              </div>
-              <img src={footer1}></img>
-            </div>
+                        <div className="div3">
+                            <div>
+                                <div style={{padding:"5px"}}><h3>Choose what you want</h3></div>
+                                <p>Personal shoppers pick items with care. Chat as they shop and manage your order.</p>
+                                </div>
+                                <img src={footer1}></img>
+                        </div>
 
-            <div className="div3">
-              <div>
-                <div style={{ padding: "5px" }}><h3>See real-time updates</h3></div>
-                <p>Pick a convenient time for you. Enjoy Loka 100% quality guarantee on every order.</p>
-              </div>
-              <img src={footer2}></img>
-            </div>
+                         <div className="div3">
+                            <div>
+                                <div style={{padding:"5px"}}><h3>See real-time updates</h3></div>
+                                <p>Pick a convenient time for you. Enjoy Loka 100% quality guarantee on every order.</p>
+                                </div>
+                                <img src={footer2}></img>
+                        </div>
+                       
+                       <div className="div3">
+                            <div style={{padding:"5px"}}>
+                                <div ><h3>Get your products delivered </h3></div>
+                                <p>Select items from your nearby stores at Loka.com to get them delivered to you.</p>
+                                </div>
+                                <img src={footer3}></img>
+                        </div>
 
-            <div className="div3">
-              <div style={{ padding: "5px" }}>
-                <div ><h3>Get your products delivered </h3></div>
-                <p>Select items from your nearby stores at Loka.com to get them delivered to you or pick them up quickly.</p>
-              </div>
-              <img src={footer3}></img>
-            </div>
+           
+        
 
           </div>
         </div>

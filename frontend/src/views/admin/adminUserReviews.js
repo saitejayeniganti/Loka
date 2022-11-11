@@ -19,7 +19,9 @@ import './admin.css'
 import { Button, MenuItem, Select, TextField } from "@mui/material";
 import KeyboardBackspaceTwoToneIcon from '@mui/icons-material/KeyboardBackspaceTwoTone';
 import customerReviews from "../../animations/good-reviews.json";
-
+import { get, post } from "../../utils/serverCall.js";
+import { Navigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 const initialRows = [
   {
     id: 1,
@@ -75,7 +77,10 @@ export default function AdminUserReviews() {
     
 
     const [rows, setRows] = React.useState(initialRows);
-    
+    const [redirToUserdetail, setRedirToUserdetail] = useState(false);
+    const location = useLocation();
+    console.log("state in reviews",location.state)
+
     const defaultOptions = {
     loop: false,
     autoplay: true,
@@ -84,9 +89,6 @@ export default function AdminUserReviews() {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-
-
-
 
     const deleteReview = () => {
     
@@ -97,17 +99,30 @@ export default function AdminUserReviews() {
         console.log(e)
     };
 
+   useEffect(() => {
+        get(`/admin/userreviews?id=${location.state}`)
+      .then((result) => { console.log(result)})
+      .catch((err) => {
+        
+      });
+    }, []);
+
+  if (redirToUserdetail) {
+    return <Navigate to={"/adminuserDetail"} state={location.state.id}/>;
+  }
+
     return(<>
-    <div style={{backgroundColor:"#24476a",position:"fixed",height:"100vh",width:"100vw"}}></div>
-    <div style={{height:"100vh",backgroundColor:"#e7e4e4",width:"30vw",marginLeft:"70vw",position:"fixed",borderTopLeftRadius:"50%",}}></div>
+    <div style={{height:"100vh",backgroundColor:"#e7e4e4",width:"30vw",marginLeft:"70vw",position:"fixed"}}></div>
+        <div style={{backgroundColor:"#24476a",position:"fixed",height:"100vh",width:"70vw"}}></div>
+         
         
          <div style={{position:"relative",padding:"20px"}}>
            <Grid container spacing={2} sx={{}}>
                 <Grid item xs={12}>
-                        <Grid container sx={{padding:"20px"}}>
+                        <Grid container sx={{}}>
                             <Grid item xs={9} sx={{textAlign:"left",color:"white"}}>
                                 <Grid item xs={12}>
-                                    <h2 style={{color:'white'}}>Reviews of</h2>
+                                    <h2 style={{color:'white'}}>Reviews of {location.state.name}</h2>
                                 </Grid>
                                 <Grid item xs={12}>
                                     customer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etc
@@ -121,12 +136,12 @@ export default function AdminUserReviews() {
 
             {/* *************************End of header******************** */}
 
-                <Grid item xs={8.5}>
+                <Grid item xs={8.4}>
                 <div style={{ height: '75vh', width: '100%',background:"white",padding:"20px",borderRadius:"10px" }}>
                     <Grid container spacing={2} sx={{marginBottom:"15px"}}>
                          <Grid item xs={12} sx={{textAlign:"right"}}>
                                <div style={{paddingLeft:"20px"}}>
-                                  <Button variant="outlined" startIcon={<KeyboardBackspaceTwoToneIcon />}>
+                                  <Button variant="outlined" startIcon={<KeyboardBackspaceTwoToneIcon />} onClick={()=>setRedirToUserdetail(true)}>
                                      Go Back
                                      </Button>
                                       <Button
@@ -134,6 +149,7 @@ export default function AdminUserReviews() {
                                  sx={{ width: "10%"}}
                                  onClick={deleteReview}
                                  style={{marginLeft:"10px"}}
+                                 disabled="true"
                              >
                               Delete
                              </Button>
@@ -155,7 +171,7 @@ export default function AdminUserReviews() {
                 </div>
                 </Grid>
 
-                <Grid item xs={3.5} sx={{}}>
+                <Grid item xs={3.6} sx={{}}>
                     <div style={{ height: '75vh', width: '100%',background:"white",padding:"20px",borderRadius:"10px",marginLeft:"5px"}}>
                           <Grid container spacing={2}>
                             <Grid item xs={12}>
