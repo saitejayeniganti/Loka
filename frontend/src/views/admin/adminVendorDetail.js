@@ -81,7 +81,7 @@ function AdminVendorDetail() {
         <div style={{position:"relative"}}>
             <Grid container spacing={2} style={{padding:"20px"}}>
                  <Grid item xs={3}>
-                    <Paper elevation={3} style={{padding:"10px",backgroundColor:"rgb(215 229 242)"}}>
+                    <Paper elevation={3} style={{padding:"10px",}}>
                          <Grid container style={{padding:"10px"}}>
                             <Grid item xs={2} >
                                 <img src={order} style={{height:"4vh",width:"4vh",textAlign:"left"}} title="Approved users"/>
@@ -97,7 +97,7 @@ function AdminVendorDetail() {
                  </Grid>   
 
                   <Grid item xs={3}>
-                    <Paper elevation={3} style={{padding:"10px",backgroundColor:"rgb(215 229 242)"}}>
+                    <Paper elevation={3} style={{padding:"10px",}}>
                          <Grid container style={{padding:"10px"}}>
                             <Grid item xs={2} >
                                 <img src={review} style={{height:"4vh",width:"4vh",textAlign:"left"}} title="Approved users"/>
@@ -113,7 +113,7 @@ function AdminVendorDetail() {
                  </Grid>  
 
                   <Grid item xs={3}>
-                    <Paper elevation={3} style={{padding:"10px",backgroundColor:"rgb(215 229 242)"}}>
+                    <Paper elevation={3} style={{padding:"10px",}}>
                          <Grid container style={{padding:"10px"}}>
                             <Grid item xs={2} >
                                  <img src={money} style={{height:"4vh",width:"4vh",textAlign:"left"}} title="Approved users"/>
@@ -129,7 +129,7 @@ function AdminVendorDetail() {
                  </Grid>  
 
                   <Grid item xs={3}>
-                    <Paper elevation={3} style={{padding:"10px",backgroundColor:"rgb(215 229 242)"}}>
+                    <Paper elevation={3} style={{padding:"10px",}}>
                          <Grid container style={{padding:"10px"}}>
                             <Grid item xs={2} >
                                  <img src={ads} style={{height:"4vh",width:"4vh",textAlign:"left"}} title="Approved users"/>
@@ -145,7 +145,7 @@ function AdminVendorDetail() {
                  </Grid>  
 
                  <Grid item xs={3}>
-                    <Paper elevation={3} style={{height:"70vh",backgroundColor:"#e7e4e4",padding:"10px"}}>
+                    <Paper elevation={3} style={{height:"70vh",padding:"10px"}}>
                           <Grid container spacing={3} >
                                 <Grid item xs={12}>
                                     <img src={testBanner} height="150" width="100%"></img>
@@ -185,7 +185,7 @@ function AdminVendorDetail() {
                     </Grid>
 
                  <Grid item xs={9}>
-                    <Paper elevation={3} style={{height:"70vh",backgroundColor:"#e7e4e4"}}>
+                    <Paper elevation={3} style={{height:"70vh"}}>
                         <Grid container style={{padding:"10px"}}>
                             <Grid item xs={12} sx={{textAlign:"right",marginBottom:"1vh"}}>
                               <div style={{paddingLeft:"20px"}}>

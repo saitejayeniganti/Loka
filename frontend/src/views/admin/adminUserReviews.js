@@ -22,64 +22,42 @@ import customerReviews from "../../animations/good-reviews.json";
 import { get, post } from "../../utils/serverCall.js";
 import { Navigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
-const initialRows = [
-  {
-    id: 1,
-    first: 'Jane',
-    last: 'Carter',
-  },
-  {
-    id: 2,
-    first: 'Jack',
-    last: 'Smith',
-  },
-  {
-    id: 3,
-    first: 'Gill',
-    last: 'Martin',
-  },
-   {
-    id: 4,
-    first: 'Jane',
-    last: 'Carter',
-  },
-  {
-    id: 5,
-    first: 'Jack',
-    last: 'Smith',
-  },
-  {
-    id: 6,
-    first: 'Gill',
-    last: 'Martin',
-  },
-  {
-    id: 7,
-    first: 'Gill',
-    last: 'Martin',
-  },
-];
+import Rating from '@mui/material/Rating';
+
 
 const columns = [
   {
-    field: 'first',
-    headerName: 'First',
-    width: 140,
+    field: 'product',
+    headerName: 'Product',
+    width: 200,
   },
   {
-    field: 'last',
-    headerName: 'Last',
-    width: 140,
+    field: 'title',
+    headerName: 'Title',
+    width: 200,
   },
+   {
+    field: 'status',
+    headerName: 'Status',
+    width: 200,
+  },
+   {
+    field: 'isRecommended',
+    headerName: 'Recommended',
+    width: 200,
+  },
+   
 ];
 
 export default function AdminUserReviews() {
     
 
-    const [rows, setRows] = React.useState(initialRows);
+    const [rows, setRows] = React.useState([]);
     const [redirToUserdetail, setRedirToUserdetail] = useState(false);
+    const [btnDisable, setBtnDisable] = useState(true);
+    const [selectedReview, setSelectedReview] = useState("");
     const location = useLocation();
-    console.log("state in reviews",location.state)
+    
 
     const defaultOptions = {
     loop: false,
@@ -97,11 +75,32 @@ export default function AdminUserReviews() {
 
    const rowSelected = (e) => {
         console.log(e)
+        setBtnDisable(false)
+        setSelectedReview(e)
     };
 
    useEffect(() => {
-        get(`/admin/userreviews?id=${location.state}`)
-      .then((result) => { console.log(result)})
+        get(`/admin/userreviews?id=${location.state.id}`)
+      .then((result) => { 
+        console.log("serverdata",result)
+        var arr=new Array()
+        for(var u of result)
+        {
+          var ob={
+            "id":u._id,
+            "title":u.title,
+            "review":u.review,
+            "status":u.status,
+            "rating":u.rating,
+            "isRecommended":u.isRecommended,
+            "product":u.product.name,
+            "productDetails":u.product,
+            "created":u.created
+          }
+          arr.push(ob)
+        }
+        setRows([...arr])
+      })
       .catch((err) => {
         
       });
@@ -149,7 +148,7 @@ export default function AdminUserReviews() {
                                  sx={{ width: "10%"}}
                                  onClick={deleteReview}
                                  style={{marginLeft:"10px"}}
-                                 disabled="true"
+                                 disabled={btnDisable}
                              >
                               Delete
                              </Button>
@@ -165,7 +164,7 @@ export default function AdminUserReviews() {
                     rows={rows}
                     pageSize={5}
                     // rowsPerPageOptions={[5,10,15,20]}
-                    onRowClick={rowSelected}
+                    onRowClick={(e)=>rowSelected(e.row)}
                     />
                     </div>
                 </div>
@@ -174,12 +173,43 @@ export default function AdminUserReviews() {
                 <Grid item xs={3.6} sx={{}}>
                     <div style={{ height: '75vh', width: '100%',background:"white",padding:"20px",borderRadius:"10px",marginLeft:"5px"}}>
                           <Grid container spacing={2}>
+                          {selectedReview==""?
+                            <>
                             <Grid item xs={12}>
                                   <Lottie options={defaultOptions} height={380} width={380} />
                             </Grid>
-                                <Grid item xs={12} sx={{}}>
-                                    Click a review to know the details.
+                            <Grid item xs={12} sx={{}}>
+                                  Click a review to know the details.
+                            </Grid>
+                            </>:
+                            <>
+                            <Grid container xs={12}>
+                                  <Grid item xs={12}>
+                                    <img src={money} height="200" width="200" style={{borderRadius:"50%"}}></img>
+                                  </Grid>
+                               
+                                <Grid item xs={12} sx={{paddingLeft:"2vw"}}>
+                                    <Grid item xs={12} sx={{marginTop:"5vh",textAlign:"center",textTransform:"capitalize"}}>
+                                        {selectedReview.productDetails.name}
+                                    </Grid>
+                                    
+                                    <Grid item xs={12} sx={{marginTop:"5vh",textAlign:"left"}}>
+                                        <Rating name="read-only" value={selectedReview.rating} readOnly />
+                                    </Grid>
+                                    <Grid item xs={12} sx={{marginTop:"5vh",textAlign:"left"}}>
+                                        {selectedReview.review}
+                                    </Grid>
+                                    <Grid item xs={12} sx={{marginTop:"5vh",textAlign:"left"}}>
+                                        {selectedReview.created}
+                                    </Grid>
+                                     <Grid item xs={12} sx={{marginTop:"5vh",textAlign:"left"}}>
+                                        Change Status
+                                    </Grid>
                                 </Grid>
+                            </Grid>
+                            </>
+                          }
+                            
                           </Grid>
                     </div>
                 </Grid>

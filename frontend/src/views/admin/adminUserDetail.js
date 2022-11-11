@@ -76,7 +76,6 @@ export const data = {
 
 function AdminUserDetail() {
   const location = useLocation();
-  console.log("state in detail",location.state)
   const [value, setValue] = React.useState('1');
   const [redirToUsers, setRedirToUsers] = useState(false);
   const [redirToOrders, setRedirToOrders] = useState(false);

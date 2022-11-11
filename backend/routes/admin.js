@@ -106,9 +106,9 @@ router.get('/userorders', async (req, res) => {
 //get all user reviews
 router.get('/userreviews', async (req, res) => {
   try {
-    const orders=await Review.find({user:req.query.id}).populate("user").populate("product")
+    const reviews=await Review.find({user:req.query.id}).populate("user").populate("product")
     res.status(200).json(
-        orders
+        reviews
       );
   } catch (error) {
     console.log(error);

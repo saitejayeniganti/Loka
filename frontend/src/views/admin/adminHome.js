@@ -78,6 +78,9 @@ function AdminHome() {
   const [vendors, setVendors] = React.useState('');
   const [users, setUsers] = React.useState("");
   const [redirToUsers, setRedirToUsers] = useState(false);
+  const [redirToReviews, setRedirToReviews] = useState(false);
+  const [redirToOrders, setRedirToOrders] = useState(false);
+  const [redirToVendors, setRedirToVendors] = useState(false);
   
   const [usersMap, setUsersMap] = React.useState(
                                                     {
@@ -246,7 +249,11 @@ function AdminHome() {
 
     if (redirToUsers) {
     return <Navigate to={"/adminusers"} />;
-   }        
+   }       
+   
+   if (redirToVendors) {
+    return <Navigate to={"/adminvendors"} />;
+   }   
 
     return (
       <>
@@ -460,7 +467,7 @@ function AdminHome() {
               </Grid>
               
               <Grid item xs={12} style={{marginBottom:"2vh",cursor:"pointer"}}>
-                  <Paper style={{height:"29vh",backgroundColor:"rgb(215 229 242)",borderRadius:"15px",}}> 
+                  <Paper style={{height:"29vh",backgroundColor:"rgb(215 229 242)",borderRadius:"15px",}} onClick={()=>setRedirToVendors(true)}> 
                   <Grid container sx={{padding:"20px"}}>
                       <Grid item xs={2} >
                           <StorefrontRoundedIcon sx={{height:"4vh",width:"4vh"}}/>

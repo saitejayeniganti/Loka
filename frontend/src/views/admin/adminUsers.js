@@ -120,8 +120,6 @@ export default function AdminUsers() {
         get("/admin/users")
       .then((result) => {  
         var arr=new Array()
-        
-        
         for(var u of result)
         {
           var ob={
@@ -134,8 +132,6 @@ export default function AdminUsers() {
           }
           arr.push(ob)
         }
-        
-        
         setRows([...arr])
        })
       .catch((err) => {
