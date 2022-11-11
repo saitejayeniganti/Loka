@@ -4,6 +4,7 @@ const Order = require('../model/order');
 const Cart = require('../model/cart');
 const Product = require('../model/product');
 const store = require('../utils/store');
+const auth = require('../middleware/auth');
 
 router.post('/add', async (req, res) => {
   try {

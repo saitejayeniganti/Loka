@@ -121,9 +121,9 @@ const renderProducts = () => {
             {headers.map((header) => {
               return (
                 <>
-                  <li style={{ paddingRight: "50px" }}>
+                  <li style={{ paddingRight: "50px"}}>
                     <Link to={header} spy={true} smooth={false} duration={1000}>
-                      <label style={{fontSize:"23px",fontWeight:"500",textTransform: "capitalize"}}>{header}</label>
+                      <label style={{fontSize:"23px",fontWeight:"500",textTransform: "capitalize",cursor:"pointer"}}>{header}</label>
                     </Link>
                   </li>
                 </>
@@ -151,7 +151,7 @@ const renderProducts = () => {
                           style={{ padding: "10px", paddingBottom: "20px" }}
                         //   onClick={() => this.handleOpen(dish)}
                         >
-                          <Card sx={{ width: "14vw",height:"30vh",borderWidth:"2px",backgroundColor:"#f3f3ea",cursor:"pointer",borderRadius:"10px" }}>
+                          <Card sx={{ width: "14vw",height:"30vh",borderWidth:"2px",backgroundColor:"#e5e8e8",cursor:"pointer",borderRadius:"10px" }}>
                             <CardMedia
                                 component="img"
                                 height="190vh"

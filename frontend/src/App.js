@@ -55,6 +55,7 @@ import AdminVendorDetail from "./views/admin/adminVendorDetail";
 import AdminVendorOrders from "./views/admin/adminVendorOrders";
 import CustomerMerchantView from "./views/customer/customerMerchantView";
 import Fb from "./components/fb";
+import SavedMerchants from "./views/customer/savedMerchants";
 
 
 
@@ -198,11 +199,12 @@ function App() {
         <Route path="/progress" element={<Progress></Progress>}></Route>
 
         <Route path="/mapview" element={<MapView />}></Route>
-        <Route path="/adrequest" element={<AdRequest />}></Route>
-        <Route path="/paypal" element={<PayPalTest />}></Route>
-        <Route path="/rew" element={<ProductReviews />}></Route>
-        <Route path="/review" element={<ReviewsTest />}></Route>
-        <Route path="/fb" element={<Fb />}></Route>
+        <Route path="/adrequest" element={<AdRequest/>}></Route>
+        <Route path="/paypal" element={<PayPalTest/>}></Route>
+        <Route path="/rew" element={<ProductReviews/>}></Route>
+        <Route path="/review" element={<ReviewsTest/>}></Route>
+        <Route path="/savedmerchants" element={<SavedMerchants/>}></Route>
+        <Route path="/fb" element={<Fb/>}></Route>
         <Route path="*" element={<ErrorPath></ErrorPath>}></Route>
       </Routes>
     );

@@ -22,7 +22,7 @@ import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded
 import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
 import BookmarkBorderRoundedIcon from '@mui/icons-material/BookmarkBorderRounded';
 
-function CustomerHome() {
+function SavedMerchants() {
 
   const defaultOptions = {
     loop: true,
@@ -124,7 +124,7 @@ if (redirToMerchant) {
       </div>
      
       <div className="homeBanner1">
-        <h1>Order products for pickup or delivery today</h1>
+        <h1>Order products from saved merchants for <br/>pickup or delivery today</h1>
         <p>Whatever you want from local stores, brought right to your door.</p>
       </div>
 
@@ -140,7 +140,7 @@ if (redirToMerchant) {
           textAlign: "center",
         }}
       >
-        Select a store nearby
+        Select a saved store
       </div>
 
       <div className="row" style={{paddingLeft:"20px"}}>
@@ -286,4 +286,4 @@ if (redirToMerchant) {
   );
 }
 
-export default CustomerHome;
+export default SavedMerchants;
