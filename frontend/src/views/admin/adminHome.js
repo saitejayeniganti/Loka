@@ -349,7 +349,7 @@ function AdminHome() {
             {/* -------------------------------------------left 1--------------------------------------------- */}
             <Grid item xs={2}>
               <Grid item xs={12} style={{marginBottom:"2vh",cursor:"pointer"}}>
-                  <Paper style={{height:"29vh",backgroundColor:"rgb(215 229 242)",borderRadius:"15px"}} onClick={()=>setRedirToUsers(true)}>
+                  <Paper style={{height:"29vh",borderRadius:"15px"}} onClick={()=>setRedirToUsers(true)}>
                     <Grid container sx={{padding:"20px"}}>
                       <Grid item xs={2} >
                           <PeopleAltRoundedIcon sx={{height:"4vh",width:"4vh"}}/>
@@ -388,7 +388,7 @@ function AdminHome() {
              
               
               <Grid item xs={12} style={{marginBottom:"20px",cursor:"pointer"}}>
-                  <Paper style={{height:"29vh",backgroundColor:"rgb(215 229 242)",borderRadius:"15px"}}>
+                  <Paper style={{height:"29vh",borderRadius:"15px"}}>
                    <Grid container sx={{padding:"20px"}}>
                       <Grid item xs={2} >
                            <img src={order} style={{height:"5vh",width:"5vh",textAlign:"left"}} />
@@ -430,7 +430,7 @@ function AdminHome() {
         
 
                <Grid item xs={12} style={{marginBottom:"20px",cursor:"pointer"}}>
-                  <Paper style={{height:"29vh",backgroundColor:"rgb(215 229 242)",borderRadius:"15px"}}>
+                  <Paper style={{height:"29vh",borderRadius:"15px"}}>
                        <Grid container sx={{padding:"20px"}}>
                       <Grid item xs={2} >
                           <img src={reviewsimg} style={{height:"4vh",width:"4vh",textAlign:"left"}} />
@@ -467,7 +467,7 @@ function AdminHome() {
               </Grid>
               
               <Grid item xs={12} style={{marginBottom:"2vh",cursor:"pointer"}}>
-                  <Paper style={{height:"29vh",backgroundColor:"rgb(215 229 242)",borderRadius:"15px",}} onClick={()=>setRedirToVendors(true)}> 
+                  <Paper style={{height:"29vh",borderRadius:"15px",}} onClick={()=>setRedirToVendors(true)}> 
                   <Grid container sx={{padding:"20px"}}>
                       <Grid item xs={2} >
                           <StorefrontRoundedIcon sx={{height:"4vh",width:"4vh"}}/>
