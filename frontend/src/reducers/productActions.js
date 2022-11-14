@@ -1,5 +1,5 @@
 import { ACTION } from '../utils/consts';
-import { get, post } from "../utils/serverCall";
+import { get, post, put } from "../utils/serverCall";
 // fetch products api
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
@@ -46,10 +46,10 @@ export const addProduct = async (productData) => {
   }
 }
 
-export const getProductsByMerchantId = async (merchantId) => {
+export const updateProduct = async (id, productData) => {
   try {
-    const merchantProducts = await get(`/product/merchant/` + id);
-    return merchantProducts
+    const updatedProductResult = await put(`/product/` + id, productData)
+    return updatedProductResult
   } catch (e) {
     throw e
   }

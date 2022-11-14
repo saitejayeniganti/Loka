@@ -4,7 +4,7 @@ import ProductCard from '../../components/ProductCard';
 import EditProductModal from '../../components/merchant/EditProductModal'
 import { Grid } from '@mui/material'
 import { useInventory } from './customhooks/index'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 
 export default function MerchantInventory() {
     const [open, setOpen] = useState(false)
@@ -15,11 +15,7 @@ export default function MerchantInventory() {
     }
     const handleClose = () => setOpen(false)
 
-    const { inventory, fetchAllProductsByMerchantId } = useInventory()
-
-    useEffect(() => {
-        fetchAllProductsByMerchantId("636458aacdca6561d00fe6e4")
-    }, [])
+    const { inventory, fetchAllProductsByMerchantId } = useInventory("636458aacdca6561d00fe6e4")
 
     return (
         <>
@@ -34,7 +30,7 @@ export default function MerchantInventory() {
                     })
                     }
                 </Grid>
-                <EditProductModal open={open} handleClose={handleClose} liftedProductData={liftedProductData} />
+                <EditProductModal open={open} handleClose={handleClose} liftedProductData={liftedProductData} fetchAllProductsByMerchantId={fetchAllProductsByMerchantId} />
             </div>
             <a href="https://www.freepik.com/free-vector/warehouse-interior-with-cardboard-boxes-racks_7741532.htm#query=inventory&position=0&from_view=search&track=sph">Image by upklyak</a> on Freepik
         </>

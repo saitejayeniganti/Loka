@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { Modal, Backdrop, TextField, InputAdornment, Autocomplete, Button, Stack, Divider, Box, Typography } from '@mui/material'
 import FileUpload from "../../components/FileUpload";
-import { displayMessage } from '../../utils/messages'
+import { displayMessage, displayError } from '../../utils/messages'
 import { useState } from 'react'
 import { useBrand } from "../../views/merchant/customhooks/index"
+import { updateProduct } from '../../reducers/actions'
 
 const style = {
     position: 'absolute',
@@ -17,14 +18,14 @@ const style = {
     p: 4,
 };
 
-export default function EditProductModal({ open, handleClose, liftedProductData }) {
+export default function EditProductModal({ open, handleClose, liftedProductData, fetchAllProductsByMerchantId }) {
     const parsedProductData = {
         sku: liftedProductData.sku,
         name: liftedProductData.name,
         description: liftedProductData.description,
         quantity: liftedProductData.quantity,
         price: liftedProductData.price,
-        brand: liftedProductData.brand,
+        brand: liftedProductData.brand?._id,
         image: liftedProductData.image,
         merchant: "636458aacdca6561d00fe6e4"
     }
@@ -32,7 +33,6 @@ export default function EditProductModal({ open, handleClose, liftedProductData 
     const [productData, setProductData] = useState(parsedProductData)
     const { brandData } = useBrand()
     useEffect(() => {
-        console.log(parsedProductData)
         setProductData(parsedProductData)
     }, [parsedProductData.sku])
 
@@ -43,6 +43,28 @@ export default function EditProductModal({ open, handleClose, liftedProductData 
     const handleBrandAutoComplete = (event, newValue) => {
         setProductData({ ...productData, brand: newValue.id })
     }
+
+    const onUpdateProduct = async () => {
+        if (productData.sku === "" ||
+            productData.name === "" ||
+            productData.description === "" ||
+            productData.quantity === "" ||
+            productData.price === "" ||
+            productData.brand === "" ||
+            productData.image === "") {
+            displayError("Please Enter All The Details")
+            return
+        }
+        try {
+            const updatedProductResult = await updateProduct(liftedProductData._id, productData)
+            handleClose()
+            displayMessage(updatedProductResult.message)
+            fetchAllProductsByMerchantId()
+        } catch (e) {
+            displayError(e.error)
+        }
+    }
+
     return (
         <>
             <Modal
@@ -73,7 +95,7 @@ export default function EditProductModal({ open, handleClose, liftedProductData 
                             <TextField required type="number" label="Price" name="price"
                                 InputProps={{ startAdornment: <InputAdornment position="start">${productData.price}</InputAdornment>, }} onChange={handleProductDataChange} />
                         </Stack>
-                        <Autocomplete required freeSolo options={brandData} renderInput={(params) => <TextField {...params} label="Brand" />} onChange={handleBrandAutoComplete} />
+                        <Autocomplete required freeSolo options={brandData} renderInput={(params) => <TextField {...params} label={`Brand: ${liftedProductData.brand.name}`} />} onChange={handleBrandAutoComplete} />
                         <div><p>Image Upload</p>
                             <FileUpload
                                 callback={(imageURL) => {
@@ -84,7 +106,7 @@ export default function EditProductModal({ open, handleClose, liftedProductData 
                                 folderPath="merchantProductsImages/"
                             /></div>
                         <Divider variant="middle" />
-                        <Button variant="contained" color="success">Update Product</Button>
+                        <Button variant="contained" color="success" onClick={onUpdateProduct}>Update Product</Button>
                     </Stack>
                 </Box>
             </Modal>
