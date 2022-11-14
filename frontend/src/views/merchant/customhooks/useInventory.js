@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react'
 import { get } from '../../../utils/serverCall'
 
-export const useInventory = () => {
+export const useInventory = (merchantId) => {
     const [inventory, setInventory] = useState([])
 
-    const fetchAllProductsByMerchantId = (merchantId) => {
+    useEffect(() => {
+        fetchAllProductsByMerchantId()
+    }, [])
+
+    const fetchAllProductsByMerchantId = () => {
         get(`/product/merchant/` + merchantId).then(data => {
             setInventory(data.product)
         })

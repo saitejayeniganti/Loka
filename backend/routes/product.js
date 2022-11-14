@@ -208,6 +208,24 @@ router.put('/:id', async (req, res) => {
   }
 });
 
+router.delete('/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+
+    await Product.findByIdAndRemove(productId);
+
+    res.status(200).json({
+      success: true,
+      message: 'Product has been deleted successfully!'
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
 router.get(
   '/merchant/:id',
   // auth,
@@ -215,7 +233,6 @@ router.get(
   async (req, res) => {
     try {
       const merchantId = req.params.id;
-      console.log(req.params);
 
       const productsDoc = await Product.find({ merchant: merchantId }).populate({
         path: 'brand',

@@ -23,8 +23,8 @@ export default function ProductCard(props) {
                     <Divider sx={{ opacity: '1' }} />
                     <CardActions>
                         <Grid container spacing={1} justifyContent="flex-end">
-                            <Grid item>{props.isMerchant && <Button size="small" variant="outlined" onClick={() => props.handleOpen(props.singleItem)} >Edit</Button>}</Grid>
-                            <Grid item> {props.isMerchant && <Button size="small" variant="outlined" color="error">Delete</Button>}</Grid>
+                            <Grid item>{props.isMerchant && <Button size="small" variant="outlined" onClick={() => props.handleOpenUpdateModal(props.singleItem)} >Edit</Button>}</Grid>
+                            <Grid item> {props.isMerchant && <Button size="small" variant="outlined" onClick={() => props.handleOpenDeleteDialog(props.singleItem._id)} color="error">Delete</Button>}</Grid>
                         </Grid>
                     </CardActions>
                 </Stack>
