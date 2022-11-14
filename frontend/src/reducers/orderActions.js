@@ -51,3 +51,25 @@ export const fetchOrderById = (id, withLoading = true) => {
   };
 };
 
+export const fetchOrders = (id, withLoading = true) => {
+  return async (dispatch, getState) => {
+    try {
+      if (withLoading) {
+        // dispatch(setOrderLoading(true));
+      }
+      const response = await get(`/order/me`);
+      
+      dispatch({
+        type: ACTION.FETCH_ORDERS,
+        payload: response.orders
+      });
+    } catch (error) {
+      console.log(error);
+      // handleError(error, dispatch);
+    } finally {
+      if (withLoading) {
+        // dispatch(setOrderLoading(false));
+      }
+    }
+  };
+};

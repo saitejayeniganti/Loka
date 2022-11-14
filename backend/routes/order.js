@@ -60,6 +60,48 @@ router.post('/add', async (req, res) => {
     });
   }
 });
+// fetch my orders api
+router.get('/me', async (req, res) => {
+  try {
+    console.log("me ", req);
+    const { page = 1, limit = 10 } = req.query;
+    // const user = req.user._id;
+    const user = "634fb3e27bcc0d0fe139ce7c";
+    const query = { user };
+    console.log("query", query);
+
+    const ordersDoc = await Order.find(query)
+      .sort('-created')
+      // .populate({
+      //   path: 'cart',
+      //   populate: {
+      //     path: 'products.product',
+      //     populate: {
+      //       path: 'brand'
+      //     }
+      //   }
+      // })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const count = await Order.countDocuments(query);
+    console.log("count ",count);
+    const orders = store.formatOrders(ordersDoc);
+
+    res.status(200).json({
+      orders,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      count
+    });
+  } catch (error) {
+    console.log("X ",error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
 
 // fetch order id 
 router.get('/:orderId', async (req, res) => {
@@ -113,6 +155,50 @@ router.get('/:orderId', async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+
+// fetch my orders api
+router.get('/me', async (req, res) => {
+  try {
+    console.log("me ", req);
+    const { page = 1, limit = 10 } = req.query;
+    // const user = req.user._id;
+    const user = "634fb3e27bcc0d0fe139ce7c";
+    const query = { user };
+    console.log("query", query);
+
+    const ordersDoc = await Order.find(query)
+      .sort('-created')
+      // .populate({
+      //   path: 'cart',
+      //   populate: {
+      //     path: 'products.product',
+      //     populate: {
+      //       path: 'brand'
+      //     }
+      //   }
+      // })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const count = await Order.countDocuments(query);
+    console.log("count ",count);
+    const orders = store.formatOrders(ordersDoc);
+
+    res.status(200).json({
+      orders,
+      totalPages: Math.ceil(count / limit),
+      currentPage: Number(page),
+      count
+    });
+  } catch (error) {
+    console.log("X ",error);
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });

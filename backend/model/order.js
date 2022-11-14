@@ -43,8 +43,7 @@ const OrderItemSchema = new Schema({
   },
   merchant: {
     type: Schema.Types.ObjectId,
-    ref: 'Merchant',
-    required: true
+    ref: 'Merchant'
   },
   numReviews: {
     type: Number,

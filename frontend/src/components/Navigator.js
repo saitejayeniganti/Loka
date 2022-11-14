@@ -32,6 +32,7 @@ import { getCoordinates } from "../utils/mapsHelper";
 import { bindActionCreators } from "redux";
 import { actionCreators as aCreators } from "../reducers/actionCreators";
 import lokamarketlogo from "../images/admin/online-marketplace.png";
+import { Link } from "@mui/material";
 
 
 function MenuAppBar(props) {
@@ -249,6 +250,10 @@ function MenuAppBar(props) {
             )}
             {!props.isLoggedIn && (
               <>
+                <Link href={"/myorder"}
+                  underline="none" color="inherit">
+                  <Typography body="h5" marginRight="20px">Your Orders</Typography>
+                </Link>
                 <Badge badgeContent={props.items?.length} color="primary">
                   <ShoppingCartOutlinedIcon
                     selfalign="right"
@@ -265,8 +270,8 @@ function MenuAppBar(props) {
                   <Box
                     sx={{ width: 500 }}
                     role="presentation"
-                    // onClick={() => props.cartOpen ? props.closeCart() : props.openCart()}
-                    // onKeyDown={() => props.cartOpen ? props.closeCart() : props.openCart()}
+                  // onClick={() => props.cartOpen ? props.closeCart() : props.openCart()}
+                  // onKeyDown={() => props.cartOpen ? props.closeCart() : props.openCart()}
                   >
                     <Cart />
                   </Box>

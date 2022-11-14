@@ -87,6 +87,21 @@ exports.caculateTaxAmount = order => {
   }
 };
 
+exports.formatOrders = orders => {
+  const newOrders = orders.map(order => {
+    return {
+      _id: order._id,
+      total: parseFloat(Number(order.total.toFixed(2))),
+      created: order.created,
+      products: order?.products
+    };
+  });
+
+  return newOrders.map(order => {
+    return order?.products ? this.caculateTaxAmount(order) : order;
+  });
+};
+
 exports.caculateOrderTotal = order => {
   const total = order.products
     .filter(item => item.status !== 'Cancelled')
