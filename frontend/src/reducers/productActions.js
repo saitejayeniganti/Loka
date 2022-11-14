@@ -1,5 +1,5 @@
 import { ACTION } from '../utils/consts';
-import { get, post, put } from "../utils/serverCall";
+import { get, post, put, remove } from "../utils/serverCall";
 // fetch products api
 export const fetchProducts = () => {
   return async (dispatch, getState) => {
@@ -50,6 +50,15 @@ export const updateProduct = async (id, productData) => {
   try {
     const updatedProductResult = await put(`/product/` + id, productData)
     return updatedProductResult
+  } catch (e) {
+    throw e
+  }
+}
+
+export const deleteProduct = async (id) => {
+  try {
+    const deleteProductResult = await remove(`/product/` + id)
+    return deleteProductResult
   } catch (e) {
     throw e
   }
