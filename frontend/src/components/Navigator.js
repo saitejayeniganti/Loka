@@ -40,7 +40,8 @@ function MenuAppBar(props) {
   const navigate = useNavigate();
   const [auth, setAuth] = useState(true);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [location, setLocation] = useState(defaultLocation);
+  const loc = props.isLoggedIn ? props.user.location : defaultLocation;
+  const [location, setLocation] = useState(loc);
   const [searchInput, setSearchInput] = useState("");
 
   const errorState = useSelector((state) => state.errorReducer);
@@ -133,10 +134,10 @@ function MenuAppBar(props) {
             input={location.address}
             callback={(data) => {
               getCoordinates(data.description).then((result) => {
-                console.log("updated location", data);
+                console.log("updated location", result);
                 setLocation({
                   address: data.description,
-                  coordinates: [result.lat, result.lng],
+                  coordinates: [result.lng, result.lat],
                 });
               });
             }}

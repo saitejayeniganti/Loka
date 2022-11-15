@@ -111,7 +111,6 @@ function CustomerHome() {
 
   const initialRender = useRef(true);
   const prevLocation = usePrevious(location);
-
   useEffect(() => {
     if (initialRender.current) {
       initialRender.current = false;
@@ -121,6 +120,17 @@ function CustomerHome() {
       fetchMerchants(location, searchInput);
     }
   }, [location, prevLocation]);
+
+  const prevSearchInput = usePrevious(searchInput);
+  useEffect(() => {
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+    if (!isEqual(prevSearchInput, searchInput)) {
+      fetchMerchants(location, searchInput);
+    }
+  }, [searchInput, prevSearchInput]);
 
   // useEffect(() => {
   //   fetchMerchants(location, searchInput);

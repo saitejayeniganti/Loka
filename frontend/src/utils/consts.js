@@ -46,7 +46,7 @@ export const ACTION = {
 
 export const CONSTANTS = {
   DEFAULT_ADDRESS: {
-    coordinates: [37.33, -121.88],
+    coordinates: [-121.88, 37.33],
     address: "San José State University, Washington Sq, San Jose",
   },
 };

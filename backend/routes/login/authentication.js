@@ -127,7 +127,7 @@ router.get("/logout", (req, res) => {
   res.send();
 });
 
-const checkRegistration = () => { };
+const checkRegistration = () => {};
 
 const insertMerchant = (body, user, res) => {
   const merchant = {};
@@ -148,7 +148,7 @@ const insertMerchant = (body, user, res) => {
 
 const getLocation = (body) => {
   const location = { type: "Point" };
-  location.coordinates = [body.latitude, body.longitude];
+  location.coordinates = [body.longitude, body.latitude];
   location.address = body.address;
   return location;
 };
