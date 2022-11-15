@@ -25,7 +25,7 @@ export default function MerchantInventory() {
 
     const handleCloseDeleteDialog = () => setOpenDeleteDialog(false)
 
-    const { inventory, fetchAllProductsByMerchantId } = useInventory("636458aacdca6561d00fe6e4")
+    const { inventory, fetchAllProductsByMerchantId } = useInventory(sessionStorage.getItem("id"))
 
     return (
         <>

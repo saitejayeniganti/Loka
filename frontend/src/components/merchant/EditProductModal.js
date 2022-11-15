@@ -27,7 +27,7 @@ export default function EditProductModal({ open, handleClose, liftedProductData,
         price: liftedProductData.price,
         brand: liftedProductData.brand?._id,
         image: liftedProductData.image,
-        merchant: "636458aacdca6561d00fe6e4"
+        merchant: sessionStorage.getItem("id")
     }
 
     const [productData, setProductData] = useState(parsedProductData)

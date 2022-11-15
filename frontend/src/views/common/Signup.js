@@ -162,6 +162,7 @@ function Signup(userDetails) {
       post("/auth/signup", filledData)
         .then((res) => {
           console.log(res);
+          sessionStorage.setItem("id", res._id.userId);
           displayMessage("Registered Successfully");
           navigate("/");
         })
@@ -178,7 +179,7 @@ function Signup(userDetails) {
 
   return (
     <>
-     <Grid container sx={{ height: "100%", position: "absolute" }}>
+      <Grid container sx={{ height: "100%", position: "absolute" }}>
         <Grid item xs={4} sx={{ backgroundColor: "#FEBB15" }}></Grid>
         <Grid item xs={8} sx={{ backgroundColor: "white" }}></Grid>
       </Grid>
@@ -213,9 +214,10 @@ function Signup(userDetails) {
         <Grid
           item
           xs={8}
-          sx={{ 
+          sx={{
             // background: "rgb(243, 233, 100)"
-             paddingTop: "40px" }}
+            paddingTop: "40px"
+          }}
         >
           <Grid container sx={{ height: "100%" }}>
             <Grid item xs={2.5}></Grid>
