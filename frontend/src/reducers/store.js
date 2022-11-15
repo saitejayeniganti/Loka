@@ -11,7 +11,7 @@ const composeEnhancers =
   compose;
 export const store = createStore(
   reducers,
-  composeEnhancers(applyMiddleware(thunkMiddleware, loggerMiddleware))
+  composeEnhancers(applyMiddleware(thunkMiddleware))
 );
 // const store = createStore(
 //   reducers,

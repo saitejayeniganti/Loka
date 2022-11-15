@@ -35,7 +35,7 @@ import lokamarketlogo from "../images/admin/online-marketplace.png";
 import { Link } from "@mui/material";
 
 function MenuAppBar(props) {
-  // console.log("props - ", props);
+  console.log("props - ", props);
   const defaultLocation = CONSTANTS.DEFAULT_ADDRESS;
   const navigate = useNavigate();
   const [auth, setAuth] = useState(true);
@@ -171,7 +171,8 @@ function MenuAppBar(props) {
           <Typography variant="h5" component="div">
             LOKA
           </Typography>
-          {props.isLoggedIn && props.user.role == 0 && searchBoxes()}
+          {((props.isLoggedIn && props.user.role == 0) || !props.isLoggedIn) &&
+            searchBoxes()}
           {/* {props.user && (
             <Typography variant="h5" component="div">
               {props.user.firstName}

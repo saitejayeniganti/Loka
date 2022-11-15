@@ -35,7 +35,7 @@ function CustomerHome() {
 
   const navigatorState = useSelector((state) => state.navigatorReducer);
   const navigate = useNavigate();
-  const [location, setLocation] = useState(CONSTANTS.DEFAULT_ADDRESS);
+  const [location, setLocation] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [selectedMerchant, setSelectedMerchant] = useState("");
   const [redirToMerchant, setRedirToMerchant] = useState(false);
@@ -72,9 +72,10 @@ function CustomerHome() {
   };
 
   const fetchMerchants = (location, searchInput) => {
-    get("/customer/merchants", { location, searchInput }).then(() => {
-      console.log("fetched ");
-    });
+    location &&
+      get("/customer/merchants", { location, searchInput }).then(() => {
+        console.log("fetched ");
+      });
   };
 
   const saveMerchantIcon = () => {

@@ -46,6 +46,8 @@ function Home(userDetails) {
     } else if (user.role == 2) {
       return <Navigate to={"/adminhome"} />;
     }
+  } else {
+    return <Navigate to={"/customerhome"} />;
   }
 
   return (
