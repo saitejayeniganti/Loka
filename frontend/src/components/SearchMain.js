@@ -26,12 +26,13 @@ export default function SearchMain({ input, callback }) {
         //autocompleteService.current.getPlacePredictions(request, callback);
         //backend search call here.
         get("/search/test", request).then((result) => {
-          const res = [
-            { _id: 1, name: "apple" },
-            { _id: 2, name: "orange" },
-            { _id: 2, name: "tomato" },
-          ];
-          callback(res);
+          console.log("search results", result);
+          // const res = [
+          //   { _id: 1, name: "apple" },
+          //   { _id: 2, name: "orange" },
+          //   { _id: 2, name: "tomato" },
+          // ];
+          callback(result);
         });
       }, 200),
     []
@@ -87,7 +88,7 @@ export default function SearchMain({ input, callback }) {
       id="search-main"
       sx={{ width: 300, background: "white" }}
       getOptionLabel={
-        (option) => (typeof option === "string" ? option : option.name)
+        (option) => (typeof option === "string" ? option : option.storeName)
         // Second line of the suggestion.
       }
       filterOptions={(x) => x} // if need filtering
@@ -179,16 +180,16 @@ export default function SearchMain({ input, callback }) {
                       fontWeight: 400,
                     }}
                   >
-                    {option.name}
+                    {option.storeName}
                   </span>
                   // ))
                 }
 
-                <Typography variant="body2" color="text.secondary">
+                {/* <Typography variant="body2" color="text.secondary">
                   Store/Product
-                  {/* {option.structured_formatting.secondary_text} */}
-                  {/* // this is description text */}
-                </Typography>
+                   // {option.structured_formatting.secondary_text} 
+                  // this is description text 
+                </Typography> */}
               </Grid>
             </Grid>
           </li>
