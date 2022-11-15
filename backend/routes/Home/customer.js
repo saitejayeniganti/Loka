@@ -15,7 +15,7 @@ router.get("/merchants", (req, res) => {
           coordinates: [lng, lat],
         },
         distanceField: "dist.calculated",
-        maxDistance: 10000,
+        maxDistance: 33000,
         includeLocs: "dist.location",
         spherical: true,
       },
