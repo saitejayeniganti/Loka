@@ -34,7 +34,6 @@ import { actionCreators as aCreators } from "../reducers/actionCreators";
 import lokamarketlogo from "../images/admin/online-marketplace.png";
 import { Link } from "@mui/material";
 
-
 function MenuAppBar(props) {
   // console.log("props - ", props);
   const defaultLocation = CONSTANTS.DEFAULT_ADDRESS;
@@ -133,10 +132,11 @@ function MenuAppBar(props) {
           <SearchGMaps
             input={location.address}
             callback={(data) => {
-              getCoordinates(data.description).then((data) => {
+              getCoordinates(data.description).then((result) => {
+                console.log("updated location", data);
                 setLocation({
                   address: data.description,
-                  coordinates: [data.lat, data.lng],
+                  coordinates: [result.lat, result.lng],
                 });
               });
             }}
@@ -250,9 +250,10 @@ function MenuAppBar(props) {
             )}
             {!props.isLoggedIn && (
               <>
-                <Link href={"/myorder"}
-                  underline="none" color="inherit">
-                  <Typography body="h5" marginRight="20px">Your Orders</Typography>
+                <Link href={"/myorder"} underline="none" color="inherit">
+                  <Typography body="h5" marginRight="20px">
+                    Your Orders
+                  </Typography>
                 </Link>
                 <Badge badgeContent={props.items?.length} color="primary">
                   <ShoppingCartOutlinedIcon
@@ -270,8 +271,8 @@ function MenuAppBar(props) {
                   <Box
                     sx={{ width: 500 }}
                     role="presentation"
-                  // onClick={() => props.cartOpen ? props.closeCart() : props.openCart()}
-                  // onKeyDown={() => props.cartOpen ? props.closeCart() : props.openCart()}
+                    // onClick={() => props.cartOpen ? props.closeCart() : props.openCart()}
+                    // onKeyDown={() => props.cartOpen ? props.closeCart() : props.openCart()}
                   >
                     <Cart />
                   </Box>
