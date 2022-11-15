@@ -125,10 +125,11 @@ function CustomerHome() {
     }
   }, [location, prevLocation]);
 
+  const searchInitialRender = useRef(true);
   const prevSearchInput = usePrevious(searchInput);
   useEffect(() => {
-    if (initialRender.current) {
-      initialRender.current = false;
+    if (searchInitialRender.current) {
+      searchInitialRender.current = false;
       return;
     }
     if (!isEqual(prevSearchInput, searchInput)) {

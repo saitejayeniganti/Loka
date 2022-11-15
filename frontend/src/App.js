@@ -29,7 +29,7 @@ import LocationSearch from "./components/LocationSearch";
 import RouteMap from "./views/routeMap";
 import MerchantLogin from "./views/merchant/merchantLogin";
 import MerchantAddProducts from "./views/merchant/merchantAddProducts";
-import MerchantInventory from "./views/merchant/merchantInventory"
+import MerchantInventory from "./views/merchant/merchantInventory";
 import { useSelector } from "react-redux";
 import { REDUCER } from "./utils/consts";
 import CustomerSignup from "./views/customer/customerSignup";
@@ -57,10 +57,6 @@ import AdminVendorOrders from "./views/admin/adminVendorOrders";
 import CustomerMerchantView from "./views/customer/customerMerchantView";
 import Fb from "./components/fb";
 import SavedMerchants from "./views/customer/savedMerchants";
-
-
-
-
 
 function App() {
   const [user, setUser] = useState(null);
@@ -172,7 +168,11 @@ function App() {
           exact
           element={<CustomerSignup />}
         ></Route>
-        <Route path="/merchantinventory" exact element={<MerchantInventory />}></Route>
+        <Route
+          path="/merchantinventory"
+          exact
+          element={<MerchantInventory />}
+        ></Route>
         <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
         <Route path="/merchantlogin" exact element={<MerchantLogin />}></Route>
         <Route
@@ -182,13 +182,37 @@ function App() {
         ></Route>
         <Route path="/adminhome" exact element={<AdminHome />}></Route>
         <Route path="/adminusers" exact element={<AdminUsers />}></Route>
-        <Route path="/adminuserdetail" exact element={<AdminUserDetail />}></Route>
-        <Route path="/adminuserorders" exact element={<AdminUserOrders />}></Route>
+        <Route
+          path="/adminuserdetail"
+          exact
+          element={<AdminUserDetail />}
+        ></Route>
+        <Route
+          path="/adminuserorders"
+          exact
+          element={<AdminUserOrders />}
+        ></Route>
         <Route path="/adminvendors" exact element={<AdminVendors />}></Route>
-        <Route path="/adminvendordetail" exact element={<AdminVendorDetail />}></Route>
-        <Route path="/adminvendororders" exact element={<AdminVendorOrders />}></Route>
-        <Route path="/adminuserreviews" exact element={<AdminUserReviews />}></Route>
-        <Route path="/customermerchant" exact element={<CustomerMerchantView />}></Route>
+        <Route
+          path="/adminvendordetail"
+          exact
+          element={<AdminVendorDetail />}
+        ></Route>
+        <Route
+          path="/adminvendororders"
+          exact
+          element={<AdminVendorOrders />}
+        ></Route>
+        <Route
+          path="/adminuserreviews"
+          exact
+          element={<AdminUserReviews />}
+        ></Route>
+        <Route
+          path="/customermerchant"
+          exact
+          element={<CustomerMerchantView />}
+        ></Route>
         <Route path="/productList" exact element={<ProductList />}></Route>
         <Route path="/product" exact element={<Product />}></Route>
         <Route path="/bill" exact element={<Bill />}></Route>
@@ -200,13 +224,16 @@ function App() {
         <Route path="/profile" exact element={<Profile />}></Route>
         <Route path="/progress" element={<Progress></Progress>}></Route>
 
-        <Route path="/mapview" element={<MapView />}></Route>
-        <Route path="/adrequest" element={<AdRequest/>}></Route>
-        <Route path="/paypal" element={<PayPalTest/>}></Route>
-        <Route path="/rew" element={<ProductReviews/>}></Route>
-        <Route path="/review" element={<ReviewsTest/>}></Route>
-        <Route path="/savedmerchants" element={<SavedMerchants/>}></Route>
-        <Route path="/fb" element={<Fb/>}></Route>
+        <Route
+          path="/mapview"
+          element={<MapView user={user} isLoggedIn={isLoggedIn} />}
+        ></Route>
+        <Route path="/adrequest" element={<AdRequest />}></Route>
+        <Route path="/paypal" element={<PayPalTest />}></Route>
+        <Route path="/rew" element={<ProductReviews />}></Route>
+        <Route path="/review" element={<ReviewsTest />}></Route>
+        <Route path="/savedmerchants" element={<SavedMerchants />}></Route>
+        <Route path="/fb" element={<Fb />}></Route>
         <Route path="*" element={<ErrorPath></ErrorPath>}></Route>
       </Routes>
     );
@@ -217,24 +244,24 @@ function App() {
       {loadSpinner ? (
         inProgressComponent()
       ) : (
-          <Router>
-            <div
-              style={{
-                position: "fixed",
-                width: "100%",
-                height: "64px",
-                zIndex: "100",
-              }}
-            >
-              <Navigator isLoggedIn={isLoggedIn} user={user} />
-            </div>
+        <Router>
+          <div
+            style={{
+              position: "fixed",
+              width: "100%",
+              height: "64px",
+              zIndex: "100",
+            }}
+          >
+            <Navigator isLoggedIn={isLoggedIn} user={user} />
+          </div>
 
-            <div style={{ paddingTop: "64px" }}>
-              {/* padding relative to navigator height*/}
-              {routes()}
-            </div>
-          </Router>
-        )}
+          <div style={{ paddingTop: "64px" }}>
+            {/* padding relative to navigator height*/}
+            {routes()}
+          </div>
+        </Router>
+      )}
     </div>
   );
 }
