@@ -20,6 +20,8 @@ import Login from "./views/common/Login";
 import ProductList from "./views/product/ProductList";
 import Product from "./views/product/Product";
 import Bill from "./views/bill/Bill";
+import Order from "./views/order/Order";
+import MyOrder from "./views/order/MyOrder";
 import MerchantHome from "./views/merchant/merchantHome";
 import Signup from "./views/common/Signup";
 import LocationSearch from "./components/LocationSearch";
@@ -27,6 +29,7 @@ import LocationSearch from "./components/LocationSearch";
 import RouteMap from "./views/routeMap";
 import MerchantLogin from "./views/merchant/merchantLogin";
 import MerchantAddProducts from "./views/merchant/merchantAddProducts";
+import MerchantInventory from "./views/merchant/merchantInventory"
 import { useSelector } from "react-redux";
 import { REDUCER } from "./utils/consts";
 import CustomerSignup from "./views/customer/customerSignup";
@@ -41,6 +44,23 @@ import { bindActionCreators } from "redux";
 // import MapsWithIcon from "../src/components/merchantMap";
 import AdRequest from "./views/AdRequest";
 import MapView from "./components/MapView";
+import PayPalTest from "./views/paypalTest";
+import ProductReviews from "./components/reviews/ProductReviews";
+import ReviewsTest from "./views/ReviewsTest";
+import AdminUsers from "./views/admin/adminUsers";
+import AdminUserDetail from "./views/admin/adminUserDetail";
+import AdminUserOrders from "./views/admin/adminUserOrders";
+import AdminUserReviews from "./views/admin/adminUserReviews";
+import AdminVendors from "./views/admin/adminVendors";
+import AdminVendorDetail from "./views/admin/adminVendorDetail";
+import AdminVendorOrders from "./views/admin/adminVendorOrders";
+import CustomerMerchantView from "./views/customer/customerMerchantView";
+import Fb from "./components/fb";
+import SavedMerchants from "./views/customer/savedMerchants";
+
+
+
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -152,6 +172,7 @@ function App() {
           exact
           element={<CustomerSignup />}
         ></Route>
+        <Route path="/merchantinventory" exact element={<MerchantInventory />}></Route>
         <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
         <Route path="/merchantlogin" exact element={<MerchantLogin />}></Route>
         <Route
@@ -160,16 +181,32 @@ function App() {
           element={<MerchantAddProducts />}
         ></Route>
         <Route path="/adminhome" exact element={<AdminHome />}></Route>
+        <Route path="/adminusers" exact element={<AdminUsers />}></Route>
+        <Route path="/adminuserdetail" exact element={<AdminUserDetail />}></Route>
+        <Route path="/adminuserorders" exact element={<AdminUserOrders />}></Route>
+        <Route path="/adminvendors" exact element={<AdminVendors />}></Route>
+        <Route path="/adminvendordetail" exact element={<AdminVendorDetail />}></Route>
+        <Route path="/adminvendororders" exact element={<AdminVendorOrders />}></Route>
+        <Route path="/adminuserreviews" exact element={<AdminUserReviews />}></Route>
+        <Route path="/customermerchant" exact element={<CustomerMerchantView />}></Route>
         <Route path="/productList" exact element={<ProductList />}></Route>
         <Route path="/product" exact element={<Product />}></Route>
         <Route path="/bill" exact element={<Bill />}></Route>
+        <Route path="/order" exact element={<Order />}></Route>
+        <Route path="/myorder" exact element={<MyOrder />}></Route>
         <Route path="/route" exact element={<RouteMap />}></Route>
         {/* <Route path="/map" exact element={<SimpleMap />}></Route> */}
         <Route path="/location" exact element={<LocationSearch />}></Route>
         <Route path="/profile" exact element={<Profile />}></Route>
         <Route path="/progress" element={<Progress></Progress>}></Route>
-        <Route path="/adrequest" element={<AdRequest />}></Route>
+
         <Route path="/mapview" element={<MapView />}></Route>
+        <Route path="/adrequest" element={<AdRequest/>}></Route>
+        <Route path="/paypal" element={<PayPalTest/>}></Route>
+        <Route path="/rew" element={<ProductReviews/>}></Route>
+        <Route path="/review" element={<ReviewsTest/>}></Route>
+        <Route path="/savedmerchants" element={<SavedMerchants/>}></Route>
+        <Route path="/fb" element={<Fb/>}></Route>
         <Route path="*" element={<ErrorPath></ErrorPath>}></Route>
       </Routes>
     );
@@ -180,24 +217,24 @@ function App() {
       {loadSpinner ? (
         inProgressComponent()
       ) : (
-        <Router>
-          <div
-            style={{
-              position: "fixed",
-              width: "100%",
-              height: "64px",
-              zIndex: "100",
-            }}
-          >
-            <Navigator isLoggedIn={isLoggedIn} user={user} />
-          </div>
+          <Router>
+            <div
+              style={{
+                position: "fixed",
+                width: "100%",
+                height: "64px",
+                zIndex: "100",
+              }}
+            >
+              <Navigator isLoggedIn={isLoggedIn} user={user} />
+            </div>
 
-          <div style={{ paddingTop: "64px" }}>
-            {/* padding relative to navigator height*/}
-            {routes()}
-          </div>
-        </Router>
-      )}
+            <div style={{ paddingTop: "64px" }}>
+              {/* padding relative to navigator height*/}
+              {routes()}
+            </div>
+          </Router>
+        )}
     </div>
   );
 }

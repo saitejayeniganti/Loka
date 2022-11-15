@@ -4,6 +4,7 @@ let items = localStorage.getItem('items');
 const initialState = {
   items: items ? JSON.parse(items) : [],
   cartOpen: false,
+  cartId: null,
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -40,6 +41,18 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cartOpen: false,
+      }
+    case ACTION.ADD_NEW_CART:
+      return {
+        ...state,
+        cartId: action.payload.cartId,
+        cart: action.payload.cart,
+      }
+    case ACTION.CLEAR_CART:
+      localStorage.removeItem("items");
+      return {
+        ...state,
+        items: [],
       }
     default:
       return state;

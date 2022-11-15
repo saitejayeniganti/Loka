@@ -31,6 +31,9 @@ import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import { getCoordinates } from "../utils/mapsHelper";
 import { bindActionCreators } from "redux";
 import { actionCreators as aCreators } from "../reducers/actionCreators";
+import lokamarketlogo from "../images/admin/online-marketplace.png";
+import { Link } from "@mui/material";
+
 
 function MenuAppBar(props) {
   // console.log("props - ", props);
@@ -162,7 +165,7 @@ function MenuAppBar(props) {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <img src={logoicon} width="28" height="28" />
+            <img src={lokamarketlogo} width="30" height="30" />
           </IconButton>
           <Typography variant="h5" component="div">
             LOKA
@@ -247,6 +250,10 @@ function MenuAppBar(props) {
             )}
             {!props.isLoggedIn && (
               <>
+                <Link href={"/myorder"}
+                  underline="none" color="inherit">
+                  <Typography body="h5" marginRight="20px">Your Orders</Typography>
+                </Link>
                 <Badge badgeContent={props.items?.length} color="primary">
                   <ShoppingCartOutlinedIcon
                     selfalign="right"
@@ -263,8 +270,8 @@ function MenuAppBar(props) {
                   <Box
                     sx={{ width: 500 }}
                     role="presentation"
-                    // onClick={() => props.cartOpen ? props.closeCart() : props.openCart()}
-                    // onKeyDown={() => props.cartOpen ? props.closeCart() : props.openCart()}
+                  // onClick={() => props.cartOpen ? props.closeCart() : props.openCart()}
+                  // onKeyDown={() => props.cartOpen ? props.closeCart() : props.openCart()}
                   >
                     <Cart />
                   </Box>

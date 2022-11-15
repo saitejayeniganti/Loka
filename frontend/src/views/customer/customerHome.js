@@ -10,12 +10,38 @@ import banner from "../../images/theme/banner.jpeg";
 import banner1 from "../../images/theme/banner1.jpeg";
 import banner2 from "../../images/theme/banner2.jpeg";
 import { buttonUnstyledClasses } from "@mui/base";
+import Lottie from "react-lottie";
 import { useSelector } from "react-redux";
 import { CONSTANTS, REDUCER } from "../../utils/consts";
+import { useNavigate } from "react-router-dom";
 import { get } from "../../utils/serverCall";
 import isEqual from "lodash/isEqual";
+import { Navigate } from "react-router-dom";
+import shoppingOrderConfirm from "../../animations/shopping-order-confirm.json";
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
+import BookmarkBorderRoundedIcon from '@mui/icons-material/BookmarkBorderRounded';
 
 function CustomerHome() {
+
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: shoppingOrderConfirm,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
+  const navigatorState = useSelector((state) => state.navigatorReducer);
+  const navigate = useNavigate();
+  const [location, setLocation] = useState(CONSTANTS.DEFAULT_ADDRESS);
+  const [searchInput, setSearchInput] = useState("");
+  const [selectedMerchant, setSelectedMerchant] = useState("");
+  const [redirToMerchant, setRedirToMerchant] = useState(false);
+
+  
   const vendors = [
     {
       id: 1,
@@ -49,13 +75,20 @@ function CustomerHome() {
 
   const fetchMerchants = (location, searchInput) => {
     get("/customer/merchants", { location, searchInput }).then(() => {
-      console.log("fetched Merchants");
+      console.log("fetched ");
     });
   };
-  const navigatorState = useSelector((state) => state.navigatorReducer);
 
-  const [location, setLocation] = useState(CONSTANTS.DEFAULT_ADDRESS);
-  const [searchInput, setSearchInput] = useState("");
+   const saveMerchantIcon = () => {
+    console.log("saved")
+  };
+
+   const redirectToMerchant = (merchant) => {
+      setSelectedMerchant(merchant)
+      setRedirToMerchant(true)
+  };
+
+
 
   useEffect(() => {
     // console.log("navigator Change", navigatorState);
@@ -97,16 +130,25 @@ function CustomerHome() {
   //   fetchMerchants(location, searchInput);
   // }, [location, searchInput]);
 
+if (redirToMerchant) {
+    return <Navigate to={"/customermerchant"} />;
+  }
+
   return (
     <>
-      <div className="homeBanner" style={{ textAlign: "right" }}>
+ 
+    
+
+      <div className="homeBanner" style={{ textAlign: "left" }}>
         <img src={banner1} height="220px"></img>
       </div>
-
+     
       <div className="homeBanner1">
         <h1>Order products for pickup or delivery today</h1>
         <p>Whatever you want from local stores, brought right to your door.</p>
       </div>
+
+
 
       <div
         style={{
@@ -121,18 +163,18 @@ function CustomerHome() {
         Select a store nearby
       </div>
 
-      <div className="row">
+      <div className="row" style={{paddingLeft:"20px"}}>
         {vendors.map((vendor) => (
           <Paper
             key={vendor.id}
-            onClick={() => onVendorClick(vendor.id)}
-            elevation={2}
+            elevation={3}
             sx={{
               maxWidth: "20%",
               borderRadius: "10px",
               padding: "0px !important",
-              marginLeft: "20px",
+              marginLeft: "30px",
               marginTop: "25px",
+              cursor:"pointer"
             }}
           >
             <Grid container spacing={0}>
@@ -146,6 +188,8 @@ function CustomerHome() {
                   height: "140px",
                   padding: "10px",
                 }}
+                title="Redirect to merchant"
+                onClick={() => redirectToMerchant()}
               >
                 <div
                   style={{
@@ -171,23 +215,23 @@ function CustomerHome() {
                 container
                 xs={8}
                 sx={{
-                  background: "#ffe3ac",
+                  background: "#e5e8e8",
                   padding: "0px !important",
                   borderTopRightRadius: "10px",
                   borderBottomRightRadius: "10px",
                   padding: "10px",
                 }}
               >
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <div style={{ textAlign: "left" }}>{vendor.name}</div>
                 </Grid>
-                <Grid item xs={4}>
+                 <Grid item xs={4}>
                   <div
                     style={{
                       display: "flex",
                       flexDirection: "row",
                       justifyContent: "center",
-                      backgroundColor: "#F5F5F5",
+                      backgroundColor: "#ffffff",
                       borderRadius: "45px",
                       paddingTop: "2px",
                       paddingBottom: "3px",
@@ -202,12 +246,13 @@ function CustomerHome() {
                     >
                       {vendor.rating} &nbsp;
                     </div>
-                    <div>
-                      <StarPurple500SharpIcon fontSize="small" />
+                    <div style={{color:"#FFD700"}}>
+                      <StarPurple500SharpIcon fontSize="medium"/>
                     </div>
                   </div>
                 </Grid>
-
+                <Grid item xs={1}></Grid>
+                <Grid item xs={1} sx={{marginTop:"2px",opacity:"60%"}} title="Save Merchant"><BookmarkRoundedIcon color="" onClick={()=>saveMerchantIcon()} /></Grid>
                 <Grid item xs={12}>
                   <div style={{ textAlign: "left", fontSize: "13px" }}>
                     {vendor.categories[0]}

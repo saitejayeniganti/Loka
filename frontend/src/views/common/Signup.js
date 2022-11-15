@@ -162,6 +162,7 @@ function Signup(userDetails) {
       post("/auth/signup", filledData)
         .then((res) => {
           console.log(res);
+          sessionStorage.setItem("id", res._id.userId);
           displayMessage("Registered Successfully");
           navigate("/");
         })
@@ -179,11 +180,15 @@ function Signup(userDetails) {
   return (
     <>
       <Grid container sx={{ height: "100%", position: "absolute" }}>
+        <Grid item xs={4} sx={{ backgroundColor: "#FEBB15" }}></Grid>
+        <Grid item xs={8} sx={{ backgroundColor: "white" }}></Grid>
+      </Grid>
+      <Grid container sx={{ height: "100%", position: "absolute" }}>
         <Grid
           item
           xs={4}
           sx={{
-            background: "linear-gradient(35deg, #F9EA8F 40%, #AFF1DA 70%)",
+            // background: "linear-gradient(35deg, #F9EA8F 40%, #AFF1DA 70%)",
           }}
         >
           <div
@@ -205,10 +210,14 @@ function Signup(userDetails) {
             platform.
           </div>
         </Grid>
+
         <Grid
           item
           xs={8}
-          sx={{ background: "rgb(243, 233, 100)", padding: "20px" }}
+          sx={{
+            // background: "rgb(243, 233, 100)"
+            paddingTop: "40px"
+          }}
         >
           <Grid container sx={{ height: "100%" }}>
             <Grid item xs={2.5}></Grid>

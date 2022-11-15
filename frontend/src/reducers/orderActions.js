@@ -1,5 +1,6 @@
 import { get, post } from "../utils/serverCall";
 import { ACTION } from '../utils/consts';
+
 export const addNewOrder = (items) => {
   return async (dispatch, getState) => {
     try {
@@ -16,11 +17,59 @@ export const addNewOrder = (items) => {
         type: ACTION.CREATE_NEW_ORDER,
         payload: response.order
       });
+      dispatch({
+        type: ACTION.CLEAR_CART
+      })
     } catch (error) {
       console.log(error);
       // handleError(error, dispatch);
     } finally {
       //dispatch(setProductLoading(false));
+    }
+  };
+};
+
+export const fetchOrderById = (id, withLoading = true) => {
+  return async (dispatch, getState) => {
+    try {
+      if (withLoading) {
+        // dispatch(setOrderLoading(true));
+      }
+      const response = await get(`/order/${id}`);
+      dispatch({
+        type: ACTION.FETCH_ORDER,
+        payload: response.order
+      });
+    } catch (error) {
+      console.log(error);
+      // handleError(error, dispatch);
+    } finally {
+      if (withLoading) {
+        // dispatch(setOrderLoading(false));
+      }
+    }
+  };
+};
+
+export const fetchOrders = (id, withLoading = true) => {
+  return async (dispatch, getState) => {
+    try {
+      if (withLoading) {
+        // dispatch(setOrderLoading(true));
+      }
+      const response = await get(`/order/me`);
+      
+      dispatch({
+        type: ACTION.FETCH_ORDERS,
+        payload: response.orders
+      });
+    } catch (error) {
+      console.log(error);
+      // handleError(error, dispatch);
+    } finally {
+      if (withLoading) {
+        // dispatch(setOrderLoading(false));
+      }
     }
   };
 };

@@ -1,6 +1,8 @@
 import { ACTION, REDUCER } from '../utils/consts';
 const initialState = {
   order_id: null,
+  orders: [],
+  order: null,
 };
 
 const orderReducer = (state = initialState, action) => {
@@ -9,6 +11,16 @@ const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         order_id: action.payload
+      };
+    case ACTION.FETCH_ORDERS:
+      return {
+        ...state,
+        orders: action.payload
+      };
+    case ACTION.FETCH_ORDER:
+      return {
+        ...state,
+        order: action.payload
       };
     default:
       return state;

@@ -33,6 +33,7 @@ router.post(
       const isActive = req.body.isActive;
       const brand = req.body.brand;
       const image = req.body.image;
+      const merchant = req.body.merchant
 
       if (!sku) {
         return res.status(400).json({ error: 'You must enter sku.' });
@@ -70,6 +71,7 @@ router.post(
         isActive,
         brand,
         image,
+        merchant
       });
 
       const savedProduct = await product.save();
@@ -97,7 +99,6 @@ router.get(
     try {
       let products = [];
       products = await Product.find({})
-      console.log("Here B");
       // if (req.user.merchant) {
       //   console.log("Here");
       //   const brands = await Brand.find({
@@ -125,7 +126,6 @@ router.get(
       //    //});
       //    console.log("Here In");
       // }
-      console.log("Here XX");
       res.status(200).json({
         products
       });
@@ -162,7 +162,7 @@ router.get(
           })
           .where('brand', brandId);
       } else {
-         productDoc = await Product.findOne({ _id: productId })//.populate({
+        productDoc = await Product.findOne({ _id: productId })//.populate({
         //   path: 'brand',
         //   select: 'name'
         // });
@@ -173,7 +173,7 @@ router.get(
           message: 'No product found.'
         });
       }
-      
+
 
       res.status(200).json({
         product: productDoc
@@ -186,4 +186,75 @@ router.get(
     }
   }
 );
+
+router.put('/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const update = req.body;
+    const query = { _id: productId };
+
+    await Product.findOneAndUpdate(query, update, {
+      new: true
+    });
+
+    res.status(200).json({
+      success: true,
+      message: 'Product has been updated successfully!'
+    });
+  } catch (error) {
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+
+    await Product.findByIdAndRemove(productId);
+
+    res.status(200).json({
+      success: true,
+      message: 'Product has been deleted successfully!'
+    });
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+router.get(
+  '/merchant/:id',
+  // auth,
+  // role.checkRole(role.ROLES.Admin, role.ROLES.Merchant),
+  async (req, res) => {
+    try {
+      const merchantId = req.params.id;
+
+      const productsDoc = await Product.find({ merchant: merchantId }).populate({
+        path: 'brand',
+        select: 'name'
+      });
+
+      if (!productsDoc) {
+        return res.status(404).json({
+          message: 'No products found.'
+        });
+      }
+
+      res.status(200).json({
+        product: productsDoc
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
+  }
+);
+
 module.exports = router;
