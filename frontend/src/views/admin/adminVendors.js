@@ -18,6 +18,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { Button, MenuItem, Select, TextField } from "@mui/material";
 import KeyboardBackspaceTwoToneIcon from '@mui/icons-material/KeyboardBackspaceTwoTone';
+import { get, post } from "../../utils/serverCall.js";
+import { Navigate } from "react-router-dom";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -52,77 +54,41 @@ export const options = {
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = ['Selected Vendor', '1', '2', '3', '4'];
 
-// for chart ****************************************
-export const data = {
-  labels,
-  datasets: [
-    {
-      label:"Orders",
-      data: [1,4,2,5,6,7,8],
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    }
-  ],
-};
-
-// for table ****************************************
-const initialRows = [
-  {
-    id: 1,
-    first: 'Jane',
-    last: 'Carter',
-  },
-  {
-    id: 2,
-    first: 'Jack',
-    last: 'Smith',
-  },
-  {
-    id: 3,
-    first: 'Gill',
-    last: 'Martin',
-  },
-   {
-    id: 4,
-    first: 'Jane',
-    last: 'Carter',
-  },
-  {
-    id: 5,
-    first: 'Jack',
-    last: 'Smith',
-  },
-  {
-    id: 6,
-    first: 'Gill',
-    last: 'Martin',
-  },
-  {
-    id: 7,
-    first: 'Gill',
-    last: 'Martin',
-  },
-];
 
 const columns = [
   {
-    field: 'first',
-    headerName: 'First',
-    width: 140,
+    field: 'storeName',
+    headerName: 'Name',
+    width: 250,
   },
   {
-    field: 'last',
-    headerName: 'Last',
-    width: 140,
+    field: 'email',
+    headerName: 'Email',
+    width: 250,
+  },
+  {
+    field: 'address',
+    headerName: 'Address',
+    width: 250,
+  },
+    {
+    field: 'status',
+    headerName: 'Status',
+    width: 250,
   },
 ];
 
 
 export default function AdminVendors() {
    const [value, setValue] = React.useState('1');
-   
-   const [rows, setRows] = React.useState(initialRows);
+   const [rows, setRows] = React.useState([]);
+   const [redirToHome, setRedirToHome] = useState(false);
+   const [redirToDetail, setRedirToDetail] = useState(false);
+   const [selectedVendor,setSelectedVendor]=useState(null)
+   const [orderMap, setOrderMap] = React.useState("");
+   const [revenueMap, setRevenueMap] = React.useState("");
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -137,13 +103,99 @@ export default function AdminVendors() {
     },
   };
 
+  useEffect(() => {
+        get("/admin/vendors")
+      .then((result) => { 
+        console.log(result)
+        var arr=new Array()
+        for(var u of result)
+        {
+          var ob={
+            "id":u._id,
+            "storeName":u.storeName,
+            "email":u.email,
+            "status":u.status,
+            "address":u.location.address,
+          }
+          arr.push(ob)
+        }
+        setRows([...arr])
+       })
+      .catch((err) => {
+        
+      });
+    }, []);
+
   const rowSelected = (e) => {
-        console.log(e)
+        setSelectedVendor(e)
+        console.log("selected row",e)
+        get(`/admin/vendororder?id=${e}`)
+      .then((result) => { 
+          console.log("vendor orders",result)
+          var orderMapDetails=[]
+          var mapOrder=[]
+           for(var o of result.orders)
+          {
+            if(e.id!=o._id)
+            {
+              orderMapDetails.push(o.count)
+              mapOrder.push(o._id)
+            }
+            if(e.id==o._id)
+            {
+            orderMapDetails.unshift(o.count)
+            mapOrder.unshift(e.id)
+            }
+          }
+          console.log("maporder",mapOrder)
+          var spentMapDetails=new Array(mapOrder.length).fill(0)
+          setOrderMap({
+                        labels,
+                        datasets: [
+                          {
+                            label: 'Orders',
+                            data: orderMapDetails.splice(0,orderMapDetails.length>4?4:orderMapDetails.length),
+                            borderColor: 'rgb(255, 99, 132)',
+                            backgroundColor: ["#000000",'rgba(255, 99, 132, 0.5)','rgba(255, 99, 132, 0.5)','rgba(255, 99, 132, 0.5)','rgba(255, 99, 132, 0.5)','rgba(255, 99, 132, 0.5)']
+                          },
+
+                        ],
+                        })  
+           for(var i=0;i<mapOrder.length;i++)
+          {
+            for(var j=0;j<result.allOrders.length;j++)
+            {
+              if(mapOrder[i]==result.allOrders[j].user)
+                {spentMapDetails[i]+=result.allOrders[j].total}
+            }
+          }
+          console.log(spentMapDetails)
+          setRevenueMap({
+                        labels,
+                        datasets: [
+                          {
+                            label: 'Revenue',
+                            data: spentMapDetails,
+                            borderColor: 'rgb(255, 99, 132)',
+                            backgroundColor: ["#000000",'rgba(255, 99, 132, 0.5)','rgba(255, 99, 132, 0.5)','rgba(255, 99, 132, 0.5)','rgba(255, 99, 132, 0.5)','rgba(255, 99, 132, 0.5)']
+                          },
+
+                        ],
+                        })
+      })
+      .catch((err) => {
+        
+      });
     };
 
-     const viewVendor = (e) => {
-        console.log(e)
-    };
+
+  if (redirToHome) {
+    return <Navigate to={"/adminhome"} />;
+  }
+
+  if (redirToDetail) {
+    return <Navigate to={"/adminvendordetail"}  state={selectedVendor}/>;
+   }   
 
 return(<>
         <div style={{backgroundColor:"#e7e4e4",position:"fixed",height:"40vh",width:"100vw"}}></div>
@@ -180,12 +232,10 @@ return(<>
                                 </Box>
                                 <TabPanel value="1">
                                     <Grid container >
-                                        {/* <Grid item xs={12} >
-                                            <div style={{fontSize:"30px",textAlign:"left"}}>Customer onboarding frequency on Loka</div>
-                                         </Grid> */}
+                                        {orderMap!=""?<>
                                          <Grid item xs={12} >
-                                             <Bar options={options} data={data} />
-                                             </Grid>
+                                             <Bar options={options} data={orderMap} />
+                                          </Grid>
                                              <Grid item xs={12} sx={{marginTop:'5vh',textAlign:"left"}}>
                                                 Comparison of orders between the selected vendor with the orders of the nearest 5 restaurants within 5 mile radius.
                                              </Grid>
@@ -193,36 +243,54 @@ return(<>
                                                                   <Button
                                                                 variant="contained"
                                                                 sx={{ width: "100%"}}
-                                                                onClick={viewVendor}
+                                                                onClick={()=>setRedirToDetail(true)}
                                                                 >
                                                                     View Vendor
                                                                 </Button>
                                             </Grid>
-
+                                        </>:
+                                        <>
+                                          <Grid item xs={12} >
+                                             <div style={{height:"100%",width:"100%"}}>
+                                                <div style={{marginTop:"5vh"}}><Lottie options={defaultOptions} height={200} width={200} /></div>
+                                             </div>
+                                          </Grid>
+                                          <Grid item xs={12} sx={{marginTop:'5vh',textAlign:"center"}}>
+                                            <div style={{fontSize:"16px",fontweight:"400"}}>select a vendor to see the comparison</div>
+                                          </Grid>
+                                        </>
+                                        }
                                     </Grid>
+                                    
                                  </TabPanel>
                                  <TabPanel value="2">
                                     <Grid container style={{height:"100%",width:"100%"}}>
-                                         {/* <Grid item xs={12} >
-                                             <div style={{fontSize:"30px",textAlign:"left"}}>Vendor onboarding frequency on Loka</div>
-                                        </Grid> */}
-                                         <Grid item xs={12} >
-                                             <Bar options={options} data={data} />
+                                        {revenueMap!=""?<>
+                                             <Grid item xs={12} >
+                                             <Bar options={options} data={revenueMap} />
                                           </Grid>
                                           <Grid item xs={12} sx={{marginTop:'5vh',textAlign:"left"}}>
-                                                Comparison of revenue generated between the selected vendor with the revenue of the nearest 5 restaurants within 5 mile radius.
+                                                Comparison of revenue generated between the selected vendor with the revenue of the top 5 merchants on LOKA.
                                              </Grid>
                                             <Grid item xs={12} sx={{marginTop:'5vh',textAlign:"right"}}>
                                                                   <Button
                                                                 variant="contained"
                                                                 sx={{ width: "100%"}}
-                                                                onClick={viewVendor}
+                                                                onClick={()=>setRedirToDetail(true)}
                                                                 >
                                                                     View Vendor
                                                                 </Button>
                                             </Grid>
-
-                                
+                                        </>:<>
+                                             <Grid item xs={12} >
+                                             <div style={{height:"100%",width:"100%"}}>
+                                                <div style={{marginTop:"5vh"}}><Lottie options={defaultOptions} height={200} width={200} /></div>
+                                             </div>
+                                          </Grid>
+                                          <Grid item xs={12} sx={{marginTop:'5vh',textAlign:"center"}}>
+                                            <div style={{fontSize:"16px",fontweight:"400"}}>select a vendor to see the comparison</div>
+                                          </Grid>
+                                          </>}
                                      </Grid>
                                  </TabPanel>
         
@@ -234,7 +302,7 @@ return(<>
                         <div style={{ height: '50vh', width: '100%',background:"white", }}>
                           <Grid item xs={12} sx={{textAlign:"right"}}>
                               <div style={{paddingLeft:"20px",marginBottom:"10px"}}>
-                                 <Button variant="outlined" startIcon={<KeyboardBackspaceTwoToneIcon />}>
+                                 <Button variant="outlined" startIcon={<KeyboardBackspaceTwoToneIcon />} onClick={()=>setRedirToHome(true)}>
                                     Go Back
                                     </Button>
                                 </div>
@@ -247,7 +315,7 @@ return(<>
                     rows={rows}
                     pageSize={5}
                     // rowsPerPageOptions={[5,10,15,20]}
-                    onRowClick={rowSelected}
+                    onRowClick={(e)=>rowSelected(e.row)}
                     />
                     </div>
                     </Paper>
