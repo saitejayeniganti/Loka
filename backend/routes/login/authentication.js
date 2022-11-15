@@ -35,6 +35,7 @@ router.get("/gSignup", passport.authenticate("gSignup", ["profile", "email"]));
 
 const getUserData = (userInfo) => {
   const {
+    _id,
     provider,
     email,
     firstName,
@@ -45,6 +46,7 @@ const getUserData = (userInfo) => {
     location,
   } = userInfo;
   const user = {
+    id: _id,
     provider,
     email,
     firstName,
@@ -125,9 +127,9 @@ router.get("/logout", (req, res) => {
   res.send();
 });
 
-const checkRegistration = () => {};
+const checkRegistration = () => { };
 
-const insertMerchant = (body, res) => {
+const insertMerchant = (body, user, res) => {
   const merchant = {};
   merchant.email = body.email;
   merchant.location = body.location;
@@ -139,7 +141,7 @@ const insertMerchant = (body, res) => {
         err: err.code === 11000 ? "Merchant already registered" : err.code,
       });
     } else {
-      res.status(200).send({ _id: result });
+      res.status(200).send({ _id: { ...result, userId: user.id } });
     }
   });
 };
@@ -163,7 +165,7 @@ const insertUser = (body, res) => {
       });
     } else {
       if (body.role == 1) {
-        insertMerchant(body, res);
+        insertMerchant(body, result, res);
       } else {
         res.status(200).send({ _id: result });
       }

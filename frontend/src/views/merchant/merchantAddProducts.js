@@ -24,7 +24,7 @@ const defaultProductData = {
     price: "",
     brand: "",
     image: "",
-    merchant: "636458aacdca6561d00fe6e4"
+    merchant: sessionStorage.getItem("id")
 }
 
 export default function MerchantAddProducts() {

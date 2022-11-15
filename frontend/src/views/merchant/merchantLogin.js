@@ -22,8 +22,8 @@ import { showMessage } from "../../reducers/actions.js";
 
 
 function MerchantLogin(userDetails) {
-
- const defaultOptions = {
+  const navigate = useNavigate();
+  const defaultOptions = {
     loop: true,
     autoplay: true,
     animationData: merchant1,
@@ -39,9 +39,9 @@ function MerchantLogin(userDetails) {
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
-};
+  };
 
-    const defaultOptions5 = {
+  const defaultOptions5 = {
     loop: false,
     autoplay: true,
     animationData: shopAnimation,
@@ -50,22 +50,22 @@ function MerchantLogin(userDetails) {
     },
   };
 
-const [lottieToggle, setLottieToggle] = useState(true);
+  const [lottieToggle, setLottieToggle] = useState(true);
 
 
-useEffect(() => {
+  useEffect(() => {
 
-  const intervalID = setInterval(() => {
+    const intervalID = setInterval(() => {
 
-    setLottieToggle(lottieToggle=>!lottieToggle)
+      setLottieToggle(lottieToggle => !lottieToggle)
 
-    
 
-  }, 3000);
-  return () => clearInterval(intervalID);
-}, []);
 
- const gLogin = (event) => {
+    }, 3000);
+    return () => clearInterval(intervalID);
+  }, []);
+
+  const gLogin = (event) => {
     event.preventDefault();
     window.open(process.env.REACT_APP_NODE_SERVER + "/auth/gLogin", "_self");
   };
@@ -74,6 +74,7 @@ useEffect(() => {
     e.preventDefault();
     post("/auth/login", filledData)
       .then((result) => {
+        sessionStorage.setItem("id", result.id)
         showMessage("Login Success");
         navigate("/");
       })
@@ -105,9 +106,9 @@ useEffect(() => {
   }
 
 
-return(
+  return (
     <>
-            <Grid container sx={{ height: "100%", position: "absolute" }}>
+      <Grid container sx={{ height: "100%", position: "absolute" }}>
         <Grid item xs={6} sx={{ backgroundColor: "white" }}></Grid>
         <Grid item xs={6} sx={{ backgroundColor: "rgb(243, 233, 100)" }}></Grid>
       </Grid>
@@ -120,17 +121,17 @@ return(
         }}
       >
         <Grid container spacing={30}>
-          <Grid item xs={4}  style={{marginTop:"130px"}}>
-            {lottieToggle?<Lottie options={defaultOptions}  height={420} width={420} />:
-            <Lottie options={defaultOptions1}  height={420} width={420} />
-            
+          <Grid item xs={4} style={{ marginTop: "130px" }}>
+            {lottieToggle ? <Lottie options={defaultOptions} height={420} width={420} /> :
+              <Lottie options={defaultOptions1} height={420} width={420} />
+
             }
-            
+
           </Grid>
           <Grid item xs={4}>
             <Paper elevation={3} sx={{ padding: "25px", borderRadius: "12px" }}>
               <div style={{ margin: "10px" }}>
-                <img src={shop} style={{ maxWidth:"350px", maxHeight:"350px"}}></img>
+                <img src={shop} style={{ maxWidth: "350px", maxHeight: "350px" }}></img>
                 <div className="appHeadings">Login as a Vendor into LOKA</div>
                 <div style={{ marginTop: "20px" }}>
                   <Button
@@ -223,21 +224,21 @@ return(
               </div>
             </Paper>
           </Grid>
-          <Grid item xs={4} style={{marginTop:"130px",marginLeft:"-100px"}}>
-           
-            
-            <Lottie options={defaultOptions5} 
-            height={500} width={500} 
+          <Grid item xs={4} style={{ marginTop: "130px", marginLeft: "-100px" }}>
+
+
+            <Lottie options={defaultOptions5}
+              height={500} width={500}
             />
-            
-            
+
+
           </Grid>
         </Grid>
       </div>
     </>
-    
-    
-    )
+
+
+  )
 }
 
 export default MerchantLogin;
