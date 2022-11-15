@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import cost from "../../images/merchant/cost.png";
@@ -13,6 +13,7 @@ import { buttonUnstyledClasses } from "@mui/base";
 import { useSelector } from "react-redux";
 import { CONSTANTS, REDUCER } from "../../utils/consts";
 import { get } from "../../utils/serverCall";
+import isEqual from "lodash/isEqual";
 
 function CustomerHome() {
   const vendors = [
@@ -71,11 +72,30 @@ function CustomerHome() {
     // fetchMerchants(newLoc, newSearch);
   }, [navigatorState]);
 
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    }, [value]);
+    return ref.current;
+  }
+
+  const initialRender = useRef(true);
+  const prevLocation = usePrevious(location);
+
   useEffect(() => {
-    // console.log("new loc", location);
-    // console.log("new search", searchInput);
-    fetchMerchants(location, searchInput);
-  }, [location, searchInput]);
+    if (initialRender.current) {
+      initialRender.current = false;
+      return;
+    }
+    if (!isEqual(prevLocation, location)) {
+      fetchMerchants(location, searchInput);
+    }
+  }, [location, prevLocation]);
+
+  // useEffect(() => {
+  //   fetchMerchants(location, searchInput);
+  // }, [location, searchInput]);
 
   return (
     <>

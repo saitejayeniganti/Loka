@@ -45,4 +45,6 @@ const MerchantSchema = new Schema({
   },
 });
 
+// MerchantSchema.index({ location: "2dsphere" });
+
 module.exports = Mongoose.model("Merchant", MerchantSchema);
