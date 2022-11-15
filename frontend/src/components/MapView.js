@@ -146,6 +146,7 @@ export default function MapView(props) {
       },
       (result, status) => {
         if (status === "OK" && result) {
+          console.log("directions", result);
           setDirections(result);
         }
       }
@@ -167,7 +168,7 @@ export default function MapView(props) {
       </div>
       <div className="map">
         <GoogleMap
-          zoom={10}
+          zoom={11}
           center={center}
           mapContainerClassName="map-container"
           options={options}
@@ -191,30 +192,32 @@ export default function MapView(props) {
                 position={location}
                 icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
               />
-              <MarkerClusterer>
-                {(clusterer) =>
-                  vendors.map((vendor) => (
-                    <Marker
-                      key={vendor.location.coordinates[1]}
-                      position={{
-                        lat: vendor.location.coordinates[1],
-                        lng: vendor.location.coordinates[0],
-                      }}
-                      clusterer={clusterer}
-                      onClick={() => {
-                        fetchDirections(vendor);
-                      }}
-                    />
-                  ))
-                }
-              </MarkerClusterer>
-              <Circle center={location} radius={15000} options={closeOptions} />
+              {vendors && (
+                <MarkerClusterer>
+                  {(clusterer) =>
+                    vendors.map((vendor) => (
+                      <Marker
+                        key={vendor.location.coordinates[1]}
+                        position={{
+                          lat: vendor.location.coordinates[1],
+                          lng: vendor.location.coordinates[0],
+                        }}
+                        clusterer={clusterer}
+                        onClick={() => {
+                          fetchDirections(vendor);
+                        }}
+                      />
+                    ))
+                  }
+                </MarkerClusterer>
+              )}
+              <Circle center={location} radius={5000} options={closeOptions} />
               <Circle
                 center={location}
-                radius={30000}
+                radius={10000}
                 options={middleOptions}
               />
-              <Circle center={location} radius={45000} options={farOptions} />
+              <Circle center={location} radius={15000} options={farOptions} />
             </>
           )}
         </GoogleMap>
