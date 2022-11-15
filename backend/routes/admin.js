@@ -118,4 +118,88 @@ router.get('/userreviews', async (req, res) => {
   }
 })
 
+//get all vendors
+router.get('/vendors', async (req, res) => {
+  try {
+    const vendor=await Merchant.find({})
+    res.status(200).json(
+        vendor
+      );
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+})
+
+//get grouped orders and all orders
+router.get('/vendororder', async (req, res) => {
+  try {
+  const orders=await Order.aggregate().sortByCount("merchant");
+    const allOrders=await Order.find({
+    })
+    res.status(200).json({
+        "orders":orders,
+        "allOrders":allOrders
+      });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+})
+
+//get all vendor orders
+router.get('/vendororders', async (req, res) => {
+  try {
+    const orders=await Order.find({merchant:req.query.id}).populate("merchant").populate("user")
+    res.status(200).json(
+        orders
+      );
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+})
+
+//get all vendor reviews
+router.get('/vendorreviews', async (req, res) => {
+  try {
+    const reviews=await Review.find({merchant:req.query.id}).populate("merchant")
+    res.status(200).json(
+        reviews
+      );
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+})
+
+
+//get all vendor details, reviews and orders
+router.get('/vendor', async (req, res) => {
+  try {
+    const vendor=await Merchant.find({_id:req.query.id})
+    // const reviews=await Review.find({user:req.query.id})
+    const orders=await Order.find({merchant:req.query.id})
+    res.status(200).json({
+        "vendor":vendor,
+        // "reviews":reviews,
+        "orders":orders
+      });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+})
+
+
 module.exports = router;

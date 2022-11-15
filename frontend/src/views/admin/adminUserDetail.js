@@ -17,7 +17,7 @@ import { Button, MenuItem, Select, TextField } from "@mui/material";
 import KeyboardBackspaceTwoToneIcon from '@mui/icons-material/KeyboardBackspaceTwoTone';
 import { Navigate } from "react-router-dom";
 import { get, post } from "../../utils/serverCall.js";
-import location from "../../images/admin/location.png"
+import locationpng from "../../images/admin/location.png"
 import emailpng from "../../images/admin/email.png"
 import phonepng from "../../images/admin/phone.png"
 import time from "../../images/admin/calendar.png"
@@ -356,7 +356,7 @@ function AdminUserDetail() {
                                 </Grid>
                                 <Grid container xs={12} sx={{marginTop:"6vh"}}>
                                     <Grid item xs={3}>
-                                      <img src={location} height="40px" weight='40px'/>
+                                      <img src={locationpng} height="40px" weight='40px'/>
                                     </Grid>
                                     <Grid item xs={8} sx={{textAlign:"left"}}>
                                           {userDetails.location.address}

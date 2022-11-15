@@ -19,42 +19,35 @@ import './admin.css'
 import KeyboardBackspaceTwoToneIcon from '@mui/icons-material/KeyboardBackspaceTwoTone';
 import cardShopping from "../../animations/parcel-pickup-service.json";
 import { Button, MenuItem, Select, TextField } from "@mui/material";
+import { get, post } from "../../utils/serverCall.js";
+import { Navigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
-const initialRows = [
-  {
-    id: 1,
-    first: 'Jane',
-    last: 'Carter',
-  },
-  {
-    id: 2,
-    first: 'Jack',
-    last: 'Smith',
-  },
-  {
-    id: 3,
-    first: 'Gill',
-    last: 'Martin',
-  },
-];
 
 const columns = [
   {
-    field: 'first',
-    headerName: 'First',
-    width: 140,
+    field: 'customer',
+    headerName: 'customer Name',
+    width: 320,
   },
   {
-    field: 'last',
-    headerName: 'Last',
-    width: 140,
+    field: 'placed',
+    headerName: 'Placed on',
+    width: 320,
+  },
+  {
+    field: 'total',
+    headerName: 'Total',
+    width: 320,
   },
 ];
 
 export default function AdminVendorOrders() {
-    
+  const location = useLocation();
+  console.log("state in orders",location.state)
+  const [rows, setRows] = React.useState([]);
+  const [redirToVendorDetail, setRedirToVendorDetail] = useState(false);
 
-  const [rows, setRows] = React.useState(initialRows);
     const defaultOptions = {
     loop: false,
     autoplay: true,
@@ -63,11 +56,37 @@ export default function AdminVendorOrders() {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-  const dat=[{name:"sai",age:"2"},{name:"teja",age:"5"}];
+
+   useEffect(() => {
+    console.log("state in vendor orders", location.state)
+        get(`/admin/vendororders?id=${location.state.id}`)
+      .then((result) => {   
+        console.log(result)
+        var arr=new Array()
+        for(var u of result)
+        {
+          var ob={
+            "id":u._id,
+            "total":u.total,
+            "placed":u.created.substr(0, 10)
+          }
+          arr.push(ob)
+        }
+        setRows([...arr])
+      })
+       .catch((err) => {
+        
+      });
+    }, []);
+  
 
    const rowSelected = (e) => {
         console.log(e)
     };
+
+  if (redirToVendorDetail) {
+    return <Navigate to={"/adminvendordetail"} state={location.state}/>;
+  }
 
     return(<>
             <div style={{height:"100vh",backgroundColor:"#e7e4e4",width:"30vw",marginLeft:"70vw",position:"fixed"}}></div>
@@ -78,7 +97,7 @@ export default function AdminVendorOrders() {
                         <Grid container sx={{padding:"20px"}}>
                             <Grid item xs={9} sx={{textAlign:"left",color:"white"}}>
                                 <Grid item xs={12}>
-                                    <h2 style={{color:'white'}}>Orders of</h2>
+                                    <h2 style={{color:'white'}}>Orders of {location.state.storeName}</h2>
                                 </Grid>
                                 <Grid item xs={12}>
                                     customer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etc
@@ -91,13 +110,13 @@ export default function AdminVendorOrders() {
                 </Grid>
 
             {/* *************************End of header******************** */}
-
+<Grid container spacing={1} >
                 <Grid item xs={8.5}>
                 <div style={{ height: '75vh', width: '100%',background:"white",padding:"20px",borderRadius:"10px" }}>
                     <Grid container spacing={2} sx={{marginBottom:"15px"}}>
                         <Grid item xs={12} sx={{textAlign:"right"}}>
                               <div style={{paddingLeft:"20px"}}>
-                                 <Button variant="outlined" startIcon={<KeyboardBackspaceTwoToneIcon />}>
+                                 <Button variant="outlined" startIcon={<KeyboardBackspaceTwoToneIcon />} onClick={()=>setRedirToVendorDetail(true)}>
                                     Go Back
                                     </Button>
                                 </div>
@@ -131,6 +150,7 @@ export default function AdminVendorOrders() {
                           </Grid>
                     </div>
                 </Grid>
+            </Grid>
             </Grid>
         </div>
           </>)
