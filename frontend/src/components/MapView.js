@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { get } from "../utils/serverCall";
 import { CONSTANTS, REDUCER } from "../utils/consts";
 import { isEqual } from "lodash";
+import MapDistance from "./MapDistance";
 // import Places from "./places";
 // import Distance from "./distance";
 
@@ -164,7 +165,7 @@ export default function MapView(props) {
           }}
         /> */}
         {!location && <p>Enter the address of your home.</p>}
-        {/* {directions && <Distance leg={directions.routes[0].legs[0]} />} */}
+        {directions && <MapDistance leg={directions.routes[0].legs[0]} />}
       </div>
       <div className="map">
         <GoogleMap
@@ -204,7 +205,10 @@ export default function MapView(props) {
                         }}
                         clusterer={clusterer}
                         onClick={() => {
-                          fetchDirections(vendor);
+                          fetchDirections({
+                            lat: vendor.location.coordinates[1],
+                            lng: vendor.location.coordinates[0],
+                          });
                         }}
                       />
                     ))
