@@ -25,8 +25,8 @@ export default function SearchMain({ input, callback }) {
       throttle((request, callback) => {
         //autocompleteService.current.getPlacePredictions(request, callback);
         //backend search call here.
-        get("/search/test", request).then((result) => {
-          console.log("search results", result);
+        get("/search/merchant", request).then((result) => {
+          // console.log("search results", result);
           // const res = [
           //   { _id: 1, name: "apple" },
           //   { _id: 2, name: "orange" },

@@ -18,13 +18,12 @@ import { get } from "../../utils/serverCall";
 import isEqual from "lodash/isEqual";
 import { Navigate } from "react-router-dom";
 import shoppingOrderConfirm from "../../animations/shopping-order-confirm.json";
-import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
-import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
-import BookmarkBorderRoundedIcon from '@mui/icons-material/BookmarkBorderRounded';
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
+import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
+import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 
 function CustomerHome() {
-
   const defaultOptions = {
     loop: true,
     autoplay: true,
@@ -41,7 +40,6 @@ function CustomerHome() {
   const [selectedMerchant, setSelectedMerchant] = useState("");
   const [redirToMerchant, setRedirToMerchant] = useState(false);
 
-  
   const vendors = [
     {
       id: 1,
@@ -79,16 +77,14 @@ function CustomerHome() {
     });
   };
 
-   const saveMerchantIcon = () => {
-    console.log("saved")
+  const saveMerchantIcon = () => {
+    console.log("saved");
   };
 
-   const redirectToMerchant = (merchant) => {
-      setSelectedMerchant(merchant)
-      setRedirToMerchant(true)
+  const redirectToMerchant = (merchant) => {
+    setSelectedMerchant(merchant);
+    setRedirToMerchant(true);
   };
-
-
 
   useEffect(() => {
     // console.log("navigator Change", navigatorState);
@@ -130,25 +126,20 @@ function CustomerHome() {
   //   fetchMerchants(location, searchInput);
   // }, [location, searchInput]);
 
-if (redirToMerchant) {
+  if (redirToMerchant) {
     return <Navigate to={"/customermerchant"} />;
   }
 
   return (
     <>
- 
-    
-
       <div className="homeBanner" style={{ textAlign: "left" }}>
         <img src={banner1} height="220px"></img>
       </div>
-     
+
       <div className="homeBanner1">
         <h1>Order products for pickup or delivery today</h1>
         <p>Whatever you want from local stores, brought right to your door.</p>
       </div>
-
-
 
       <div
         style={{
@@ -163,7 +154,7 @@ if (redirToMerchant) {
         Select a store nearby
       </div>
 
-      <div className="row" style={{paddingLeft:"20px"}}>
+      <div className="row" style={{ paddingLeft: "20px" }}>
         {vendors.map((vendor) => (
           <Paper
             key={vendor.id}
@@ -174,7 +165,7 @@ if (redirToMerchant) {
               padding: "0px !important",
               marginLeft: "30px",
               marginTop: "25px",
-              cursor:"pointer"
+              cursor: "pointer",
             }}
           >
             <Grid container spacing={0}>
@@ -225,7 +216,7 @@ if (redirToMerchant) {
                 <Grid item xs={6}>
                   <div style={{ textAlign: "left" }}>{vendor.name}</div>
                 </Grid>
-                 <Grid item xs={4}>
+                <Grid item xs={4}>
                   <div
                     style={{
                       display: "flex",
@@ -246,13 +237,23 @@ if (redirToMerchant) {
                     >
                       {vendor.rating} &nbsp;
                     </div>
-                    <div style={{color:"#FFD700"}}>
-                      <StarPurple500SharpIcon fontSize="medium"/>
+                    <div style={{ color: "#FFD700" }}>
+                      <StarPurple500SharpIcon fontSize="medium" />
                     </div>
                   </div>
                 </Grid>
                 <Grid item xs={1}></Grid>
-                <Grid item xs={1} sx={{marginTop:"2px",opacity:"60%"}} title="Save Merchant"><BookmarkRoundedIcon color="" onClick={()=>saveMerchantIcon()} /></Grid>
+                <Grid
+                  item
+                  xs={1}
+                  sx={{ marginTop: "2px", opacity: "60%" }}
+                  title="Save Merchant"
+                >
+                  <BookmarkRoundedIcon
+                    color=""
+                    onClick={() => saveMerchantIcon()}
+                  />
+                </Grid>
                 <Grid item xs={12}>
                   <div style={{ textAlign: "left", fontSize: "13px" }}>
                     {vendor.categories[0]}
