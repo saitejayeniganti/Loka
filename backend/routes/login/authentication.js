@@ -134,6 +134,7 @@ const insertMerchant = (body, user, res) => {
   merchant.email = body.email;
   merchant.location = body.location;
   merchant.storeName = body.storeName;
+  merchant._id = user._id;
   const newMerchant = new MerchantModel(merchant);
   newMerchant.save((err, result) => {
     if (err) {
