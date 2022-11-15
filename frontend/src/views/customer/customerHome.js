@@ -40,32 +40,34 @@ function CustomerHome() {
   const [selectedMerchant, setSelectedMerchant] = useState("");
   const [redirToMerchant, setRedirToMerchant] = useState(false);
 
-  const vendors = [
-    {
-      id: 1,
-      name: "Costco",
-      image: cost,
-      rating: "4.5",
-      categories: ["grocery", "Frozen", "Meat"],
-      driveTime: "12 - 15 min",
-    },
-    {
-      id: 2,
-      name: "Walmart",
-      image: cost,
-      rating: "3.5",
-      categories: ["Dairy", "Meat"],
-      driveTime: "21 - 25 min",
-    },
-    {
-      id: 2,
-      name: "Walmart",
-      image: cost,
-      rating: "3.5",
-      categories: ["Dairy", "Meat"],
-      driveTime: "21 - 25 min",
-    },
-  ];
+  // const vendors = [
+  //   {
+  //     id: 1,
+  //     name: "Costco",
+  //     image: cost,
+  //     rating: "4.5",
+  //     categories: ["grocery", "Frozen", "Meat"],
+  //     driveTime: "12 - 15 min",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Walmart",
+  //     image: cost,
+  //     rating: "3.5",
+  //     categories: ["Dairy", "Meat"],
+  //     driveTime: "21 - 25 min",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Walmart",
+  //     image: cost,
+  //     rating: "3.5",
+  //     categories: ["Dairy", "Meat"],
+  //     driveTime: "21 - 25 min",
+  //   },
+  // ];
+
+  const [vendors, setVendors] = useState([]);
 
   const onVendorClick = (vendorId) => {
     console.log(vendorId);
@@ -73,8 +75,9 @@ function CustomerHome() {
 
   const fetchMerchants = (location, searchInput) => {
     location &&
-      get("/customer/merchants", { location, searchInput }).then(() => {
-        console.log("fetched ");
+      get("/customer/merchants", { location, searchInput }).then((result) => {
+        console.log("nearby stores", result);
+        setVendors(result);
       });
   };
 
@@ -168,7 +171,7 @@ function CustomerHome() {
       <div className="row" style={{ paddingLeft: "20px" }}>
         {vendors.map((vendor) => (
           <Paper
-            key={vendor.id}
+            key={vendor._id}
             elevation={3}
             sx={{
               maxWidth: "20%",
@@ -203,7 +206,7 @@ function CustomerHome() {
                   }}
                 >
                   <img
-                    src={vendor.image}
+                    src={vendor.image ? vendor.image : cost}
                     style={{
                       borderColor: "black",
                       padding: "0px !important",
@@ -225,7 +228,7 @@ function CustomerHome() {
                 }}
               >
                 <Grid item xs={6}>
-                  <div style={{ textAlign: "left" }}>{vendor.name}</div>
+                  <div style={{ textAlign: "left" }}>{vendor.storeName}</div>
                 </Grid>
                 <Grid item xs={4}>
                   <div
@@ -265,7 +268,7 @@ function CustomerHome() {
                     onClick={() => saveMerchantIcon()}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                {/* vendor.categories && <Grid item xs={12}>
                   <div style={{ textAlign: "left", fontSize: "13px" }}>
                     {vendor.categories[0]}
                     {vendor.categories.slice(1, 2).map((v) => (
@@ -276,7 +279,7 @@ function CustomerHome() {
                     ))}{" "}
                     ..
                   </div>
-                </Grid>
+                </Grid> */}
 
                 <Grid item xs={12}>
                   <div style={{ textAlign: "left", fontSize: "13px" }}>

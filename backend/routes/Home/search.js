@@ -30,7 +30,7 @@ router.get("/merchant", (req, res) => {
     })
     .catch((error) => {
       console.log(error);
-      res.sendStatus(200);
+      res.sendStatus(500);
     });
 
   // res.sendStatus(200);

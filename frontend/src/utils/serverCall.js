@@ -16,7 +16,7 @@ const get = (path, data) => {
   return Axios.get(process.env.REACT_APP_NODE_SERVER + path, { params: data })
     .then((response) => response.data)
     .catch((error) => {
-      if (error.response && error.response.data.err) {
+      if (error.response && error.response.data && error.response.data.err) {
         store.dispatch(showError(error.response.data.err));
         throw error.response.data.err;
       } else {
@@ -33,7 +33,7 @@ const post = (path, data) => {
   return Axios.post(process.env.REACT_APP_NODE_SERVER + path, data)
     .then((response) => response.data)
     .catch((error) => {
-      if (error.response && error.response.data.err) {
+      if (error.response && error.response.data && error.response.data.err) {
         store.dispatch(showError(error.response.data.err));
         throw error.response.data.err;
       } else {
@@ -51,7 +51,7 @@ const put = (path, data) => {
   return Axios.put(process.env.REACT_APP_NODE_SERVER + path, data)
     .then((response) => response.data)
     .catch((error) => {
-      if (error.response && error.response.data.err) {
+      if (error.response && error.response.data && error.response.data.err) {
         store.dispatch(showError(error.response.data.err));
         throw error.response.data.err;
       } else {
@@ -69,7 +69,7 @@ const remove = (path, data) => {
   return Axios.delete(process.env.REACT_APP_NODE_SERVER + path, data)
     .then((response) => response.data)
     .catch((error) => {
-      if (error.response && error.response.data.err) {
+      if (error.response && error.response.data && error.response.data.err) {
         store.dispatch(showError(error.response.data.err));
         throw error.response.data.err;
       } else {
