@@ -142,7 +142,7 @@ function CustomerHome() {
   // }, [location, searchInput]);
 
   if (redirToMerchant) {
-    return <Navigate to={"/customermerchant"} />;
+    return <Navigate to={"/customermerchant?id=" + selectedMerchant} />;
   }
 
   return (
@@ -195,7 +195,7 @@ function CustomerHome() {
                   padding: "10px",
                 }}
                 title="Redirect to merchant"
-                onClick={() => redirectToMerchant()}
+                onClick={() => redirectToMerchant(vendor._id)}
               >
                 <div
                   style={{

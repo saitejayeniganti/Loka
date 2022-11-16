@@ -52,7 +52,7 @@ export default function MapDistance({ leg, vendor }) {
           <Button
             size="small"
             onClick={() => {
-              return navigate("/customermerchant");
+              return navigate("/customermerchant?id=" + vendor._id);
             }}
           >
             Go to store page
