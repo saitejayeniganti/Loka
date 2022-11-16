@@ -1,4 +1,11 @@
-import { Button, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { displayError, displayMessage } from "../../utils/messages";
@@ -18,11 +25,11 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import KeyIcon from "@mui/icons-material/Key";
 import HomeIcon from "@mui/icons-material/Home";
 import Paper from "@mui/material/Paper";
-import { useSelector } from "react-redux";
+import FileUpload from "../../components/FileUpload";
+import { v4 as uuidv4 } from "uuid";
+import { Avatar, Image } from "antd";
 
 function Profile(userDetails) {
-  const sessionState = useSelector((state) => state.sessionReducer);
-
   const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
@@ -48,7 +55,6 @@ function Profile(userDetails) {
 
   const navigate = useNavigate();
   const user = userDetails.user;
-  const [externalSignup, setExternalSignUp] = useState(false);
   const defaultFilledData = {
     firstName: "",
     lastName: "",
@@ -61,6 +67,7 @@ function Profile(userDetails) {
     address: "",
     latitude: "",
     longitude: "",
+    image: "",
     // storeName: "",
   };
 
@@ -90,7 +97,9 @@ function Profile(userDetails) {
         filledData[key] === undefined
       ) {
         isValid = false;
-        return true;
+        console.log(key);
+        displayError("Please fill all fields");
+        return false;
       }
     });
     return isValid;
@@ -99,13 +108,7 @@ function Profile(userDetails) {
   const checkValidation = () => {
     let isValid = true;
     trimInputs();
-    // if (!checkEmpty()) {
-    //   displayError("Fill valid input");
-    //   // showError("Fill valid input");
-    //   // showMessage("hello");
-    //   isValid = false;
-    // }
-    return isValid;
+    return checkEmpty();
   };
 
   const handleSelect = (address) => {
@@ -116,6 +119,7 @@ function Profile(userDetails) {
       });
       getLatLng(results[0])
         .then((latLng) => {
+          console.log("Success", latLng);
           setFilledData((prev) => {
             return { ...prev, latitude: latLng.lat, longitude: latLng.lng };
           });
@@ -126,45 +130,27 @@ function Profile(userDetails) {
     });
   };
 
-  const gSignup = (e) => {
-    e.preventDefault();
-    window.open(
-      process.env.REACT_APP_NODE_SERVER + "/auth/gSignup/callback",
-      "_self"
-    );
-  };
-
   useEffect(() => {
-    user && setExternalSignUp(true);
     if (user) {
+      console.log("profile user", user);
       setFilledData((prev) => {
         return {
           ...prev,
           firstName: user.firstName,
           lastName: user.lastName,
-          email: user.email,
-          provider: user.provider,
+          // email: user.emails ? user.emails[0].value : defaultFilledData.email,
+          // externalId: user.id,
+          // provider: user.provider,
+          // password: "provider",
+          phone: user.phone,
+          address: user.location.address,
+          latitude: user.location.coordinates[1],
+          longitude: user.location.coordinates[0],
+          image: user.image,
         };
       });
     }
   }, [userDetails.user]);
-
-  useEffect(() => {
-    if (sessionState.isLoggedIn) {
-      const userInfo = sessionState.user;
-      setFilledData({
-        ...filledData,
-        firstName: userInfo.firstName,
-        lastName: userInfo.lastName,
-        email: userInfo.email,
-        provider: userInfo.provider,
-        role: userInfo.role,
-        address: userInfo.location.address,
-        latitude: userInfo.location.coordinates[0],
-        longitude: userInfo.location.coordinates[1],
-      });
-    }
-  }, [sessionState]);
 
   // useEffect(() => {
   //   setRedirectHome(true);
@@ -177,10 +163,12 @@ function Profile(userDetails) {
   const signup = (e) => {
     e.preventDefault();
     if (checkValidation()) {
-      post("/auth/signup", filledData)
+      post("/auth/profile", filledData)
         .then((res) => {
-          displayMessage("Registered Successfully");
-          navigate("/");
+          console.log(res);
+          // sessionStorage.setItem("id", res._id.userId);
+          displayMessage("Updated Successfully");
+          navigate("/profile");
         })
         .catch((err) => {
           console.log(err);
@@ -188,170 +176,230 @@ function Profile(userDetails) {
     }
   };
 
-  if (userDetails.isLoggedIn) {
+  if (!userDetails.isLoggedIn) {
     // console.log("redirect");
     return <Navigate to={"/"} />;
   }
 
   return (
     <>
-      <Grid container sx={{ height: "100%" }}>
-        <Grid item xs={2.5}></Grid>
-        <Grid item xs={7}>
-          <Paper elevation={10} sx={{ borderRadius: "10px" }}>
-            <div
-              style={{
-                background: "#84bbf4",
-                borderTopLeftRadius: "10px",
-                borderTopRightRadius: "10px",
-              }}
-            >
-              <Lottie options={defaultOptions1} height={350} width={350} />
-            </div>
-            <div
-              style={{
-                padding: "10px",
-                overflowY: "scroll",
-                position: "relative",
-                // height: "450px",
-              }}
-            >
-              <div style={{ margin: "20px" }}>
-                <TextField
-                  fullWidth
-                  id="outlined-size-small"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={filledData.firstName}
-                  label="First Name"
-                  size="small"
-                  name="firstName"
-                  onChange={eventHandler}
-                />
-              </div>
-              <div style={{ margin: "20px" }}>
-                <TextField
-                  fullWidth
-                  id="outlined-size-small"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    ),
-                  }}
-                  value={filledData.lastName}
-                  label="Last Name"
-                  size="small"
-                  name="lastName"
-                  onChange={eventHandler}
-                />
-              </div>
+      <Grid container sx={{ height: "100%", position: "absolute" }}>
+        <Grid item xs={4} sx={{ backgroundColor: "#FEBB15" }}></Grid>
+        <Grid item xs={8} sx={{ backgroundColor: "white" }}></Grid>
+      </Grid>
+      <Grid container sx={{ height: "100%", position: "absolute" }}>
+        <Grid
+          item
+          xs={4}
+          sx={
+            {
+              // background: "linear-gradient(35deg, #F9EA8F 40%, #AFF1DA 70%)",
+            }
+          }
+        >
+          <div
+            style={{ fontSize: "80px", fontFamily: "math", marginTop: "20px" }}
+          >
+            <br /> Profile
+          </div>
+          <Lottie options={defaultOptions} height={420} width={420} />
+        </Grid>
 
-              <div style={{ margin: "20px" }}>
-                <TextField
-                  fullWidth
-                  id="outlined-size-small"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <LocalPostOfficeIcon />
-                      </InputAdornment>
-                    ),
+        <Grid
+          item
+          xs={8}
+          sx={{
+            // background: "rgb(243, 233, 100)"
+            paddingTop: "40px",
+          }}
+        >
+          <Grid container sx={{ height: "100%" }}>
+            <Grid item xs={2.5}></Grid>
+            <Grid item xs={7}>
+              <Paper elevation={10} sx={{ borderRadius: "10px" }}>
+                <div
+                  style={{
+                    background: "#84bbf4",
+                    borderTopLeftRadius: "10px",
+                    borderTopRightRadius: "10px",
                   }}
-                  value={filledData.email}
-                  label="Email"
-                  size="small"
-                  name="email"
-                  onChange={eventHandler}
-                />
-              </div>
-              <div style={{ margin: "20px" }}>
-                <TextField
-                  fullWidth
-                  id="outlined-size-small"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <PhoneIcon />
-                      </InputAdornment>
-                    ),
+                >
+                  {/* <Lottie options={defaultOptions1} height={350} width={350} /> */}
+                </div>
+                <div
+                  style={{
+                    padding: "10px",
+                    overflowY: "scroll",
+                    position: "relative",
+                    // height: "450px",
                   }}
-                  value={filledData.phone}
-                  label="Phone"
-                  size="small"
-                  name="phone"
-                  onChange={eventHandler}
-                />
-              </div>
-              {/* <div style={{ margin: "20px" }}>
-                {filledData.provider === "email" && (
-                  <TextField
-                    fullWidth
-                    id="outlined-size-small"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <KeyIcon />
-                        </InputAdornment>
-                      ),
+                >
+                  <div style={{ margin: "20px" }}>
+                    <TextField
+                      fullWidth
+                      id="firstName"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <AccountCircle />
+                          </InputAdornment>
+                        ),
+                      }}
+                      value={filledData.firstName}
+                      label="First Name"
+                      size="small"
+                      name="firstName"
+                      variant="outlined"
+                      onChange={eventHandler}
+                    />
+                  </div>
+                  <div style={{ margin: "20px" }}>
+                    <TextField
+                      fullWidth
+                      id="lastName"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <AccountCircle />
+                          </InputAdornment>
+                        ),
+                      }}
+                      value={filledData.lastName}
+                      label="Last Name"
+                      size="small"
+                      name="lastName"
+                      onChange={eventHandler}
+                    />
+                  </div>
+
+                  {/* <div style={{ margin: "20px" }}>
+                    <TextField
+                      fullWidth
+                      id="email"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <LocalPostOfficeIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      value={filledData.email}
+                      label="Email"
+                      size="small"
+                      name="email"
+                      onChange={eventHandler}
+                    />
+                  </div> */}
+                  <div style={{ margin: "20px" }}>
+                    <TextField
+                      fullWidth
+                      id="phone"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <PhoneIcon />
+                          </InputAdornment>
+                        ),
+                      }}
+                      value={filledData.phone}
+                      label="Phone"
+                      size="small"
+                      name="phone"
+                      onChange={eventHandler}
+                    />
+                  </div>
+                  {/* <div style={{ margin: "20px" }}>
+                    {filledData.provider === "email" && (
+                      <TextField
+                        fullWidth
+                        id="password"
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <KeyIcon />
+                            </InputAdornment>
+                          ),
+                        }}
+                        value={filledData.password}
+                        disabled={externalSignup}
+                        label="Password"
+                        size="small"
+                        name="password"
+                        onChange={eventHandler}
+                        type="password"
+                      />
+                    )}
+                  </div> */}
+                  {/* <div style={{ margin: "20px" }}>
+                    <FormControl fullWidth>
+                      <InputLabel id="role-label">Account Role</InputLabel>
+                      <Select
+                        fullWidth
+                        labelId="role-label"
+                        id="role"
+                        value={filledData.role}
+                        label="Account Role"
+                        onChange={eventHandler}
+                        name="role"
+                      >
+                        <MenuItem value={0}>Customer</MenuItem>
+                        <MenuItem value={1}>Vendor</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </div> */}
+                  <div style={{ margin: "20px" }}>
+                    {filledData.role == 1 && (
+                      <TextField
+                        fullWidth
+                        id="storeName"
+                        label="Store Name"
+                        name="storeName"
+                        value={filledData.storeName}
+                        onChange={eventHandler}
+                      />
+                    )}
+                  </div>
+                  <div style={{ margin: "20px" }}>
+                    <LocationSearchInput
+                      handleChange={handleChange}
+                      handleSelect={handleSelect}
+                      address={filledData.address}
+                    />
+                  </div>
+                  <div>
+                    {filledData.image && (
+                      <Avatar
+                        size={128}
+                        src={
+                          <Image
+                            src={filledData.image}
+                            style={{ width: 256 }}
+                          />
+                        }
+                      />
+                    )}
+                  </div>
+                  <FileUpload
+                    callback={(e) => {
+                      console.log("uploaded url", e);
+                      setFilledData({ ...filledData, image: e });
                     }}
-                    value={filledData.password}
-                    disabled={externalSignup}
-                    label="Password"
-                    size="small"
-                    name="password"
-                    onChange={eventHandler}
+                    fileName={uuidv4()}
+                    folderPath="profile/"
                   />
-                )}
-              </div> */}
-              {/* <div style={{ margin: "20px" }}>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={filledData.role}
-                  label="Account Role"
-                  onChange={eventHandler}
-                  name="role"
-                >
-                  <MenuItem value={0}>Customer</MenuItem>
-                  <MenuItem value={1}>Vendor</MenuItem>
-                </Select>
-              </div> */}
-              <div style={{ margin: "20px" }}>
-                {filledData.role == 1 && (
-                  <TextField
-                    id="signup-name"
-                    label="Store Name"
-                    name="storeName"
-                    value={filledData.storeName}
-                    onChange={eventHandler}
-                  />
-                )}
-              </div>
-              <div style={{ margin: "20px" }}>
-                <LocationSearchInput
-                  handleChange={handleChange}
-                  handleSelect={handleSelect}
-                  address={filledData.address}
-                />
-              </div>
-              <div style={{ margin: "20px" }}>
-                <Button
-                  variant="contained"
-                  sx={{ width: "100%" }}
-                  onClick={signup}
-                >
-                  Update
-                </Button>
-              </div>
-            </div>
-          </Paper>
+                  <div style={{ margin: "20px" }}>
+                    <Button
+                      variant="contained"
+                      sx={{ width: "100%" }}
+                      onClick={signup}
+                    >
+                      Update
+                    </Button>
+                  </div>
+                </div>
+              </Paper>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </>

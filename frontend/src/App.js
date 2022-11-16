@@ -221,7 +221,11 @@ function App() {
         <Route path="/route" exact element={<RouteMap />}></Route>
         {/* <Route path="/map" exact element={<SimpleMap />}></Route> */}
         <Route path="/location" exact element={<LocationSearch />}></Route>
-        <Route path="/profile" exact element={<Profile />}></Route>
+        <Route
+          path="/profile"
+          exact
+          element={<Profile user={user} isLoggedIn={isLoggedIn} />}
+        ></Route>
         <Route path="/progress" element={<Progress></Progress>}></Route>
 
         <Route

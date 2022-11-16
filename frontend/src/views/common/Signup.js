@@ -27,6 +27,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import Paper from "@mui/material/Paper";
 import FileUpload from "../../components/FileUpload";
 import { v4 as uuidv4 } from "uuid";
+import { Avatar, Image } from "antd";
 
 function Signup(userDetails) {
   const [address, setAddress] = useState("");
@@ -97,6 +98,7 @@ function Signup(userDetails) {
         filledData[key] === undefined
       ) {
         isValid = false;
+        console.log(key);
         displayError("Please fill all fields");
         return false;
       }
@@ -107,12 +109,6 @@ function Signup(userDetails) {
   const checkValidation = () => {
     let isValid = true;
     trimInputs();
-    // if (!checkEmpty()) {
-    //   displayError("Fill valid input");
-    //   // showError("Fill valid input");
-    //   // showMessage("hello");
-    //   isValid = false;
-    // }
     return checkEmpty();
   };
 
@@ -154,6 +150,7 @@ function Signup(userDetails) {
           email: user.emails ? user.emails[0].value : defaultFilledData.email,
           externalId: user.id,
           provider: user.provider,
+          password: "provider",
         };
       });
     }
@@ -207,7 +204,7 @@ function Signup(userDetails) {
           <div
             style={{ fontSize: "80px", fontFamily: "math", marginTop: "20px" }}
           >
-            Vendor <br /> Sign Up
+            <br /> Sign Up
           </div>
           <Lottie options={defaultOptions} height={420} width={420} />
 
@@ -219,8 +216,7 @@ function Signup(userDetails) {
               padding: "20px",
             }}
           >
-            To become a known vendor in the neighborhood, sign up on to the LOKA
-            platform.
+            sign up on to the LOKA platform.
           </div>
         </Grid>
 
@@ -424,6 +420,19 @@ function Signup(userDetails) {
                       address={filledData.address}
                     />
                   </div>
+                  <div>
+                    {filledData.image && (
+                      <Avatar
+                        size={128}
+                        src={
+                          <Image
+                            src={filledData.image}
+                            style={{ width: 256 }}
+                          />
+                        }
+                      />
+                    )}
+                  </div>
                   <FileUpload
                     callback={(e) => {
                       console.log("uploaded url", e);
@@ -432,6 +441,7 @@ function Signup(userDetails) {
                     fileName={uuidv4()}
                     folderPath="profile/"
                   />
+
                   <div style={{ margin: "20px" }}>
                     <Button
                       variant="contained"

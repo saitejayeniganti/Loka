@@ -41,9 +41,9 @@ const getUserData = (userInfo) => {
     firstName,
     lastName,
     role,
-    latitude,
-    longitude,
     location,
+    phone,
+    image,
   } = userInfo;
   const user = {
     id: _id,
@@ -52,9 +52,9 @@ const getUserData = (userInfo) => {
     firstName,
     lastName,
     role,
-    latitude,
-    longitude,
     location,
+    phone,
+    image,
   };
   if (userInfo.role == 1) {
     user.storeName = userInfo.storeName;
@@ -241,6 +241,14 @@ router.post("/login", (req, res) => {
 
 router.get("/reset", (req, res) => {
   req.logout();
+  res.send();
+});
+
+// router.get("/profile", (req, res) => {
+//   res.send();
+// });
+
+router.post("/profile", (req, res) => {
   res.send();
 });
 
