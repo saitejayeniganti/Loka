@@ -6,8 +6,9 @@ import DeleteProductDialog from '../../components/merchant/DeleteProductDialog'
 import { Grid } from '@mui/material'
 import { useInventory } from './customhooks/index'
 import { useState } from 'react'
+import { connect } from "react-redux";
 
-export default function MerchantInventory() {
+function MerchantInventory(props) {
     const [openUpdateModal, setOpenUpdateModal] = useState(false)
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
     const [liftedProductData, setLiftedProductData] = useState({})
@@ -25,7 +26,7 @@ export default function MerchantInventory() {
 
     const handleCloseDeleteDialog = () => setOpenDeleteDialog(false)
 
-    const { inventory, fetchAllProductsByMerchantId } = useInventory(sessionStorage.getItem("id"))
+    const { inventory, fetchAllProductsByMerchantId } = useInventory(props.id)
 
     return (
         <>
@@ -47,3 +48,11 @@ export default function MerchantInventory() {
         </>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        id: state.sessionReducer.user.id,
+    };
+};
+
+export default connect(mapStateToProps)(MerchantInventory);

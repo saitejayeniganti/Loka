@@ -5,6 +5,7 @@ import { displayMessage, displayError } from '../../utils/messages'
 import { useState } from 'react'
 import { useBrand } from "../../views/merchant/customhooks/index"
 import { updateProduct } from '../../reducers/actions'
+import { connect } from "react-redux";
 
 const style = {
     position: 'absolute',
@@ -18,18 +19,17 @@ const style = {
     p: 4,
 };
 
-export default function EditProductModal({ open, handleClose, liftedProductData, fetchAllProductsByMerchantId }) {
+function EditProductModal(props) {
     const parsedProductData = {
-        sku: liftedProductData.sku,
-        name: liftedProductData.name,
-        description: liftedProductData.description,
-        quantity: liftedProductData.quantity,
-        price: liftedProductData.price,
-        brand: liftedProductData.brand?._id,
-        image: liftedProductData.image,
-        merchant: sessionStorage.getItem("id")
+        sku: props.liftedProductData.sku,
+        name: props.liftedProductData.name,
+        description: props.liftedProductData.description,
+        quantity: props.liftedProductData.quantity,
+        price: props.liftedProductData.price,
+        brand: props.liftedProductData.brand?._id,
+        image: props.liftedProductData.image,
+        merchant: props.id
     }
-
     const [productData, setProductData] = useState(parsedProductData)
     const { brandData } = useBrand()
     useEffect(() => {
@@ -56,10 +56,10 @@ export default function EditProductModal({ open, handleClose, liftedProductData,
             return
         }
         try {
-            const updatedProductResult = await updateProduct(liftedProductData._id, productData)
-            handleClose()
+            const updatedProductResult = await updateProduct(props.liftedProductData._id, productData)
+            props.handleClose()
             displayMessage(updatedProductResult.message)
-            fetchAllProductsByMerchantId()
+            props.fetchAllProductsByMerchantId()
         } catch (e) {
             displayError(e.error)
         }
@@ -70,8 +70,8 @@ export default function EditProductModal({ open, handleClose, liftedProductData,
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
-                open={open}
-                onClose={handleClose}
+                open={props.open}
+                onClose={props.handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
                 BackdropProps={{
@@ -95,7 +95,7 @@ export default function EditProductModal({ open, handleClose, liftedProductData,
                             <TextField required type="number" label="Price" name="price"
                                 InputProps={{ startAdornment: <InputAdornment position="start">${productData.price}</InputAdornment>, }} onChange={handleProductDataChange} />
                         </Stack>
-                        <Autocomplete required freeSolo options={brandData} renderInput={(params) => <TextField {...params} label={`Brand: ${liftedProductData.brand.name}`} />} onChange={handleBrandAutoComplete} />
+                        <Autocomplete required freeSolo options={brandData} renderInput={(params) => <TextField {...params} label={`Brand: ${props.liftedProductData.brand.name}`} />} onChange={handleBrandAutoComplete} />
                         <div><p>Image Upload</p>
                             <FileUpload
                                 callback={(imageURL) => {
@@ -113,3 +113,11 @@ export default function EditProductModal({ open, handleClose, liftedProductData,
         </>
     )
 }
+
+const mapStateToProps = (state) => {
+    return {
+        id: state.sessionReducer.user.id,
+    };
+};
+
+export default connect(mapStateToProps)(EditProductModal);
