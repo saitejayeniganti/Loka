@@ -26,6 +26,8 @@ export default function MapView(props) {
   const [searchInput, setSearchInput] = useState("");
   const [vendors, setVendors] = useState([]);
 
+  const [currentVendor, setCurrentVendor] = useState();
+
   // const [home, setHome] = useState(); // delivery address. set by getting location from navigator.
   const [directions, setDirections] = useState();
   const mapRef = useRef();
@@ -135,7 +137,7 @@ export default function MapView(props) {
   //   }
   // }, [searchInput, prevSearchInput]);
 
-  const fetchDirections = (house) => {
+  const fetchDirections = (house, details) => {
     if (!location) return; // if home is not set then no directions.
 
     const service = new google.maps.DirectionsService();
@@ -149,6 +151,7 @@ export default function MapView(props) {
         if (status === "OK" && result) {
           console.log("directions", result);
           setDirections(result);
+          setCurrentVendor(details);
         }
       }
     );
@@ -157,7 +160,6 @@ export default function MapView(props) {
   return (
     <div className="container">
       <div className="controls">
-        <h1>Commute?</h1>
         {/* <Places
           setHome={(position) => {
             setHome(position);
@@ -165,7 +167,12 @@ export default function MapView(props) {
           }}
         /> */}
         {!location && <p>Enter the address of your home.</p>}
-        {directions && <MapDistance leg={directions.routes[0].legs[0]} />}
+        {directions && (
+          <MapDistance
+            leg={directions.routes[0].legs[0]}
+            vendor={currentVendor}
+          />
+        )}
       </div>
       <div className="map">
         <GoogleMap
@@ -205,10 +212,13 @@ export default function MapView(props) {
                         }}
                         clusterer={clusterer}
                         onClick={() => {
-                          fetchDirections({
-                            lat: vendor.location.coordinates[1],
-                            lng: vendor.location.coordinates[0],
-                          });
+                          fetchDirections(
+                            {
+                              lat: vendor.location.coordinates[1],
+                              lng: vendor.location.coordinates[0],
+                            },
+                            vendor
+                          );
                         }}
                       />
                     ))
