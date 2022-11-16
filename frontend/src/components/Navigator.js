@@ -165,6 +165,9 @@ function MenuAppBar(props) {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={() => {
+              navigate("/");
+            }}
           >
             <img src={lokamarketlogo} width="30" height="30" />
           </IconButton>
