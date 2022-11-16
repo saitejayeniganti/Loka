@@ -6,6 +6,7 @@ import FileUpload from "../../components/FileUpload";
 import { useBrand } from "./customhooks/index"
 import { addProduct } from '../../reducers/actions'
 import { displayMessage, displayError } from '../../utils/messages'
+import { connect } from "react-redux";
 
 const defaultOptions = {
     loop: true,
@@ -16,18 +17,19 @@ const defaultOptions = {
     },
 };
 
-const defaultProductData = {
-    sku: "",
-    name: "",
-    description: "",
-    quantity: "",
-    price: "",
-    brand: "",
-    image: "",
-    merchant: sessionStorage.getItem("id")
-}
+function MerchantAddProducts(props) {
+    const defaultProductData = {
+        sku: "",
+        name: "",
+        description: "",
+        quantity: "",
+        price: "",
+        brand: "",
+        image: "",
+        merchant: props.id
+    }
+    console.log(defaultProductData)
 
-export default function MerchantAddProducts() {
     const [productData, setProductData] = useState(defaultProductData)
     const { brandData } = useBrand()
 
@@ -99,7 +101,10 @@ export default function MerchantAddProducts() {
     )
 }
 
-const options = [
-    { label: 'Nestle', id: 1 },
-    { label: 'Brooks', id: 2 },
-];
+const mapStateToProps = (state) => {
+    return {
+        id: state.sessionReducer.user.id,
+    };
+};
+
+export default connect(mapStateToProps)(MerchantAddProducts);
