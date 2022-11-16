@@ -104,7 +104,7 @@ function Login(userDetails) {
           <Grid item xs={4}>
             <Lottie options={defaultOptions1} height={700} width={700} />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={4} sx={{ zIndex: "1000" }}>
             <Paper elevation={3} sx={{ padding: "25px", borderRadius: "12px" }}>
               <div style={{ margin: "10px" }}>
                 {/* <img src={loginImage} width="350" height="350"></img> */}

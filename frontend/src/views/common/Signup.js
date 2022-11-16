@@ -97,6 +97,7 @@ function Signup(userDetails) {
         filledData[key] === undefined
       ) {
         isValid = false;
+        displayError("Please fill all fields");
         return false;
       }
     });

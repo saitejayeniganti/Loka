@@ -18,7 +18,7 @@ import logoicon from "../images/theme/grocery-bag.png";
 import { get } from "../utils/serverCall.js";
 import { useDispatch, useSelector } from "react-redux";
 import { CONSTANTS, REDUCER } from "../utils/consts";
-import { Alert } from "@mui/material";
+import { Alert, AlertTitle } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import SearchGMaps from "./SearchGMaps";
@@ -289,14 +289,16 @@ function MenuAppBar(props) {
       </AppBar>
       {showError && (
         <div style={{ position: "fixed", bottom: "10px", zIndex: "2" }}>
-          <Alert severity="warning" dismissible="true">
+          <Alert severity="error" variant="filled" dismissible="true">
+            <AlertTitle>Error</AlertTitle>
             {errorMsg}
           </Alert>
         </div>
       )}
       {showMessage && (
         <div style={{ position: "fixed", bottom: "10px", zIndex: "2" }}>
-          <Alert severity="success" dismissible="true">
+          <Alert severity="info" variant="filled" dismissible="true">
+            <AlertTitle>Info</AlertTitle>
             {message}
           </Alert>
         </div>
