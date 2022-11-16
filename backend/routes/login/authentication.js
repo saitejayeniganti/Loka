@@ -202,7 +202,7 @@ router.post("/signup", (req, res) => {
 
 const setSession = (req, res, userInfo) => {
   const user = getUserData(userInfo);
-  req.logout();
+  // req.logout();
   req.logIn(user, function (error) {
     if (!error) {
       console.log("succcessfully updated user session");
@@ -228,7 +228,7 @@ router.post("/login", (req, res) => {
               MerchantModel.findOne({ _id: result._id })
                 .then((merchant) => {
                   setSession(req, res, {
-                    ...result,
+                    ...result._doc,
                     storeName: merchant.storeName,
                   });
                 })
@@ -284,7 +284,10 @@ const updateUser = (body, req, res) => {
           { new: true }
         )
           .then((merchant) => {
-            setSession(req, res, { ...user, storeName: merchant.storeName });
+            setSession(req, res, {
+              ...user._doc,
+              storeName: merchant.storeName,
+            });
             // res.status(200).send({});
           })
           .catch((err) => {

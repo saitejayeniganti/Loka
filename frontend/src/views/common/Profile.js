@@ -151,6 +151,7 @@ function Profile(userDetails) {
           longitude: user.location.coordinates[0],
           image: user.image,
           id: user.id,
+          role: user.role,
         };
         if (user.role == 1) {
           data = { ...data, storeName: user.storeName };
