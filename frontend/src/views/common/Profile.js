@@ -228,7 +228,7 @@ function Profile(userDetails) {
                     ),
                   }}
                   value={filledData.firstName}
-                  placeholder="First Name"
+                  label="First Name"
                   size="small"
                   name="firstName"
                   onChange={eventHandler}
@@ -246,7 +246,7 @@ function Profile(userDetails) {
                     ),
                   }}
                   value={filledData.lastName}
-                  placeholder="Last Name"
+                  label="Last Name"
                   size="small"
                   name="lastName"
                   onChange={eventHandler}
@@ -265,7 +265,7 @@ function Profile(userDetails) {
                     ),
                   }}
                   value={filledData.email}
-                  placeholder="Email"
+                  label="Email"
                   size="small"
                   name="email"
                   onChange={eventHandler}
@@ -283,7 +283,7 @@ function Profile(userDetails) {
                     ),
                   }}
                   value={filledData.phone}
-                  placeholder="Phone"
+                  label="Phone"
                   size="small"
                   name="phone"
                   onChange={eventHandler}
@@ -303,7 +303,7 @@ function Profile(userDetails) {
                     }}
                     value={filledData.password}
                     disabled={externalSignup}
-                    placeholder="Password"
+                    label="Password"
                     size="small"
                     name="password"
                     onChange={eventHandler}
