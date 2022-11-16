@@ -107,8 +107,8 @@ function Login(userDetails) {
           <Grid item xs={4}>
             <Paper elevation={3} sx={{ padding: "25px", borderRadius: "12px" }}>
               <div style={{ margin: "10px" }}>
-                <img src={loginImage} width="350" height="350"></img>
-                <div className="appHeadings">Login as a Customer into LOKA</div>
+                {/* <img src={loginImage} width="350" height="350"></img> */}
+                {/* <div className="appHeadings">Login as a Customer into LOKA</div> */}
                 <div style={{ marginTop: "20px" }}>
                   <Button
                     variant="outlined"
@@ -182,6 +182,7 @@ function Login(userDetails) {
                     size="small"
                     name="password"
                     onChange={eventHandler}
+                    type="password"
                   />
                 </div>
                 <div style={{ marginTop: "20px" }}>

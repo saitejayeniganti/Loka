@@ -97,7 +97,7 @@ function Signup(userDetails) {
         filledData[key] === undefined
       ) {
         isValid = false;
-        return true;
+        return false;
       }
     });
     return isValid;
@@ -112,7 +112,7 @@ function Signup(userDetails) {
     //   // showMessage("hello");
     //   isValid = false;
     // }
-    return isValid;
+    return checkEmpty();
   };
 
   const handleSelect = (address) => {
@@ -242,14 +242,14 @@ function Signup(userDetails) {
                     borderTopRightRadius: "10px",
                   }}
                 >
-                  <Lottie options={defaultOptions1} height={350} width={350} />
+                  {/* <Lottie options={defaultOptions1} height={350} width={350} /> */}
                 </div>
                 <div
                   style={{
                     padding: "10px",
                     overflowY: "scroll",
                     position: "relative",
-                    height: "450px",
+                    // height: "450px",
                   }}
                 >
                   <div style={{ margin: "20px" }}>
@@ -287,13 +287,13 @@ function Signup(userDetails) {
                         </svg>
                       }
                     >
-                      Continue with Google
+                      Signup with Google
                     </Button>
                   </div>
                   <div style={{ margin: "20px" }}>
                     <TextField
                       fullWidth
-                      id="outlined-size-small"
+                      id="firstName"
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -312,7 +312,7 @@ function Signup(userDetails) {
                   <div style={{ margin: "20px" }}>
                     <TextField
                       fullWidth
-                      id="outlined-size-small"
+                      id="lastName"
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -331,7 +331,7 @@ function Signup(userDetails) {
                   <div style={{ margin: "20px" }}>
                     <TextField
                       fullWidth
-                      id="outlined-size-small"
+                      id="email"
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -349,7 +349,7 @@ function Signup(userDetails) {
                   <div style={{ margin: "20px" }}>
                     <TextField
                       fullWidth
-                      id="outlined-size-small"
+                      id="phone"
                       InputProps={{
                         startAdornment: (
                           <InputAdornment position="start">
@@ -368,7 +368,7 @@ function Signup(userDetails) {
                     {filledData.provider === "email" && (
                       <TextField
                         fullWidth
-                        id="outlined-size-small"
+                        id="password"
                         InputProps={{
                           startAdornment: (
                             <InputAdornment position="start">
@@ -382,6 +382,7 @@ function Signup(userDetails) {
                         size="small"
                         name="password"
                         onChange={eventHandler}
+                        type="password"
                       />
                     )}
                   </div>
@@ -391,7 +392,7 @@ function Signup(userDetails) {
                       <Select
                         fullWidth
                         labelId="role-label"
-                        id="demo-simple-select"
+                        id="role"
                         value={filledData.role}
                         label="Account Role"
                         onChange={eventHandler}
@@ -407,7 +408,7 @@ function Signup(userDetails) {
                     {filledData.role == 1 && (
                       <TextField
                         fullWidth
-                        id="signup-name"
+                        id="storeName"
                         label="Store Name"
                         name="storeName"
                         value={filledData.storeName}
