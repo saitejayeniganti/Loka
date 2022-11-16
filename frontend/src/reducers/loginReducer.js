@@ -1,7 +1,7 @@
 import { ACTION, REDUCER } from "../utils/consts";
 
 const initialState = {
-  [REDUCER.SIGNEDIN]: false,
+  [REDUCER.SIGNEDIN]: "",
 };
 
 const loginReducer = (state = initialState, action) => {

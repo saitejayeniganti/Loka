@@ -202,12 +202,13 @@ router.post("/signup", (req, res) => {
 
 const setSession = (req, res, userInfo) => {
   const user = getUserData(userInfo);
+  req.logout();
   req.logIn(user, function (error) {
     if (!error) {
       console.log("succcessfully updated user session");
     }
+    res.send(user);
   });
-  res.send(user);
 };
 
 // if gauth and login as email then send message.
@@ -223,7 +224,20 @@ router.post("/login", (req, res) => {
       if (result) {
         bcrypt.compare(body.password, result.password, (error, response) => {
           if (response) {
-            setSession(req, res, result);
+            if (result.role == 1) {
+              MerchantModel.findOne({ _id: result._id })
+                .then((merchant) => {
+                  setSession(req, res, {
+                    ...result,
+                    storeName: merchant.storeName,
+                  });
+                })
+                .catch((err) => {
+                  res.status(500).send({ err });
+                });
+            } else {
+              setSession(req, res, result);
+            }
           } else {
             res
               .status(404)
@@ -248,8 +262,50 @@ router.get("/reset", (req, res) => {
 //   res.send();
 // });
 
+const updateUser = (body, req, res) => {
+  //if updating email need to update session info as well
+  const query = { _id: body.id };
+  const update = {
+    firstName: body.firstName,
+    lastName: body.lastName,
+    phone: body.phone,
+    location: body.location,
+    image: body.image,
+  };
+  UserModel.findOneAndUpdate(query, update, { new: true })
+    .then((user) => {
+      if (body.role == 1) {
+        MerchantModel.findOneAndUpdate(
+          query,
+          {
+            location: body.location,
+            storeName: body.storeName,
+          },
+          { new: true }
+        )
+          .then((merchant) => {
+            setSession(req, res, { ...user, storeName: merchant.storeName });
+            // res.status(200).send({});
+          })
+          .catch((err) => {
+            res.status(500).send({ err });
+          });
+      } else {
+        setSession(req, res, user);
+        // res.status(200).send({});
+      }
+    })
+    .catch((err) => {
+      res.status(500).send({ err });
+    });
+};
+
 router.post("/profile", (req, res) => {
-  res.send();
+  const body = req.body;
+  const location = getLocation(body);
+  body.location = location;
+  updateUser(body, req, res);
+  // res.send();
 });
 
 module.exports = router;

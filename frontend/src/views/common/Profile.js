@@ -29,11 +29,18 @@ import FileUpload from "../../components/FileUpload";
 import { v4 as uuidv4 } from "uuid";
 import { Avatar, Image } from "antd";
 
+import { actionCreators } from "../../reducers/actionCreators.js";
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+
 function Profile(userDetails) {
   const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   // const [redirectHome, setRedirectHome] = useState(false);
+
+  const dispatch = useDispatch();
+  const { doSignIn } = bindActionCreators(actionCreators, dispatch);
 
   const defaultOptions = {
     loop: false,
@@ -62,12 +69,13 @@ function Profile(userDetails) {
     // externalId: "",
     provider: "email",
     phone: "",
-    password: "",
+    // password: "",
     role: 0,
     address: "",
     latitude: "",
     longitude: "",
     image: "",
+    id: "",
     // storeName: "",
   };
 
@@ -97,7 +105,7 @@ function Profile(userDetails) {
         filledData[key] === undefined
       ) {
         isValid = false;
-        console.log(key);
+        console.log("fill data", key);
         displayError("Please fill all fields");
         return false;
       }
@@ -106,7 +114,6 @@ function Profile(userDetails) {
   };
 
   const checkValidation = () => {
-    let isValid = true;
     trimInputs();
     return checkEmpty();
   };
@@ -134,19 +141,23 @@ function Profile(userDetails) {
     if (user) {
       console.log("profile user", user);
       setFilledData((prev) => {
-        return {
-          ...prev,
+        let data = {
           firstName: user.firstName,
           lastName: user.lastName,
-          // email: user.emails ? user.emails[0].value : defaultFilledData.email,
-          // externalId: user.id,
-          // provider: user.provider,
-          // password: "provider",
           phone: user.phone,
+          email: user.email,
           address: user.location.address,
           latitude: user.location.coordinates[1],
           longitude: user.location.coordinates[0],
           image: user.image,
+          id: user.id,
+        };
+        if (user.role == 1) {
+          data = { ...data, storeName: user.storeName };
+        }
+        return {
+          ...prev,
+          ...data,
         };
       });
     }
@@ -168,7 +179,9 @@ function Profile(userDetails) {
           console.log(res);
           // sessionStorage.setItem("id", res._id.userId);
           displayMessage("Updated Successfully");
-          navigate("/profile");
+          doSignIn(Date.now());
+          // window.location.reload();
+          // navigate("/profile");
         })
         .catch((err) => {
           console.log(err);

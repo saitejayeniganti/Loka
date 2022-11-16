@@ -110,7 +110,7 @@ function App() {
       .catch((error) => {
         // setSession({ user, isLoggedIn });
         setLoadSpinner(false);
-
+        updateSessionState(null, false);
         // console.log(error);
       });
   };
@@ -124,8 +124,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // console.log("login changed", loginState[REDUCER.SIGNEDIN]);
-    if (loginState[REDUCER.SIGNEDIN] == "true") {
+    console.log("profile changed");
+    if (loginState[REDUCER.SIGNEDIN] != "") {
       getUser();
     }
   }, [loginState]);

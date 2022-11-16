@@ -52,6 +52,7 @@ function MenuAppBar(props) {
     aCreators,
     dispatch
   );
+  const { doSignIn } = bindActionCreators(aCreators, dispatch);
 
   const handleChange = (event) => {
     setAuth(event.target.checked);
@@ -68,9 +69,10 @@ function MenuAppBar(props) {
   const handleLogout = () => {
     get("/auth/logout").then((res) => {
       setAnchorEl(null);
-      navigate("/home");
+      doSignIn(Date.now());
+      // navigate("/home");
       // console.log("loggedOut");
-      window.location.reload();
+      // window.location.reload();
     });
   };
 
