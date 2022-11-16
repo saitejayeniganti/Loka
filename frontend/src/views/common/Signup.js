@@ -1,4 +1,11 @@
-import { Button, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { displayError, displayMessage } from "../../utils/messages";
@@ -295,9 +302,10 @@ function Signup(userDetails) {
                         ),
                       }}
                       value={filledData.firstName}
-                      placeholder="First Name"
+                      label="First Name"
                       size="small"
                       name="firstName"
+                      variant="outlined"
                       onChange={eventHandler}
                     />
                   </div>
@@ -313,7 +321,7 @@ function Signup(userDetails) {
                         ),
                       }}
                       value={filledData.lastName}
-                      placeholder="Last Name"
+                      label="Last Name"
                       size="small"
                       name="lastName"
                       onChange={eventHandler}
@@ -332,7 +340,7 @@ function Signup(userDetails) {
                         ),
                       }}
                       value={filledData.email}
-                      placeholder="Email"
+                      label="Email"
                       size="small"
                       name="email"
                       onChange={eventHandler}
@@ -350,7 +358,7 @@ function Signup(userDetails) {
                         ),
                       }}
                       value={filledData.phone}
-                      placeholder="Phone"
+                      label="Phone"
                       size="small"
                       name="phone"
                       onChange={eventHandler}
@@ -370,7 +378,7 @@ function Signup(userDetails) {
                         }}
                         value={filledData.password}
                         disabled={externalSignup}
-                        placeholder="Password"
+                        label="Password"
                         size="small"
                         name="password"
                         onChange={eventHandler}
@@ -378,22 +386,27 @@ function Signup(userDetails) {
                     )}
                   </div>
                   <div style={{ margin: "20px" }}>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={filledData.role}
-                      label="Account Role"
-                      onChange={eventHandler}
-                      name="role"
-                    >
-                      <MenuItem value={0}>Customer</MenuItem>
-                      <MenuItem value={1}>Vendor</MenuItem>
-                      {/* <MenuItem value={2}>Admin</MenuItem> */}
-                    </Select>
+                    <FormControl fullWidth>
+                      <InputLabel id="role-label">Account Role</InputLabel>
+                      <Select
+                        fullWidth
+                        labelId="role-label"
+                        id="demo-simple-select"
+                        value={filledData.role}
+                        label="Account Role"
+                        onChange={eventHandler}
+                        name="role"
+                      >
+                        <MenuItem value={0}>Customer</MenuItem>
+                        <MenuItem value={1}>Vendor</MenuItem>
+                        {/* <MenuItem value={2}>Admin</MenuItem> */}
+                      </Select>
+                    </FormControl>
                   </div>
                   <div style={{ margin: "20px" }}>
                     {filledData.role == 1 && (
                       <TextField
+                        fullWidth
                         id="signup-name"
                         label="Store Name"
                         name="storeName"
