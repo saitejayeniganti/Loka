@@ -1,4 +1,11 @@
-import { Button, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { displayError, displayMessage } from "../../utils/messages";
@@ -18,6 +25,8 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import KeyIcon from "@mui/icons-material/Key";
 import HomeIcon from "@mui/icons-material/Home";
 import Paper from "@mui/material/Paper";
+import FileUpload from "../../components/FileUpload";
+import { v4 as uuidv4 } from "uuid";
 
 function Signup(userDetails) {
   const [address, setAddress] = useState("");
@@ -58,6 +67,7 @@ function Signup(userDetails) {
     address: "",
     latitude: "",
     longitude: "",
+    image: "",
     // storeName: "",
   };
 
@@ -187,9 +197,11 @@ function Signup(userDetails) {
         <Grid
           item
           xs={4}
-          sx={{
-            // background: "linear-gradient(35deg, #F9EA8F 40%, #AFF1DA 70%)",
-          }}
+          sx={
+            {
+              // background: "linear-gradient(35deg, #F9EA8F 40%, #AFF1DA 70%)",
+            }
+          }
         >
           <div
             style={{ fontSize: "80px", fontFamily: "math", marginTop: "20px" }}
@@ -216,7 +228,7 @@ function Signup(userDetails) {
           xs={8}
           sx={{
             // background: "rgb(243, 233, 100)"
-            paddingTop: "40px"
+            paddingTop: "40px",
           }}
         >
           <Grid container sx={{ height: "100%" }}>
@@ -290,9 +302,10 @@ function Signup(userDetails) {
                         ),
                       }}
                       value={filledData.firstName}
-                      placeholder="First Name"
+                      label="First Name"
                       size="small"
                       name="firstName"
+                      variant="outlined"
                       onChange={eventHandler}
                     />
                   </div>
@@ -308,7 +321,7 @@ function Signup(userDetails) {
                         ),
                       }}
                       value={filledData.lastName}
-                      placeholder="Last Name"
+                      label="Last Name"
                       size="small"
                       name="lastName"
                       onChange={eventHandler}
@@ -327,7 +340,7 @@ function Signup(userDetails) {
                         ),
                       }}
                       value={filledData.email}
-                      placeholder="Email"
+                      label="Email"
                       size="small"
                       name="email"
                       onChange={eventHandler}
@@ -345,7 +358,7 @@ function Signup(userDetails) {
                         ),
                       }}
                       value={filledData.phone}
-                      placeholder="Phone"
+                      label="Phone"
                       size="small"
                       name="phone"
                       onChange={eventHandler}
@@ -365,7 +378,7 @@ function Signup(userDetails) {
                         }}
                         value={filledData.password}
                         disabled={externalSignup}
-                        placeholder="Password"
+                        label="Password"
                         size="small"
                         name="password"
                         onChange={eventHandler}
@@ -373,22 +386,27 @@ function Signup(userDetails) {
                     )}
                   </div>
                   <div style={{ margin: "20px" }}>
-                    <Select
-                      labelId="demo-simple-select-label"
-                      id="demo-simple-select"
-                      value={filledData.role}
-                      label="Account Role"
-                      onChange={eventHandler}
-                      name="role"
-                    >
-                      <MenuItem value={0}>Customer</MenuItem>
-                      <MenuItem value={1}>Vendor</MenuItem>
-                      {/* <MenuItem value={2}>Admin</MenuItem> */}
-                    </Select>
+                    <FormControl fullWidth>
+                      <InputLabel id="role-label">Account Role</InputLabel>
+                      <Select
+                        fullWidth
+                        labelId="role-label"
+                        id="demo-simple-select"
+                        value={filledData.role}
+                        label="Account Role"
+                        onChange={eventHandler}
+                        name="role"
+                      >
+                        <MenuItem value={0}>Customer</MenuItem>
+                        <MenuItem value={1}>Vendor</MenuItem>
+                        {/* <MenuItem value={2}>Admin</MenuItem> */}
+                      </Select>
+                    </FormControl>
                   </div>
                   <div style={{ margin: "20px" }}>
                     {filledData.role == 1 && (
                       <TextField
+                        fullWidth
                         id="signup-name"
                         label="Store Name"
                         name="storeName"
@@ -404,6 +422,14 @@ function Signup(userDetails) {
                       address={filledData.address}
                     />
                   </div>
+                  <FileUpload
+                    callback={(e) => {
+                      console.log("uploaded url", e);
+                      setFilledData({ ...filledData, image: e });
+                    }}
+                    fileName={uuidv4()}
+                    folderPath="profile/"
+                  />
                   <div style={{ margin: "20px" }}>
                     <Button
                       variant="contained"

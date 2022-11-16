@@ -77,6 +77,7 @@ const UserSchema = new Schema({
     },
     address: { type: String, trim: true },
   },
+  image: { type: String, trim: true },
 });
 const User = Mongoose.model("User", UserSchema);
 User.syncIndexes();

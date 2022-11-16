@@ -161,7 +161,7 @@ function Login(userDetails) {
                         </InputAdornment>
                       ),
                     }}
-                    placeholder="Email"
+                    label="Email"
                     size="small"
                     name="email"
                     onChange={eventHandler}
@@ -178,7 +178,7 @@ function Login(userDetails) {
                         </InputAdornment>
                       ),
                     }}
-                    placeholder="Password"
+                    label="Password"
                     size="small"
                     name="password"
                     onChange={eventHandler}
