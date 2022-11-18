@@ -149,7 +149,7 @@ function CustomerHome() {
     return <Navigate to={"/customermerchant?id=" + selectedMerchant} />;
   }
 
-  const createBaseCard = (vendor, product) => {
+  const createBaseCard = (vendor, productName) => {
     return (
       <Paper
         key={vendor._id}
@@ -211,6 +211,7 @@ function CustomerHome() {
             <Grid item xs={6}>
               <div style={{ textAlign: "left" }}>{vendor.storeName}</div>
             </Grid>
+
             <Grid item xs={4}>
               <div
                 style={{
@@ -261,11 +262,15 @@ function CustomerHome() {
           ..
         </div>
       </Grid> */}
-
+            {productName && (
+              <Grid item xs={12}>
+                <div style={{ textAlign: "left", color: "grey" }}>
+                  product: {productName}
+                </div>
+              </Grid>
+            )}
             <Grid item xs={12}>
-              <div style={{ textAlign: "left", fontSize: "13px" }}>
-                opening and close timings
-              </div>
+              <div style={{ textAlign: "left", fontSize: "13px" }}>timings</div>
             </Grid>
             <Grid item xs={6}></Grid>
             <Grid item xs={6}>
