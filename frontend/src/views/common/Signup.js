@@ -172,7 +172,7 @@ function Signup(userDetails) {
           console.log(res);
           sessionStorage.setItem("id", res._id.userId);
           displayMessage("Registered Successfully");
-          navigate("/");
+          navigate("/login");
         })
         .catch((err) => {
           console.log(err);

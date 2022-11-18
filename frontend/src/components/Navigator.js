@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
+import MapIcon from "@mui/icons-material/Map";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -190,7 +191,22 @@ function MenuAppBar(props) {
               {props.user.firstName}
             </Typography>
           )} */}
-
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyItems: "right",
+            }}
+          >
+            <IconButton
+              aria-label="delete"
+              onClick={() => {
+                navigate("/mapview");
+              }}
+            >
+              <MapIcon />
+            </IconButton>
+          </div>
           <Box
             sx={{
               display: "flex",
@@ -262,6 +278,7 @@ function MenuAppBar(props) {
                 </Menu>
               </div>
             )}
+
             {!props.isLoggedIn && (
               <>
                 <Link href={"/myorder"} underline="none" color="inherit">
