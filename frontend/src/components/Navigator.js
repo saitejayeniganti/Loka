@@ -184,22 +184,10 @@ function MenuAppBar(props) {
           <Typography variant="h5" component="div">
             LOKA
           </Typography>
-          {((props.isLoggedIn && props.user.role == 0) || !props.isLoggedIn) &&
-            searchBoxes()}
-          {/* {props.user && (
-            <Typography variant="h5" component="div">
-              {props.user.firstName}
-            </Typography>
-          )} */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyItems: "right",
-            }}
-          >
+          <div>
             <IconButton
               aria-label="delete"
+              color="primary"
               onClick={() => {
                 navigate("/mapview");
               }}
@@ -207,6 +195,14 @@ function MenuAppBar(props) {
               <MapIcon />
             </IconButton>
           </div>
+          {((props.isLoggedIn && props.user.role == 0) || !props.isLoggedIn) &&
+            searchBoxes()}
+          {/* {props.user && (
+            <Typography variant="h5" component="div">
+              {props.user.firstName}
+            </Typography>
+          )} */}
+
           <Box
             sx={{
               display: "flex",
