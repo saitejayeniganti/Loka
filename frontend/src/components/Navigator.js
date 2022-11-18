@@ -156,9 +156,9 @@ function MenuAppBar(props) {
               setSearchInput(data);
             }}
           ></SearchMain>
-          <div style={{ margin: "0px", background: "linen", color: "black" }}>
+          {/* <div style={{ margin: "0px", background: "linen", color: "black" }}>
             <FormControlLabel control={<Switch />} label="Products" />
-          </div>
+          </div> */}
         </div>
       </>
     );
