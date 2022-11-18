@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { get } from '../../../utils/serverCall'
+import { get, post } from '../../../utils/serverCall'
 
 export const useBrand = () => {
     const [brandData, setBrandData] = useState([])
@@ -15,5 +15,15 @@ export const useBrand = () => {
         });
     }
 
-    return { brandData, fetchAllBrand }
+    const createBrand = async (newBrandName) => {
+        const newBrandObject = { name: newBrandName }
+        try {
+            const createdBrandResult = await post(`/brand/create`, newBrandObject)
+            return createdBrandResult
+        } catch (e) {
+            throw e
+        }
+    }
+
+    return { brandData, fetchAllBrand, createBrand }
 }
