@@ -37,12 +37,6 @@ const CategorySchema = new Schema({
     type: Boolean,
     default: true
   },
-  products: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Product'
-    }
-  ],
   updated: Date,
   created: {
     type: Date,

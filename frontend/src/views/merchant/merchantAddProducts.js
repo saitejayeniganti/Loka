@@ -28,17 +28,16 @@ function MerchantAddProducts(props) {
         image: "",
         merchant: props.id
     }
-    console.log(defaultProductData)
 
     const [productData, setProductData] = useState(defaultProductData)
-    const { brandData } = useBrand()
+    const { brandData, createBrand, fetchAllBrand } = useBrand()
 
     const handleProductDataChange = (event) => {
         setProductData({ ...productData, [event.target.name]: event.target.value })
     }
 
     const handleBrandAutoComplete = (event, newValue) => {
-        setProductData({ ...productData, brand: newValue.id })
+        setProductData({ ...productData, brand: newValue })
     }
 
     const onAddProduct = async () => {
@@ -52,11 +51,26 @@ function MerchantAddProducts(props) {
             displayError("Please Enter All The Details")
             return
         }
+
+        const brandName = productData.brand
+        const foundBrand = brandData.filter(data => data.label === brandName)
+        console.log(foundBrand)
+        if (foundBrand.length === 0) {
+            // Create a brand and return id
+            const createdBrandResult = await createBrand(brandName)
+            productData.brand = createdBrandResult.brand._id
+        } else {
+            productData.brand = foundBrand[0].id
+        }
+
         try {
             const addProductResult = await addProduct(productData)
             displayMessage(addProductResult.message)
+            fetchAllBrand()
+            setProductData(defaultProductData)
         } catch (e) {
             displayError(e.error)
+            setProductData(defaultProductData)
         }
     }
 
@@ -72,16 +86,16 @@ function MerchantAddProducts(props) {
                         <Divider variant="middle" />
                         <Stack spacing={3} sx={{ marginTop: '20px' }}>
                             <Stack direction="row" spacing={2}>
-                                <TextField fullWidth required label="SKU" name="sku" variant="outlined" onChange={handleProductDataChange} />
-                                <TextField fullWidth required label="Name" name="name" variant="outlined" onChange={handleProductDataChange} />
+                                <TextField fullWidth required label="SKU" name="sku" variant="outlined" value={productData.sku} onChange={handleProductDataChange} />
+                                <TextField fullWidth required label="Name" name="name" variant="outlined" value={productData.name} onChange={handleProductDataChange} />
                             </Stack>
-                            <TextField fullWidth required multiline maxRows={3} label="Description" name="description" variant="outlined" onChange={handleProductDataChange} />
+                            <TextField fullWidth required multiline maxRows={3} label="Description" name="description" variant="outlined" value={productData.description} onChange={handleProductDataChange} />
                             <Stack direction="row" spacing={2}>
-                                <TextField fullWidth required type="number" label="Quantity" name="quantity" variant="outlined" onChange={handleProductDataChange} />
+                                <TextField fullWidth required type="number" label="Quantity" name="quantity" variant="outlined" value={productData.quantity} onChange={handleProductDataChange} />
                                 <TextField fullWidth required type="number" label="Price" name="price"
-                                    InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment>, }} onChange={handleProductDataChange} />
+                                    InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment>, }} value={productData.price} onChange={handleProductDataChange} />
                             </Stack>
-                            <Autocomplete fullWidth required freeSolo options={brandData} renderInput={(params) => <TextField {...params} label="Brand" />} onChange={handleBrandAutoComplete} />
+                            <Autocomplete freeSolo fullWidth required options={brandData} renderInput={(params) => <TextField {...params} label="Brand" />} value={productData.brand} onInputChange={handleBrandAutoComplete} />
                             <div><p>Image Upload</p>
                                 <FileUpload
                                     callback={(imageURL) => {
