@@ -23,7 +23,6 @@ const BrandSchema = new Schema({
   },
   image: {
     type: String,
-    required: true,
   },
   description: {
     type: String,

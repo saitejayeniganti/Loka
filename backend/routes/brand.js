@@ -11,10 +11,10 @@ router.post(
             const image = req.body.image;
             const description = req.body.description;
 
-            if (!description || !name) {
+            if (!name) {
                 return res
                     .status(400)
-                    .json({ error: 'You must enter description & name.' });
+                    .json({ error: 'You must enter name.' });
             }
 
             const foundBrand = await Brand.findOne({ name });
