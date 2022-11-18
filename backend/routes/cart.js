@@ -8,7 +8,8 @@ const store = require('../utils/store');
 router.post('/add', auth, async (req, res) => {
   try {
     // const user = req.user._id;
-    const user = "634fb3e27bcc0d0fe139ce7c";
+    // const user = "634fb3e27bcc0d0fe139ce7c";
+    const user = "637446b8c4c910caff00e6bc";
     const items = req.body.products;
 
     const products = store.caculateItemsSalesTax(items);

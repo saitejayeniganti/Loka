@@ -4,11 +4,13 @@ const Order = require('../model/order');
 const Product = require('../model/product');
 const store = require('../utils/store');
 const auth = require('../middleware/auth');
+const { sendMail } = require("../utils/mail");
 
 router.post('/add', async (req, res) => {
   try {
     // const user = req.user._id;
-    const user = "634fb3e27bcc0d0fe139ce7c";
+    // const user = "634fb3e27bcc0d0fe139ce7c";
+    const user = "637446b8c4c910caff00e6bc";
     let items = req.body.items;
     const total = req.body.totalPrice;
 
@@ -47,7 +49,12 @@ router.post('/add', async (req, res) => {
     //   total: orderDoc.total,
     //   products: cart.products
     // };
-    // await mailgun.sendEmail(order.user.email, 'order-confirmation', newOrder);
+    sendMail({
+      to: "poonam273713@gmail.com",
+      subject: 'Order confirmation',
+      text: `Hi Poonam! Thank you for your order!. \n\n` +
+        `We've received your order and will contact you as soon as your package is shipped. \n\n`
+    });
 
     res.status(200).json({
       success: true,
@@ -66,7 +73,8 @@ router.get('/me', async (req, res) => {
     console.log("me ", req);
     const { page = 1, limit = 10 } = req.query;
     // const user = req.user._id;
-    const user = "634fb3e27bcc0d0fe139ce7c";
+    // const user = "634fb3e27bcc0d0fe139ce7c";
+    const user = "637446b8c4c910caff00e6bc";
     const query = { user };
     console.log("query", query);
 
@@ -86,7 +94,7 @@ router.get('/me', async (req, res) => {
       .exec();
 
     const count = await Order.countDocuments(query);
-    console.log("count ",count);
+    console.log("count ", count);
     const orders = store.formatOrders(ordersDoc);
 
     res.status(200).json({
@@ -96,7 +104,7 @@ router.get('/me', async (req, res) => {
       count
     });
   } catch (error) {
-    console.log("X ",error);
+    console.log("X ", error);
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
@@ -122,7 +130,8 @@ router.get('/:orderId', async (req, res) => {
     //   });
     // } else {
     // const user = req.user._id;
-    const user = "634fb3e27bcc0d0fe139ce7c";
+    // const user = "634fb3e27bcc0d0fe139ce7c";
+    const user = "637446b8c4c910caff00e6bc";
     orderDoc = await Order.findOne({ _id: orderId, user })
     // .populate({
     //   populate: {
@@ -168,7 +177,8 @@ router.get('/me', async (req, res) => {
     console.log("me ", req);
     const { page = 1, limit = 10 } = req.query;
     // const user = req.user._id;
-    const user = "634fb3e27bcc0d0fe139ce7c";
+    // const user = "634fb3e27bcc0d0fe139ce7c";
+    const user = "637446b8c4c910caff00e6bc";
     const query = { user };
     console.log("query", query);
 
@@ -188,7 +198,7 @@ router.get('/me', async (req, res) => {
       .exec();
 
     const count = await Order.countDocuments(query);
-    console.log("count ",count);
+    console.log("count ", count);
     const orders = store.formatOrders(ordersDoc);
 
     res.status(200).json({
@@ -198,7 +208,7 @@ router.get('/me', async (req, res) => {
       count
     });
   } catch (error) {
-    console.log("X ",error);
+    console.log("X ", error);
     res.status(400).json({
       error: 'Your request could not be processed. Please try again.'
     });
