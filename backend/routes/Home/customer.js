@@ -24,7 +24,11 @@ const doLocationFilter = (lng, lat, ids, res) => {
     },
   ])
     .then((result) => {
-      res.status(200).send({ vendorDetails: result });
+      let merchantMap = {};
+      result.forEach((each) => {
+        merchantMap[each._id] = each;
+      });
+      res.status(200).send({ vendorDetails: merchantMap });
     })
     .catch((err) => {
       res.status(500).send({});
@@ -175,8 +179,8 @@ const doCombinedLocationSearch = (lat, lng, products, vendors, res) => {
       });
       res.status(200).send({
         productVendors: products,
-        vendorList: vendorOnly,
-        vendorDetails: result,
+        vendorsOnly: vendorOnly,
+        vendorDetails: merchantMap,
       });
     })
     .catch((err) => {

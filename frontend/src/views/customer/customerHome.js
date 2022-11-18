@@ -67,7 +67,7 @@ function CustomerHome() {
   //   },
   // ];
 
-  const [vendors, setVendors] = useState([]);
+  const [vendorsOnly, setVendorsOnly] = useState([]);
   const [productVendors, setProductVendors] = useState([]);
   const [vendorDetails, setVendorDetails] = useState([]);
 
@@ -79,7 +79,7 @@ function CustomerHome() {
     location &&
       get("/customer/multiSearch", { location, searchInput }).then((result) => {
         console.log("nearby stores", result);
-        setVendors(result.vendors);
+        setVendorsOnly(result.vendorsOnly);
         setProductVendors(result.productVendors);
         setVendorDetails(result.vendorDetails);
       });
@@ -149,8 +149,8 @@ function CustomerHome() {
     return <Navigate to={"/customermerchant?id=" + selectedMerchant} />;
   }
 
-  const createVendorCards = () => {
-    return vendors.map((vendor) => (
+  const createBaseCard = (vendor, product) => {
+    return (
       <Paper
         key={vendor._id}
         elevation={3}
@@ -250,17 +250,17 @@ function CustomerHome() {
               />
             </Grid>
             {/* vendor.categories && <Grid item xs={12}>
-              <div style={{ textAlign: "left", fontSize: "13px" }}>
-                {vendor.categories[0]}
-                {vendor.categories.slice(1, 2).map((v) => (
-                  <>
-                    {" - "}
-                    {v}{" "}
-                  </>
-                ))}{" "}
-                ..
-              </div>
-            </Grid> */}
+        <div style={{ textAlign: "left", fontSize: "13px" }}>
+          {vendor.categories[0]}
+          {vendor.categories.slice(1, 2).map((v) => (
+            <>
+              {" - "}
+              {v}{" "}
+            </>
+          ))}{" "}
+          ..
+        </div>
+      </Grid> */}
 
             <Grid item xs={12}>
               <div style={{ textAlign: "left", fontSize: "13px" }}>
@@ -294,158 +294,44 @@ function CustomerHome() {
           </Grid>
         </Grid>
       </Paper>
-    ));
+    );
   };
 
   const createProductVendorCards = () => {
     return (
-      vendorDetails &&
-      vendorDetails.map((vendor) => (
-        <Paper
-          key={vendor._id}
-          elevation={3}
-          sx={{
-            maxWidth: "20%",
-            borderRadius: "10px",
-            padding: "0px !important",
-            marginLeft: "30px",
-            marginTop: "25px",
-            cursor: "pointer",
-          }}
-        >
-          <Grid container spacing={0}>
-            <Grid
-              item
-              xs={4}
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                height: "140px",
-                padding: "10px",
-              }}
-              title="Redirect to merchant"
-              onClick={() => redirectToMerchant(vendor._id)}
-            >
-              <div
-                style={{
-                  borderStyle: "solid",
-                  borderWidth: "0.1rem",
-                  borderColor: "#d3d3d3",
-                  borderRadius: "50%",
-                  marginLeft: "10px",
-                }}
-              >
-                <img
-                  src={vendor.image ? vendor.image : cost}
-                  style={{
-                    borderColor: "black",
-                    padding: "0px !important",
-                    height: "100%",
-                    width: "100%",
-                  }}
-                ></img>
-              </div>
-            </Grid>
-            <Grid
-              container
-              xs={8}
-              sx={{
-                background: "#e5e8e8",
-                padding: "0px !important",
-                borderTopRightRadius: "10px",
-                borderBottomRightRadius: "10px",
-                padding: "10px",
-              }}
-            >
-              <Grid item xs={6}>
-                <div style={{ textAlign: "left" }}>{vendor.storeName}</div>
-              </Grid>
-              <Grid item xs={4}>
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    justifyContent: "center",
-                    backgroundColor: "#ffffff",
-                    borderRadius: "45px",
-                    paddingTop: "2px",
-                    paddingBottom: "3px",
-                  }}
-                >
-                  <div
-                    style={{
-                      textAlign: "left",
-                      marginTop: "2px",
-                      fontSize: "14px",
-                    }}
-                  >
-                    {vendor.rating} &nbsp;
-                  </div>
-                  <div style={{ color: "#FFD700" }}>
-                    <StarPurple500SharpIcon fontSize="medium" />
-                  </div>
-                </div>
-              </Grid>
-              <Grid item xs={1}></Grid>
-              <Grid
-                item
-                xs={1}
-                sx={{ marginTop: "2px", opacity: "60%" }}
-                title="Save Merchant"
-              >
-                <BookmarkRoundedIcon
-                  color=""
-                  onClick={() => saveMerchantIcon()}
-                />
-              </Grid>
-              {/* vendor.categories && <Grid item xs={12}>
-              <div style={{ textAlign: "left", fontSize: "13px" }}>
-                {vendor.categories[0]}
-                {vendor.categories.slice(1, 2).map((v) => (
-                  <>
-                    {" - "}
-                    {v}{" "}
-                  </>
-                ))}{" "}
-                ..
-              </div>
-            </Grid> */}
-
-              <Grid item xs={12}>
-                <div style={{ textAlign: "left", fontSize: "13px" }}>
-                  opening and close timings
-                </div>
-              </Grid>
-              <Grid item xs={6}></Grid>
-              <Grid item xs={6}>
-                <div style={{ textAlign: "left", display: "flex" }}>
-                  <img
-                    src={delivery}
-                    style={{
-                      width: "20px",
-                      height: "20px",
-                      display: "inline-block",
-                    }}
-                  ></img>
-                  &nbsp;
-                  <div
-                    style={{
-                      color: "rgb(10 173 10)",
-                      fontSize: "12px",
-                      display: "inline-block",
-                      marginTop: "5px",
-                    }}
-                  >
-                    {vendor.driveTime}
-                  </div>
-                </div>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Paper>
-      ))
+      productVendors &&
+      productVendors.map((each) => {
+        let vendor = vendorDetails[each.merchant];
+        return vendor && createBaseCard(vendor, each.name);
+      })
     );
+    // return (
+    //   vendorDetails &&
+    //   vendorDetails.map((vendor) => {
+    //     createBaseCard(vendor);
+    //   })
+    // );
+  };
+
+  const createVendorOnlyCards = () => {
+    if (vendorsOnly) {
+      return vendorsOnly.map((vendor) => {
+        return createBaseCard(vendorDetails[vendor]);
+      });
+    } else {
+      // Object.keys(obj)
+      let vendors = Object.keys(vendorDetails);
+      return vendors.map((vendor) => {
+        return createBaseCard(vendorDetails[vendor]);
+      });
+    }
+
+    // return (
+    //   vendorDetails &&
+    //   vendorDetails.map((vendor) => {
+    //     createBaseCard(vendor);
+    //   })
+    // );
   };
 
   return (
@@ -473,6 +359,7 @@ function CustomerHome() {
       </div>
 
       <div className="row" style={{ paddingLeft: "20px" }}>
+        {createVendorOnlyCards()}
         {createProductVendorCards()}
       </div>
       <div style={{ marginTop: "5% " }}></div>
