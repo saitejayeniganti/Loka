@@ -58,7 +58,34 @@ export default function MapView(props) {
         searchInput,
       }).then((result) => {
         console.log("nearby stores", result);
-        setVendors(result);
+        const vendorsOnly = result.vendorsOnly;
+        const productVendors = result.productVendors;
+        const vendorDetails = result.vendorDetails;
+        let vendorsTemp;
+        let vendors;
+        vendorsTemp =
+          productVendors &&
+          productVendors.map((each) => {
+            return vendorDetails[each.merchant];
+          });
+        vendors = [...vendorsTemp];
+        if (vendorsOnly) {
+          vendorsTemp = vendorsOnly.map((vendor) => {
+            return vendorDetails[vendor];
+          });
+        } else {
+          // Object.keys(obj)
+          let vendors = Object.keys(vendorDetails);
+          vendorsTemp = vendors.map((vendor) => {
+            return vendorDetails[vendor];
+          });
+        }
+        vendors = [...vendorsTemp];
+        setVendors(vendors);
+        // setVendorsOnly(result.vendorsOnly);
+        // setProductVendors(result.productVendors);
+        // setVendorDetails(result.vendorDetails);
+        // setVendors(result);
       });
   };
 
