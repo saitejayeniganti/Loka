@@ -129,6 +129,10 @@ function MenuAppBar(props) {
   }, [searchInput]);
 
   const searchBoxes = () => {
+    // margin: 0px;
+    // background: linen;
+    // color: black;
+
     return (
       <>
         <div style={{ marginLeft: "16px" }}>
@@ -145,13 +149,16 @@ function MenuAppBar(props) {
             }}
           ></SearchGMaps>
         </div>
-        <div style={{ margin: "auto" }}>
+        <div style={{ margin: "auto", display: "flex" }}>
           <SearchMain
             input=""
             callback={(data) => {
               setSearchInput(data);
             }}
           ></SearchMain>
+          <div style={{ margin: "0px", background: "linen", color: "black" }}>
+            <FormControlLabel control={<Switch />} label="Products" />
+          </div>
         </div>
       </>
     );
