@@ -32,6 +32,7 @@ router.post(
       const taxable = req.body.taxable;
       const isActive = req.body.isActive;
       const brand = req.body.brand;
+      const category = req.body.category;
       const image = req.body.image;
       const merchant = req.body.merchant
 
@@ -70,6 +71,7 @@ router.post(
         taxable,
         isActive,
         brand,
+        category,
         image,
         merchant
       });
@@ -246,7 +248,7 @@ router.get(
       const productsDoc = await Product.find({ merchant: merchantId }).populate({
         path: 'brand',
         select: 'name'
-      });
+      }).populate({ path: 'category', select: 'name' });
 
       if (!productsDoc) {
         return res.status(404).json({
