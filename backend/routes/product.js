@@ -32,6 +32,7 @@ router.post(
       const taxable = req.body.taxable;
       const isActive = req.body.isActive;
       const brand = req.body.brand;
+      const category = req.body.category;
       const image = req.body.image;
       const merchant = req.body.merchant
 
@@ -70,6 +71,7 @@ router.post(
         taxable,
         isActive,
         brand,
+        category,
         image,
         merchant
       });
@@ -190,8 +192,17 @@ router.get(
 router.put('/:id', async (req, res) => {
   try {
     const productId = req.params.id;
-    const update = req.body;
     const query = { _id: productId };
+
+    const update = req.body;
+    const newSku = update.sku;
+
+    const currentProduct = await Product.findOne({ _id: productId })
+    const foundProduct = await Product.findOne({ sku: newSku });
+
+    if (foundProduct && currentProduct.sku != newSku) {
+      return res.status(400).json({ error: 'This sku is already in use.' });
+    }
 
     await Product.findOneAndUpdate(query, update, {
       new: true
@@ -237,7 +248,7 @@ router.get(
       const productsDoc = await Product.find({ merchant: merchantId }).populate({
         path: 'brand',
         select: 'name'
-      });
+      }).populate({ path: 'category', select: 'name' });
 
       if (!productsDoc) {
         return res.status(404).json({

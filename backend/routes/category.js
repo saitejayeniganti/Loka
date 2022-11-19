@@ -1,15 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const Brand = require('../model/brand')
+const Category = require('../model/category')
 
 router.post(
-    '/create',
+    '/',
     async (req, res) => {
         try {
             const name = req.body.name;
-            const image = req.body.image;
-            const description = req.body.description;
 
             if (!name) {
                 return res
@@ -17,24 +15,22 @@ router.post(
                     .json({ error: 'You must enter name.' });
             }
 
-            const foundBrand = await Brand.findOne({ name });
+            const foundCategory = await Category.findOne({ name });
 
-            if (foundBrand) {
-                return res.status(400).json({ error: 'This brand name is already in use.' });
+            if (foundCategory) {
+                return res.status(400).json({ error: 'This category name is already in use.' });
             }
 
-            const brand = new Brand({
+            const category = new Category({
                 name,
-                image,
-                description,
             });
 
-            const savedBrand = await brand.save();
+            const savedCategory = await category.save();
 
             res.status(200).json({
                 success: true,
-                message: `Brand has been created successfully!`,
-                brand: savedBrand
+                message: `Category has been created successfully!`,
+                category: savedCategory
             });
         } catch (error) {
             console.log(error);
@@ -49,12 +45,12 @@ router.get(
     '/',
     async (req, res) => {
         try {
-            allBrands = await Brand.find({})
+            allCategories = await Category.find({})
 
             res.status(200).json({
                 success: true,
-                message: `All brands have been fetched successfully!`,
-                allBrands
+                message: `All categories have been fetched successfully!`,
+                allCategories
             });
         } catch (error) {
             console.log(error);

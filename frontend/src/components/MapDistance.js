@@ -30,7 +30,7 @@ export default function MapDistance({ leg, vendor }) {
 
   const vendorCard = () => {
     return (
-      <Card sx={{ maxWidth: 345 }}>
+      <Card sx={{ maxWidth: 345, marginTop: "64px", marginRight: "32px" }}>
         <CardMedia
           component="img"
           height="100"

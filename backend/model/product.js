@@ -68,12 +68,10 @@ const ProductSchema = new Schema({
     require: true,
     default: 0,
   },
-  category: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'category'
-    }
-  ]
+  category: {
+    type: Schema.Types.ObjectId,
+    ref: 'Category'
+  }
 }, { timestamps: true });
 
 module.exports = Mongoose.model('Product', ProductSchema);

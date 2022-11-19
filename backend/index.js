@@ -9,6 +9,7 @@ var userRoute = require("./routes/userRoute");
 var vendorRoute = require("./routes/vendorRoute");
 const productRoute = require("./routes/product");
 const brandRoute = require("./routes/brand")
+const categoryRoute = require("./routes/category")
 const reviewRoute = require("./routes/review");
 const orderRoute = require("./routes/order");
 const adminRouter = require("./routes/admin");
@@ -91,6 +92,7 @@ async function initializeApplication() {
     // app.use("/user", auth);
     app.use("/product", productRoute);
     app.use("/brand", brandRoute);
+    app.use("/category", categoryRoute);
     app.use("/review", reviewRoute);
     app.use("/order", orderRoute);
     app.use("/auth", authrouter);

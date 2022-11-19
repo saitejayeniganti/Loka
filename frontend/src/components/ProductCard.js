@@ -16,6 +16,7 @@ export default function ProductCard(props) {
                         <Typography variant="subtitle1" >{`Quantity: ${props.singleItem.quantity}`}</Typography>
                     </Stack>
                     <Typography variant="subtitle1" >{`Brand: ${props.singleItem.brand.name}`}</Typography>
+                    <Typography variant="subtitle1" >{`Category: ${props.singleItem.category.name}`}</Typography>
                     <Divider sx={{ opacity: '1' }} />
                     <Typography variant="body1" color="text.secondary" align="justify">
                         {props.singleItem.description}

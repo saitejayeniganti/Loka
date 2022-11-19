@@ -57,8 +57,35 @@ export default function MapView(props) {
         location,
         searchInput,
       }).then((result) => {
+        const vendorsOnly = result.vendorsOnly;
+        const productVendors = result.productVendors;
+        const vendorDetails = result.vendorDetails;
+        let vendorsTemp = [];
+        let vendors;
+        productVendors &&
+          (vendorsTemp = productVendors.map((each) => {
+            return vendorDetails[each.merchant];
+          }));
+        console.log(vendorsTemp);
+        vendors = [...vendorsTemp];
+        if (vendorsOnly) {
+          vendorsTemp = vendorsOnly.map((vendor) => {
+            return vendorDetails[vendor];
+          });
+        } else {
+          // Object.keys(obj)
+          let vendors = Object.keys(vendorDetails);
+          vendorsTemp = vendors.map((vendor) => {
+            return vendorDetails[vendor];
+          });
+        }
+        vendors = [...vendorsTemp];
         console.log("nearby stores", result);
-        setVendors(result);
+        setVendors(vendors);
+        // setVendorsOnly(result.vendorsOnly);
+        // setProductVendors(result.productVendors);
+        // setVendorDetails(result.vendorDetails);
+        // setVendors(result);
       });
   };
 
@@ -205,7 +232,7 @@ export default function MapView(props) {
                   {(clusterer) =>
                     vendors.map((vendor) => (
                       <Marker
-                        key={vendor.location.coordinates[1]}
+                        key={vendor._id}
                         position={{
                           lat: vendor.location.coordinates[1],
                           lng: vendor.location.coordinates[0],

@@ -3,7 +3,7 @@ import { Grid, Paper, TextField, InputAdornment, Autocomplete, Button, Stack, Ty
 import Lottie from "react-lottie";
 import addProducts from '../../animations/addProductsVendor.json'
 import FileUpload from "../../components/FileUpload";
-import { useBrand } from "./customhooks/index"
+import { useBrand, useCategory } from "./customhooks/index"
 import { addProduct } from '../../reducers/actions'
 import { displayMessage, displayError } from '../../utils/messages'
 import { connect } from "react-redux";
@@ -25,20 +25,26 @@ function MerchantAddProducts(props) {
         quantity: "",
         price: "",
         brand: "",
+        category: "",
         image: "",
         merchant: props.id
     }
-    console.log(defaultProductData)
 
     const [productData, setProductData] = useState(defaultProductData)
-    const { brandData } = useBrand()
+    const { brandData, createBrand, fetchAllBrand } = useBrand()
+    const { categoryData } = useCategory()
+    console.log(categoryData)
 
     const handleProductDataChange = (event) => {
         setProductData({ ...productData, [event.target.name]: event.target.value })
     }
 
     const handleBrandAutoComplete = (event, newValue) => {
-        setProductData({ ...productData, brand: newValue.id })
+        setProductData({ ...productData, brand: newValue })
+    }
+
+    const handleCategoryAutoComplete = (event, newValue) => {
+        setProductData({ ...productData, category: newValue })
     }
 
     const onAddProduct = async () => {
@@ -48,15 +54,33 @@ function MerchantAddProducts(props) {
             productData.quantity === "" ||
             productData.price === "" ||
             productData.brand === "" ||
+            productData.category === "" ||
             productData.image === "") {
             displayError("Please Enter All The Details")
             return
         }
+
+        const brandName = productData.brand
+        const foundBrand = brandData.filter(data => data.label === brandName)
+        if (foundBrand.length === 0) {
+            const createdBrandResult = await createBrand(brandName)
+            productData.brand = createdBrandResult.brand._id
+        } else {
+            productData.brand = foundBrand[0].id
+        }
+
+        const categoryName = productData.category
+        const foundCategory = categoryData.filter(data => data.label === categoryName)
+        productData.category = foundCategory[0].id
+
         try {
             const addProductResult = await addProduct(productData)
             displayMessage(addProductResult.message)
+            fetchAllBrand()
+            setProductData(defaultProductData)
         } catch (e) {
             displayError(e.error)
+            setProductData(defaultProductData)
         }
     }
 
@@ -72,16 +96,17 @@ function MerchantAddProducts(props) {
                         <Divider variant="middle" />
                         <Stack spacing={3} sx={{ marginTop: '20px' }}>
                             <Stack direction="row" spacing={2}>
-                                <TextField fullWidth required label="SKU" name="sku" variant="outlined" onChange={handleProductDataChange} />
-                                <TextField fullWidth required label="Name" name="name" variant="outlined" onChange={handleProductDataChange} />
+                                <TextField fullWidth required label="SKU" name="sku" variant="outlined" value={productData.sku} onChange={handleProductDataChange} />
+                                <TextField fullWidth required label="Name" name="name" variant="outlined" value={productData.name} onChange={handleProductDataChange} />
                             </Stack>
-                            <TextField fullWidth required multiline maxRows={3} label="Description" name="description" variant="outlined" onChange={handleProductDataChange} />
+                            <TextField fullWidth required multiline maxRows={3} label="Description" name="description" variant="outlined" value={productData.description} onChange={handleProductDataChange} />
                             <Stack direction="row" spacing={2}>
-                                <TextField fullWidth required type="number" label="Quantity" name="quantity" variant="outlined" onChange={handleProductDataChange} />
+                                <TextField fullWidth required type="number" label="Quantity" name="quantity" variant="outlined" value={productData.quantity} onChange={handleProductDataChange} />
                                 <TextField fullWidth required type="number" label="Price" name="price"
-                                    InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment>, }} onChange={handleProductDataChange} />
+                                    InputProps={{ startAdornment: <InputAdornment position="start">$</InputAdornment>, }} value={productData.price} onChange={handleProductDataChange} />
                             </Stack>
-                            <Autocomplete fullWidth required freeSolo options={brandData} renderInput={(params) => <TextField {...params} label="Brand" />} onChange={handleBrandAutoComplete} />
+                            <Autocomplete freeSolo fullWidth required options={brandData} renderInput={(params) => <TextField {...params} label="Brand" />} value={productData.brand} onInputChange={handleBrandAutoComplete} />
+                            <Autocomplete required options={categoryData} renderInput={(params) => <TextField {...params} label="Category" />} value={productData.category} onInputChange={handleCategoryAutoComplete} />
                             <div><p>Image Upload</p>
                                 <FileUpload
                                     callback={(imageURL) => {
