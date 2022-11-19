@@ -7,6 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import MenuIcon from "@mui/icons-material/Menu";
+import MapIcon from "@mui/icons-material/Map";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -183,6 +184,17 @@ function MenuAppBar(props) {
           <Typography variant="h5" component="div">
             LOKA
           </Typography>
+          <div>
+            <IconButton
+              aria-label="delete"
+              color="primary"
+              onClick={() => {
+                navigate("/mapview");
+              }}
+            >
+              <MapIcon />
+            </IconButton>
+          </div>
           {((props.isLoggedIn && props.user.role == 0) || !props.isLoggedIn) &&
             searchBoxes()}
           {/* {props.user && (
@@ -262,6 +274,7 @@ function MenuAppBar(props) {
                 </Menu>
               </div>
             )}
+
             {!props.isLoggedIn && (
               <>
                 <Link href={"/myorder"} underline="none" color="inherit">

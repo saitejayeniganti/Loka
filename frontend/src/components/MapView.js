@@ -57,17 +57,16 @@ export default function MapView(props) {
         location,
         searchInput,
       }).then((result) => {
-        console.log("nearby stores", result);
         const vendorsOnly = result.vendorsOnly;
         const productVendors = result.productVendors;
         const vendorDetails = result.vendorDetails;
-        let vendorsTemp;
+        let vendorsTemp = [];
         let vendors;
-        vendorsTemp =
-          productVendors &&
-          productVendors.map((each) => {
+        productVendors &&
+          (vendorsTemp = productVendors.map((each) => {
             return vendorDetails[each.merchant];
-          });
+          }));
+        console.log(vendorsTemp);
         vendors = [...vendorsTemp];
         if (vendorsOnly) {
           vendorsTemp = vendorsOnly.map((vendor) => {
@@ -81,6 +80,7 @@ export default function MapView(props) {
           });
         }
         vendors = [...vendorsTemp];
+        console.log("nearby stores", result);
         setVendors(vendors);
         // setVendorsOnly(result.vendorsOnly);
         // setProductVendors(result.productVendors);
@@ -232,7 +232,7 @@ export default function MapView(props) {
                   {(clusterer) =>
                     vendors.map((vendor) => (
                       <Marker
-                        key={vendor.location.coordinates[1]}
+                        key={vendor._id}
                         position={{
                           lat: vendor.location.coordinates[1],
                           lng: vendor.location.coordinates[0],
