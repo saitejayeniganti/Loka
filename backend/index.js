@@ -12,6 +12,7 @@ const brandRoute = require("./routes/brand")
 const reviewRoute = require("./routes/review");
 const orderRoute = require("./routes/order");
 const adminRouter = require("./routes/admin");
+const campaignRouter = require("./routes/campaign");
 // var auth = require("./routes/auth");
 require("./config/passport")(app);
 //const authRoute = require("./routes/authentication");
@@ -96,6 +97,7 @@ async function initializeApplication() {
     app.use("/search", searchRouter);
     app.use("/customer", customerRouter);
     app.use("/admin", adminRouter);
+    app.use("/campaign", campaignRouter);
 
     await connection.createConnection();
     app.listen(process.env.NODE_PORT, () => {
