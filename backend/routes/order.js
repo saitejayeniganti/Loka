@@ -2,7 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../model/order');
 const Product = require('../model/product');
+const Mongoose = require('mongoose');
 const store = require('../utils/store');
+const ObjectId = Mongoose.Types.ObjectId;
 const auth = require('../middleware/auth');
 const { sendMail } = require("../utils/mail");
 
@@ -206,6 +208,70 @@ router.get('/me', async (req, res) => {
       totalPages: Math.ceil(count / limit),
       currentPage: Number(page),
       count
+    });
+  } catch (error) {
+    console.log("X ", error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+router.get('/merchant/myOrder/:id', async (req, res) => {
+  try {
+    const merchantId = req.params.id;
+
+    const ordersDoc = await Order.
+      aggregate([
+        {
+          $unwind: "$products"
+        },
+        {
+          $match: {
+            "products.merchant": ObjectId(merchantId)
+
+          }
+        },
+        {
+          $group: {
+            _id: "$_id",
+            created: { $max: "$created" },
+            user: { $max: "$user" },
+            total: { $max: "$total" },
+            products: {
+              $push: "$products"
+            }
+          }
+        },
+        {
+          $sort: { "created": 1 }
+        }
+      ]);
+    const orders = ordersDoc;
+
+    res.status(200).json({
+      orders,
+    });
+  } catch (error) {
+    console.log("X ", error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+});
+
+router.put('/merchant/myOrder/update', async (req, res) => {
+  try {
+    const { productId, status } = req.body;
+    console.log("idxx ", productId);
+
+    const ordersDoc = await Order
+      .updateOne({ "products._id": ObjectId(productId) },
+        { $set: { "products.$.status": status } })
+    const orders = ordersDoc
+
+    res.status(200).json({
+      orders,
     });
   } catch (error) {
     console.log("X ", error);

@@ -47,7 +47,7 @@ router.post('/audience/add/member', async (req, res) => {
         FNAME: firstname,
         LNAME: lastname
       },
-       tags: [tag]
+      tags: [tag]
     })
     res.send(response)
   }
@@ -56,5 +56,58 @@ router.post('/audience/add/member', async (req, res) => {
   }
 })
 
+router.post('/campaign/send', async (req, res) => {
+  
+  const { campaignId } = req.body;
+  // const { ListId, SegmentId, tempalteId, subjectLine, previewText, campaignTitle, fromName, replyTo } = req.body
+
+  // const createCampaign = async () => {
+  //     try {
+  //         const campaign = await mailchimp.campaigns.create({
+  //             type: "regular",
+  //             recipients: {
+  //                 segment_opts: {
+  //                     saved_segment_id: SegmentId,
+  //                     match: 'any'
+  //                 },
+  //                 list_id: ListId
+  //             },
+  //             settings: {
+  //                 subject_line: subjectLine,
+  //                 preview_text: previewText,
+  //                 title: campaignTitle,
+  //                 template_id: tempalteId,
+  //                 from_name: fromName,
+  //                 reply_to: replyTo,
+  //                 to_name: "*|FNAME|*",
+  //                 auto_footer: true,
+  //                 inline_css: true,
+
+  //             }
+  //         })
+  //         return campaign.id
+  //     }
+  //     catch (err) {
+  //         res.status(400).send(err)
+  //     }
+  // }
+
+  // const sendCampaign = async (campaignId) => {
+  try {
+    await mailchimp.campaigns.send(campaignId)
+    // res.redirect("success.html")
+    res.status(200).json({
+      success: true,
+      message: 'Campaign Sent successfully!'
+    });
+  }
+  catch (err) {
+    res.status(400).send(err)
+  }
+  // }
+
+  // const campaignId = await createCampaign()
+  // sendCampaign(campaignId)
+})
 
 module.exports = router;
