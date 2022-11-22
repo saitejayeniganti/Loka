@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mailchimp = require("@mailchimp/mailchimp_marketing");
+const { sendMail } = require("../utils/mail");
 
 mailchimp.setConfig({
   apiKey: "9e20cfa2f9528a562c5d2f70cc5fc9c6-us14",
@@ -37,7 +38,9 @@ router.post('/audience/create', async (req, res) => {
 });
 
 router.post('/audience/add/member', async (req, res) => {
-  const { listId, firstname, lastname, email, tag } = req.body
+  const listId = '008065ef6c';
+  console.log(" bodyxx", req.body);
+  const { firstname, lastname, email } = req.body
   try {
     const response = await mailchimp.lists.addListMember(listId, {
       email_address: email,
@@ -47,9 +50,20 @@ router.post('/audience/add/member', async (req, res) => {
         FNAME: firstname,
         LNAME: lastname
       },
-      tags: [tag]
+      // tags: [tag]
     })
-    res.send(response)
+    // res.send(response)
+    sendMail({
+      to: email,
+      subject: 'Newsletter Subscription',
+      text: `Hi ${firstname}! \n\n` +
+        `You are receiving this email because you subscribed to our newsletter. \n\n` +
+        `If you did not request this change, please contact us immediately.`
+    });
+    res.status(200).json({
+      success: true,
+      message: 'You have successfully subscribed to the newsletter!'
+    });
   }
   catch (err) {
     res.status(400).send(err)
@@ -57,7 +71,7 @@ router.post('/audience/add/member', async (req, res) => {
 })
 
 router.post('/campaign/send', async (req, res) => {
-  
+
   const { campaignId } = req.body;
   // const { ListId, SegmentId, tempalteId, subjectLine, previewText, campaignTitle, fromName, replyTo } = req.body
 

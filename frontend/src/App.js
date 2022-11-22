@@ -43,6 +43,7 @@ import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 // import MapsWithIcon from "../src/components/merchantMap";
 import AdRequest from "./views/AdRequest";
+import NewsLetter from "./views/NewsLetter";
 import MapView from "./components/MapView";
 import PayPalTest from "./views/paypalTest";
 import ProductReviews from "./components/reviews/ProductReviews";
@@ -213,11 +214,11 @@ function App() {
           exact
           element={<CustomerMerchantView />}
         ></Route>
-        <Route path="/productList" exact element={<ProductList />}></Route>
-        <Route path="/product" exact element={<Product />}></Route>
-        <Route path="/bill" exact element={<Bill />}></Route>
-        <Route path="/order" exact element={<Order />}></Route>
-        <Route path="/myorder" exact element={<MyOrder />}></Route>
+        <Route path="/productList" exact element={<ProductList user={user} isLoggedIn={isLoggedIn} />}></Route>
+        <Route path="/product" exact element={<Product user={user} isLoggedIn={isLoggedIn} />}></Route>
+        <Route path="/bill" exact element={<Bill user={user} isLoggedIn={isLoggedIn} />}></Route>
+        <Route path="/order" exact element={<Order user={user} isLoggedIn={isLoggedIn} />}></Route>
+        <Route path="/myorder" exact element={<MyOrder user={user} isLoggedIn={isLoggedIn} />}></Route>
         <Route path="/route" exact element={<RouteMap />}></Route>
         {/* <Route path="/map" exact element={<SimpleMap />}></Route> */}
         <Route path="/location" exact element={<LocationSearch />}></Route>
@@ -233,6 +234,7 @@ function App() {
           element={<MapView user={user} isLoggedIn={isLoggedIn} />}
         ></Route>
         <Route path="/adrequest" element={<AdRequest />}></Route>
+        <Route path="/newsletter" element={<NewsLetter />}></Route>
         <Route path="/paypal" element={<PayPalTest />}></Route>
         <Route path="/rew" element={<ProductReviews />}></Route>
         <Route path="/review" element={<ReviewsTest />}></Route>

@@ -33,6 +33,7 @@ import { getCoordinates } from "../utils/mapsHelper";
 import { bindActionCreators } from "redux";
 import { actionCreators as aCreators } from "../reducers/actionCreators";
 import lokamarketlogo from "../images/admin/online-marketplace.png";
+import newsletter from "../images/admin/newsletter.png";
 import { Link } from "@mui/material";
 
 function MenuAppBar(props) {
@@ -195,6 +196,17 @@ function MenuAppBar(props) {
               <MapIcon />
             </IconButton>
           </div>
+          <div>
+            <IconButton
+              aria-label="delete"
+              color="primary"
+              onClick={() => {
+                navigate("/newsletter");
+              }}
+            >
+             <img src={newsletter} width="30" height="30" /> 
+            </IconButton>
+          </div>
           {((props.isLoggedIn && props.user.role == 0) || !props.isLoggedIn) &&
             searchBoxes()}
           {/* {props.user && (
@@ -275,7 +287,7 @@ function MenuAppBar(props) {
               </div>
             )}
 
-            {!props.isLoggedIn && (
+            {props.isLoggedIn && (
               <>
                 <Link href={"/myorder"} underline="none" color="inherit">
                   <Typography body="h5" marginRight="20px">

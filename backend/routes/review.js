@@ -7,7 +7,7 @@ const Product = require('../model/product');
 
 router.post('/add', (req, res) => {
 
-  const review = new Review(Object.assign(req.body, { user: "6334b6d8f6033071ce456261"}));
+  const review = new Review(Object.assign(req.body, { user: req.user.id}));
   review.save((err, data) => {
     if (err) {
       return res.status(400).json({

@@ -57,6 +57,7 @@ export const fetchOrders = (id, withLoading = true) => {
       if (withLoading) {
         // dispatch(setOrderLoading(true));
       }
+      console.log("fetch ordersxx");
       const response = await get(`/order/me`);
       
       dispatch({
