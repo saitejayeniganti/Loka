@@ -2,22 +2,17 @@ import React, { useEffect, useState } from "react";
 import shopLanding from "../../images/merchant/shopLandingPage.jpg";
 import { Link } from "react-scroll";
 import CustomerMerchantFooter from "../../components/footer/customerMerchantFooter";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ubereatslogo from "../../images/theme/UberEatsWhite.png";
 import kiwi from "../../images/customer/kiwi.png";
-import { Carousel } from "antd";
-import Grid from "@mui/material/Grid";
-import { get, post } from "../../utils/serverCall.js";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Carousel } from 'antd';
+import { get, post,put } from "../../utils/serverCall.js";
+
 import { doSignIn, showMessage } from "../../reducers/actions.js";
 import { actionCreators } from "../../reducers/actionCreators.js";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Card, CardMedia, CardActions, Button, Typography, Grid, Stack, Divider } from '@mui/material';
 
 const data = {
   dairy: [
@@ -71,38 +66,77 @@ export default function CustomerMerchantView() {
   const [searchParams, setSearchParams] = useSearchParams();
   searchParams.get("id");
   console.log("url id", searchParams.get("id"));
-
+  const [redirAdLink,setRedirAdLink]=React.useState("");
   const [products, setProducts] = React.useState(data);
   const [aproducts, setaProducts] = React.useState(data);
   const [allImages, setAllImages] = React.useState([1, 2, 3]);
 
-  // useEffect(() => {
-  //     get("/auth/login", filledData)
-  //   .then((result) => {
-  //      let productsSubCat = {};
-  //     for (let product of result.data) {
-  //       if (!productsSubCat[product.category]) productsSubCat[product.category] = [];
-  //       productsSubCat[product.category].push(product);
-  //     }
-  //     setProducts(productsSubCat)
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-  // }, []);
+    //To get adds from external sources
+      useEffect(() => {
+        let today=new Date()
+        //merchant id in the API
+        get(`/admin/adimages?id=${"63752e8e24aed58999808f5c"}&date=${today}`)
+      .then((result) => {
+        console.log("API result",result)
+        console.log("link is",result.redirectLink)
+        if(result!={})
+          setRedirAdLink(result.redirectLink)
+        else
+          setRedirAdLink("")
+        let arr=[]
+        let obj1={
+                    "src":"vendor",
+                    "img":shopLanding,
+                    "link":""
+                  }
+        arr.push(obj1)
+        if(result!=[])
+              {
+                   for(let i in result.imageList)
+                    {
+                      let obj={
+                                "id":result._id,
+                                "src":"ad",
+                                "img":result.imageList[i],
+                              }
+                      arr.push(obj)
+                    }
+              }       
+        setAllImages([...arr])
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }, []);
 
-  const renderImages = () => {
-    return (
-      <>
-        <Carousel autoplay>
-          {allImages.map((image) => {
-            return (
-              <>
-                <div>
-                  <img
-                    src={shopLanding}
-                    style={{ width: "100%", height: "300px" }}
-                  ></img>
+    const openImage=(e)=>{
+        console.log(e.target)
+    }
+
+const renderImages=()=>{
+    return(<>
+    <Carousel autoplay>
+            {allImages.map((image) => {return(<>
+                 <div onClick={()=>{
+                  if(image.link=="")
+                  { }
+                  else
+                  {
+                    console.log(image)
+                    let requestdetails={
+                                  "id":image.id,
+                              }
+                  put(`/admin/adclick`,requestdetails)
+                    .then((result) => {
+                      console.log("ad click API result",result)
+                      window.open(redirAdLink, "_blank")
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                  }
+                  }}>
+                    <img src={image.img} style={{ width: "100%", height: "300px" }}></img>
                 </div>
               </>
             );
@@ -159,98 +193,42 @@ export default function CustomerMerchantView() {
           <hr></hr>
         </div>
 
-        <div
-          style={{
-            position: "relative",
-            padding: "20px",
-            paddingTop: "0px !important",
-          }}
-        >
+        <div style={{ position: "relative",paddingLeft:"20px",paddingTop:"0px !important" }}>
           {headers.map((header) => {
             return (
               <>
-                <div className="row" id={header} style={{ marginTop: "20px" }}>
-                  <div style={{ textAlign: "left" }}>
-                    <label
-                      style={{
-                        fontSize: "22px",
-                        fontWeight: "400",
-                        textTransform: "capitalize",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      {header}
-                    </label>
+                <div class="row" id={header} style={{ marginTop: "0px",marginBottom:"30px" }}>
+                 <div style={{textAlign:"left"}}> 
+                  <label style={{fontSize:"22px",fontWeight:"400",textTransform: "capitalize",marginBottom:"20px",marginLeft:"10px"}}>{header}</label>
                   </div>
 
                   {products[header].map((dish) => {
                     return (
                       <>
-                        <div
-                          className="col-md-2"
-                          style={{ padding: "10px", paddingBottom: "20px" }}
-                          //   onClick={() => this.handleOpen(dish)}
-                        >
-                          <Card
-                            sx={{
-                              width: "14vw",
-                              height: "30vh",
-                              borderWidth: "2px",
-                              backgroundColor: "#e5e8e8",
-                              cursor: "pointer",
-                              borderRadius: "10px",
-                            }}
-                          >
-                            <CardMedia
-                              component="img"
-                              height="190vh"
-                              image={kiwi}
-                            />
-                            <CardContent>
-                              <Grid
-                                container
-                                spacing={2}
-                                style={{ marginBottom: "10px" }}
-                              >
-                                <Grid
-                                  item
-                                  xs={6}
-                                  style={{
-                                    textAlign: "left",
-                                    fontSize: "18px",
-                                    fontWeight: "500",
-                                  }}
+                         <Card sx={{ maxWidth: 250, textAlign: 'left',marginLeft:"20px",marginBottom:"20px",borderRadius:"7px" }} raised>
+                            <CardMedia component="img" height="170" src={kiwi} />
+                            <Stack spacing={1} sx={{ padding: "15px" }}>
+                                <Typography variant="h5" sx={{textTransform:"capitalize"}}>{dish.name}</Typography>
+                                <Stack
+                                    direction="row"
+                                    spacing={2}
                                 >
-                                  Lizard
-                                </Grid>
-                                <Grid
-                                  item
-                                  xs={6}
-                                  style={{
-                                    textAlign: "right",
-                                    fontSize: "14px",
-                                    fontWeight: "400",
-                                  }}
-                                >
-                                  $ 2.56
-                                </Grid>
-                              </Grid>
-
-                              <Typography
-                                variant="body2"
-                                color="text.secondary"
-                                style={{
-                                  height: "4vh",
-                                  textAlign: "left",
-                                  inlineSize: "250px",
-                                }}
-                              >
-                                Lizards are a widespread group of squamate
-                                reptiles
-                              </Typography>
-                            </CardContent>
+                                    <Typography variant="subtitle1" >{`Price: `}</Typography>
+                                </Stack>
+                                <Typography variant="subtitle1" >{`Brand: `}</Typography>
+                                <Divider sx={{ opacity: '1' }} />
+                                <Typography variant="body1" color="text.secondary" align="justify" sx={{overflow:"hidden"}}>
+                                    DescriptionDescriptionDescriptionDescription
+                                </Typography>
+                                {/* <Divider sx={{ opacity: '1' }} /> */}
+                                <CardActions>
+                                    {/* <Grid container spacing={1} justifyContent="flex-end">
+                                        <Grid item>{props.isMerchant && <Button size="small" variant="outlined" onClick={() => props.handleOpenUpdateModal(props.singleItem)} >Edit</Button>}</Grid>
+                                        <Grid item> {props.isMerchant && <Button size="small" variant="outlined" onClick={() => props.handleOpenDeleteDialog(props.singleItem._id)} color="error">Delete</Button>}</Grid>
+                                    </Grid> */}
+                                </CardActions>
+                            </Stack>
                           </Card>
-                        </div>
                       </>
                     );
                   })}

@@ -1,9 +1,10 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import "../App.css";
 
-function PayPalTest() {
+function PayPalTest(props) {
+  // console.log("props",props)
   return (
-    <div className="App-body">
+    <div className="">
       <PayPalScriptProvider
         options={{ "client-id": "AecQz8risxMZZKZY86j2gW7nhV6UiYMHAulZhEpta6PrdnjC7rwIkHOvBFv_1Fyut2AlT5oXNL57L0-O" }}
       >
@@ -13,7 +14,7 @@ function PayPalTest() {
               purchase_units: [
                 {
                   amount: {
-                    value: "10.00",
+                    value: props.price,
                   },
                 },
               ],  
@@ -22,7 +23,8 @@ function PayPalTest() {
           onApprove={async (data, actions) => {
             const details = await actions.order.capture();
             const name = details.payer.name.given_name;
-            alert("Transaction completed by " + name);
+            props.paid(props.id)
+            alert("Transaction completed. Paid by " + props.name);
           }}
         />
       </PayPalScriptProvider>

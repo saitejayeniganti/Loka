@@ -16,14 +16,11 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-
 import KeyboardBackspaceTwoToneIcon from '@mui/icons-material/KeyboardBackspaceTwoTone';
 import { DataGrid,GridToolbar } from '@mui/x-data-grid';
 import { get, post } from "../../utils/serverCall.js";
 import { Navigate } from "react-router-dom";
 import { Button, MenuItem, Select, TextField } from "@mui/material";
-
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -155,8 +152,10 @@ export default function AdminUsers() {
     setSelectedUser(e.id)
       get(`/admin/userorder`)
       .then((result) => { 
+        console.log(result)
           var orderMapDetails=[]
           var mapOrder=[]
+          var checkZero=false
           for(var o of result.orders)
           {
             if(e.id!=o._id)
@@ -166,10 +165,13 @@ export default function AdminUsers() {
             }
             if(e.id==o._id)
             {
+              checkZero=true
             orderMapDetails.unshift(o.count)
             mapOrder.unshift(e.id)
             }
           }
+          if(checkZero==false)
+            orderMapDetails.unshift(0)
           console.log("maporder",mapOrder)
           var spentMapDetails=new Array(mapOrder.length).fill(0)
           setOrderMap({

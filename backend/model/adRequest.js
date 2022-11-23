@@ -8,11 +8,6 @@ const AdRequestSchema = new Schema({
     ref: "Merchant",
     required: true,
   },
-   userId: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
   phone: {
     type: String,
     trim: true,
@@ -28,21 +23,24 @@ const AdRequestSchema = new Schema({
   amount: {
     type: String,
   },
-  company: {
+  email: {
     type: String,
   },
   redirectLink:{
     type: String,
   },
-  images: [
+  imageList: [
     {
       type: String, 
     }
   ],
   fromDate:{type:Date},
   toDate:{type:Date},
-  isApproved:{type:Boolean},
-  isPaid:{type:Boolean}
+  isApproved:{type:String},
+  isPaid:{type:String},
+  created:{type:Date},
+  status:{type:String},
+  clicks:{type:String}
 });
 const AdRequest = Mongoose.model("AdRequest", AdRequestSchema);
 AdRequest.syncIndexes();

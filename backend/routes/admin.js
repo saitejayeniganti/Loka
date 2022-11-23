@@ -6,8 +6,10 @@ const Product = require('../model/product');
 const Cart = require('../model/cart');
 const Merchant = require('../model/merchant');
 const Order = require('../model/order');
-
+const AdRequest = require('../model/adRequest');
+const AdClicks = require('../model/adClicks');
 const User = require('../model/user');
+const { findByIdAndUpdate } = require('../model/review');
 
 //get all details
 router.get('/dashboard', async (req, res) => {
@@ -166,6 +168,23 @@ router.get('/vendororders', async (req, res) => {
   }
 })
 
+
+//get all orders
+router.get('/allorders', async (req, res) => {
+  try {
+    const orders=await Order.find({}).sort({"created":-1}).populate("user")
+    res.status(200).json(
+        orders
+      );
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+})
+
+
 //get all vendor reviews
 router.get('/vendorreviews', async (req, res) => {
   try {
@@ -200,6 +219,160 @@ router.get('/vendor', async (req, res) => {
     });
   }
 })
+
+//get all merchants
+router.get('/allmerchants', async (req, res) => {
+  try {
+    const vendor=await Merchant.find({})
+    
+    res.status(200).json({
+        vendor}
+      );
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }
+})
+
+
+router.post('/adrequest', async (req, res) => {
+  try {
+      console.log(req.body)
+      const adrequest = new AdRequest(req.body)
+      console.log(adrequest);
+      const adrequestDoc = await adrequest.save();
+       res.status(200).json({adrequest});
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
+  router.put('/adstatus', async (req, res) => {
+  try {
+      const filter = { _id: req.body.id };
+      const update = {isApproved:req.body.isApproved,status:req.body.status};
+      const adrequestDoc = await AdRequest.findByIdAndUpdate(filter, update)
+       res.status(200).json(adrequestDoc);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
+    router.put('/adpaid', async (req, res) => {
+      console.log(req.body)
+  try {
+      const filter = { _id: req.body.id };
+      const update = {"isPaid":"PAID","status":"PAID"};
+      const adrequestDoc = await AdRequest.findByIdAndUpdate(filter, update)
+       res.status(200).json(adrequestDoc);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
+  //save ads in marchant
+    router.put('/savemerchantads', async (req, res) => {
+      console.log(req.body)
+  try {
+      const filter = { _id: req.body.id };
+      const update = {"ads":req.body.ads};
+      const merchantDoc = await Merchant.findByIdAndUpdate(filter, update)
+       res.status(200).json(merchantDoc);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
+   router.put('/adclick', async (req, res) => {
+      // console.log("click api server",req.body)
+  try {
+      const filter = { _id: req.body.id };
+      const ad = await AdRequest.find({_id: req.body.id})
+      let clicks= parseInt(ad[0].clicks) +1
+      const update = {"clicks":clicks};
+      const adrequestDoc = await AdRequest.findByIdAndUpdate(filter, update)
+
+      // const filter1={adRequestId: req.body.id,userId:req.body.userId}
+      // const adClick = await AdRequest.find(filter1)
+      // if(
+      //   console.log("adclick schema data",adClick)
+      // )
+      // const adClickDoc = await AdClicks.findByIdAndUpdate(filter, update)
+
+      res.status(200).json(adrequestDoc);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
+  router.get('/addetails', async (req, res) => {
+  try {
+      const addetails = await AdRequest.find({email:req.query.id}).populate("merchantId")
+      res.status(200).json(addetails);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
+
+  router.get('/alladdetails', async (req, res) => {
+  try {
+      const addetails = await AdRequest.find().populate("merchantId")
+      res.status(200).json(addetails);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
+  //get ads from merchant
+  router.get('/merchant', async (req, res) => {
+  try {
+      console.log(req.query)
+      const merchant = await Merchant.find({_id:req.query.id})
+      res.status(200).json(merchant[0]);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
+
+  router.get('/adimages', async (req, res) => {
+  try {
+      console.log(req.query)
+      const adimages = await AdRequest.find({merchantId:req.query.id}).populate("merchantId")
+      for(var ad of adimages)
+      {
+        var sd=new Date(ad.fromDate)
+        var ed=new Date(ad.toDate)
+        var clientDate=new Date(req.query.date)
+        if(sd<clientDate && clientDate<ed)
+          return res.status(200).json(ad);
+      }
+      res.status(200).json([]);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
 
 
 module.exports = router;
