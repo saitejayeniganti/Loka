@@ -10,7 +10,9 @@ const { sendMail } = require("../utils/mail");
 
 router.post('/add', async (req, res) => {
   try {
+    console.log("HereX", req.user);
     const user = req.user.id;
+
     // const user = "634fb3e27bcc0d0fe139ce7c";
     // const user = "637446b8c4c910caff00e6bc";
     let items = req.body.items;
@@ -221,7 +223,6 @@ router.get('/merchant/myOrder/:id', async (req, res) => {
 router.put('/merchant/myOrder/update', async (req, res) => {
   try {
     const { productId, status } = req.body;
-    console.log("idxx ", productId);
 
     const ordersDoc = await Order
       .updateOne({ "products._id": ObjectId(productId) },
@@ -243,7 +244,7 @@ const decreaseQuantity = products => {
   let bulkOptions = products.map(item => {
     return {
       updateOne: {
-        filter: { _id: item.product },
+        filter: { _id: item._id },
         update: { $inc: { quantity: -item.quantity } }
       }
     };

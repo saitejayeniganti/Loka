@@ -1,12 +1,31 @@
 import { get, post } from "../utils/serverCall";
 import { ACTION } from '../utils/consts';
+const store = require('../utils/store');
 
 export const addNewOrder = (items) => {
   return async (dispatch, getState) => {
     try {
       //dispatch(setProductLoading(true));
-      let totalPrice = 0;
-      for (var x of items) {
+      // let totalPrice = 0;
+      // for (var x of items) {
+      //   totalPrice += x.price;
+      // }
+      let allItems = items;
+      allItems = store.caculateItemsSalesTax(allItems);
+      var allItemMap = new Map();
+      let totalPrice = 0.0;
+    
+      for (var x of allItems) {
+        if (allItemMap.has(x._id)) {
+          let item = allItemMap.get(x._id);
+          item.count = item.count + 1;
+          item.quantity = item.quantity + 1;
+          allItemMap.set(x._id, item);
+        } else {
+          x.count = 1;
+          x.quantity = 1;
+          allItemMap.set(x._id, x);
+        }
         totalPrice += x.price;
       }
       const response = await post(`/order/add`, {

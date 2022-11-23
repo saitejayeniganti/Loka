@@ -34,6 +34,7 @@ const Order = (props) => {
           </Grid>
           <Grid xs={6}>
             <Paper
+              elevation={3}
               sx={{
                 p: 2,
                 margin: 'auto',
@@ -76,8 +77,8 @@ const Order = (props) => {
                           <Typography variant="subtitle1" component="div">
                             Status: {product.status}
                           </Typography>
-                          <Typography variant="subtitle1" component="div" sx={{fontWeight: 'bold'}} marginLeft="100px">
-                             ${product.priceWithTax}
+                          <Typography variant="subtitle1" component="div" sx={{ fontWeight: 'bold' }} marginLeft="100px">
+                            ${product.priceWithTax}
                           </Typography>
                         </Grid>
                       </Typography>
