@@ -20,7 +20,7 @@ function MerchantHome() {
       <Grid container spacing={1} sx={{ padding: '10px' }}>
         <Grid item xs={3} onClick={() => navigate("/merchantaddproducts")}>
           <Paper elevation={3} sx={{
-            width: '100%', height: '200px', cursor: "pointer", '&:hover': {
+            cursor: "pointer", '&:hover': {
               opacity: [0.9, 0.8, 0.7],
             },
           }}>
@@ -29,7 +29,7 @@ function MerchantHome() {
           </Paper>
         </Grid>
         <Grid item xs={3} onClick={() => navigate("/merchantinventory")}><Paper elevation={3} sx={{
-          width: '100%', height: '200px', cursor: "pointer", '&:hover': {
+          cursor: "pointer", '&:hover': {
             opacity: [0.9, 0.8, 0.7],
           },
         }}>
@@ -37,8 +37,8 @@ function MerchantHome() {
           <Grid item xs={12} sx={{ height: '170px', paddingTop: '5px' }}><img style={{ height: '150px' }} src={inventoryMerchantHome}></img></Grid>
         </Paper>
         </Grid>
-        <Grid item xs={3}><Paper elevation={3} sx={{
-          width: '100%', height: '200px', cursor: "pointer", '&:hover': {
+        <Grid item xs={3} onClick={() => navigate("/merchantorders")}><Paper elevation={3} sx={{
+          cursor: "pointer", '&:hover': {
             opacity: [0.9, 0.8, 0.7],
           },
         }}>
@@ -47,7 +47,7 @@ function MerchantHome() {
         </Paper>
         </Grid>
         <Grid item xs={3}><Paper elevation={3} sx={{
-          width: '100%', height: '200px', cursor: "pointer", '&:hover': {
+          cursor: "pointer", '&:hover': {
             opacity: [0.9, 0.8, 0.7],
           },
         }}>
