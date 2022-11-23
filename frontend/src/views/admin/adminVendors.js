@@ -134,6 +134,7 @@ export default function AdminVendors() {
           console.log("vendor orders",result)
           var orderMapDetails=[]
           var mapOrder=[]
+          var checkZero=false
            for(var o of result.orders)
           {
             if(e.id!=o._id)
@@ -147,6 +148,8 @@ export default function AdminVendors() {
             mapOrder.unshift(e.id)
             }
           }
+          if(checkZero==false)
+            orderMapDetails.unshift(0)
           console.log("maporder",mapOrder)
           var spentMapDetails=new Array(mapOrder.length).fill(0)
           setOrderMap({

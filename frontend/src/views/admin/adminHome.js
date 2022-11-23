@@ -255,6 +255,10 @@ function AdminHome() {
     return <Navigate to={"/adminvendors"} />;
    }   
 
+   if (redirToOrders) {
+    return <Navigate to={"/adminorders"} />;
+   }  
+
     return (
       <>
         <div style={{backgroundColor:"#e7e4e4",position:"fixed",height:"40vh",width:"100vw"}}></div>
@@ -388,7 +392,7 @@ function AdminHome() {
              
               
               <Grid item xs={12} style={{marginBottom:"20px",cursor:"pointer"}}>
-                  <Paper style={{height:"29vh",borderRadius:"15px"}}>
+                  <Paper style={{height:"29vh",borderRadius:"15px"}} onClick={()=>setRedirToOrders(true)}>
                    <Grid container sx={{padding:"20px"}}>
                       <Grid item xs={2} >
                            <img src={order} style={{height:"5vh",width:"5vh",textAlign:"left"}} />

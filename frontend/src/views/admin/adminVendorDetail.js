@@ -72,7 +72,6 @@ function AdminVendorDetail() {
   const [redirToAds, setRedirToAds] = useState(false);
   const [vendorDetails, setVendorDetails] = useState({
                                                     storeName:"",
-                                                    
                                                     location:{address:""},
                                                     email:"",
                                                     created:""
@@ -260,7 +259,7 @@ function AdminVendorDetail() {
                  </Grid>   
 
                   <Grid item xs={3} onClick={()=>setRedirToReviews(true)}>
-                    <Paper elevation={3} style={{padding:"10px",cursor:"pointer"}}>
+                    <Paper elevation={3} style={{padding:"10px",cursor:"pointer"}} onClick={()=>setRedirToReviews(true)}>
                          <Grid container style={{padding:"10px"}}>
                             <Grid item xs={2} >
                                 <img src={review} style={{height:"4vh",width:"4vh",textAlign:"left"}} title="Approved users"/>

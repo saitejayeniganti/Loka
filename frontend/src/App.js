@@ -58,6 +58,12 @@ import AdminVendorOrders from "./views/admin/adminVendorOrders";
 import CustomerMerchantView from "./views/customer/customerMerchantView";
 import Fb from "./components/fb";
 import SavedMerchants from "./views/customer/savedMerchants";
+import AdminVendorReviews from "./views/admin/adminVendorReviews";
+import AdminOrders from "./views/admin/adminOrders";
+import Ads from "./views/ads";
+import AdDetails from "./views/AdDetails";
+import AdminAdRequests from "./views/admin/adminAdRequests";
+import MerchantPostAd from "./views/merchant/merchantPostAd";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -183,42 +189,25 @@ function App() {
         ></Route>
         <Route path="/adminhome" exact element={<AdminHome />}></Route>
         <Route path="/adminusers" exact element={<AdminUsers />}></Route>
-        <Route
-          path="/adminuserdetail"
-          exact
-          element={<AdminUserDetail />}
-        ></Route>
-        <Route
-          path="/adminuserorders"
-          exact
-          element={<AdminUserOrders />}
-        ></Route>
         <Route path="/adminvendors" exact element={<AdminVendors />}></Route>
-        <Route
-          path="/adminvendordetail"
-          exact
-          element={<AdminVendorDetail />}
-        ></Route>
-        <Route
-          path="/adminvendororders"
-          exact
-          element={<AdminVendorOrders />}
-        ></Route>
-        <Route
-          path="/adminuserreviews"
-          exact
-          element={<AdminUserReviews />}
-        ></Route>
-        <Route
-          path="/customermerchant"
-          exact
-          element={<CustomerMerchantView />}
-        ></Route>
-        <Route path="/productList" exact element={<ProductList user={user} isLoggedIn={isLoggedIn} />}></Route>
-        <Route path="/product" exact element={<Product user={user} isLoggedIn={isLoggedIn} />}></Route>
-        <Route path="/bill" exact element={<Bill user={user} isLoggedIn={isLoggedIn} />}></Route>
-        <Route path="/order" exact element={<Order user={user} isLoggedIn={isLoggedIn} />}></Route>
-        <Route path="/myorder" exact element={<MyOrder user={user} isLoggedIn={isLoggedIn} />}></Route>
+        <Route path="/adminorders" exact element={<AdminOrders />}></Route>
+
+        <Route path="/adminuserdetail" exact element={<AdminUserDetail />}></Route>
+        <Route path="/adminuserorders" exact element={<AdminUserOrders />}></Route>
+        <Route path="/adminads" exact element={<AdminAdRequests />}></Route>
+        <Route path="/merchantpostad" exact element={<MerchantPostAd />}></Route>
+        <Route path="/adminvendordetail" exact element={<AdminVendorDetail />}></Route>
+        <Route path="/adminvendororders" exact element={<AdminVendorOrders />}></Route>
+        <Route path="/adminuserreviews" exact element={<AdminUserReviews />}></Route>
+        <Route path="/adminvendorreviews" exact element={<AdminVendorReviews />}></Route>
+        <Route path="/ads" exact element={<Ads />}></Route>
+        <Route path="/addetail" exact element={<AdDetails />}></Route>
+        <Route path="/customermerchant" exact element={<CustomerMerchantView />}></Route>
+        <Route path="/productList" exact element={<ProductList />}></Route>
+        <Route path="/product" exact element={<Product />}></Route>
+        <Route path="/bill" exact element={<Bill />}></Route>
+        <Route path="/order" exact element={<Order />}></Route>
+        <Route path="/myorder" exact element={<MyOrder />}></Route>
         <Route path="/route" exact element={<RouteMap />}></Route>
         {/* <Route path="/map" exact element={<SimpleMap />}></Route> */}
         <Route path="/location" exact element={<LocationSearch />}></Route>

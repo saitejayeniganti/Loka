@@ -43,6 +43,11 @@ const MerchantSchema = new Schema({
     trim: true,
     required: true,
   },
+  ads: [
+    {
+      type: String, 
+    }
+  ],
 });
 
 // MerchantSchema.index({ location: "2dsphere" });
