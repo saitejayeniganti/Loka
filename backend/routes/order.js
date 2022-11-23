@@ -10,7 +10,7 @@ const { sendMail } = require("../utils/mail");
 
 router.post('/add', async (req, res) => {
   try {
-     const user = req.user.id;
+    const user = req.user.id;
     // const user = "634fb3e27bcc0d0fe139ce7c";
     // const user = "637446b8c4c910caff00e6bc";
     let items = req.body.items;
@@ -75,7 +75,7 @@ router.get('/me', async (req, res) => {
     // console.log("me ", req);
     console.log("req.user", req.user);
     const { page = 1, limit = 10 } = req.query;
-     const user = req.user.id;
+    const user = req.user.id;
     // const user = "634fb3e27bcc0d0fe139ce7c";
     // const user = "637446b8c4c910caff00e6bc";
     const query = { user };
@@ -132,7 +132,7 @@ router.get('/:orderId', async (req, res) => {
     //     }
     //   });
     // } else {
-     const user = req.user.id;
+    const user = req.user.id;
     // const user = "634fb3e27bcc0d0fe139ce7c";
     // const user = "637446b8c4c910caff00e6bc";
     orderDoc = await Order.findOne({ _id: orderId, user })
@@ -203,7 +203,9 @@ router.get('/merchant/myOrder/:id', async (req, res) => {
           $sort: { "created": 1 }
         }
       ]);
-    const orders = ordersDoc;
+
+    const ordersDocWithUsers = await Order.populate(ordersDoc, { path: "user" })
+    const orders = ordersDocWithUsers;
 
     res.status(200).json({
       orders,
