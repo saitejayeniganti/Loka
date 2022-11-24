@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardMedia, CardActions, Button, Typography, Grid, Stack, Divider } from '@mui/material'
+import { Card, CardMedia, CardActions, Button, Typography, Grid, Stack, Divider, TextField } from '@mui/material'
 
 export default function ProductCard(props) {
     return (
@@ -18,14 +18,12 @@ export default function ProductCard(props) {
                     <Typography variant="subtitle1" >{`Brand: ${props.singleItem.brand.name}`}</Typography>
                     <Typography variant="subtitle1" >{`Category: ${props.singleItem.category.name}`}</Typography>
                     <Divider sx={{ opacity: '1' }} />
-                    <Typography variant="body1" color="text.secondary" align="justify">
-                        {props.singleItem.description}
-                    </Typography>
+                    <TextField fullWidth disabled multiline minRows={3} maxRows={3} variant="filled" label="Description" value={props.singleItem.description} />
                     <Divider sx={{ opacity: '1' }} />
                     <CardActions>
                         <Grid container spacing={1} justifyContent="flex-end">
-                            <Grid item>{props.isMerchant && <Button size="small" variant="outlined" onClick={() => props.handleOpenUpdateModal(props.singleItem)} >Edit</Button>}</Grid>
                             <Grid item> {props.isMerchant && <Button size="small" variant="outlined" onClick={() => props.handleOpenDeleteDialog(props.singleItem._id)} color="error">Delete</Button>}</Grid>
+                            <Grid item>{props.isMerchant && <Button size="small" variant="outlined" onClick={() => props.handleOpenUpdateModal(props.singleItem)} >Edit</Button>}</Grid>
                         </Grid>
                     </CardActions>
                 </Stack>
