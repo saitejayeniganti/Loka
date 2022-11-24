@@ -222,10 +222,10 @@ router.get('/merchant/myOrder/:id', async (req, res) => {
 
 router.put('/merchant/myOrder/update', async (req, res) => {
   try {
-    const { productId, status } = req.body;
+    const { orderId, productId, status } = req.body;
 
     const ordersDoc = await Order
-      .updateOne({ "products._id": ObjectId(productId) },
+      .updateOne({ "_id": orderId, "products._id": productId },
         { $set: { "products.$.status": status } })
     const orders = ordersDoc
 
