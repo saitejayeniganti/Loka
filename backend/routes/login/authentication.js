@@ -135,6 +135,10 @@ const insertMerchant = (body, user, res) => {
   merchant.location = body.location;
   merchant.storeName = body.storeName;
   merchant._id = user._id;
+  merchant.description = body.description;
+  merchant.openTime = body.openTime;
+  merchant.closeTime = body.closeTime;
+  merchant.image = body.image;
   const newMerchant = new MerchantModel(merchant);
   newMerchant.save((err, result) => {
     if (err) {

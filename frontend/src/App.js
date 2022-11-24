@@ -65,6 +65,7 @@ import Ads from "./views/ads";
 import AdDetails from "./views/AdDetails";
 import AdminAdRequests from "./views/admin/adminAdRequests";
 import MerchantPostAd from "./views/merchant/merchantPostAd";
+import MerchantSignup from "./views/common/MerchantSignup";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -172,33 +173,77 @@ function App() {
 
         <Route path="/customerhome" exact element={<CustomerHome />}></Route>
         <Route
-          path="/customersignup"
+          path="/merchantSignup"
           exact
-          element={<CustomerSignup />}
+          element={<MerchantSignup />}
         ></Route>
 
-        <Route path="/merchantorders" exact element={<MerchantOrders />}></Route>
-        <Route path="/merchantinventory" exact element={<MerchantInventory />}></Route>
+        <Route
+          path="/merchantorders"
+          exact
+          element={<MerchantOrders />}
+        ></Route>
+        <Route
+          path="/merchantinventory"
+          exact
+          element={<MerchantInventory />}
+        ></Route>
         <Route path="/merchanthome" exact element={<MerchantHome />}></Route>
         <Route path="/merchantlogin" exact element={<MerchantLogin />}></Route>
-        <Route path="/merchantaddproducts" exact element={<MerchantAddProducts />}></Route>
+        <Route
+          path="/merchantaddproducts"
+          exact
+          element={<MerchantAddProducts />}
+        ></Route>
 
         <Route path="/adminhome" exact element={<AdminHome />}></Route>
         <Route path="/adminusers" exact element={<AdminUsers />}></Route>
         <Route path="/adminvendors" exact element={<AdminVendors />}></Route>
         <Route path="/adminorders" exact element={<AdminOrders />}></Route>
 
-        <Route path="/adminuserdetail" exact element={<AdminUserDetail />}></Route>
-        <Route path="/adminuserorders" exact element={<AdminUserOrders />}></Route>
+        <Route
+          path="/adminuserdetail"
+          exact
+          element={<AdminUserDetail />}
+        ></Route>
+        <Route
+          path="/adminuserorders"
+          exact
+          element={<AdminUserOrders />}
+        ></Route>
         <Route path="/adminads" exact element={<AdminAdRequests />}></Route>
-        <Route path="/merchantpostad" exact element={<MerchantPostAd />}></Route>
-        <Route path="/adminvendordetail" exact element={<AdminVendorDetail />}></Route>
-        <Route path="/adminvendororders" exact element={<AdminVendorOrders />}></Route>
-        <Route path="/adminuserreviews" exact element={<AdminUserReviews />}></Route>
-        <Route path="/adminvendorreviews" exact element={<AdminVendorReviews />}></Route>
+        <Route
+          path="/merchantpostad"
+          exact
+          element={<MerchantPostAd />}
+        ></Route>
+        <Route
+          path="/adminvendordetail"
+          exact
+          element={<AdminVendorDetail />}
+        ></Route>
+        <Route
+          path="/adminvendororders"
+          exact
+          element={<AdminVendorOrders />}
+        ></Route>
+        <Route
+          path="/adminuserreviews"
+          exact
+          element={<AdminUserReviews />}
+        ></Route>
+        <Route
+          path="/adminvendorreviews"
+          exact
+          element={<AdminVendorReviews />}
+        ></Route>
         <Route path="/ads" exact element={<Ads />}></Route>
         <Route path="/addetail" exact element={<AdDetails />}></Route>
-        <Route path="/customermerchant" exact element={<CustomerMerchantView />}></Route>
+        <Route
+          path="/customermerchant"
+          exact
+          element={<CustomerMerchantView />}
+        ></Route>
         <Route path="/productList" exact element={<ProductList />}></Route>
         <Route path="/product" exact element={<Product />}></Route>
         <Route path="/bill" exact element={<Bill />}></Route>
@@ -235,24 +280,24 @@ function App() {
       {loadSpinner ? (
         inProgressComponent()
       ) : (
-          <Router>
-            <div
-              style={{
-                position: "fixed",
-                width: "100%",
-                height: "64px",
-                zIndex: "100",
-              }}
-            >
-              <Navigator isLoggedIn={isLoggedIn} user={user} />
-            </div>
+        <Router>
+          <div
+            style={{
+              position: "fixed",
+              width: "100%",
+              height: "64px",
+              zIndex: "100",
+            }}
+          >
+            <Navigator isLoggedIn={isLoggedIn} user={user} />
+          </div>
 
-            <div style={{ paddingTop: "64px" }}>
-              {/* padding relative to navigator height*/}
-              {routes()}
-            </div>
-          </Router>
-        )}
+          <div style={{ paddingTop: "64px" }}>
+            {/* padding relative to navigator height*/}
+            {routes()}
+          </div>
+        </Router>
+      )}
     </div>
   );
 }

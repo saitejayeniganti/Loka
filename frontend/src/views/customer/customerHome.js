@@ -212,7 +212,7 @@ function CustomerHome() {
               <div style={{ textAlign: "left" }}>{vendor.storeName}</div>
             </Grid>
 
-            <Grid item xs={4}>
+            {/* <Grid item xs={4}>
               <div
                 style={{
                   display: "flex",
@@ -237,9 +237,9 @@ function CustomerHome() {
                   <StarPurple500SharpIcon fontSize="medium" />
                 </div>
               </div>
-            </Grid>
+            </Grid> */}
             <Grid item xs={1}></Grid>
-            <Grid
+            {/* <Grid
               item
               xs={1}
               sx={{ marginTop: "2px", opacity: "60%" }}
@@ -249,7 +249,7 @@ function CustomerHome() {
                 color=""
                 onClick={() => saveMerchantIcon()}
               />
-            </Grid>
+            </Grid> */}
             {/* vendor.categories && <Grid item xs={12}>
         <div style={{ textAlign: "left", fontSize: "13px" }}>
           {vendor.categories[0]}
@@ -270,10 +270,17 @@ function CustomerHome() {
               </Grid>
             )}
             <Grid item xs={12}>
-              <div style={{ textAlign: "left", fontSize: "13px" }}>timings</div>
+              <div style={{ textAlign: "left", fontSize: "13px" }}>
+                <u>Timings</u>
+                {": "}
+                {new Date(vendor.openTime).getHours()}:
+                {new Date(vendor.openTime).getMinutes()}-
+                {new Date(vendor.closeTime).getHours()}:
+                {new Date(vendor.closeTime).getMinutes()}
+              </div>
             </Grid>
-            <Grid item xs={6}></Grid>
-            <Grid item xs={6}>
+            {/* <Grid item xs={6}></Grid> */}
+            <Grid item xs={12}>
               <div style={{ textAlign: "left", display: "flex" }}>
                 <img
                   src={delivery}
@@ -292,7 +299,7 @@ function CustomerHome() {
                     marginTop: "5px",
                   }}
                 >
-                  {vendor.driveTime}
+                  {vendor.location.address}
                 </div>
               </div>
             </Grid>

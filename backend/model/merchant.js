@@ -43,10 +43,26 @@ const MerchantSchema = new Schema({
     trim: true,
     required: true,
   },
+  description: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+  openTime: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+  closeTime: {
+    type: String,
+    trim: true,
+    required: true,
+  },
+  image: { type: String, trim: true },
   ads: [
     {
-      type: String, 
-    }
+      type: String,
+    },
   ],
 });
 

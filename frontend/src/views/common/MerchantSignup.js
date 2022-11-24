@@ -28,8 +28,10 @@ import Paper from "@mui/material/Paper";
 import FileUpload from "../../components/FileUpload";
 import { v4 as uuidv4 } from "uuid";
 import { Avatar, Image } from "antd";
+import { LocalizationProvider, TimePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-function Signup(userDetails) {
+function MerchantSignup(userDetails) {
   const [address, setAddress] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
@@ -64,12 +66,15 @@ function Signup(userDetails) {
     provider: "email",
     phone: "",
     password: "",
-    role: 0,
+    role: 1,
     address: "",
     latitude: "",
     longitude: "",
     image: "",
-    // storeName: "",
+    openTime: new Date(),
+    closeTime: new Date(),
+    description: "",
+    storeName: "",
   };
 
   const [filledData, setFilledData] = useState(defaultFilledData);
@@ -236,15 +241,15 @@ function Signup(userDetails) {
                 sx={{ borderRadius: "10px", paddingTop: "8px" }}
               >
                 <div style={{ fontSize: "smaller" }}>
-                  Signup as a Vendor ?{" "}
+                  Signup as a Customer ?{" "}
                   <u
                     style={{ cursor: "pointer" }}
                     className="linkHighlight"
                     onClick={() => {
-                      navigate("/merchantSignup");
+                      navigate("/signup");
                     }}
                   >
-                    Merchant Signup{" "}
+                    Customer Signup{" "}
                   </u>
                 </div>
                 <div
@@ -398,23 +403,7 @@ function Signup(userDetails) {
                       />
                     )}
                   </div>
-                  {/* <div style={{ margin: "20px" }}>
-                    <FormControl fullWidth>
-                      <InputLabel id="role-label">Account Role</InputLabel>
-                      <Select
-                        fullWidth
-                        labelId="role-label"
-                        id="role"
-                        value={filledData.role}
-                        label="Account Role"
-                        onChange={eventHandler}
-                        name="role"
-                      >
-                        <MenuItem value={0}>Customer</MenuItem>
-                        <MenuItem value={1}>Vendor</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </div> */}
+
                   <div style={{ margin: "20px" }}>
                     {filledData.role == 1 && (
                       <TextField
@@ -427,6 +416,42 @@ function Signup(userDetails) {
                       />
                     )}
                   </div>
+                  <div style={{ margin: "20px" }}>
+                    <TextField
+                      fullWidth
+                      id="outlined-multiline-static"
+                      label="Description"
+                      name="description"
+                      multiline
+                      rows={2}
+                      value={filledData.description}
+                      onChange={eventHandler}
+                    />
+                  </div>
+
+                  <div style={{ margin: "20px" }}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <TimePicker
+                        label="Open Time"
+                        name="openTime"
+                        value={filledData.openTime}
+                        onChange={(e) => {
+                          setFilledData({ ...filledData, openTime: e.$d });
+                        }}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                      <TimePicker
+                        label="Close Time"
+                        name="closeTime"
+                        value={filledData.closeTime}
+                        onChange={(e) => {
+                          setFilledData({ ...filledData, closeTime: e.$d });
+                        }}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </LocalizationProvider>
+                  </div>
+
                   <div style={{ margin: "20px" }}>
                     <LocationSearchInput
                       handleChange={handleChange}
@@ -487,4 +512,4 @@ function Signup(userDetails) {
   );
 }
 
-export default Signup;
+export default MerchantSignup;
