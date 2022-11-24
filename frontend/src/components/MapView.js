@@ -185,7 +185,7 @@ export default function MapView(props) {
   };
 
   return (
-    <div className="container">
+    <div className="container" >
       <div className="controls">
         {/* <Places
           setHome={(position) => {

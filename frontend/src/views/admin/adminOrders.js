@@ -29,11 +29,11 @@ const columns = [
     headerName: 'Customer Name',
     width: 200,
   },
-  {
-    field: 'vendorName',
-    headerName: 'Vendor Name',
-    width: 200,
-  },
+  // {
+  //   field: 'vendorName',
+  //   headerName: 'Vendor Name',
+  //   width: 200,
+  // },
   {
     field: 'placed',
     headerName: 'Placed on',
@@ -64,30 +64,33 @@ export default function AdminOrders() {
   useEffect(() => {
         get(`/admin/allorders`)
       .then((result) => {   
-        console.log(result)
+        console.log("all orders",result)
         var arr=new Array()
         for(var u of result)
         {
-        var userTemp=u.user
+          if(u.user)
+          {
+          var userTemp=u.user
           var ob={
             "id":u._id,
             "customerName":userTemp.firstName+" "+userTemp.lastName,
-            // "customerName":"",
-            "vendorName":"",
+            // "vendorName":"",
             "total":"$ "+u.total,
             "placed":u.created.substr(0, 10),
             "allData":u
           }
+          console.log(u._id,"its data is",ob)
           arr.push(ob)
+          }
+        
         }
         setRows([...arr])
+        console.log("result arr",arr)
       })
        .catch((err) => {
         
       });
     }, []);
-
-  const dat=[{name:"sai",age:"2"},{name:"teja",age:"5"}];
 
    const rowSelected = (e) => {
     setSelectedOrder(e)
@@ -109,9 +112,9 @@ export default function AdminOrders() {
                                 <Grid item xs={12}>
                                     <h2 style={{color:'white'}}>All Orders</h2>
                                 </Grid>
-                                <Grid item xs={12}>
+                                {/* <Grid item xs={12}>
                                     customer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etc
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                             {/* <Grid item xs={3} sx={{textAlign:"left"}}>
                                 <Lottie options={defaultOptions} height={200} width={280} />

@@ -75,9 +75,7 @@ export default function AdminUserOrders() {
        .catch((err) => {
         
       });
-    }, []);
-
-  const dat=[{name:"sai",age:"2"},{name:"teja",age:"5"}];
+    }, []); 
 
    const rowSelected = (e) => {
         console.log(e)
@@ -98,9 +96,9 @@ export default function AdminUserOrders() {
                                 <Grid item xs={12}>
                                     <h2 style={{color:'white'}}>Orders of {location.state.name}</h2>
                                 </Grid>
-                                <Grid item xs={12}>
+                                {/* <Grid item xs={12}>
                                     customer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etc
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                             {/* <Grid item xs={3} sx={{textAlign:"left"}}>
                                 <Lottie options={defaultOptions} height={200} width={280} />
@@ -132,7 +130,7 @@ export default function AdminUserOrders() {
                     rows={rows}
                     pageSize={10}
                     // rowsPerPageOptions={[5,10,15,20]}
-                    onRowClick={rowSelected}
+                    onRowClick={(e)=>rowSelected(e.row)}
                     />
                     </div>
                 </div>

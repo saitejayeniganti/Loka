@@ -12,6 +12,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
+import Lottie from "react-lottie";
 import MenuItem from "@mui/material/MenuItem";
 import AddBusinessRoundedIcon from "@mui/icons-material/AddBusinessRounded";
 import Menu from "@mui/material/Menu";
@@ -33,10 +34,16 @@ import { getCoordinates } from "../utils/mapsHelper";
 import { bindActionCreators } from "redux";
 import { actionCreators as aCreators } from "../reducers/actionCreators";
 import lokamarketlogo from "../images/admin/online-marketplace.png";
-import newsletter from "../images/admin/newsletter.png";
+import newsletter from "../images/admin/news.png";
 import { Link } from "@mui/material";
+import markpng from "../images/admin/mark.png"
+import marketpng from "../images/admin/market.png"
+
 
 function MenuAppBar(props) {
+
+
+
   console.log("props - ", props);
   const defaultLocation = CONSTANTS.DEFAULT_ADDRESS;
   const navigate = useNavigate();
@@ -180,7 +187,8 @@ function MenuAppBar(props) {
               navigate("/");
             }}
           >
-            <img src={lokamarketlogo} width="30" height="30" />
+            <img src={marketpng} width="30" height="30" />
+            
           </IconButton>
           <Typography variant="h5" component="div">
             LOKA
@@ -193,7 +201,7 @@ function MenuAppBar(props) {
                 navigate("/mapview");
               }}
             >
-              <MapIcon />
+              <img src={markpng} height="28px" width="28px"></img> 
             </IconButton>
           </div>
           <div>
@@ -207,7 +215,7 @@ function MenuAppBar(props) {
              <img src={newsletter} width="30" height="30" /> 
             </IconButton>
           </div>
-          {((props.isLoggedIn && props.user.role == 0) || !props.isLoggedIn) &&
+          {((props.isLoggedIn && props.user.role == 0) || (!props.isLoggedIn)) &&
             searchBoxes()}
           {/* {props.user && (
             <Typography variant="h5" component="div">

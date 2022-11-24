@@ -1,7 +1,6 @@
 import { Grid, Rating, Typography, Button, Divider, TextField, Snackbar } from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import productImage from "../../images/products/apple.jpeg";
 import * as actions from '../../reducers/actions';
 import { connect } from 'react-redux';
 
@@ -42,7 +41,7 @@ const Product = (props) => {
         <Box
           sx={{ width: "100%" }}
           component="img"
-          src={productImage}
+          src={props.product?.image}
         />
       </Grid>
       <Grid item md={4} mt={5} textAlign="left">
@@ -50,12 +49,10 @@ const Product = (props) => {
           {props.product?.name}
         </Typography>
         <Typography variant="body2">
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
+          {props.product?.description}
         </Typography>
         <Typography variant="h5" sx={{ fontWeight: "bold", color: "#ff6d00" }}>
-          $90.00
+          {props.product?.price}
         </Typography>
         <Typography variant="subtitle2" sx={{ color: "gray" }}>
           $5.95 for shipping

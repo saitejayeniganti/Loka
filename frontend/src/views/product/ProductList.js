@@ -1,9 +1,9 @@
 import { Grid, Rating, Typography, Link } from "@mui/material";
-import { Box } from "@mui/system";
 import React, { useEffect } from "react";
-import productImage from "../../images/products/apple.jpeg";
 import * as actions from '../../reducers/actions';
 import { connect } from 'react-redux';
+import ProductCard from '../../components/ProductCard';
+import customerHome from '../../images/customer/cushome.jpeg'
 
 const ProductList = (props) => {
   useEffect(() => {
@@ -11,303 +11,23 @@ const ProductList = (props) => {
   }, []);
 
   return (
-    <Grid sx={{ mb: 5 }} container>
-      {props.products.map((product, index) => (
-        <Grid item md={3}>
-          <Link
-            href={`/product?id=${product._id}`}
-            key={index} underline="none" color="inherit"
-          >
-            <Box
-              sx={{ width: "100%" }}
-              component="img"
-              src={productImage}
-            />
-            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-              {product.name}
-            </Typography>
-            <Typography variant="body2">
-              Vintage Typewriter to post awesome stories about UI design and webdev.
-              Vintage Typewriter to post awesome stories about UI design and webdev.
-              Vintage Typewriter to post awesome stories about UI design and webdev.
-        </Typography>
-            <Typography variant="h5" sx={{ fontWeight: "bold", color: "#ff6d00" }}>
-              $90.00
-        </Typography>
-            <Typography variant="subtitle2" sx={{ color: "gray" }}>
-              $5.95 for shipping
-        </Typography>
-            {/* Rating wraper */}
-            <Box
-              sx={{
-                display: "flex",
-
-                alignItems: "center",
-              }}
-            >
-              <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
-              <Typography>4.9</Typography>
-            </Box>
-          </Link>
+    <>
+      <div style={{ position: "relative" }}>
+        <img src={customerHome} style={{ width: "100%", height: "300px" }}></img>
+        <h1 style={{ position: "absolute", bottom: "8px", left: "16px", color: "white", backgroundColor: "#063970", padding: '5px', borderRadius: "10px" }}>Shop our products</h1>
+      </div>
+      <div>
+        <Grid container spacing={1} sx={{ padding: '10px' }}>
+          {props.products.map((singleItem, index) => {
+            return (<Grid item xs={3} lg={2} key={singleItem._id}><Link
+              href={`/product?id=${singleItem._id}`}
+              key={index} underline="none" color="inherit"
+            ><ProductCard singleItem={singleItem} /></Link></Grid>)
+          })
+          }
         </Grid>
-      ))}
-      <Grid item md={3}>
-        <Box
-          sx={{ width: "100%" }}
-          component="img"
-          src={productImage}
-        />
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          Red Apples
-        </Typography>
-        <Typography variant="body2">
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-        </Typography>
-        <Typography variant="h5" sx={{ fontWeight: "bold", color: "#ff6d00" }}>
-          $90.00
-        </Typography>
-        <Typography variant="subtitle2" sx={{ color: "gray" }}>
-          $5.95 for shipping
-        </Typography>
-        {/* Rating wraper */}
-        <Box
-          sx={{
-            display: "flex",
-
-            alignItems: "center",
-          }}
-        >
-          <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
-          <Typography>4.9</Typography>
-        </Box>
-      </Grid>
-      <Grid item md={3}>
-        <Box
-          sx={{ width: "100%" }}
-          component="img"
-          src={productImage}
-        />
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          Red Apples
-        </Typography>
-        <Typography variant="body2">
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-        </Typography>
-        <Typography variant="h5" sx={{ fontWeight: "bold", color: "#ff6d00" }}>
-          $90.00
-        </Typography>
-        <Typography variant="subtitle2" sx={{ color: "gray" }}>
-          $5.95 for shipping
-        </Typography>
-        {/* Rating wraper */}
-        <Box
-          sx={{
-            display: "flex",
-
-            alignItems: "center",
-          }}
-        >
-          <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
-          <Typography>4.9</Typography>
-        </Box>
-      </Grid>
-      <Grid item md={3}>
-        <Box
-          sx={{ width: "100%" }}
-          component="img"
-          src={productImage}
-        />
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          Red Apples
-        </Typography>
-        <Typography variant="body2">
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-        </Typography>
-        <Typography variant="h5" sx={{ fontWeight: "bold", color: "#ff6d00" }}>
-          $90.00
-        </Typography>
-        <Typography variant="subtitle2" sx={{ color: "gray" }}>
-          $5.95 for shipping
-        </Typography>
-        {/* Rating wraper */}
-        <Box
-          sx={{
-            display: "flex",
-
-            alignItems: "center",
-          }}
-        >
-          <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
-          <Typography>4.9</Typography>
-        </Box>
-      </Grid>
-      <Grid item md={3}>
-        <Box
-          sx={{ width: "100%" }}
-          component="img"
-          src={productImage}
-        />
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          Red Apples
-        </Typography>
-        <Typography variant="body2">
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-        </Typography>
-        <Typography variant="h5" sx={{ fontWeight: "bold", color: "#ff6d00" }}>
-          $90.00
-        </Typography>
-        <Typography variant="subtitle2" sx={{ color: "gray" }}>
-          $5.95 for shipping
-        </Typography>
-        {/* Rating wraper */}
-        <Box
-          sx={{
-            display: "flex",
-
-            alignItems: "center",
-          }}
-        >
-          <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
-          <Typography>4.9</Typography>
-        </Box>
-      </Grid>
-      <Grid item md={3}>
-        <Box
-          sx={{ width: "100%" }}
-          component="img"
-          src={productImage}
-        />
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          Red Apples
-        </Typography>
-        <Typography variant="body2">
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-        </Typography>
-        <Typography variant="h5" sx={{ fontWeight: "bold", color: "#ff6d00" }}>
-          $90.00
-        </Typography>
-        <Typography variant="subtitle2" sx={{ color: "gray" }}>
-          $5.95 for shipping
-        </Typography>
-        {/* Rating wraper */}
-        <Box
-          sx={{
-            display: "flex",
-
-            alignItems: "center",
-          }}
-        >
-          <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
-          <Typography>4.9</Typography>
-        </Box>
-      </Grid>
-      <Grid item md={3}>
-        <Box
-          sx={{ width: "100%" }}
-          component="img"
-          src={productImage}
-        />
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          Red Apples
-        </Typography>
-        <Typography variant="body2">
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-        </Typography>
-        <Typography variant="h5" sx={{ fontWeight: "bold", color: "#ff6d00" }}>
-          $90.00
-        </Typography>
-        <Typography variant="subtitle2" sx={{ color: "gray" }}>
-          $5.95 for shipping
-        </Typography>
-        {/* Rating wraper */}
-        <Box
-          sx={{
-            display: "flex",
-
-            alignItems: "center",
-          }}
-        >
-          <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
-          <Typography>4.9</Typography>
-        </Box>
-      </Grid>
-      <Grid item md={3}>
-        <Box
-          sx={{ width: "100%" }}
-          component="img"
-          src={productImage}
-        />
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          Red Apples
-        </Typography>
-        <Typography variant="body2">
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-        </Typography>
-        <Typography variant="h5" sx={{ fontWeight: "bold", color: "#ff6d00" }}>
-          $90.00
-        </Typography>
-        <Typography variant="subtitle2" sx={{ color: "gray" }}>
-          $5.95 for shipping
-        </Typography>
-        {/* Rating wraper */}
-        <Box
-          sx={{
-            display: "flex",
-
-            alignItems: "center",
-          }}
-        >
-          <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
-          <Typography>4.9</Typography>
-        </Box>
-      </Grid>
-      <Grid item md={3}>
-        <Box
-          sx={{ width: "100%" }}
-          component="img"
-          src={productImage}
-        />
-        <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-          Red Apples
-        </Typography>
-        <Typography variant="body2">
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-          Vintage Typewriter to post awesome stories about UI design and webdev.
-        </Typography>
-        <Typography variant="h5" sx={{ fontWeight: "bold", color: "#ff6d00" }}>
-          $90.00
-        </Typography>
-        <Typography variant="subtitle2" sx={{ color: "gray" }}>
-          $5.95 for shipping
-        </Typography>
-        {/* Rating wraper */}
-        <Box
-          sx={{
-            display: "flex",
-
-            alignItems: "center",
-          }}
-        >
-          <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
-          <Typography>4.9</Typography>
-        </Box>
-      </Grid>
-    </Grid>
+      </div>
+    </>
   );
 };
 
