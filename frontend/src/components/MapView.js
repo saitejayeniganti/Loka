@@ -12,8 +12,9 @@ import { get } from "../utils/serverCall";
 import { CONSTANTS, REDUCER } from "../utils/consts";
 import { isEqual } from "lodash";
 import MapDistance from "./MapDistance";
-import markpng from "../images/maps/home.png";
-import HomeIcon from "@mui/icons-material/Home";
+import homeIcon from "../images/maps/home.png";
+
+// import HomeIcon from "@mui/icons-material/Home";
 // import homePng from "../images/customer/mapHome.png";
 // import Places from "./places";
 // import Distance from "./distance";
@@ -229,7 +230,7 @@ export default function MapView(props) {
               <Marker
                 position={location}
                 // icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
-                icon={markpng}
+                icon={homeIcon}
               />
               {vendors && (
                 <MarkerClusterer>
