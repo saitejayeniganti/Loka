@@ -12,6 +12,9 @@ import { get } from "../utils/serverCall";
 import { CONSTANTS, REDUCER } from "../utils/consts";
 import { isEqual } from "lodash";
 import MapDistance from "./MapDistance";
+import markpng from "../images/maps/home.png";
+import HomeIcon from "@mui/icons-material/Home";
+// import homePng from "../images/customer/mapHome.png";
 // import Places from "./places";
 // import Distance from "./distance";
 
@@ -35,7 +38,7 @@ export default function MapView(props) {
   const center = useMemo(() => ({ lat: 37.33, lng: -121.88 }), []);
   const options = useMemo(
     () => ({
-      mapId: "b181cac70f27f5e6",
+      mapId: "5fe6bda9aaa3860d",
       disableDefaultUI: true,
       clickableIcons: false,
     }),
@@ -185,7 +188,7 @@ export default function MapView(props) {
   };
 
   return (
-    <div className="container" >
+    <div className="container">
       <div className="controls">
         {/* <Places
           setHome={(position) => {
@@ -225,7 +228,8 @@ export default function MapView(props) {
             <>
               <Marker
                 position={location}
-                icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+                // icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
+                icon={markpng}
               />
               {vendors && (
                 <MarkerClusterer>
@@ -279,22 +283,22 @@ const closeOptions = {
   ...defaultOptions,
   zIndex: 3,
   fillOpacity: 0.05,
-  strokeColor: "#8BC34A",
-  fillColor: "#8BC34A",
+  strokeColor: "#00cc00",
+  fillColor: "#00e600",
 };
 const middleOptions = {
   ...defaultOptions,
   zIndex: 2,
   fillOpacity: 0.05,
-  strokeColor: "#FBC02D",
-  fillColor: "#FBC02D",
+  strokeColor: "#0000ff",
+  fillColor: "#0000ff",
 };
 const farOptions = {
   ...defaultOptions,
   zIndex: 1,
   fillOpacity: 0.05,
-  strokeColor: "#FF5252",
-  fillColor: "#FF5252",
+  strokeColor: "#b32d00",
+  fillColor: "#ff4000",
 };
 
 // const generateHouses = (position) => {

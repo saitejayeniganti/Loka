@@ -466,7 +466,7 @@ function Signup(userDetails) {
                     </Button>
                   </div>
                   <div style={{ fontSize: "smaller", marginBottom: "20px" }}>
-                    Already a registered Vendor ?{" "}
+                    Already registered ?{" "}
                     <u
                       style={{ cursor: "pointer" }}
                       className="linkHighlight"
