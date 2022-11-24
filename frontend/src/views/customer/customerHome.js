@@ -209,7 +209,9 @@ function CustomerHome() {
             }}
           >
             <Grid item xs={6}>
-              <div style={{ textAlign: "left" }}>{vendor.storeName}</div>
+              <div style={{ textAlign: "left", fontWeight: "bold" }}>
+                {vendor.storeName}
+              </div>
             </Grid>
 
             {/* <Grid item xs={4}>
