@@ -123,9 +123,9 @@ export default function AdminUserReviews() {
                                 <Grid item xs={12}>
                                     <h2 style={{color:'white'}}>Reviews of {location.state.name}</h2>
                                 </Grid>
-                                <Grid item xs={12}>
+                                {/* <Grid item xs={12}>
                                     customer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etccustomer orders etc
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                             {/* <Grid item xs={3} sx={{textAlign:"left"}}>
                                 <Lottie options={defaultOptions} height={200} width={280} />
