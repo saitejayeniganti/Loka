@@ -41,8 +41,11 @@ const MyOrder = (props) => {
             > */}
             {props.orders?.map((order, i) => (
               <>
-                <Typography variant="h5" textAlign="left">{`Order No ${i + 1}`}</Typography>
+                <Typography variant="h5" sx={{
+                  p: 2
+                }}>{`Order No ${i + 1}`}</Typography>
                 <Paper
+                  elevation={3}
                   sx={{
                     p: 2,
                     margin: 'auto',
