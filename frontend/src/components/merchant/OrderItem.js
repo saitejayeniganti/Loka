@@ -27,7 +27,7 @@ function OrderItem(props) {
                     <Grid item xs={12}><Typography variant="subtitle1" >{`Quantity Bought: ${props.product.quantity}`}</Typography></Grid>
                     <Grid item xs={12}><Typography variant="subtitle1" >{`Price With Tax: $${props.product.priceWithTax}`}</Typography></Grid>
                     <Grid item xs={12}><Divider sx={{ opacity: '1' }} /></Grid>
-                    <Grid item xs={12}><TextField fullWidth disabled multiline minRows={3} maxRows={3} variant="filled" label="Description" value={props.product.description} /></Grid>
+                    <Grid item xs={12}><TextField fullWidth disabled multiline minRows={2} maxRows={2} variant="filled" label="Description" value={props.product.description} /></Grid>
                     <Grid item xs={12}><Divider sx={{ opacity: '1' }} /></Grid>
                     <Grid item xs={12} sx={{ paddingTop: '10px' }}>
                         <FormControl fullWidth>

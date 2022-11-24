@@ -11,9 +11,11 @@ function MerchantOrders(props) {
     return (
         <>
             <Grid container spacing={1} sx={{ padding: '10px' }}>
-                <Grid item xs={3} >
-                    <img style={{ height: '170px' }} src={merchantOrders} />
-                    <h2>Your Orders</h2>
+                <Grid item xs={3}>
+                    <div style={{ position: 'fixed', top: '80px', left: '20px', zIndex: 1 }}>
+                        <img style={{ height: '170px' }} src={merchantOrders} />
+                        <h2>Your Orders</h2>
+                    </div>
                 </Grid>
                 <Grid item xs={9}>
                     <Grid container spacing={1} sx={{ padding: '10px' }}>
