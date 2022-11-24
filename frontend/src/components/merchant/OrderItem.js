@@ -1,13 +1,22 @@
-import React from "react";
-import { Card, CardMedia, CardActions, Button, Typography, Grid, Divider, FormControl, InputLabel, Select, MenuItem } from '@mui/material'
+import { useState } from "react";
+import { Card, CardMedia, CardActions, Button, Typography, Grid, Divider, FormControl, InputLabel, Select, MenuItem, TextField } from '@mui/material'
 
 function OrderItem(props) {
     console.log(props)
-    const [age, setAge] = React.useState(props.product.status);
+    const [status, setStatus] = useState(props.product.status);
 
-    const handleChange = (event) => {
-        setAge(event.target.value);
+    const handleStatusChange = (event) => {
+        setStatus(event.target.value);
     };
+
+    const revertStatusChange = () => {
+        setStatus(props.product.status);
+    }
+
+    const updateStatusChange = () => {
+        console.log(status)
+    }
+
     return (
         <>
             <Card sx={{ textAlign: 'left' }} raised>
@@ -18,7 +27,7 @@ function OrderItem(props) {
                     <Grid item xs={12}><Typography variant="subtitle1" >{`Quantity Bought: ${props.product.quantity}`}</Typography></Grid>
                     <Grid item xs={12}><Typography variant="subtitle1" >{`Price With Tax: $${props.product.priceWithTax}`}</Typography></Grid>
                     <Grid item xs={12}><Divider sx={{ opacity: '1' }} /></Grid>
-                    <Grid item xs={12}><Typography variant="body1" color="text.secondary" align="justify">{props.product.description}</Typography></Grid>
+                    <Grid item xs={12}><TextField fullWidth disabled multiline minRows={3} maxRows={3} variant="filled" label="Description" value={props.product.description} /></Grid>
                     <Grid item xs={12}><Divider sx={{ opacity: '1' }} /></Grid>
                     <Grid item xs={12} sx={{ paddingTop: '10px' }}>
                         <FormControl fullWidth>
@@ -26,9 +35,9 @@ function OrderItem(props) {
                             <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
-                                value={props.product.status}
+                                value={status}
                                 label="Status"
-                                onChange={handleChange}
+                                onChange={handleStatusChange}
                             >
                                 <MenuItem value={'Not processed'}>Not processed</MenuItem>
                                 <MenuItem value={'Processing'}>Processing</MenuItem>
@@ -38,7 +47,8 @@ function OrderItem(props) {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} sx={{ paddingTop: '10px' }}>{<Button size="small" variant="outlined" onClick={() => props.handleOpenUpdateModal(props.singleItem)} sx={{ float: "right" }}>Update Status</Button>}</Grid>
+                    <Grid item xs={6} sx={{ paddingTop: '10px', paddingRight: '5px' }}>{<Button size="small" variant="outlined" onClick={revertStatusChange} color="error">Revert Status</Button>}</Grid>
+                    <Grid item xs={6} sx={{ paddingTop: '10px', paddingLeft: '5px' }}>{<Button size="small" variant="outlined" onClick={updateStatusChange}>Update Status</Button>}</Grid>
                 </Grid>
             </Card>
         </>
