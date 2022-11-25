@@ -42,7 +42,7 @@ export default function MapDistance({ leg, vendor }) {
             {vendor.storeName}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            add description or rating
+            {vendor.location.address}
           </Typography>
           <Typography variant="body2">
             {leg.distance.text} away from your location
