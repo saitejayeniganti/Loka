@@ -36,14 +36,10 @@ import { actionCreators as aCreators } from "../reducers/actionCreators";
 import lokamarketlogo from "../images/admin/online-marketplace.png";
 import newsletter from "../images/admin/news.png";
 import { Link } from "@mui/material";
-import markpng from "../images/admin/mark.png"
-import marketpng from "../images/admin/market.png"
-
+import markpng from "../images/admin/mark.png";
+import marketpng from "../images/admin/market.png";
 
 function MenuAppBar(props) {
-
-
-
   console.log("props - ", props);
   const defaultLocation = CONSTANTS.DEFAULT_ADDRESS;
   const navigate = useNavigate();
@@ -79,7 +75,7 @@ function MenuAppBar(props) {
     get("/auth/logout").then((res) => {
       setAnchorEl(null);
       doSignIn(Date.now());
-      // navigate("/home");
+      navigate("/login");
       // console.log("loggedOut");
       // window.location.reload();
     });
@@ -188,41 +184,43 @@ function MenuAppBar(props) {
             }}
           >
             <img src={marketpng} width="30" height="30" />
-            
           </IconButton>
           <Typography variant="h5" component="div">
             LOKA
           </Typography>
-          <div>
-            <IconButton
-              aria-label="delete"
-              color="primary"
-              onClick={() => {
-                navigate("/mapview");
-              }}
-            >
-              <img src={markpng} height="28px" width="28px"></img> 
-            </IconButton>
-          </div>
-          <div>
-            <IconButton
-              aria-label="delete"
-              color="primary"
-              onClick={() => {
-                navigate("/newsletter");
-              }}
-            >
-             <img src={newsletter} width="30" height="30" /> 
-            </IconButton>
-          </div>
-          {((props.isLoggedIn && props.user.role == 0) || (!props.isLoggedIn)) &&
+          {(!props.isLoggedIn || props.user.role == 0) && (
+            <div>
+              <IconButton
+                aria-label="delete"
+                color="primary"
+                onClick={() => {
+                  navigate("/mapview");
+                }}
+              >
+                <img src={markpng} height="28px" width="28px"></img>
+              </IconButton>
+            </div>
+          )}
+          {(!props.isLoggedIn || props.user.role == 0) && (
+            <div>
+              <IconButton
+                aria-label="delete"
+                color="primary"
+                onClick={() => {
+                  navigate("/newsletter");
+                }}
+              >
+                <img src={newsletter} width="30" height="30" />
+              </IconButton>
+            </div>
+          )}
+          {((props.isLoggedIn && props.user.role == 0) || !props.isLoggedIn) &&
             searchBoxes()}
           {/* {props.user && (
             <Typography variant="h5" component="div">
               {props.user.firstName}
             </Typography>
           )} */}
-
           <Box
             sx={{
               display: "flex",
@@ -295,11 +293,11 @@ function MenuAppBar(props) {
               </div>
             )}
 
-            {props.isLoggedIn && (
+            {props.isLoggedIn && props.user.role == 0 && (
               <>
                 <Link href={"/myorder"} underline="none" color="inherit">
                   <Typography body="h5" marginRight="20px">
-                    Your Orders
+                    My Orders
                   </Typography>
                 </Link>
                 <Badge badgeContent={props.items?.length} color="primary">
