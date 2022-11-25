@@ -32,7 +32,12 @@ export default function SearchMain({ input, callback }) {
           //   { _id: 2, name: "orange" },
           //   { _id: 2, name: "tomato" },
           // ];
-          callback(result);
+          let resultSet = new Set();
+          result.forEach((each) => {
+            resultSet.add(each.name || each.storeName);
+          });
+          // console.log(resultSet)
+          callback(Array.from(resultSet));
         });
       }, 200),
     []
@@ -180,7 +185,7 @@ export default function SearchMain({ input, callback }) {
                       fontWeight: 400,
                     }}
                   >
-                    {option.storeName}
+                    {option}
                   </span>
                   // ))
                 }

@@ -16,7 +16,7 @@ router.get("/merchant", (req, res) => {
       },
     },
     {
-      $limit: 1,
+      $limit: 5,
     },
     {
       $project: {
@@ -26,7 +26,8 @@ router.get("/merchant", (req, res) => {
   ])
     .then((response) => {
       // console.log(response);
-      res.status(200).send(response);
+      doProductSearch(query, response, res);
+      // res.status(200).send(response);
     })
     .catch((error) => {
       console.log(error);
@@ -35,6 +36,38 @@ router.get("/merchant", (req, res) => {
 
   // res.sendStatus(200);
 });
+
+const doProductSearch = (searchInput, vendors, res) => {
+  ProductModel.aggregate([
+    {
+      $search: {
+        index: "productSearch",
+        autocomplete: {
+          query: searchInput,
+          path: "name",
+        },
+      },
+    },
+    {
+      $limit: 5,
+    },
+    {
+      $project: {
+        name: 1,
+      },
+    },
+  ])
+    .then((products) => {
+      // console.log(response);
+      // doCombinedLocationSearch(lat, lng, products, vendors, res);
+      let totalRes = [...vendors, ...products];
+      res.status(200).send(totalRes);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+};
 
 router.get("/storesList", (req, res) => {
   const query = req.query.input;
