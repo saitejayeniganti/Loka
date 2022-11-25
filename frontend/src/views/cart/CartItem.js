@@ -2,8 +2,7 @@ import { Button } from "@mui/material";
 import productImage from "../../images/products/apple.jpeg";
 import { Wrapper } from "./CartItem.styles";
 import { connect } from "react-redux";
-import * as actions from '../../reducers/actions';
-
+import * as actions from "../../reducers/actions";
 
 const CartItem = (props) => {
   return (
@@ -12,7 +11,7 @@ const CartItem = (props) => {
         <h3>{props.item.name}</h3>
         <div className="information">
           <p>Price: ${props.item.price}</p>
-          { <p>Total: ${(props.item.count * props.item.price).toFixed(2)}</p> }
+          {<p>Total: ${(props.item.count * props.item.price).toFixed(2)}</p>}
         </div>
         <div className="buttons">
           <Button
@@ -34,14 +33,12 @@ const CartItem = (props) => {
           </Button>
         </div>
       </div>
-      <img src={productImage} alt={props.item.title} />
+      <img src={props.item.image} alt={props.item.title} />
     </Wrapper>
   );
 };
 
-
-const mapStateToProps = (state) => {
-};
+const mapStateToProps = (state) => {};
 
 const actionCreators = {
   addToCart: actions.addToCart,
