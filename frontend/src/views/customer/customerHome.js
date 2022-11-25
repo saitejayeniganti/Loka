@@ -282,25 +282,42 @@ function CustomerHome() {
         </div>
       </Grid> */}
             {productDetails && (
-              <Grid item xs={12}>
-                <div style={{ textAlign: "left", display: "flex" }}>
-                  product:{" "}
-                  <div
-                    style={{
-                      color: "blue",
-                      display: "block",
-                      cursor: "pointer",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                    }}
-                    onClick={() => {
-                      return navigate("/product?id=" + productDetails._id);
-                    }}
-                  >
-                    {productDetails.name}
+              <>
+                <Grid item xs={12}>
+                  <div style={{ textAlign: "left", display: "flex" }}>
+                    product:{" "}
+                    <div
+                      style={{
+                        color: "blue",
+                        display: "block",
+                        cursor: "pointer",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                      onClick={() => {
+                        return navigate("/product?id=" + productDetails._id);
+                      }}
+                    >
+                      {productDetails.name}
+                    </div>
                   </div>
-                </div>
-              </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <div style={{ textAlign: "left", display: "flex" }}>
+                    price:{" $"}
+                    <div
+                      style={{
+                        display: "block",
+
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {productDetails.price}
+                    </div>
+                  </div>
+                </Grid>
+              </>
             )}
             <Grid item xs={12}>
               <div style={{ textAlign: "left", fontSize: "13px" }}>

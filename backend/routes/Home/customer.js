@@ -125,6 +125,7 @@ const doProductSearch = (lat, lng, searchInput, vendors, res) => {
         name: 1,
         merchant: 1,
         image: 1,
+        price: 1,
       },
     },
   ])
