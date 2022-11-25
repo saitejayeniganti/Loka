@@ -22,6 +22,7 @@ import cardShopping from "../../animations/card-shopping.json";
 import { Button, MenuItem, Select, TextField } from "@mui/material";
 import { get, post } from "../../utils/serverCall.js";
 import { Navigate } from "react-router-dom";
+import Divider from '@mui/material/Divider';
 
 const columns = [
     {
@@ -71,6 +72,7 @@ export default function AdminOrders() {
           if(u.user)
           {
           var userTemp=u.user
+
           var ob={
             "id":u._id,
             "customerName":userTemp.firstName+" "+userTemp.lastName,
@@ -79,13 +81,13 @@ export default function AdminOrders() {
             "placed":u.created.substr(0, 10),
             "allData":u
           }
-          console.log(u._id,"its data is",ob)
+          // console.log(u._id,"its data is",ob)
           arr.push(ob)
           }
         
         }
         setRows([...arr])
-        console.log("result arr",arr)
+        // console.log("result arr",arr)
       })
        .catch((err) => {
         
@@ -95,6 +97,41 @@ export default function AdminOrders() {
    const rowSelected = (e) => {
     setSelectedOrder(e)
         console.log(e)
+    };
+
+    const renderProducts = () => {
+      return( <>
+        <Grid container>
+          <Grid container style={{marginBottom:"2vh",fontWeight:"800"}}>
+          <Grid item xs={7.5} sx={{alignSelf: "center",textAlign:"center"}}>
+              ITEM 
+          </Grid>
+          <Grid item xs={2.5} sx={{textAlign:"left",alignSelf: "center"}}>
+            QUANTITY
+          </Grid>
+          <Grid item xs={2} sx={{alignSelf: "center"}}>
+            PRICE
+          </Grid>
+            </Grid>
+            {selectedOrder.products.map((p)=><>
+            <Grid item xs={3} sx={{textAlign:"left",marginTop:"5px",marginBottom:"5px"}}>
+                <img src={p.image} height="64px" width="64px"/>
+            </Grid>
+          <Grid item xs={5} sx={{textAlign:"left",alignSelf: "center"}}>
+              {p.name}
+          </Grid>
+          <Grid item xs={2} sx={{textAlign:"left",alignSelf: "center"}}>
+            X&nbsp;&nbsp;{p.quantity}
+          </Grid>
+          <Grid item xs={2} sx={{alignSelf: "center"}}>
+            $&nbsp;{p.totalPrice}
+          </Grid>
+        </>)}
+        
+        </Grid>
+      </>
+        
+        )
     };
 
     if (redirToUserDetail) {
@@ -167,14 +204,26 @@ export default function AdminOrders() {
                             <Grid item xs={12}>
                                   <div style={{fontSize:"20px"}}>Order Details</div>
                             </Grid>
-                            <Grid item xs={12} sx={{marginTop:"3 vh"}}>
-                                    <Grid item xs={3}>
-
+                            <Grid item xs={12} sx={{marginTop:"5vh",maxHeight:"40vh",overflowY:"scroll"}}>
+                                    <Grid item xs={12}>
+                                      {renderProducts()}
                                     </Grid>
-                                    <Grid item xs={4}>
-
+                                    <Grid item xs={12} sx={{marginTop:"5vh",marginBottom:"3vh"}}>
+                                                <Divider style={{opacity:"500%"}}/>
+                                                <Divider style={{opacity:"500%"}}/>
+                                    </Grid>
+                                          
+                                    <Grid container>
+                                        <Grid item xs={7.2}></Grid>
+                                        <Grid item xs={2.8} style={{fontWeight:"800"}}>
+                                          TOTAL
+                                        </Grid>
+                                        <Grid item xs={2} style={{fontWeight:"800"}}>
+                                            $&nbsp;{selectedOrder.total}
+                                        </Grid>
                                     </Grid>
                             </Grid>
+                            
                             </>}
                            
                           </Grid>
