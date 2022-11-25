@@ -38,7 +38,9 @@ const CartItem = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {};
+const mapStateToProps = (state) => {
+  return {};
+};
 
 const actionCreators = {
   addToCart: actions.addToCart,

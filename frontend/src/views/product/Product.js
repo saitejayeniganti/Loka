@@ -121,13 +121,18 @@ const Product = (props) => {
               alignItems: "left",
             }}
           >
-            <Button
-              onClick={addToCart}
-              justifyContent="left"
-              variant="contained"
-            >
-              Add to Cart
-            </Button>
+            {props.product && props.product.quantity > 0 && (
+              <Button
+                onClick={addToCart}
+                justifyContent="left"
+                variant="contained"
+              >
+                Add to Cart
+              </Button>
+            )}
+            {props.product && props.product.quantity <= 0 && (
+              <Typography variant="h5">Out of Stock</Typography>
+            )}
           </Box>
           <Snackbar
             open={addedToCard}
