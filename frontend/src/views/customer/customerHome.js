@@ -22,6 +22,7 @@ import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
 import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
 import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
+import { over } from "lodash";
 
 function CustomerHome() {
   const defaultOptions = {
@@ -90,8 +91,9 @@ function CustomerHome() {
   };
 
   const redirectToMerchant = (merchant) => {
-    setSelectedMerchant(merchant);
-    setRedirToMerchant(true);
+    // setSelectedMerchant(merchant);
+    // setRedirToMerchant(true);
+    navigate("/customermerchant?id=" + merchant);
   };
 
   useEffect(() => {
@@ -149,7 +151,7 @@ function CustomerHome() {
     return <Navigate to={"/customermerchant?id=" + selectedMerchant} />;
   }
 
-  const createBaseCard = (vendor, productName) => {
+  const createBaseCard = (vendor, productDetails) => {
     return (
       <Paper
         key={vendor._id}
@@ -160,7 +162,6 @@ function CustomerHome() {
           padding: "0px !important",
           marginLeft: "30px",
           marginTop: "25px",
-          cursor: "pointer",
         }}
       >
         <Grid container spacing={0}>
@@ -173,6 +174,7 @@ function CustomerHome() {
               justifyContent: "center",
               height: "140px",
               padding: "10px",
+              cursor: "pointer",
             }}
             title="Redirect to merchant"
             onClick={() => redirectToMerchant(vendor._id)}
@@ -187,7 +189,13 @@ function CustomerHome() {
               }}
             >
               <img
-                src={vendor.image ? vendor.image : cost}
+                src={
+                  productDetails
+                    ? productDetails.image
+                    : vendor.image
+                    ? vendor.image
+                    : cost
+                }
                 style={{
                   borderColor: "black",
                   padding: "0px !important",
@@ -208,8 +216,17 @@ function CustomerHome() {
               padding: "10px",
             }}
           >
-            <Grid item xs={6}>
-              <div style={{ textAlign: "left", fontWeight: "bold" }}>
+            <Grid item xs={12}>
+              <div
+                style={{
+                  textAlign: "left",
+                  fontWeight: "bold",
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  cursor: "pointer",
+                }}
+                onClick={() => redirectToMerchant(vendor._id)}
+              >
                 {vendor.storeName}
               </div>
             </Grid>
@@ -264,16 +281,30 @@ function CustomerHome() {
           ..
         </div>
       </Grid> */}
-            {productName && (
+            {productDetails && (
               <Grid item xs={12}>
-                <div style={{ textAlign: "left", color: "grey" }}>
-                  product: {productName}
+                <div style={{ textAlign: "left", display: "flex" }}>
+                  product:{" "}
+                  <div
+                    style={{
+                      color: "blue",
+                      display: "block",
+                      cursor: "pointer",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                    }}
+                    onClick={() => {
+                      return navigate("/product?id=" + productDetails._id);
+                    }}
+                  >
+                    {productDetails.name}
+                  </div>
                 </div>
               </Grid>
             )}
             <Grid item xs={12}>
               <div style={{ textAlign: "left", fontSize: "13px" }}>
-                <u>Timings</u>
+                Timings
                 {": "}
                 {new Date(vendor.openTime).getHours()}:
                 {new Date(vendor.openTime).getMinutes()}-
@@ -316,7 +347,7 @@ function CustomerHome() {
       productVendors &&
       productVendors.map((each) => {
         let vendor = vendorDetails[each.merchant];
-        return vendor && createBaseCard(vendor, each.name);
+        return vendor && createBaseCard(vendor, each);
       })
     );
     // return (
