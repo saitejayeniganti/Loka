@@ -280,7 +280,7 @@ router.post('/adrequest', async (req, res) => {
 
   //save ads in marchant
     router.put('/savemerchantads', async (req, res) => {
-      console.log(req.body)
+      console.log("API: savemerchantads",req.body)
   try {
       const filter = { _id: req.body.id };
       const update = {"ads":req.body.ads};
@@ -298,7 +298,11 @@ router.post('/adrequest', async (req, res) => {
   try {
       const filter = { _id: req.body.id };
       const ad = await AdRequest.find({_id: req.body.id})
-      let clicks= parseInt(ad[0].clicks) +1
+      let clicks=0
+      if(ad[0]!=undefined)
+          clicks= parseInt(ad[0].clicks==undefined?0:ad[0].clicks) +1
+      else
+        clicks= 0
       const update = {"clicks":clicks};
       const adrequestDoc = await AdRequest.findByIdAndUpdate(filter, update)
 
@@ -343,8 +347,9 @@ router.post('/adrequest', async (req, res) => {
   //get ads from merchant
   router.get('/merchant', async (req, res) => {
   try {
-      console.log(req.query)
+      // console.log(req.query)
       const merchant = await Merchant.find({_id:req.query.id})
+      console.log("ads merchant server",merchant)
       res.status(200).json(merchant[0]);
   } catch (error) {
     console.log(error);
@@ -354,9 +359,23 @@ router.post('/adrequest', async (req, res) => {
   }})
 
 
+  //get all products for merchant page
+  router.get('/allproducts', async (req, res) => {
+  try {
+      console.log(req.query)
+      const product = await Product.find({merchant:req.query.id}).populate("category",["_id","name"]).populate("brand")
+      res.status(200).json(product);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
   router.get('/adimages', async (req, res) => {
   try {
       console.log(req.query)
+      const merchant = await Merchant.find({_id:req.query.id})
       const adimages = await AdRequest.find({merchantId:req.query.id}).populate("merchantId")
       for(var ad of adimages)
       {
@@ -364,9 +383,9 @@ router.post('/adrequest', async (req, res) => {
         var ed=new Date(ad.toDate)
         var clientDate=new Date(req.query.date)
         if(sd<clientDate && clientDate<ed)
-          return res.status(200).json(ad);
+          return res.status(200).json({"ads":ad,"merchant":merchant});
       }
-      res.status(200).json([]);
+      res.status(200).json({"ads":[],"merchant":merchant});
   } catch (error) {
     console.log(error);
     res.status(400).json({

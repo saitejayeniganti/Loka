@@ -21,14 +21,15 @@ import {
   DatePicker,
 } from 'antd';
 import { Navigate } from "react-router-dom";
+import { connect } from "react-redux";
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
-export default function MerchantPostAd() {
+function MerchantPostAd(props) {
     const [imageList, setImageList] = useState([]);
 
     useEffect(() => {
-    get(`/admin/merchant?id=${"63752e8e24aed58999808f5c"}`)
+    get(`/admin/merchant?id=${props.id}`)
       .then((result) => {
         console.log("result ads",result.ads)
         setImageList([...result.ads])
@@ -49,7 +50,7 @@ export default function MerchantPostAd() {
         const saveAds = () => {
             
             let requestdetails={
-                    "id":"63752e8e24aed58999808f5c",
+                    "id":props.id,
                     "ads":imageList
                 }
 
@@ -141,3 +142,11 @@ export default function MerchantPostAd() {
      
     </>)
 }
+
+const mapStateToProps = (state) => {
+    return {
+        id: state.sessionReducer.user.id,
+    };
+};
+
+export default connect(mapStateToProps)(MerchantPostAd);

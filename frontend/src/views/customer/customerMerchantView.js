@@ -13,112 +13,103 @@ import { actionCreators } from "../../reducers/actionCreators.js";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Card, CardMedia, CardActions, Button, Typography, Grid, Stack, Divider } from '@mui/material';
+import { Navigate } from "react-router-dom";
 
-const data = {
-  dairy: [
-    {
-      name: "milk",
-    },
-    {
-      name: "cheese",
-    },
-    {
-      name: "butter",
-    },
-    {
-      name: "butter",
-    },
-    {
-      name: "butter",
-    },
-    {
-      name: "butter",
-    },
-    {
-      name: "butter",
-    },
-  ],
-  meat: [
-    {
-      name: "chicken",
-    },
-    {
-      name: "fish",
-    },
-    {
-      name: "lamb",
-    },
-  ],
-  drinks: [
-    {
-      name: "coke",
-    },
-    {
-      name: "pepsi",
-    },
-    {
-      name: "sprite",
-    },
-  ],
-};
 
 export default function CustomerMerchantView() {
   const [searchParams, setSearchParams] = useSearchParams();
   searchParams.get("id");
-  console.log("url id", searchParams.get("id"));
   const [redirAdLink,setRedirAdLink]=React.useState("");
-  const [products, setProducts] = React.useState(data);
-  const [aproducts, setaProducts] = React.useState(data);
+  const [products, setProducts] = React.useState({});
   const [allImages, setAllImages] = React.useState([1, 2, 3]);
+  const [redirProductDetail, setRedirProductDetail] = React.useState(false);
+  const [selectedProduct, setSelectedProduct] = React.useState(false);
+  const [storeName, setStoreName] = React.useState(false);
 
-    //To get adds from external sources
+      //Toget product details
+      useEffect(() => {
+          get(`/admin/allproducts?id=${searchParams.get("id")}`)
+          .then((result) => {
+            console.log(result)
+            let productSubCat = {};
+            for (let product of result) {
+              if (!productSubCat[product.category.name]) productSubCat[product.category.name] = [];
+              productSubCat[product.category.name].push(product);
+            }
+            setProducts(productSubCat)
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }, []); 
+
+
+    //To get ads from external sources
       useEffect(() => {
         let today=new Date()
         //merchant id in the API
-        get(`/admin/adimages?id=${"63752e8e24aed58999808f5c"}&date=${today}`)
+        get(`/admin/adimages?id=${searchParams.get("id")}&date=${today}`)
       .then((result) => {
-        console.log("API result",result)
-        console.log("link is",result.redirectLink)
-        if(result!={})
-          setRedirAdLink(result.redirectLink)
+        console.log("API result for ads",result)
+        
+        let ads=result.ads
+        let merchant=result.merchant[0]
+        setStoreName(merchant.storeName)
+        // console.log("link is",ads.redirectLink)
+
+        if(ads!={})
+          setRedirAdLink(ads.redirectLink)
         else
           setRedirAdLink("")
         let arr=[]
-        let obj1={
-                    "src":"vendor",
-                    "img":shopLanding,
-                    "link":""
-                  }
-        arr.push(obj1)
-        if(result!=[])
-              {
-                   for(let i in result.imageList)
+        arr.push({
+                  "id":ads._id,
+                  "src":"vendor",
+                  "img":merchant.image,
+                    })
+        if(merchant.ads!=undefined && merchant.ads.length!=0)
+        {
+          // console.log("merchant own ads",merchant.ads)
+          // console.log("before merchant owen ads",arr)
+            for(let i in merchant.ads)
                     {
                       let obj={
-                                "id":result._id,
-                                "src":"ad",
-                                "img":result.imageList[i],
+                                "id":ads._id,
+                                "src":"vendor",
+                                "img":merchant.ads[i],
                               }
+                      console.log("merchant ads iteration")
                       arr.push(obj)
                     }
+          // console.log("after merchant own ads",arr)
+        }
+        if(ads!={})
+              {
+                   for(let i in ads.imageList)
+                    {
+                      let obj={
+                                "id":ads._id,
+                                "src":"ad",
+                                "img":ads.imageList[i],
+                              }
+                      arr.push(obj)
+                      // console.log("after outside iteration")
+                    }
+          // console.log("after outside ads",arr)
               }       
         setAllImages([...arr])
       })
       .catch((err) => {
         console.log(err);
       });
-    }, []);
-
-    const openImage=(e)=>{
-        console.log(e.target)
-    }
+    }, []); 
 
 const renderImages=()=>{
     return(<>
-    <Carousel autoplay>
+    <Carousel autoplay effect="fade">
             {allImages.map((image) => {return(<>
                  <div onClick={()=>{
-                  if(image.link=="")
+                  if(image.src=="vendor")
                   { }
                   else
                   {
@@ -147,7 +138,7 @@ const renderImages=()=>{
   };
 
   const renderProducts = () => {
-    let headers = Object.keys(aproducts);
+    let headers = Object.keys(products);
     return (
       <>
         <div
@@ -205,21 +196,28 @@ const renderImages=()=>{
                   {products[header].map((dish) => {
                     return (
                       <>
-                         <Card sx={{ maxWidth: 250, textAlign: 'left',marginLeft:"20px",marginBottom:"20px",borderRadius:"7px" }} raised>
-                            <CardMedia component="img" height="170" src={kiwi} />
-                            <Stack spacing={1} sx={{ padding: "15px" }}>
-                                <Typography variant="h5" sx={{textTransform:"capitalize"}}>{dish.name}</Typography>
+                         <Card sx={{ maxWidth: 180, textAlign: 'left',marginLeft:"20px",marginBottom:"20px",cursor:"pointer",
+                                      borderRadius:"7px",boxShadow: "0 4px 4px 0 rgba(0,0,0,0.2)",transition: "0.3s", "&:hover": {
+                                      boxShadow: "0 8px 16px 0 rgba(2, 25, 77, 0.5)"
+                            
+                            } }} raised onClick={()=>{setSelectedProduct(dish);setRedirProductDetail(true)}}>
+                            <CardMedia component="img" height="130" src={kiwi}/>
+                            <Stack spacing={1} sx={{ padding: "5px" }}>
+                              <div style={{textTransform: "capitalize",fontSize:"16px",fontWeight:"500"}}>{dish.name}</div>
                                 <Stack
                                     direction="row"
                                     spacing={2}
                                 >
-                                    <Typography variant="subtitle1" >{`Price: `}</Typography>
+                                    <div>{`Price: `}&nbsp;${dish.price}</div>
                                 </Stack>
-                                <Typography variant="subtitle1" >{`Brand: `}</Typography>
+                                <div>{`Brand: `}{dish.brand.name}</div>
                                 <Divider sx={{ opacity: '1' }} />
-                                <Typography variant="body1" color="text.secondary" align="justify" sx={{overflow:"hidden"}}>
-                                    DescriptionDescriptionDescriptionDescription
-                                </Typography>
+                                <div style={{overflow:"hidden"}}>
+                                    {dish.desription}
+                                </div>
+                                    
+                                
+                                
                                 {/* <Divider sx={{ opacity: '1' }} /> */}
                                 <CardActions>
                                     {/* <Grid container spacing={1} justifyContent="flex-end">
@@ -241,23 +239,14 @@ const renderImages=()=>{
     );
   };
 
+ if (redirProductDetail) {
+  console.log("redirecting",selectedProduct._id)
+    return <Navigate to={"/product?id=" + selectedProduct._id} />;
+  }
+
   return (
     <>
       <div style={{ position: "relative", background: "black" }}>
-        {/* <Carousel autoplay>
-                 <div>
-                    <img src={shopLanding} style={{ width: "100%", height: "300px" }}></img>
-                </div>
-                <div>
-                    <img src={ubereatslogo} style={{ width: "100%", height: "300px" }}></img>
-                </div>
-                <div>
-                    <img src={shopLanding} style={{ width: "100%", height: "300px" }}></img>
-                </div>
-                <div>
-                    <img src={ubereatslogo} style={{ width: "100%", height: "300px" }}></img>
-                </div>
-            </Carousel> */}
         {renderImages()}
         <h1
           style={{
@@ -270,11 +259,11 @@ const renderImages=()=>{
             borderRadius: "10px",
           }}
         >
-          Welcome To Your Store!
+          Welcome To {storeName}!
         </h1>
       </div>
       {/* ***************************** body ********************************* */}
-      <div>{renderProducts()}</div>
+      <div>{products=={}?"This merchant has no products.":renderProducts()}</div>
 
       {/* ***************************** footer ********************************* */}
 
