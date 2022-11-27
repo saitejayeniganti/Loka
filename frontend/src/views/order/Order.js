@@ -49,7 +49,7 @@ const Order = (props) => {
 
                   <Grid item>
                     <ButtonBase sx={{ width: 128, height: 128 }}>
-                      <Img alt="complex" src={productImage} />
+                      <Img alt="complex" width="120px" src={product.image} />
                     </ButtonBase>
                   </Grid>
                   <Grid item xs={12} sm container textAlign="left">
@@ -65,7 +65,7 @@ const Order = (props) => {
                           {product.quantity}
                         </Typography>
                       </Grid>
-                      <Grid item>
+                      <Grid item mb="5px">
                         <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2">
                           Cancel
                       </Typography>

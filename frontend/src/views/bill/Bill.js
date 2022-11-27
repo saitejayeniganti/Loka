@@ -32,7 +32,7 @@ const Bill = (props) => {
   const items = Array.from(allItemMap.values());
   const addNewOrder = async (e) => {
     e.preventDefault();
-    props.addNewOrder(props.items)
+    props.addNewOrder(items)
       .then((result) => {
         displayMessage("Order Confirmed");
         // console.log("order id", props.order_id._i);

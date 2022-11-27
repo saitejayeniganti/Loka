@@ -40,7 +40,7 @@ const OrderItems = (props) => {
                 <img
                   component="img"
                   style={{ marginLeft: "0" }}
-                  src={productImage}
+                  src={i.image}
                   align="left"
                 />
                 <Grid container item>

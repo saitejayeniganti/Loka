@@ -162,10 +162,7 @@ const Product = (props) => {
                 {review.title}
               </Typography>
               <Typography variant="body2">
-                Vintage Typewriter to post awesome stories about UI design and
-                webdev. Vintage Typewriter to post awesome stories about UI
-                design and webdev. Vintage Typewriter to post awesome stories
-                about UI design and webdev.
+                Fresh veggies. Faster delivery. Order charges were minimal with best possible services.
               </Typography>
               <br />
             </>

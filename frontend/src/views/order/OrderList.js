@@ -47,7 +47,7 @@ const OrderList = (props) => {
 
                   <Grid item>
                     <ButtonBase sx={{ width: 128, height: 128 }}>
-                      <Img alt="complex" src={productImage} />
+                      <Img alt="complex" src={product.image} />
                     </ButtonBase>
                   </Grid>
                   <Grid item xs={12} sm container textAlign="left">

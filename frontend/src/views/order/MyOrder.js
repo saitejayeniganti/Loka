@@ -60,7 +60,7 @@ const MyOrder = (props) => {
                     <Grid container spacing={2} key={index} >
                       <Grid item>
                         <ButtonBase sx={{ width: 128, height: 128 }}>
-                          <Img alt="complex" src={productImage} />
+                          <Img alt="complex" width="120px" src={product.image} />
                         </ButtonBase>
                       </Grid>
                       <Grid item xs={12} sm container textAlign="left">
