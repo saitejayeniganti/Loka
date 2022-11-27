@@ -164,7 +164,7 @@ function CustomerHome() {
           marginTop: "25px",
         }}
       >
-        <Grid container spacing={0}>
+        <Grid container spacing={0} sx={{ height: "100%" }}>
           <Grid
             item
             xs={4}
@@ -257,7 +257,7 @@ function CustomerHome() {
                 </div>
               </div>
             </Grid> */}
-            <Grid item xs={1}></Grid>
+            {/* <Grid item xs={1}></Grid> */}
             {/* <Grid
               item
               xs={1}
@@ -285,7 +285,7 @@ function CustomerHome() {
               <>
                 <Grid item xs={12}>
                   <div style={{ textAlign: "left", display: "flex" }}>
-                    product:{" "}
+                    Product:{" "}
                     <div
                       style={{
                         color: "blue",
@@ -304,15 +304,31 @@ function CustomerHome() {
                 </Grid>
                 <Grid item xs={12}>
                   <div style={{ textAlign: "left", display: "flex" }}>
-                    price:{" $"}
+                    Brand:{" "}
                     <div
                       style={{
                         display: "block",
-
+                        fontWeight: "bold",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                       }}
                     >
+                      {productDetails.brand?.name}
+                    </div>
+                  </div>
+                </Grid>
+                <Grid item xs={12}>
+                  <div style={{ textAlign: "left", display: "flex" }}>
+                    Price:
+                    <div
+                      style={{
+                        display: "block",
+                        fontWeight: "bold",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {" $"}
                       {productDetails.price}
                     </div>
                   </div>
@@ -322,11 +338,20 @@ function CustomerHome() {
             <Grid item xs={12}>
               <div style={{ textAlign: "left", fontSize: "13px" }}>
                 Timings
-                {": "}
-                {new Date(vendor.openTime).getHours()}:
-                {new Date(vendor.openTime).getMinutes()}-
-                {new Date(vendor.closeTime).getHours()}:
-                {new Date(vendor.closeTime).getMinutes()}
+                <div
+                  style={{
+                    display: "inline",
+                    fontWeight: "bold",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {": "}
+                  {new Date(vendor.openTime).getHours()}:
+                  {new Date(vendor.openTime).getMinutes()}-
+                  {new Date(vendor.closeTime).getHours()}:
+                  {new Date(vendor.closeTime).getMinutes()}
+                </div>
               </div>
             </Grid>
             {/* <Grid item xs={6}></Grid> */}

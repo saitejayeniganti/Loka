@@ -126,12 +126,21 @@ const doProductSearch = (lat, lng, searchInput, vendors, res) => {
         merchant: 1,
         image: 1,
         price: 1,
+        brand: 1,
       },
     },
   ])
-    .then((products) => {
+    .then((response) => {
+      ProductModel.populate(response, { path: "brand", select: "name" })
+        .then((products) => {
+          doCombinedLocationSearch(lat, lng, products, vendors, res);
+        })
+        .catch((error) => {
+          console.log(error);
+          res.sendStatus(500);
+        });
       // console.log(response);
-      doCombinedLocationSearch(lat, lng, products, vendors, res);
+
       // res.status(200).send(response);
     })
     .catch((error) => {
