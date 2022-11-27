@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { Card, CardMedia, CardActions, Button, Typography, Grid, Divider, FormControl, InputLabel, Select, MenuItem, TextField } from '@mui/material'
+import { useOrders } from "../../views/merchant/customhooks/useOrders";
+import { connect } from "react-redux";
+import { displayMessage, displayError } from '../../utils/messages'
+import { put } from '../../utils/serverCall'
 
 function OrderItem(props) {
     console.log(props)
@@ -13,8 +17,22 @@ function OrderItem(props) {
         setStatus(props.product.status);
     }
 
-    const updateStatusChange = () => {
-        console.log(status)
+    const updateStatusChange = async () => {
+        const orderId = props.orderId
+        const productId = props.product._id
+
+        const newOrderStatus = {
+            orderId,
+            productId,
+            status
+        }
+        try {
+            const updatedOrderStatus = await put(`/order/merchant/myOrder/update/`, newOrderStatus)
+            displayMessage('Order Status Updated')
+            props.fetchAllOrdersByMerchantId()
+        } catch (e) {
+            displayError(e.error)
+        }
     }
 
     return (
@@ -55,4 +73,10 @@ function OrderItem(props) {
     )
 }
 
-export default OrderItem
+const mapStateToProps = (state) => {
+    return {
+        id: state.sessionReducer.user.id,
+    };
+};
+
+export default connect(mapStateToProps)(OrderItem);

@@ -35,6 +35,7 @@ function MerchantInventory(props) {
                 <h1 style={{ position: "absolute", bottom: "8px", left: "16px", color: "white", backgroundColor: "#063970", padding: '5px', borderRadius: "10px" }}>Your Inventory</h1>
             </div>
             <div>
+                {inventory.length == 0 && <h1>Your Inventory Is Empty</h1>}
                 <Grid container spacing={1} sx={{ padding: '10px' }}>
                     {inventory.map((singleItem) => {
                         return (<Grid item xs={3} lg={2} key={singleItem._id}><ProductCard singleItem={singleItem} isMerchant handleOpenUpdateModal={handleOpenUpdateModal} handleOpenDeleteDialog={handleOpenDeleteDialog} /></Grid>)

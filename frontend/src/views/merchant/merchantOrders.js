@@ -18,8 +18,9 @@ function MerchantOrders(props) {
                     </div>
                 </Grid>
                 <Grid item xs={9}>
+                    {orders.length == 0 && <h1>No Orders</h1>}
                     <Grid container spacing={1} sx={{ padding: '10px' }}>
-                        {orders.map(order => <Grid item xs={12} key={order._id}><OrderCard order={order} /></Grid>)}
+                        {orders.map(order => <Grid item xs={12} key={order._id}><OrderCard order={order} fetchAllOrdersByMerchantId={fetchAllOrdersByMerchantId} /></Grid>)}
                     </Grid>
                 </Grid>
             </Grid>
