@@ -188,13 +188,13 @@ function Signup(userDetails) {
   return (
     <>
       <Grid container sx={{ height: "100%", position: "absolute" }}>
-        <Grid item xs={4} sx={{ backgroundColor: "#FEBB15" }}></Grid>
-        <Grid item xs={8} sx={{ backgroundColor: "white" }}></Grid>
+        <Grid item xs={6} sx={{ backgroundColor: "#FEBB15" }}></Grid>
+        <Grid item xs={6} sx={{ backgroundColor: "white" }}></Grid>
       </Grid>
       <Grid container sx={{ height: "100%", position: "absolute" }}>
         <Grid
           item
-          xs={4}
+          xs={3}
           sx={
             {
               // background: "linear-gradient(35deg, #F9EA8F 40%, #AFF1DA 70%)",
@@ -202,9 +202,9 @@ function Signup(userDetails) {
           }
         >
           <div
-            style={{ fontSize: "80px", fontFamily: "math", marginTop: "20px" }}
+            style={{ fontSize: "80px", fontFamily: "math", marginTop: "10px" }}
           >
-            <br /> Sign Up
+            Sign Up
           </div>
           <Lottie options={defaultOptions} height={420} width={420} />
 
@@ -214,15 +214,16 @@ function Signup(userDetails) {
               fontFamily: "math",
               marginTop: "20px",
               padding: "20px",
+              
             }}
           >
-            sign up on to the LOKA platform.
+            sign up as a customer on to LOKA platform and discover the available products near you.
           </div>
         </Grid>
 
         <Grid
           item
-          xs={8}
+          xs={6}
           sx={{
             // background: "rgb(243, 233, 100)"
             paddingTop: "40px",

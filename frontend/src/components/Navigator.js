@@ -278,6 +278,26 @@ function MenuAppBar(props) {
                   )}
                   {props.isLoggedIn && (
                     <div>
+                      {props.user.role == 1?<>
+                        <MenuItem
+                        onClick={() => {
+                          navigate("/merchantpostad");
+                          setAnchorEl(null);
+                        }}
+                      >
+                        Ads
+                      </MenuItem>
+                      </>:""}
+                       {props.user.role == 1?<>
+                        <MenuItem
+                        onClick={() => {
+                          navigate("/merchantanalytics");
+                          setAnchorEl(null);
+                        }}
+                      >
+                        Analytics
+                      </MenuItem>
+                      </>:""}
                       <MenuItem
                         onClick={() => {
                           navigate("/profile");
@@ -286,6 +306,7 @@ function MenuAppBar(props) {
                       >
                         Profile
                       </MenuItem>
+                      
                       <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </div>
                   )}

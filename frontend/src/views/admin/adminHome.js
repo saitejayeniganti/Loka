@@ -188,7 +188,7 @@ function AdminHome() {
                     })
          for(var o of result.orders)
         {
-          var d= new Date(u.created)
+          var d= new Date(o.created)
           var m=d.getMonth()
           ordersArr[m]+=1
         }
@@ -206,7 +206,7 @@ function AdminHome() {
                     })
          for(var r of result.reviews)
         {
-          var d= new Date(u.created)
+          var d= new Date(r.created)
           var m=d.getMonth()
           reviewsArr[m]+=1
         }
@@ -214,7 +214,7 @@ function AdminHome() {
                     labels,
                     datasets: [
                       {
-                        label: 'Orders',
+                        label: 'Reviews',
                         data: reviewsArr,
                         borderColor: 'rgb(255, 99, 132)',
                         backgroundColor: 'rgba(255, 99, 132, 0.5)',
@@ -224,7 +224,7 @@ function AdminHome() {
                     })
          for(var v of result.vendors)
         {
-          var d= new Date(u.created)
+          var d= new Date(v.created)
           var m=d.getMonth()
           vendorsArr[m]+=1
         }

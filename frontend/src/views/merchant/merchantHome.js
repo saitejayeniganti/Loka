@@ -46,7 +46,7 @@ function MerchantHome() {
           <Grid item xs={12} sx={{ height: '170px', paddingTop: '5px' }}><img style={{ height: '150px' }} src={ordersMerchantHome}></img></Grid>
         </Paper>
         </Grid>
-        <Grid item xs={3}><Paper elevation={3} sx={{
+        <Grid item xs={3} onClick={() => navigate("/merchantanalytics")}><Paper elevation={3} sx={{
           cursor: "pointer", '&:hover': {
             opacity: [0.9, 0.8, 0.7],
           },

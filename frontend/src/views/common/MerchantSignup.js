@@ -192,14 +192,14 @@ function MerchantSignup(userDetails) {
 
   return (
     <>
-      <Grid container sx={{ height: "100%", position: "absolute" }}>
-        <Grid item xs={4} sx={{ backgroundColor: "#FEBB15" }}></Grid>
-        <Grid item xs={8} sx={{ backgroundColor: "white" }}></Grid>
+       <Grid container sx={{ height: "100%", position: "absolute" }}>
+        <Grid item xs={6} sx={{ backgroundColor: "#FEBB15" }}></Grid>
+        <Grid item xs={6} sx={{ backgroundColor: "white" }}></Grid>
       </Grid>
       <Grid container sx={{ height: "100%", position: "absolute" }}>
         <Grid
           item
-          xs={4}
+          xs={3}
           sx={
             {
               // background: "linear-gradient(35deg, #F9EA8F 40%, #AFF1DA 70%)",
@@ -209,7 +209,7 @@ function MerchantSignup(userDetails) {
           <div
             style={{ fontSize: "80px", fontFamily: "math", marginTop: "20px" }}
           >
-            <br /> Sign Up
+            Sign Up
           </div>
           <Lottie options={defaultOptions} height={420} width={420} />
 
@@ -221,13 +221,13 @@ function MerchantSignup(userDetails) {
               padding: "20px",
             }}
           >
-            sign up on to the LOKA platform.
+            sign up as a Vendor on to LOKA platform.
           </div>
         </Grid>
 
         <Grid
           item
-          xs={8}
+          xs={6}
           sx={{
             // background: "rgb(243, 233, 100)"
             paddingTop: "40px",
@@ -238,7 +238,7 @@ function MerchantSignup(userDetails) {
             <Grid item xs={7}>
               <Paper
                 elevation={10}
-                sx={{ borderRadius: "10px", paddingTop: "8px" }}
+                sx={{ borderRadius: "10px", paddingTop: "8px",overflowY: "scroll",height:"80vh" }}
               >
                 <div style={{ fontSize: "smaller" }}>
                   Signup as a Customer ?{" "}
@@ -264,7 +264,7 @@ function MerchantSignup(userDetails) {
                 <div
                   style={{
                     padding: "10px",
-                    overflowY: "scroll",
+                    
                     position: "relative",
                     // height: "450px",
                   }}
@@ -307,6 +307,7 @@ function MerchantSignup(userDetails) {
                       Signup with Google
                     </Button>
                   </div>
+                  
                   <div style={{ margin: "20px" }}>
                     <TextField
                       fullWidth
@@ -502,6 +503,7 @@ function MerchantSignup(userDetails) {
                       SignIn{" "}
                     </u>
                   </div>
+
                 </div>
               </Paper>
             </Grid>

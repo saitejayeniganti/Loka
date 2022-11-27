@@ -37,6 +37,7 @@ export default function CustomerMerchantView() {
               productSubCat[product.category.name].push(product);
             }
             setProducts(productSubCat)
+            // console.log("sub cat is ",productSubCat)
           })
           .catch((err) => {
             console.log(err);
@@ -167,7 +168,7 @@ const renderImages=()=>{
                     <Link to={header} spy={true} smooth={false} duration={1000}>
                       <label
                         style={{
-                          fontSize: "23px",
+                          fontSize: "20px",
                           fontWeight: "500",
                           textTransform: "capitalize",
                           cursor: "pointer",
@@ -190,7 +191,7 @@ const renderImages=()=>{
               <>
                 <div class="row" id={header} style={{ marginTop: "0px",marginBottom:"30px" }}>
                  <div style={{textAlign:"left"}}> 
-                  <label style={{fontSize:"22px",fontWeight:"400",textTransform: "capitalize",marginBottom:"20px",marginLeft:"10px"}}>{header}</label>
+                  <label style={{fontSize:"20px",fontWeight:"400",textTransform: "capitalize",marginBottom:"20px",marginLeft:"10px"}}>{header}</label>
                   </div>
 
                   {products[header].map((dish) => {
@@ -227,10 +228,12 @@ const renderImages=()=>{
                                 </CardActions>
                             </Stack>
                           </Card>
+                          
                       </>
                     );
                   })}
                 </div>
+                {/* <Divider sx={{ opacity: '1' }} /> */}
               </>
             );
           })}
@@ -263,7 +266,7 @@ const renderImages=()=>{
         </h1>
       </div>
       {/* ***************************** body ********************************* */}
-      <div>{products=={}?"This merchant has no products.":renderProducts()}</div>
+      <div>{Object.keys(products).length===0?<div style={{marginTop:"5vh"}}>This merchant has no products.</div>:renderProducts()}</div>
 
       {/* ***************************** footer ********************************* */}
 

@@ -372,6 +372,31 @@ router.post('/adrequest', async (req, res) => {
     });
   }})
 
+   //get merchant analytics
+  router.get('/merchantanalytics', async (req, res) => {
+  try {
+      console.log(req.query)
+      // const product = await Product.find({merchant:req.query.id}).populate("category",["_id","name"]).populate("brand")
+      const products=await User.find({merchant:req.query.id
+    }).populate('brand').populate('category')
+    const reviews=await Review.find({merchant:req.query.id
+    })
+    const orders=await Order.find({merchant:req.query.id
+    })
+    
+     res.status(200).json({
+        products,
+        reviews,
+        orders,
+    });
+    
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
   router.get('/adimages', async (req, res) => {
   try {
       console.log(req.query)

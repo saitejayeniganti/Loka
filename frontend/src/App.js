@@ -66,6 +66,7 @@ import AdDetails from "./views/AdDetails";
 import AdminAdRequests from "./views/admin/adminAdRequests";
 import MerchantPostAd from "./views/merchant/merchantPostAd";
 import MerchantSignup from "./views/common/MerchantSignup";
+import MerchantAnalytics from "./views/merchant/merchantAnalytics";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -200,6 +201,7 @@ function App() {
         <Route path="/adminusers" exact element={<AdminUsers />}></Route>
         <Route path="/adminvendors" exact element={<AdminVendors />}></Route>
         <Route path="/adminorders" exact element={<AdminOrders />}></Route>
+        <Route path="/merchantanalytics" exact element={<MerchantAnalytics />}></Route>
 
         <Route
           path="/adminuserdetail"
