@@ -45,7 +45,7 @@ function MerchantFooter() {
                                 <div style={{ padding: "5px" }}><h3>Manage Product Inventory</h3></div>
                                 <p>Now you can manage your inventory easily with our help. Add new products, view and update details of products</p>
                             </div>
-                            <img src={footer1}></img>
+                            <img src={footer1} style={{ width: '100%', height: '100%' }}></img>
                         </div>
 
                         <div className="div3">
@@ -53,7 +53,7 @@ function MerchantFooter() {
                                 <div style={{ padding: "5px" }}><h3>Manage Your Orders</h3></div>
                                 <p>You can easily manage orders placed by the customers. View your orders and update them at your convenience</p>
                             </div>
-                            <img src={footer2}></img>
+                            <img src={footer2} style={{ width: '100%', height: '100%' }}></img>
                         </div>
 
                         <div className="div3">
@@ -61,7 +61,7 @@ function MerchantFooter() {
                                 <div ><h3>Shop Analytics</h3></div>
                                 <p>We provide various analytics on how the shop is performing, based on those analytics you can improve your business</p>
                             </div>
-                            <img src={footer3}></img>
+                            <img src={footer3} style={{ width: '100%', height: '100%' }}></img>
                         </div>
 
                     </div>

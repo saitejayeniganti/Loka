@@ -28,7 +28,7 @@ function OrderCard(props) {
                         {props.order.products.map((product) => {
                             const itemKey = key;
                             key++;
-                            return <Grid item xs={3} key={itemKey}><OrderItem product={product} /></Grid>
+                            return <Grid item xs={3} key={itemKey}><OrderItem orderId={props.order._id} product={product} fetchAllOrdersByMerchantId={props.fetchAllOrdersByMerchantId} /></Grid>
                         }
                         )}
                     </Grid>
