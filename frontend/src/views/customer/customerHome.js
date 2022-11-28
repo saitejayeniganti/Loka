@@ -23,6 +23,7 @@ import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded
 import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 import { over } from "lodash";
+import Progress from "../../components/Progress";
 
 function CustomerHome() {
   const defaultOptions = {
@@ -71,19 +72,27 @@ function CustomerHome() {
   const [vendorsOnly, setVendorsOnly] = useState([]);
   const [productVendors, setProductVendors] = useState([]);
   const [vendorDetails, setVendorDetails] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const onVendorClick = (vendorId) => {
     console.log(vendorId);
   };
 
   const fetchMerchants = (location, searchInput) => {
+    setLoading(true);
     location &&
-      get("/customer/multiSearch", { location, searchInput }).then((result) => {
-        console.log("nearby stores", result);
-        setVendorsOnly(result.vendorsOnly);
-        setProductVendors(result.productVendors);
-        setVendorDetails(result.vendorDetails);
-      });
+      get("/customer/multiSearch", { location, searchInput })
+        .then((result) => {
+          console.log("nearby stores", result);
+          setVendorsOnly(result.vendorsOnly);
+          setProductVendors(result.productVendors);
+          setVendorDetails(result.vendorDetails);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
+        });
   };
 
   const saveMerchantIcon = () => {
@@ -149,6 +158,10 @@ function CustomerHome() {
 
   if (redirToMerchant) {
     return <Navigate to={"/customermerchant?id=" + selectedMerchant} />;
+  }
+
+  if (loading) {
+    return <Progress></Progress>;
   }
 
   const createBaseCard = (vendor, productDetails) => {

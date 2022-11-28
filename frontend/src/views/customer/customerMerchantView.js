@@ -24,6 +24,7 @@ import {
 } from "@mui/material";
 import { Navigate } from "react-router-dom";
 import Footer from "../../components/footer/footer";
+import Progress from "../../components/Progress";
 
 export default function CustomerMerchantView() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,6 +35,7 @@ export default function CustomerMerchantView() {
   const [redirProductDetail, setRedirProductDetail] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState(false);
   const [storeName, setStoreName] = React.useState(false);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -50,9 +52,11 @@ export default function CustomerMerchantView() {
         }
         setProducts(productSubCat);
         // console.log("sub cat is ",productSubCat)
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
   }, []);
 
@@ -109,6 +113,10 @@ export default function CustomerMerchantView() {
         console.log(err);
       });
   }, []);
+
+  if (loading) {
+    return <Progress></Progress>;
+  }
 
   const renderImages = () => {
     return (

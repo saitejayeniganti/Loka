@@ -16,17 +16,18 @@ import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import * as actions from "../../reducers/actions";
 import { connect, useSelector } from "react-redux";
-import { useLocation } from 'react-router-dom';
-import shopInventory from '../../images/merchant/shopInventory.jpg'
+import { useLocation } from "react-router-dom";
+import shopInventory from "../../images/merchant/shopInventory.jpg";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { clearCart } from "../../reducers/actions";
 import ProductReviews from "../../components/reviews/ProductReviews";
-import KeyboardBackspaceTwoToneIcon from '@mui/icons-material/KeyboardBackspaceTwoTone';
+import KeyboardBackspaceTwoToneIcon from "@mui/icons-material/KeyboardBackspaceTwoTone";
+import Progress from "../../components/Progress";
 
 const Product = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("mechant id in product page",location)
+  console.log("mechant id in product page", location);
   const [searchParams, setSearchParams] = useSearchParams();
   searchParams.get("id");
   const windowUrl = window.location.search;
@@ -90,46 +91,103 @@ const Product = (props) => {
     handleClose();
   };
 
-   const redirectToMerchant = () => {
+  const redirectToMerchant = () => {
     navigate(-1);
   };
+
+  if (props.product?._id != productId) {
+    return <Progress></Progress>;
+  }
   return (
     <>
-     <div style={{ position: "relative" }}>
-                <img src={shopInventory} style={{ width: "100%", height: "250px" }}></img>
-                <h1 style={{ position: "absolute", bottom: "8px", left: "16px", color: "white", backgroundColor: "#063970", padding: '5px', borderRadius: "10px" }}>Product Detail</h1>
-            </div>
+      <div style={{ position: "relative" }}>
+        <img
+          src={shopInventory}
+          style={{ width: "100%", height: "250px" }}
+        ></img>
+        <h1
+          style={{
+            position: "absolute",
+            bottom: "8px",
+            left: "16px",
+            color: "white",
+            backgroundColor: "#063970",
+            padding: "5px",
+            borderRadius: "10px",
+          }}
+        >
+          Product Detail
+        </h1>
+      </div>
 
-        <div style={{textAlign:"right",margin:"10px",marginRight:"15px"}}>
-               <Button variant="outlined" startIcon={<KeyboardBackspaceTwoToneIcon />} onClick={redirectToMerchant}>
-                                     Go Back
-                                     </Button>
+      <div style={{ textAlign: "right", margin: "10px", marginRight: "15px" }}>
+        <Button
+          variant="outlined"
+          startIcon={<KeyboardBackspaceTwoToneIcon />}
+          onClick={redirectToMerchant}
+        >
+          Go Back
+        </Button>
+      </div>
 
-                                     </div>
-
-      <Grid container spacing={1} sx={{margin:"10px"}}>
-        <Grid item xs={4} sx={{borderRadius:"10px",textAlign:'left'}}>
-          <img src={props.product?.image} height="500" width="500" style={{borderRadius:"15px"}}></img>
+      <Grid container spacing={1} sx={{ margin: "10px" }}>
+        <Grid item xs={4} sx={{ borderRadius: "10px", textAlign: "left" }}>
+          <img
+            src={props.product?.image}
+            height="500"
+            width="500"
+            style={{ borderRadius: "15px" }}
+          ></img>
         </Grid>
-        <Grid item xs={4} sx={{textAlign:'left'}}>
-          <Grid item xs={12} style={{fontWeight:"500",fontSize:"36px",textTransform:"capitalize"}}>
+        <Grid item xs={4} sx={{ textAlign: "left" }}>
+          <Grid
+            item
+            xs={12}
+            style={{
+              fontWeight: "500",
+              fontSize: "36px",
+              textTransform: "capitalize",
+            }}
+          >
             {props.product?.name}
           </Grid>
 
-          <Grid item xs={12} style={{color:"grey",marginLeft:"5px",fontSize:"16px"}}>
+          <Grid
+            item
+            xs={12}
+            style={{ color: "grey", marginLeft: "5px", fontSize: "16px" }}
+          >
             {props.product?.description}
           </Grid>
 
-          <Grid item xs={12} style={{fontSize:"16px",marginTop:"20px",marginTop:'5vh'}}>
-              <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+          <Grid
+            item
+            xs={12}
+            style={{ fontSize: "16px", marginTop: "20px", marginTop: "5vh" }}
+          >
+            <Rating
+              name="half-rating-read"
+              defaultValue={2.5}
+              precision={0.5}
+              readOnly
+            />
           </Grid>
 
-           <Grid item xs={12} style={{marginLeft:"5px",fontSize:"18px",marginTop:"20px",marginTop:'5vh'}}>
+          <Grid
+            item
+            xs={12}
+            style={{
+              marginLeft: "5px",
+              fontSize: "18px",
+              marginTop: "20px",
+              marginTop: "5vh",
+            }}
+          >
             $&nbsp;{props.product?.price}
-        </Grid>
+          </Grid>
 
-         <Grid item xs={12} sx={{marginLeft:"5px",marginTop:'15vh'}}>
-             {props.product && props.product.quantity > 0 && (
+          <Grid item xs={12} sx={{ marginLeft: "5px", marginTop: "15vh" }}>
+            {props.product && props.product.quantity > 0 && (
               <Button
                 onClick={addToCart}
                 justifyContent="left"
@@ -141,8 +199,7 @@ const Product = (props) => {
             {props.product && props.product.quantity <= 0 && (
               <Typography variant="h5">Out of Stock</Typography>
             )}
-
-        </Grid>
+          </Grid>
           <Snackbar
             open={addedToCard}
             autoHideDuration={1000}
@@ -150,50 +207,45 @@ const Product = (props) => {
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             message="Added to the cart"
           />
-
         </Grid>
-       <Grid item xs={4} sx={{textAlign:'left'}}>
-            <Grid item xs={4} style={{ fontWeight: "bold",margin:'10px' }}>
-                <h5>Review this product</h5>
-            </Grid>
-            
-            <Grid item xs={4} style={{marginTop:'5vh' }}>
-                <TextField defaultValue="" label="Title" sx={{ width: 300 }}>
-            Title
-          </TextField>
-            </Grid>
+        <Grid item xs={4} sx={{ textAlign: "left" }}>
+          <Grid item xs={4} style={{ fontWeight: "bold", margin: "10px" }}>
+            <h5>Review this product</h5>
+          </Grid>
 
-          <Grid item xs={4} style={{marginTop:'5vh',height:"15vh"}}>
+          <Grid item xs={4} style={{ marginTop: "5vh" }}>
+            <TextField defaultValue="" label="Title" sx={{ width: 300 }}>
+              Title
+            </TextField>
+          </Grid>
 
+          <Grid item xs={4} style={{ marginTop: "5vh", height: "15vh" }}>
             <TextField
-            defaultValue=""
-            multiline
-            label="Description"
-            rows={4}
-            sx={{ width: 300 }}
-          >
-            Description
-          </TextField>
-            </Grid>
+              defaultValue=""
+              multiline
+              label="Description"
+              rows={4}
+              sx={{ width: 300 }}
+            >
+              Description
+            </TextField>
+          </Grid>
 
-            <Grid item xs={4} style={{marginTop:'5vh' }}>
+          <Grid item xs={4} style={{ marginTop: "5vh" }}>
             <Button justifyContent="left" variant="contained">
-            Add review
-          </Button>
-            </Grid>
-       </Grid>
+              Add review
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
 
-    <Grid container spacing={1} sx={{margin:"15px"}}>
-      <Grid item xs={3} >
+      <Grid container spacing={1} sx={{ margin: "15px" }}>
+        <Grid item xs={3}></Grid>
+        <Grid item xs={6}>
+          <ProductReviews data="sai" />
+        </Grid>
+      </Grid>
 
-      </Grid>
-      <Grid item xs={6} >
-            <ProductReviews data="sai"/>
-      </Grid>
-    </Grid>
-      
-      
       {/* <Grid sx={{ mb: 5, mt: 5 }} container spacing={2}>
         <Grid md={3}></Grid>
         <Grid item md={4} mt={5} textAlign="left">
