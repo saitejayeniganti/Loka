@@ -55,6 +55,17 @@ function EditProductModal(props) {
             displayError("Please Enter All The Details")
             return
         }
+
+        if (parseInt(productData.quantity) < 0) {
+            displayError("Please Enter Valid Data For Quantity")
+            return
+        }
+
+        if (parseInt(productData.price) < 0) {
+            displayError("Please Enter Valid Data For Price")
+            return
+        }
+
         try {
             const updatedProductResult = await updateProduct(props.liftedProductData._id, productData)
             props.handleClose()
