@@ -67,6 +67,7 @@ import AdminAdRequests from "./views/admin/adminAdRequests";
 import MerchantPostAd from "./views/merchant/merchantPostAd";
 import MerchantSignup from "./views/common/MerchantSignup";
 import MerchantAnalytics from "./views/merchant/merchantAnalytics";
+import Future from "./views/common/Future";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -201,7 +202,11 @@ function App() {
         <Route path="/adminusers" exact element={<AdminUsers />}></Route>
         <Route path="/adminvendors" exact element={<AdminVendors />}></Route>
         <Route path="/adminorders" exact element={<AdminOrders />}></Route>
-        <Route path="/merchantanalytics" exact element={<MerchantAnalytics />}></Route>
+        <Route
+          path="/merchantanalytics"
+          exact
+          element={<MerchantAnalytics />}
+        ></Route>
 
         <Route
           path="/adminuserdetail"
@@ -272,6 +277,7 @@ function App() {
         <Route path="/review" element={<ReviewsTest />}></Route>
         <Route path="/savedmerchants" element={<SavedMerchants />}></Route>
         <Route path="/fb" element={<Fb />}></Route>
+        <Route path="/inprogress" element={<Future></Future>}></Route>
         <Route path="*" element={<ErrorPath></ErrorPath>}></Route>
       </Routes>
     );

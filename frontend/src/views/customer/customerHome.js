@@ -430,8 +430,8 @@ function CustomerHome() {
       </div>
 
       <div className="homeBanner1">
-        <h1>Order products for pickup or delivery today</h1>
-        <p>Whatever you want from local stores, brought right to your door.</p>
+        <h1>Welcome back to LOKA</h1>
+        <p>A Hyperlocal Shopping Platform.</p>
       </div>
 
       <div
