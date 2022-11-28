@@ -8,6 +8,9 @@ import ubereatslogo from "../../images/theme/UberEatsWhite.png";
 import deliveryHome from "../../animations/deliveryHome.json";
 import Lottie from "react-lottie";
 import nearBy from "../../images/theme/nearby.jpeg";
+import adsNew from "../../images/admin/adsnew.png";
+import searching from "../../images/admin/search.jpeg";
+import preview from "../../images/admin/preview.jpeg";
 import CommonFooter from "./CommonFooter";
 
 function Footer() {
@@ -34,14 +37,14 @@ function Footer() {
             <div className="div3">
               <div>
                 <div style={{ padding: "5px" }}>
-                  <h3>Simple Search</h3>
+                  <h3>Searching Made Easy</h3>
                 </div>
                 <p>
                   Search for near by merchants and products using search input
-                  at top of the screen.
+                  at top.
                 </p>
               </div>
-              <img src={footer1}></img>
+              <img src={searching} ></img>
             </div>
 
             <div className="div3">
@@ -54,7 +57,7 @@ function Footer() {
                   order
                 </p>
               </div>
-              <img src={footer2}></img>
+              <img src={preview}></img>
             </div>
 
             <div className="div3">
@@ -62,9 +65,9 @@ function Footer() {
                 <div>
                   <h3>Subscribe/Ads</h3>
                 </div>
-                <p>***********.</p>
+                <p>You can subscribe to LOKA's newsletter to get latest updates</p>
               </div>
-              <img src={footer3}></img>
+              <img src={adsNew}></img>
             </div>
           </div>
         </div>

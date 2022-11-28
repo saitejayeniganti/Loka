@@ -14,6 +14,7 @@ import Lottie from "react-lottie";
 import { useSelector } from "react-redux";
 import { CONSTANTS, REDUCER } from "../../utils/consts";
 import { useNavigate } from "react-router-dom";
+import soldOut from "../../images/admin/new-brand-badge.png";
 import { get } from "../../utils/serverCall";
 import isEqual from "lodash/isEqual";
 import { Navigate } from "react-router-dom";
@@ -194,11 +195,6 @@ function CustomerHome() {
           >
             <div
               style={{
-                // borderStyle: "solid",
-                // borderWidth: "0.1rem",
-                // borderColor: "#d3d3d3",
-                // borderRadius: "50%",
-                // marginLeft: "10px",
                 overflow: "hidden",
               }}
             >
@@ -214,11 +210,31 @@ function CustomerHome() {
                   borderColor: "black",
                   padding: "0px !important",
                   maxHeight: "-webkit-fill-available",
+                  width:"fill",
                   borderTopRightRadius:"10px",
                   borderTopLeftRadius:"10px"
                 }}
               ></img>
             </div>
+            {/* {(new Date().getTime()-new Date(vendorDetails.created).getTime())/(1000 * 3600 * 24)>3
+            ?<>
+                 <div
+                                style={{
+                                  position: "absolute",
+                                  zIndex: "2",
+                                  // marginLeft: "290px",
+                                  marginTop:"-100px"
+                                }}
+                              >
+                                <img
+                                  src={soldOut}
+                                  height="65px"
+                                  width="65px"
+                                ></img>
+                                </div>
+            </>:""
+            } */}
+                           
           </Grid>
           <Grid
             container
