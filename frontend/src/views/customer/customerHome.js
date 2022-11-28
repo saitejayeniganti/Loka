@@ -214,6 +214,8 @@ function CustomerHome() {
                   borderColor: "black",
                   padding: "0px !important",
                   maxHeight: "-webkit-fill-available",
+                  borderTopRightRadius:"10px",
+                  borderTopLeftRadius:"10px"
                 }}
               ></img>
             </div>
@@ -224,8 +226,8 @@ function CustomerHome() {
             sx={{
               background: "#e5e8e8",
               padding: "0px !important",
-              borderTopRightRadius: "10px",
               borderBottomRightRadius: "10px",
+              borderBottomLeftRadius: "10px",
               padding: "10px",
             }}
           >
@@ -379,7 +381,7 @@ function CustomerHome() {
                     display: "inline-block",
                   }}
                 ></img>
-                &nbsp;
+                &nbsp;&nbsp;
                 <div
                   style={{
                     color: "rgb(10 173 10)",

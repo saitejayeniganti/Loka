@@ -514,7 +514,7 @@ function MerchantSignup(userDetails) {
          <Grid
           item
           xs={4}
-          sx={{marginTop:"20vh"}}
+          sx={{marginTop:"15vh"}}
         >
     <Lottie options={defaultOptions1} height={500} width={500} />
         </Grid>
