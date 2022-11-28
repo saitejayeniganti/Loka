@@ -2,6 +2,7 @@ import CartItem from "./CartItem";
 import { connect } from "react-redux";
 import { Wrapper } from "./Cart.styles";
 import { Button, Link } from "@mui/material";
+import emptycart from "../../images/customer/emptyCart.png";
 
 
 const Cart = (props) => {
@@ -36,7 +37,8 @@ const Cart = (props) => {
   return (
     <Wrapper>
       <h2>Your Cart</h2>
-      {items.length === 0 ? <p>No items in cart.</p> : null}
+      {/* {items.length === 0 ? <p>No items in cart.</p> : null} */}
+      {items.length === 0 && <img src={emptycart} width="500px" ></img>}
       {}
       {items.map((item, key) => (
         <CartItem
@@ -44,12 +46,12 @@ const Cart = (props) => {
           item={item}
         />
       ))}
-      <h2>Total: {totalPrice == 0 ? "$0.00" : totalPrice}</h2>
+      {items.length > 0 && (<h2>Total: {totalPrice == 0 ? "$0.00" : totalPrice}</h2>)}
       <Link
         href={"/bill"}
         underline="none" color="inherit"
       >
-        <Button variant="contained">Proceed to checkout</Button>
+        {items.length > 0 && <Button variant="contained">Proceed to checkout</Button>}
       </Link>
     </Wrapper>
   );

@@ -64,9 +64,10 @@ const OrderList = (props) => {
                         </Typography>
                       </Grid>
                       <Grid item>
-                        <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2">
-                          Cancel
-                      </Typography>
+                        {product.status != "Delivered" &&
+                          <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2">
+                            Cancel
+                      </Typography>}
                       </Grid>
                     </Grid>
                     <Grid item>
@@ -75,8 +76,8 @@ const OrderList = (props) => {
                           <Typography variant="subtitle1" component="div">
                             Status: {product.status}
                           </Typography>
-                          <Typography variant="subtitle1" component="div" sx={{fontWeight: 'bold'}} marginLeft="100px">
-                             ${product.priceWithTax}
+                          <Typography variant="subtitle1" component="div" sx={{ fontWeight: 'bold' }} marginLeft="100px">
+                            ${product.priceWithTax}
                           </Typography>
                         </Grid>
                       </Typography>

@@ -11,9 +11,8 @@ import { useNavigate } from "react-router-dom";
 const Bill = (props) => {
   const navigate = useNavigate();
   let allItems = props.items;
-  allItems = store.caculateItemsSalesTax(allItems);
+  // allItems = store.caculateItemsSalesTax(allItems);
   var allItemMap = new Map();
-  let totalPrice = 0.0;
 
   for (var x of allItems) {
     if (allItemMap.has(x._id)) {
@@ -26,10 +25,16 @@ const Bill = (props) => {
       x.quantity = 1;
       allItemMap.set(x._id, x);
     }
-    totalPrice += x.price;
   }
 
-  const items = Array.from(allItemMap.values());
+  let items = Array.from(allItemMap.values());
+  items = store.caculateItemsSalesTax(items);
+
+  let totalPrice = 0.0;
+  for (var x of items) {
+    totalPrice += x.priceWithTax;
+  }
+
   const addNewOrder = async (e) => {
     e.preventDefault();
     props.addNewOrder(items)

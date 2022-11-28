@@ -99,7 +99,7 @@ const Product = (props) => {
             variant="h5"
             sx={{ fontWeight: "bold", color: "#ff6d00" }}
           >
-            {props.product?.price}
+            {`$${props.product?.price}`}
           </Typography>
           <Typography variant="subtitle2" sx={{ color: "gray" }}>
             $5.95 for shipping
