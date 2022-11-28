@@ -55,9 +55,12 @@ function Footer() {
             <div className="div3">
               <div>
                 <div style={{ padding: "5px" }}>
-                  <h3>Real time updates</h3>
+                  <h3>Place Order</h3>
                 </div>
-                <p>Track your orders in real time and manage your orders.</p>
+                <p>
+                  Select near by merchants, add items to cart , and place your
+                  order
+                </p>
               </div>
               <img src={footer2}></img>
             </div>
@@ -65,12 +68,9 @@ function Footer() {
             <div className="div3">
               <div style={{ padding: "5px" }}>
                 <div>
-                  <h3>Get your products delivered </h3>
+                  <h3>Subscribe/Ads</h3>
                 </div>
-                <p>
-                  Select items from your nearby stores at Loka.com to get them
-                  delivered to you.
-                </p>
+                <p>***********.</p>
               </div>
               <img src={footer3}></img>
             </div>

@@ -23,6 +23,7 @@ import {
   Divider,
 } from "@mui/material";
 import { Navigate } from "react-router-dom";
+import Footer from "../../components/footer/footer";
 
 export default function CustomerMerchantView() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -374,7 +375,7 @@ export default function CustomerMerchantView() {
 
       {/* ***************************** footer ********************************* */}
 
-      <CustomerMerchantFooter />
+      <Footer />
     </>
   );
 }
