@@ -54,7 +54,7 @@ function Login(userDetails) {
     e.preventDefault();
     post("/auth/login", filledData)
       .then((result) => {
-        // showMessage("Login Success");
+        showMessage("Login Success");
         console.log(result);
         doSignIn("true");
         navigate("/");

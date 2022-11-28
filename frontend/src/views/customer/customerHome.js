@@ -257,7 +257,7 @@ function CustomerHome() {
                 </div>
               </div>
             </Grid> */}
-            {/* <Grid item xs={1}></Grid> */}
+            <Grid item xs={1}></Grid>
             {/* <Grid
               item
               xs={1}
