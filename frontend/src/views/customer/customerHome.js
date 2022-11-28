@@ -185,7 +185,8 @@ function CustomerHome() {
                 borderWidth: "0.1rem",
                 borderColor: "#d3d3d3",
                 borderRadius: "50%",
-                marginLeft: "10px",
+                // marginLeft: "10px",
+                overflow: "hidden",
               }}
             >
               <img
@@ -446,10 +447,14 @@ function CustomerHome() {
         Select a store nearby
       </div>
 
-      <div className="row" style={{ paddingLeft: "20px" }}>
-        {createVendorOnlyCards()}
-        {createProductVendorCards()}
-      </div>
+      {productVendors?.length == 0 && vendorsOnly?.length == 0 ? (
+        "No Merchants matching your search criteria"
+      ) : (
+        <div className="row" style={{ paddingLeft: "20px" }}>
+          {createVendorOnlyCards()}
+          {createProductVendorCards()}
+        </div>
+      )}
       <div style={{ marginTop: "5% " }}></div>
       <Footer />
     </>
