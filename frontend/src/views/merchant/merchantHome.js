@@ -7,15 +7,16 @@ import inventoryMerchantHome from '../../images/merchant/inventoryMerchantHome.j
 import ordersMerchantHome from '../../images/merchant/ordersMerchantHome.jpg'
 import analyticsMerchantHome from '../../images/merchant/analyticsMerchantHome.jpg'
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 
-function MerchantHome() {
+function MerchantHome(props) {
   const navigate = useNavigate();
 
   return (
     <>
       <div style={{ position: "relative" }}>
-        <img src={shopLanding} style={{ width: "100%", height: "300px" }}></img>
-        <h1 style={{ position: "absolute", bottom: "8px", left: "16px", color: "white", backgroundColor: "#063970", padding: '5px', borderRadius: "10px" }}>Welcome To Your Store!</h1>
+        <img src={props.image} style={{ width: "100%", height: "300px" }}></img>
+        <h1 style={{ position: "absolute", bottom: "8px", left: "16px", color: "white", backgroundColor: "#063970", padding: '5px', borderRadius: "10px" }}>Welcome To {props.storeName}!</h1>
       </div>
       <Grid container spacing={1} sx={{ padding: '10px' }}>
         <Grid item xs={3} onClick={() => navigate("/merchantaddproducts")}>
@@ -61,4 +62,11 @@ function MerchantHome() {
   );
 }
 
-export default MerchantHome;
+const mapStateToProps = (state) => {
+  return {
+    image: state.sessionReducer.user.image,
+    storeName: state.sessionReducer.user.storeName
+  };
+};
+
+export default connect(mapStateToProps)(MerchantHome);
