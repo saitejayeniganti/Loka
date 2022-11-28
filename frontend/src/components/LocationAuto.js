@@ -9,20 +9,6 @@ class LocationSearchInput extends React.Component {
   constructor(props) {
     super(props);
   }
-
-  // handleChange = (address) => {
-  //   this.setState({ address });
-  // };
-
-  // handleSelect = (address) => {
-  //   geocodeByAddress(address).then((results) => {
-  //     this.setState({ address: address });
-  //     getLatLng(results[0])
-  //       .then((latLng) => console.log("Success", latLng))
-  //       .catch((error) => console.error("Error", error));
-  //   });
-  // };
-
   render() {
     return (
       <PlacesAutocomplete
