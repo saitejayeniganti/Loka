@@ -224,7 +224,11 @@ router.get("/merchant/myOrder/:id", async (req, res) => {
 
 router.put("/merchant/myOrder/update", async (req, res) => {
   try {
-    const { orderId, productId, status } = req.body;
+    const { orderId, productId, status, quantity } = req.body;
+
+    if (status === 'Cancelled') {
+      await increaseQuantity(productId, quantity)
+    }
 
     const ordersDoc = await Order.updateOne(
       { _id: orderId, "products._id": productId },
@@ -255,5 +259,10 @@ const decreaseQuantity = (products) => {
 
   Product.bulkWrite(bulkOptions);
 };
+
+const increaseQuantity = async (productId, newQuantity) => {
+  await Product.updateOne({ _id: productId }, { $inc: { quantity: newQuantity } })
+}
+
 
 module.exports = router;

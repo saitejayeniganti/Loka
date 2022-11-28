@@ -18,6 +18,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import dataAnalysis from "../../animations/ads-promotion.json";
+import advert from '../../images/admin/advert.jpeg'
 import Lottie from "react-lottie";
 import {
   DatePicker,
@@ -108,20 +109,19 @@ function MerchantPostAd(props) {
 
     return(<>
 
-      <div style={{backgroundColor:"#e7e4e4",position:"fixed",height:"40vh",width:"100vw"}}></div>
-        <div style={{backgroundColor:"#FEBB15",position:"fixed",height:"35vh",width:"100vw"}}></div>
-        <div style={{height:"60vh",backgroundColor:"#e7e4e4",width:"100vw",marginTop:"40vh",position:"fixed"}}></div>
-      
-<div style={{position:"relative"}}>
+    <div style={{ position: "relative" }}>
+                <img src={advert} style={{ width: "100%", height: "300px" }}></img>
+                <h1 style={{ position: "absolute", bottom: "8px", left: "16px", color: "white", backgroundColor: "#063970", padding: '5px', borderRadius: "10px" }}>Advertisements</h1>
+            </div>
 
-      <div style={{padding:"15px"}}>
+      {/* <div style={{padding:"15px"}}>
             <Grid container spacing={0} sx={{paddingLeft:"30px"}}>
               <Grid item xs={8} >
                 <Grid item xs={12} style={{fontSize:"40px",fontWeight:"600px",textAlign:"left",marginBottom:"5px"}}>
                     Advertisements
                 </Grid>
                 <Grid item xs={12} style={{fontSize:"16px",textAlign:'left',fontWeight:"600",marginBottom:"25px"}}>
-                    You can post an Ad which will be displayed to customers on your homepage. 
+                    You can post an Ad which will be displayed to customers on your homepage.
                 </Grid>
                 <Grid item xs={12} style={{fontSize:"16px",textAlign:'left'}}>
                     Post Ads about your new products, brands, promotions etc.
@@ -131,7 +131,7 @@ function MerchantPostAd(props) {
                    <img src={adReqImg} height='190'></img>
                 </Grid>
             </Grid>
-          </div>
+          </div> */}
 
       <div style={{backgroundColor:"whitesmoke",position:"fixed",height:"100vh",width:"100vw"}}>
              <div>
@@ -173,7 +173,7 @@ function MerchantPostAd(props) {
         </Grid>
       </div>
       </div>
-     </div>
+     
     </>)
 }
 

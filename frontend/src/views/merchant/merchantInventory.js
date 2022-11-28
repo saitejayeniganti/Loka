@@ -45,7 +45,6 @@ function MerchantInventory(props) {
                 <EditProductModal open={openUpdateModal} handleClose={handleCloseUpdateModal} liftedProductData={liftedProductData} fetchAllProductsByMerchantId={fetchAllProductsByMerchantId} />
                 <DeleteProductDialog open={openDeleteDialog} handleClose={handleCloseDeleteDialog} liftedDeleteProductId={liftedDeleteProductId} fetchAllProductsByMerchantId={fetchAllProductsByMerchantId} />
             </div>
-            <a href="https://www.freepik.com/free-vector/warehouse-interior-with-cardboard-boxes-racks_7741532.htm#query=inventory&position=0&from_view=search&track=sph">Image by upklyak</a> on Freepik
         </>
     )
 }
