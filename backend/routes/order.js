@@ -1,14 +1,15 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Order = require('../model/order');
-const Product = require('../model/product');
-const Mongoose = require('mongoose');
-const store = require('../utils/store');
+const Order = require("../model/order");
+const Product = require("../model/product");
+const Mongoose = require("mongoose");
+const store = require("../utils/store");
 const ObjectId = Mongoose.Types.ObjectId;
-const auth = require('../middleware/auth');
+const auth = require("../middleware/auth");
 const { sendMail } = require("../utils/mail");
+const product = require("../model/product");
 
-router.post('/add', async (req, res) => {
+router.post("/add", async (req, res) => {
   try {
     console.log("HereX", req.user);
     const user = req.user.id;
@@ -17,7 +18,6 @@ router.post('/add', async (req, res) => {
     // const user = "637446b8c4c910caff00e6bc";
     let items = req.body.items;
     const total = req.body.totalPrice;
-
 
     const products = store.caculateItemsSalesTax(items);
 
@@ -33,7 +33,8 @@ router.post('/add', async (req, res) => {
       //cart: cart_id,
       products,
       user,
-      total
+      total,
+      merchant: products[0].merchant,
     });
     console.log(order);
 
@@ -55,24 +56,25 @@ router.post('/add', async (req, res) => {
     // };
     sendMail({
       to: req.user.email,
-      subject: 'Order confirmation',
-      text: `Hi ${req.user.firstName}! Thank you for your order!. \n\n` +
-        `We've received your order and will contact you as soon as your package is shipped. \n\n`
+      subject: "Order confirmation",
+      text:
+        `Hi ${req.user.firstName}! Thank you for your order!. \n\n` +
+        `We've received your order and will contact you as soon as your package is shipped. \n\n`,
     });
 
     res.status(200).json({
       success: true,
-      order: { _id: orderDoc._id }
+      order: { _id: orderDoc._id },
     });
   } catch (error) {
     console.log(error);
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: "Your request could not be processed. Please try again.",
     });
   }
 });
 // fetch my orders api
-router.get('/me', async (req, res) => {
+router.get("/me", async (req, res) => {
   try {
     // console.log("me ", req);
     console.log("req.user", req.user);
@@ -84,7 +86,7 @@ router.get('/me', async (req, res) => {
     console.log("query", query);
 
     const ordersDoc = await Order.find(query)
-      .sort('-created')
+      .sort("-created")
       // .populate({
       //   path: 'cart',
       //   populate: {
@@ -106,18 +108,18 @@ router.get('/me', async (req, res) => {
       orders,
       totalPages: Math.ceil(count / limit),
       currentPage: Number(page),
-      count
+      count,
     });
   } catch (error) {
     console.log("X ", error);
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: "Your request could not be processed. Please try again.",
     });
   }
 });
 
-// fetch order id 
-router.get('/:orderId', async (req, res) => {
+// fetch order id
+router.get("/:orderId", async (req, res) => {
   try {
     const orderId = req.params.orderId;
 
@@ -137,7 +139,7 @@ router.get('/:orderId', async (req, res) => {
     const user = req.user.id;
     // const user = "634fb3e27bcc0d0fe139ce7c";
     // const user = "637446b8c4c910caff00e6bc";
-    orderDoc = await Order.findOne({ _id: orderId, user })
+    orderDoc = await Order.findOne({ _id: orderId, user });
     // .populate({
     //   populate: {
     //     path: 'products.product',
@@ -150,7 +152,7 @@ router.get('/:orderId', async (req, res) => {
 
     if (!orderDoc) {
       return res.status(404).json({
-        message: `Cannot find order with the id: ${orderId}.`
+        message: `Cannot find order with the id: ${orderId}.`,
       });
     }
     let order = {
@@ -165,48 +167,48 @@ router.get('/:orderId', async (req, res) => {
     order = store.caculateTaxAmount(order);
 
     res.status(200).json({
-      order
+      order,
     });
   } catch (error) {
     console.log(error);
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: "Your request could not be processed. Please try again.",
     });
   }
 });
 
-router.get('/merchant/myOrder/:id', async (req, res) => {
+router.get("/merchant/myOrder/:id", async (req, res) => {
   try {
     const merchantId = req.params.id;
 
-    const ordersDoc = await Order.
-      aggregate([
-        {
-          $unwind: "$products"
+    const ordersDoc = await Order.aggregate([
+      {
+        $unwind: "$products",
+      },
+      {
+        $match: {
+          "products.merchant": ObjectId(merchantId),
         },
-        {
-          $match: {
-            "products.merchant": ObjectId(merchantId)
+      },
+      {
+        $group: {
+          _id: "$_id",
+          created: { $max: "$created" },
+          user: { $max: "$user" },
+          total: { $max: "$total" },
+          products: {
+            $push: "$products",
+          },
+        },
+      },
+      {
+        $sort: { created: 1 },
+      },
+    ]);
 
-          }
-        },
-        {
-          $group: {
-            _id: "$_id",
-            created: { $max: "$created" },
-            user: { $max: "$user" },
-            total: { $max: "$total" },
-            products: {
-              $push: "$products"
-            }
-          }
-        },
-        {
-          $sort: { "created": 1 }
-        }
-      ]);
-
-    const ordersDocWithUsers = await Order.populate(ordersDoc, { path: "user" })
+    const ordersDocWithUsers = await Order.populate(ordersDoc, {
+      path: "user",
+    });
     const orders = ordersDocWithUsers;
 
     res.status(200).json({
@@ -215,19 +217,20 @@ router.get('/merchant/myOrder/:id', async (req, res) => {
   } catch (error) {
     console.log("X ", error);
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: "Your request could not be processed. Please try again.",
     });
   }
 });
 
-router.put('/merchant/myOrder/update', async (req, res) => {
+router.put("/merchant/myOrder/update", async (req, res) => {
   try {
     const { orderId, productId, status } = req.body;
 
-    const ordersDoc = await Order
-      .updateOne({ "_id": orderId, "products._id": productId },
-        { $set: { "products.$.status": status } })
-    const orders = ordersDoc
+    const ordersDoc = await Order.updateOne(
+      { _id: orderId, "products._id": productId },
+      { $set: { "products.$.status": status } }
+    );
+    const orders = ordersDoc;
 
     res.status(200).json({
       orders,
@@ -235,23 +238,22 @@ router.put('/merchant/myOrder/update', async (req, res) => {
   } catch (error) {
     console.log("X ", error);
     res.status(400).json({
-      error: 'Your request could not be processed. Please try again.'
+      error: "Your request could not be processed. Please try again.",
     });
   }
 });
 
-const decreaseQuantity = products => {
-  let bulkOptions = products.map(item => {
+const decreaseQuantity = (products) => {
+  let bulkOptions = products.map((item) => {
     return {
       updateOne: {
         filter: { _id: item._id },
-        update: { $inc: { quantity: -item.quantity } }
-      }
+        update: { $inc: { quantity: -item.quantity } },
+      },
     };
   });
 
   Product.bulkWrite(bulkOptions);
 };
-
 
 module.exports = router;
