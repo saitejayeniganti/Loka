@@ -207,7 +207,7 @@ export default function MapView(props) {
       </div>
       <div className="map">
         <GoogleMap
-          zoom={11}
+          zoom={13}
           center={center}
           mapContainerClassName="map-container"
           options={options}
