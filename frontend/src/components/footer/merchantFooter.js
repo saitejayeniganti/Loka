@@ -33,14 +33,6 @@ function MerchantFooter() {
             Manage Your Shop With Ease!
           </h2>
           <div className="div2">
-            {/* <div className="div3">
-                            <div>
-                                <div style={{padding:"5px"}}><h3>Check out near by markets</h3></div>
-                                <p>Get to know your nearby markets and find out if the products are available.</p>
-                                </div>
-                                <img src={nearBy} width="376px" height="232px" marginBottonLeftRadius="20px" marginBottonRightRadius="20px"></img>
-                        </div> */}
-
             <div className="div3">
               <div>
                 <div style={{ padding: "5px" }}>
@@ -90,9 +82,6 @@ function MerchantFooter() {
             </div>
           </div>
         </div>
-        {/* ___________________________________________________________________blocks______________________________________________________________________________ */}
-
-        {/* ___________________________________________________________________________________from eats____________________________________________________________ */}
       </footer>
       <CommonFooter></CommonFooter>
     </>

@@ -26,7 +26,7 @@ import MerchantHome from "./views/merchant/merchantHome";
 import Signup from "./views/common/Signup";
 import LocationSearch from "./components/LocationSearch";
 
-import RouteMap from "./views/routeMap";
+// import RouteMap from "./views/routeMap";
 import MerchantLogin from "./views/merchant/merchantLogin";
 import MerchantAddProducts from "./views/merchant/merchantAddProducts";
 import MerchantInventory from "./views/merchant/merchantInventory";
@@ -256,8 +256,7 @@ function App() {
         <Route path="/bill" exact element={<Bill />}></Route>
         <Route path="/order" exact element={<Order />}></Route>
         <Route path="/myorder" exact element={<MyOrder />}></Route>
-        <Route path="/route" exact element={<RouteMap />}></Route>
-        {/* <Route path="/map" exact element={<SimpleMap />}></Route> */}
+        {/* <Route path="/route" exact element={<RouteMap />}></Route> */}
         <Route path="/location" exact element={<LocationSearch />}></Route>
         <Route
           path="/profile"
