@@ -14,7 +14,7 @@ const { findByIdAndUpdate } = require('../model/review');
 //get all details
 router.get('/dashboard', async (req, res) => {
   try {
-    const users=await User.find({
+    const users=await User.find({role:0
     })
     const reviews=await Review.find({
     })
@@ -39,7 +39,7 @@ router.get('/dashboard', async (req, res) => {
 //get all users
 router.get('/users', async (req, res) => {
   try {
-    const users=await User.find({
+    const users=await User.find({role:0
     })
     res.status(200).json(
         users
@@ -55,7 +55,7 @@ router.get('/users', async (req, res) => {
 //get all user details, reviews and orders
 router.get('/user', async (req, res) => {
   try {
-    const user=await User.find({_id:req.query.id})
+    const user=await User.find({_id:req.query.id,role:0})
     const reviews=await Review.find({user:req.query.id})
     const orders=await Order.find({user:req.query.id})
     res.status(200).json({
@@ -93,7 +93,7 @@ router.get('/userorder', async (req, res) => {
 //get all user orders
 router.get('/userorders', async (req, res) => {
   try {
-    const orders=await Order.find({user:req.query.id}).populate("user")
+    const orders=await Order.find({user:req.query.id}).populate("user").populate('merchant')
     res.status(200).json(
         orders
       );
@@ -377,8 +377,7 @@ router.post('/adrequest', async (req, res) => {
   try {
       console.log(req.query)
       // const product = await Product.find({merchant:req.query.id}).populate("category",["_id","name"]).populate("brand")
-      const products=await User.find({merchant:req.query.id
-    }).populate('brand').populate('category')
+    const products=await Product.find({merchant:req.query.id}).populate('brand').populate('category')
     const reviews=await Review.find({merchant:req.query.id
     })
     const orders=await Order.find({merchant:req.query.id
