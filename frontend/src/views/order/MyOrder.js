@@ -4,6 +4,7 @@ import cartImage from "../../images/products/Cart.jpeg";
 import productImage from "../../images/products/apple.jpeg";
 import * as actions from '../../reducers/actions';
 import { connect } from 'react-redux';
+import shopInventory from "../../images/merchant/shopInventory.jpg";
 
 const MyOrder = (props) => {
   useEffect(() => {
@@ -20,13 +21,32 @@ const MyOrder = (props) => {
   console.log("orders h", props.orders);
   return (
     <>
-      <Grid >
-        <Box>
-          <Typography variant="h4"> Your Orders </Typography>
-        </Box>
+
+      <div style={{ position: "relative",top:"0px" }}>
+        <img
+          src={shopInventory}
+          style={{ width: "100%", height: "250px" }}
+        ></img>
+        <h1
+          style={{
+            position: "absolute",
+            bottom: "8px",
+            left: "16px",
+            color: "white",
+            backgroundColor: "#063970",
+            padding: "5px",
+            borderRadius: "10px",
+          }}
+        >
+          All Orders
+        </h1>
+      </div>
+
+      <Grid style={{overflowY:"scroll"}}>
+      
         <Grid container spacing={2} mt={1} >
           <Grid xs={3}>
-            <Img alt="complex" src={cartImage} />
+            {/* <Img alt="complex" src={cartImage} /> */}
           </Grid>
           <Grid xs={6}>
             {/* <Paper

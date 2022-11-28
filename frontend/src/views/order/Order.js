@@ -4,7 +4,7 @@ import cartImage from "../../images/products/Cart.jpeg";
 import productImage from "../../images/products/apple.jpeg";
 import * as actions from '../../reducers/actions';
 import { connect } from 'react-redux';
-
+import shopInventory from "../../images/merchant/shopInventory.jpg";
 
 const Order = (props) => {
   const windowUrl = window.location.search;
@@ -24,13 +24,30 @@ const Order = (props) => {
   });
   return (
     <>
+     <div style={{ position: "relative" }}>
+        <img
+          src={shopInventory}
+          style={{ width: "100%", height: "250px" }}
+        ></img>
+        <h1
+          style={{
+            position: "absolute",
+            bottom: "8px",
+            left: "16px",
+            color: "white",
+            backgroundColor: "#063970",
+            padding: "5px",
+            borderRadius: "10px",
+          }}
+        >
+          Your Order Detail
+        </h1>
+      </div>
+
       <Grid >
-        <Box>
-          <Typography variant="h4"> Your Order Detail </Typography>
-        </Box>
         <Grid container spacing={2} mt={1} >
           <Grid xs={3}>
-            <Img alt="complex" src={cartImage} />
+            {/* <Img alt="complex" src={cartImage} /> */}
           </Grid>
           <Grid xs={6}>
             <Paper
