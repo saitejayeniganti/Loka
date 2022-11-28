@@ -242,7 +242,7 @@ function Signup(userDetails) {
                       navigate("/merchantSignup");
                     }}
                   >
-                    Merchant Signup{" "}
+                    Vendor Signup{" "}
                   </u>
                 </div>
                 <div

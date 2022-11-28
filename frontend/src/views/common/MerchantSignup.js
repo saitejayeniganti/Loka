@@ -47,7 +47,7 @@ function MerchantSignup(userDetails) {
   };
 
   const defaultOptions1 = {
-    loop: true,
+    loop: false,
     autoplay: true,
     animationData: yourStore,
     rendererSettings: {
@@ -197,21 +197,18 @@ function MerchantSignup(userDetails) {
         <Grid item xs={6} sx={{ backgroundColor: "white" }}></Grid>
       </Grid>
       <Grid container sx={{ height: "100%", position: "absolute" }}>
-        <Grid
+         <Grid
           item
-          xs={3}
-          sx={
-            {
-              // background: "linear-gradient(35deg, #F9EA8F 40%, #AFF1DA 70%)",
-            }
-          }
+          xs={4}
+          sx={{marginTop:"25vh"}}
         >
+
           <div
-            style={{ fontSize: "80px", fontFamily: "math", marginTop: "20px" }}
+            style={{fontSize: "80px", fontFamily: "math" }}
           >
             Sign Up
           </div>
-          <Lottie options={defaultOptions} height={420} width={420} />
+          
 
           <div
             style={{
@@ -221,21 +218,21 @@ function MerchantSignup(userDetails) {
               padding: "20px",
             }}
           >
-            sign up as a Vendor on to LOKA platform.
+            sign up as a vendor on to LOKA platform.
           </div>
         </Grid>
 
         <Grid
           item
-          xs={6}
+          xs={4}
           sx={{
             // background: "rgb(243, 233, 100)"
             paddingTop: "40px",
           }}
         >
           <Grid container sx={{ height: "100%" }}>
-            <Grid item xs={2.5}></Grid>
-            <Grid item xs={7}>
+            
+            <Grid item xs={12}>
               <Paper
                 elevation={10}
                 sx={{
@@ -478,6 +475,7 @@ function MerchantSignup(userDetails) {
                       />
                     )}
                   </div>
+                  <div style={{marginLeft:'5px'}}>
                   <FileUpload
                     callback={(e) => {
                       console.log("uploaded url", e);
@@ -486,7 +484,7 @@ function MerchantSignup(userDetails) {
                     fileName={uuidv4()}
                     folderPath="profile/"
                   />
-
+                </div>
                   <div style={{ margin: "20px" }}>
                     <Button
                       variant="contained"
@@ -512,6 +510,13 @@ function MerchantSignup(userDetails) {
               </Paper>
             </Grid>
           </Grid>
+        </Grid>
+         <Grid
+          item
+          xs={4}
+          sx={{marginTop:"20vh"}}
+        >
+    <Lottie options={defaultOptions1} height={500} width={500} />
         </Grid>
       </Grid>
     </>
