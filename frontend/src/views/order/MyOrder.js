@@ -69,6 +69,9 @@ const MyOrder = (props) => {
                             <Typography gutterBottom variant="subtitle1" component="div">
                               {product.name}
                             </Typography>
+                            <Typography gutterBottom variant="h7" component="div" fontWeight="bold">
+                              {product.merchant.storeName}
+                            </Typography>
                             <Typography variant="body2" gutterBottom>
                               {product.description}
                             </Typography>

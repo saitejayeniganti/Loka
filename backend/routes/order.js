@@ -77,10 +77,10 @@ router.post("/add", async (req, res) => {
 router.get("/me", async (req, res) => {
   try {
     // console.log("me ", req);
-    console.log("req.user", req.user);
+    // console.log("req.user", req.user);
     const { page = 1, limit = 10 } = req.query;
     const user = req.user.id;
-    // const user = "634fb3e27bcc0d0fe139ce7c";
+    // const user = "6383b7612f8dae5b24943919";
     // const user = "637446b8c4c910caff00e6bc";
     const query = { user };
     console.log("query", query);
@@ -100,9 +100,13 @@ router.get("/me", async (req, res) => {
       .skip((page - 1) * limit)
       .exec();
 
+
     const count = await Order.countDocuments(query);
     console.log("count ", count);
     const orders = store.formatOrders(ordersDoc);
+    const ordersDocWithMerchant = await Order.populate(ordersDoc, {
+      path: "products.merchant",
+    });
 
     res.status(200).json({
       orders,
