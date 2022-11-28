@@ -21,6 +21,7 @@ function OrderItem(props) {
     const [statusOptions, setStatusOptions] = useState(statusOptionsArray.slice(statusOptionsMap[props.product.status]))
 
     useEffect(() => {
+        setStatus(props.product.status)
         setStatusOptions(statusOptionsArray.slice(statusOptionsMap[props.product.status]))
     }, [props.product.status])
 
@@ -79,8 +80,8 @@ function OrderItem(props) {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={6} sx={{ paddingTop: '10px', paddingRight: '5px' }}>{<Button size="small" variant="outlined" onClick={revertStatusChange} color="error" disabled={props.product.status === 'Delivered' || props.product.status === 'Cancelled'}>Revert Status</Button>}</Grid>
-                    <Grid item xs={6} sx={{ paddingTop: '10px', paddingLeft: '5px' }}>{<Button size="small" variant="outlined" onClick={updateStatusChange} disabled={props.product.status === 'Delivered' || props.product.status === 'Cancelled'}>Update Status</Button>}</Grid>
+                    <Grid item xs={6} sx={{ paddingTop: '10px', paddingRight: '5px' }}><Button size="small" variant="outlined" onClick={revertStatusChange} color="error" disabled={props.product.status === 'Delivered' || props.product.status === 'Cancelled'}>Revert Status</Button></Grid>
+                    <Grid item xs={6} sx={{ paddingTop: '10px', paddingLeft: '5px' }}><Button size="small" variant="outlined" onClick={updateStatusChange} disabled={props.product.status === 'Delivered' || props.product.status === 'Cancelled'}>Update Status</Button></Grid>
                 </Grid>
             </Card>
         </>
