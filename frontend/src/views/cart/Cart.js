@@ -46,7 +46,7 @@ const Cart = (props) => {
           item={item}
         />
       ))}
-      {items.length > 0 && (<h2>Total: {totalPrice == 0 ? "$0.00" : totalPrice}</h2>)}
+      {items.length > 0 && (<h2>Total: {totalPrice == 0 ? "$0.00" : "$ "+totalPrice}</h2>)}
       <Link
         href={"/bill"}
         underline="none" color="inherit"

@@ -16,14 +16,24 @@ import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import * as actions from "../../reducers/actions";
 import { connect, useSelector } from "react-redux";
+import { useLocation } from 'react-router-dom';
+import shopInventory from '../../images/merchant/shopInventory.jpg'
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { clearCart } from "../../reducers/actions";
+import ProductReviews from "../../components/reviews/ProductReviews";
+import KeyboardBackspaceTwoToneIcon from '@mui/icons-material/KeyboardBackspaceTwoTone';
 
 const Product = (props) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
+  searchParams.get("id");
   const windowUrl = window.location.search;
   const params = new URLSearchParams(windowUrl);
   const productId = params.get("id");
 
   const [addedToCard, setAddedToCart] = useState(false);
+  const [redirToHome, setRedirToHOme] = useState(false);
 
   const cartState = useSelector((state) => state.cartReducer);
 
@@ -79,49 +89,46 @@ const Product = (props) => {
     handleClose();
   };
 
+   const redirectToMerchant = () => {
+    navigate("/customermerchant?id=" + location.state);
+  };
   return (
     <>
-      <Grid sx={{ mb: 5, mt: 5 }} container spacing={2}>
-        <Grid item md={2}></Grid>
-        <Grid item md={4}>
-          <Box
-            sx={{ width: "100%" }}
-            component="img"
-            src={props.product?.image}
-          />
+     <div style={{ position: "relative" }}>
+                <img src={shopInventory} style={{ width: "100%", height: "250px" }}></img>
+                <h1 style={{ position: "absolute", bottom: "8px", left: "16px", color: "white", backgroundColor: "#063970", padding: '5px', borderRadius: "10px" }}>Product Detail</h1>
+            </div>
+
+        <div style={{textAlign:"right",margin:"10px",marginRight:"15px"}}>
+               <Button variant="outlined" startIcon={<KeyboardBackspaceTwoToneIcon />} onClick={redirectToMerchant}>
+                                     Go Back
+                                     </Button>
+
+                                     </div>
+
+      <Grid container spacing={1} sx={{margin:"10px"}}>
+        <Grid item xs={4} sx={{borderRadius:"10px",textAlign:'left'}}>
+          <img src={props.product?.image} height="500" width="500" style={{borderRadius:"15px"}}></img>
         </Grid>
-        <Grid item md={4} mt={5} textAlign="left">
-          <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+        <Grid item xs={4} sx={{textAlign:'left'}}>
+          <Grid item xs={12} style={{fontWeight:"500",fontSize:"36px",textTransform:"capitalize"}}>
             {props.product?.name}
-          </Typography>
-          <Typography variant="body2">{props.product?.description}</Typography>
-          <Typography
-            variant="h5"
-            sx={{ fontWeight: "bold", color: "#ff6d00" }}
-          >
-            {`$${props.product?.price}`}
-          </Typography>
-          <Typography variant="subtitle2" sx={{ color: "gray" }}>
-            $5.95 for shipping
-          </Typography>
-          <br />
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "left",
-            }}
-          >
-            <Rating name="half-rating" defaultValue={4.9} precision={0.5} />
-            <Typography>4.9</Typography>
-          </Box>
-          <br />
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "left",
-            }}
-          >
-            {props.product && props.product.quantity > 0 && (
+          </Grid>
+
+          <Grid item xs={12} style={{color:"grey",marginLeft:"5px",fontSize:"16px"}}>
+            {props.product?.description}
+          </Grid>
+
+          <Grid item xs={12} style={{fontSize:"16px",marginTop:"20px",marginTop:'5vh'}}>
+              <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly />
+          </Grid>
+
+           <Grid item xs={12} style={{marginLeft:"5px",fontSize:"18px",marginTop:"20px",marginTop:'5vh'}}>
+            $&nbsp;{props.product?.price}
+        </Grid>
+
+         <Grid item xs={12} sx={{marginLeft:"5px",marginTop:'15vh'}}>
+             {props.product && props.product.quantity > 0 && (
               <Button
                 onClick={addToCart}
                 justifyContent="left"
@@ -133,7 +140,8 @@ const Product = (props) => {
             {props.product && props.product.quantity <= 0 && (
               <Typography variant="h5">Out of Stock</Typography>
             )}
-          </Box>
+
+        </Grid>
           <Snackbar
             open={addedToCard}
             autoHideDuration={1000}
@@ -141,9 +149,51 @@ const Product = (props) => {
             anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
             message="Added to the cart"
           />
+
         </Grid>
+       <Grid item xs={4} sx={{textAlign:'left'}}>
+            <Grid item xs={4} style={{ fontWeight: "bold",margin:'10px' }}>
+                <h5>Review this product</h5>
+            </Grid>
+            
+            <Grid item xs={4} style={{marginTop:'5vh' }}>
+                <TextField defaultValue="" label="Title" sx={{ width: 300 }}>
+            Title
+          </TextField>
+            </Grid>
+
+          <Grid item xs={4} style={{marginTop:'5vh',height:"15vh"}}>
+
+            <TextField
+            defaultValue=""
+            multiline
+            label="Description"
+            rows={4}
+            sx={{ width: 300 }}
+          >
+            Description
+          </TextField>
+            </Grid>
+
+            <Grid item xs={4} style={{marginTop:'5vh' }}>
+            <Button justifyContent="left" variant="contained">
+            Add review
+          </Button>
+            </Grid>
+       </Grid>
       </Grid>
-      <Grid sx={{ mb: 5, mt: 5 }} container spacing={2}>
+
+    <Grid container spacing={1} sx={{margin:"15px"}}>
+      <Grid item xs={3} >
+
+      </Grid>
+      <Grid item xs={6} >
+            <ProductReviews data="sai"/>
+      </Grid>
+    </Grid>
+      
+      
+      {/* <Grid sx={{ mb: 5, mt: 5 }} container spacing={2}>
         <Grid md={3}></Grid>
         <Grid item md={4} mt={5} textAlign="left">
           <Typography variant="h6" sx={{ fontWeight: "bold" }}>
@@ -207,7 +257,8 @@ const Product = (props) => {
             Add review
           </Button>
         </Grid>
-      </Grid>
+      </Grid> */}
+
       <Dialog
         open={open}
         onClose={handleClose}

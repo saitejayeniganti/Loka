@@ -7,8 +7,9 @@ import OrderItems from "./OrderItems";
 import { displayError, displayMessage } from "../../utils/messages";
 const store = require('../../utils/store');
 import { useNavigate } from "react-router-dom";
+import PayPalTest from "../paypalTest.js";
 
-const Bill = (props) => {
+const Bill = (props) => { 
   const navigate = useNavigate();
   let allItems = props.items;
   // allItems = store.caculateItemsSalesTax(allItems);
@@ -27,7 +28,7 @@ const Bill = (props) => {
     }
   }
 
-  let items = Array.from(allItemMap.values());
+let items = Array.from(allItemMap.values());
   items = store.caculateItemsSalesTax(items);
 
   let totalPrice = 0.0;
@@ -35,8 +36,8 @@ const Bill = (props) => {
     totalPrice += x.priceWithTax;
   }
 
-  const addNewOrder = async (e) => {
-    e.preventDefault();
+  const addNewOrder = async () => {
+    // e.preventDefault();
     props.addNewOrder(items)
       .then((result) => {
         displayMessage("Order Confirmed");
@@ -47,6 +48,11 @@ const Bill = (props) => {
         console.log(err);
       });
   }
+
+   const paid = () => {
+      // console.log("in paid func")
+      addNewOrder()
+    }
 
   return (
     <>
@@ -66,10 +72,11 @@ const Bill = (props) => {
           {
             items.length !== 0 && <>
               <OrderItems items={items} />
-              <h3 align="right">Order Total: {totalPrice == 0 ? "$0.00" : totalPrice}</h3>
+              <h3 align="right">Order Total: {totalPrice == 0 ? "$0.00" : "$ "+totalPrice}</h3>
               <br />
               <Grid paddingLeft="69%">
-                <Button variant="contained" onClick={addNewOrder} >Pay for your order</Button>
+                {/* <Button variant="contained" onClick={addNewOrder} >Pay for your order</Button> */}
+                <PayPalTest price={totalPrice} name={"sai teja"} paid={paid}/>
               </Grid>
             </>
           }
