@@ -100,7 +100,6 @@ router.get("/me", async (req, res) => {
       .skip((page - 1) * limit)
       .exec();
 
-
     const count = await Order.countDocuments(query);
     console.log("count ", count);
     const orders = store.formatOrders(ordersDoc);
@@ -206,7 +205,7 @@ router.get("/merchant/myOrder/:id", async (req, res) => {
         },
       },
       {
-        $sort: { created: 1 },
+        $sort: { created: -1 },
       },
     ]);
 
@@ -230,8 +229,8 @@ router.put("/merchant/myOrder/update", async (req, res) => {
   try {
     const { orderId, productId, status, quantity } = req.body;
 
-    if (status === 'Cancelled') {
-      await increaseQuantity(productId, quantity)
+    if (status === "Cancelled") {
+      await increaseQuantity(productId, quantity);
     }
 
     const ordersDoc = await Order.updateOne(
@@ -265,8 +264,10 @@ const decreaseQuantity = (products) => {
 };
 
 const increaseQuantity = async (productId, newQuantity) => {
-  await Product.updateOne({ _id: productId }, { $inc: { quantity: newQuantity } })
-}
-
+  await Product.updateOne(
+    { _id: productId },
+    { $inc: { quantity: newQuantity } }
+  );
+};
 
 module.exports = router;
