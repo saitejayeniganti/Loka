@@ -25,9 +25,11 @@ export default function CustomerMerchantView() {
   const [redirProductDetail, setRedirProductDetail] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState(false);
   const [storeName, setStoreName] = React.useState(false);
+  
 
       //Toget product details
       useEffect(() => {
+          
           get(`/admin/allproducts?id=${searchParams.get("id")}`)
           .then((result) => {
             console.log(result)
@@ -248,7 +250,7 @@ const renderImages=()=>{
 
  if (redirProductDetail) {
   console.log("redirecting",selectedProduct._id)
-    return <Navigate to={"/product?id=" + selectedProduct._id} />;
+    return <Navigate to={"/product?id=" + selectedProduct._id} state={searchParams.get("id")} />;
   }
 
   return (

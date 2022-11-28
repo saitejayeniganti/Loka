@@ -7,13 +7,13 @@ import OrderItems from "./OrderItems";
 import { displayError, displayMessage } from "../../utils/messages";
 const store = require('../../utils/store');
 import { useNavigate } from "react-router-dom";
+import PayPalTest from "../paypalTest.js";
 
-const Bill = (props) => {
+const Bill = (props) => { 
   const navigate = useNavigate();
   let allItems = props.items;
-  allItems = store.caculateItemsSalesTax(allItems);
+  // allItems = store.caculateItemsSalesTax(allItems);
   var allItemMap = new Map();
-  let totalPrice = 0.0;
 
   for (var x of allItems) {
     if (allItemMap.has(x._id)) {
@@ -26,12 +26,18 @@ const Bill = (props) => {
       x.quantity = 1;
       allItemMap.set(x._id, x);
     }
-    totalPrice += x.price;
   }
 
-  const items = Array.from(allItemMap.values());
-  const addNewOrder = async (e) => {
-    e.preventDefault();
+let items = Array.from(allItemMap.values());
+  items = store.caculateItemsSalesTax(items);
+
+  let totalPrice = 0.0;
+  for (var x of items) {
+    totalPrice += x.priceWithTax;
+  }
+
+  const addNewOrder = async () => {
+    // e.preventDefault();
     props.addNewOrder(items)
       .then((result) => {
         displayMessage("Order Confirmed");
@@ -42,6 +48,11 @@ const Bill = (props) => {
         console.log(err);
       });
   }
+
+   const paid = () => {
+      // console.log("in paid func")
+      addNewOrder()
+    }
 
   return (
     <>
@@ -61,10 +72,11 @@ const Bill = (props) => {
           {
             items.length !== 0 && <>
               <OrderItems items={items} />
-              <h3 align="right">Order Total: {totalPrice == 0 ? "$0.00" : totalPrice}</h3>
+              <h3 align="right">Order Total: {totalPrice == 0 ? "$0.00" : "$ "+totalPrice}</h3>
               <br />
               <Grid paddingLeft="69%">
-                <Button variant="contained" onClick={addNewOrder} >Pay for your order</Button>
+                {/* <Button variant="contained" onClick={addNewOrder} >Pay for your order</Button> */}
+                <PayPalTest price={totalPrice} name={"sai teja"} paid={paid}/>
               </Grid>
             </>
           }

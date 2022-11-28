@@ -43,7 +43,7 @@ const MyOrder = (props) => {
               <>
                 <Typography variant="h5" sx={{
                   p: 2
-                }}>{`Order No ${i + 1}`}</Typography>
+                }}>{`Order Id: ${order._id}`}</Typography>
                 <Paper
                   elevation={3}
                   sx={{
@@ -69,6 +69,9 @@ const MyOrder = (props) => {
                             <Typography gutterBottom variant="subtitle1" component="div">
                               {product.name}
                             </Typography>
+                            <Typography gutterBottom variant="h7" component="div" fontWeight="bold">
+                              {product.merchant.storeName}
+                            </Typography>
                             <Typography variant="body2" gutterBottom>
                               {product.description}
                             </Typography>
@@ -77,9 +80,10 @@ const MyOrder = (props) => {
                             </Typography>
                           </Grid>
                           <Grid item>
-                            <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2">
-                              Cancel
-                            </Typography>
+                            {((product.status !== "Delivered" && product.status !== "Cancelled") &&
+                              <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2">
+                                Cancel
+                            </Typography>)}
                           </Grid>
                           <Grid item>
                             <Divider />

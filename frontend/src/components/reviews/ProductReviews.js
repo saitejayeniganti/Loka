@@ -11,7 +11,7 @@ import s from '../../images/theme/s.png'
 
 function ProductReviews(props) {
     return(<>
-        <Paper style={{width:"30%",padding:"15px",paddingRight:"25px"}}>
+        <Paper style={{width:"100%",padding:"15px",paddingRight:"25px"}}>
             <Grid container spacing={0}>
                 <Grid item xs={12}>
                     <h3>Customer Reviews</h3>
@@ -65,7 +65,7 @@ function ProductReviews(props) {
 
         {/* ----------------------------------------------------Reviews------------------------------------------------------ */}
 
-        <Paper style={{width:"60%",padding:"10px",marginTop:"20px"}}>
+        <Paper style={{width:"100%",padding:"10px",marginTop:"20px"}}>
             <Grid container spacing={0} sx={{
                 marginBottom:"15px",
                 padding:"10px",
