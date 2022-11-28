@@ -104,10 +104,10 @@ function CustomerHome() {
       console.log("new Location", newLoc);
       setLocation(newLoc);
     }
-    if (newSearch) {
-      console.log("new Search", newSearch);
-      setSearchInput(newSearch);
-    }
+    // if (newSearch) {
+    console.log("new Search", newSearch);
+    setSearchInput(newSearch);
+    // }
     // fetchMerchants(newLoc, newSearch);
   }, [navigatorState]);
 
@@ -337,7 +337,6 @@ function CustomerHome() {
             )}
             <Grid item xs={12}>
               <div style={{ textAlign: "left", fontSize: "13px" }}>
-                Timings
                 <div
                   style={{
                     display: "inline",
@@ -346,11 +345,13 @@ function CustomerHome() {
                     textOverflow: "ellipsis",
                   }}
                 >
-                  {": "}
-                  {new Date(vendor.openTime).getHours()}:
+                  {/* {": "} */}
+                  {new Date(vendor.openTime).toLocaleTimeString()} -{" "}
+                  {new Date(vendor.closeTime).toLocaleTimeString()}
+                  {/* {new Date(vendor.openTime).getHours()}:
                   {new Date(vendor.openTime).getMinutes()}-
                   {new Date(vendor.closeTime).getHours()}:
-                  {new Date(vendor.closeTime).getMinutes()}
+                  {new Date(vendor.closeTime).getMinutes()} */}
                 </div>
               </div>
             </Grid>

@@ -107,6 +107,7 @@ export default function SearchMain({ input, callback }) {
         // on selecting suggestion.
         // console.log("new Value", newValue);
         // if (newValue && newValue.description) {
+        console.log("search changed");
         setOptions(newValue ? [newValue, ...options] : options);
         setValue(newValue);
         callback(newValue);
