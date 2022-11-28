@@ -24,7 +24,6 @@ function MerchantOrders(props) {
                     </Grid>
                 </Grid>
             </Grid>
-            <a href="https://www.freepik.com/free-vector/manager-prioritizing-tasks-list_7732645.htm#query=orders&position=1&from_view=search&track=sph">Image by pch.vector</a> on Freepik
         </>
     )
 }
