@@ -133,7 +133,7 @@ function FileUpload({ callback, fileName = "", folderPath = "" }) {
       </Grid> */}
 
       <Grid container>
-        <Grid item xs={8}>
+        <Grid item xs={7} sx={{ overflow: "hidden", textOverflow: "ellipsis" }}>
           <input
             type="file"
             ref={fileInput}
@@ -146,7 +146,7 @@ function FileUpload({ callback, fileName = "", folderPath = "" }) {
             }}
           />
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <Button
             disabled={!enableUpload}
             variant="outlined"

@@ -200,8 +200,8 @@ function CustomerHome() {
                 style={{
                   borderColor: "black",
                   padding: "0px !important",
-                  height: "100%",
-                  width: "100%",
+                  height: "64px",
+                  width: "64px",
                 }}
               ></img>
             </div>
