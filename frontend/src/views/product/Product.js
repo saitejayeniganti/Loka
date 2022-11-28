@@ -26,6 +26,7 @@ import KeyboardBackspaceTwoToneIcon from '@mui/icons-material/KeyboardBackspaceT
 const Product = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
+  console.log("mechant id in product page",location)
   const [searchParams, setSearchParams] = useSearchParams();
   searchParams.get("id");
   const windowUrl = window.location.search;
@@ -90,7 +91,7 @@ const Product = (props) => {
   };
 
    const redirectToMerchant = () => {
-    navigate("/customermerchant?id=" + location.state);
+    navigate(-1);
   };
   return (
     <>
