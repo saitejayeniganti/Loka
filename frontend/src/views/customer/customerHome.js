@@ -104,10 +104,10 @@ function CustomerHome() {
       console.log("new Location", newLoc);
       setLocation(newLoc);
     }
-    if (newSearch) {
-      console.log("new Search", newSearch);
-      setSearchInput(newSearch);
-    }
+    // if (newSearch) {
+    console.log("new Search", newSearch);
+    setSearchInput(newSearch);
+    // }
     // fetchMerchants(newLoc, newSearch);
   }, [navigatorState]);
 
@@ -185,7 +185,8 @@ function CustomerHome() {
                 borderWidth: "0.1rem",
                 borderColor: "#d3d3d3",
                 borderRadius: "50%",
-                marginLeft: "10px",
+                // marginLeft: "10px",
+                overflow: "hidden",
               }}
             >
               <img
@@ -199,8 +200,8 @@ function CustomerHome() {
                 style={{
                   borderColor: "black",
                   padding: "0px !important",
-                  height: "100%",
-                  width: "100%",
+                  height: "64px",
+                  width: "64px",
                 }}
               ></img>
             </div>
@@ -257,7 +258,7 @@ function CustomerHome() {
                 </div>
               </div>
             </Grid> */}
-            {/* <Grid item xs={1}></Grid> */}
+            <Grid item xs={1}></Grid>
             {/* <Grid
               item
               xs={1}
@@ -337,7 +338,6 @@ function CustomerHome() {
             )}
             <Grid item xs={12}>
               <div style={{ textAlign: "left", fontSize: "13px" }}>
-                Timings
                 <div
                   style={{
                     display: "inline",
@@ -346,11 +346,13 @@ function CustomerHome() {
                     textOverflow: "ellipsis",
                   }}
                 >
-                  {": "}
-                  {new Date(vendor.openTime).getHours()}:
+                  {/* {": "} */}
+                  {new Date(vendor.openTime).toLocaleTimeString()} -{" "}
+                  {new Date(vendor.closeTime).toLocaleTimeString()}
+                  {/* {new Date(vendor.openTime).getHours()}:
                   {new Date(vendor.openTime).getMinutes()}-
                   {new Date(vendor.closeTime).getHours()}:
-                  {new Date(vendor.closeTime).getMinutes()}
+                  {new Date(vendor.closeTime).getMinutes()} */}
                 </div>
               </div>
             </Grid>
@@ -445,10 +447,14 @@ function CustomerHome() {
         Select a store nearby
       </div>
 
-      <div className="row" style={{ paddingLeft: "20px" }}>
-        {createVendorOnlyCards()}
-        {createProductVendorCards()}
-      </div>
+      {productVendors?.length == 0 && vendorsOnly?.length == 0 ? (
+        "No Merchants matching your search criteria"
+      ) : (
+        <div className="row" style={{ paddingLeft: "20px" }}>
+          {createVendorOnlyCards()}
+          {createProductVendorCards()}
+        </div>
+      )}
       <div style={{ marginTop: "5% " }}></div>
       <Footer />
     </>

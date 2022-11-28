@@ -9,7 +9,7 @@ import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import { get, post,put } from "../../utils/serverCall.js";
 import { Button } from "@mui/material";
-import shopLanding from '../../images/merchant/shopLandingPage.jpg'
+import ma from '../../images/admin/ma.jpg'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -71,18 +71,6 @@ export const data = {
   ],
 };
 
-export const data1= {
-  labels1,
-  datasets: [
-    {
-      label: 'Products',
-      data: [0],
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-
-  ],
-};
 
 export const options = {
   responsive: true,
@@ -121,6 +109,36 @@ function MerchantAnalytics(props) {
                                                       ]
                                                     }
                                                     );
+    
+     const [brandsMap, setBrandsMap] = React.useState(
+                                                    {
+                                                      labels,
+                                                      datasets: [
+                                                        {
+                                                          label: 'Brands',
+                                                          data: [0],
+                                                          borderColor: 'rgb(255, 99, 132)',
+                                                          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                                                        },
+
+                                                      ]
+                                                    }
+                                                    );         
+                                                    
+      const [categoriesMap, setCategoriesMap] = React.useState(
+                                                    {
+                                                      labels,
+                                                      datasets: [
+                                                        {
+                                                          label: 'Categories',
+                                                          data: [0],
+                                                          borderColor: 'rgb(255, 99, 132)',
+                                                          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                                                        },
+
+                                                      ]
+                                                    }
+                                                    );  
 
      const [ordersMap, setOrdersMap] = React.useState(
                                                     {
@@ -205,38 +223,66 @@ function MerchantAnalytics(props) {
 
         for(var p of result.products)
         {
+          // console.log("counting ")
           var d= new Date(p.created)
           var m=d.getMonth()
           productsArr[m]+=1
-          if(!brands.includes(p.brand._id))
-            brands.push(p.brand._id)
-        if(!categories.includes(p.category._id))
-            categories.push(p.category._id)
+          if(!brands.includes(p.brand.name))
+            brands.push(p.brand.name)
+        if(!categories.includes(p.category.name))
+            categories.push(p.category.name)
 
-        // if(!brandSubcat[p.brand._id])
-        //     brandSubcat[p.brand._id]=1
-        // brandSubcat[p.brand._id]+=1
+        if(!brandSubcat[p.brand.name])
+            brandSubcat[p.brand.name]=0
+        brandSubcat[p.brand.name]+=1
 
-        // if(!categorySubcat[p.category._id])
-        //     categorySubcat[p.category._id]=1
-        // categorySubcat[p.category._id]+=1
+        if(!categorySubcat[p.category.name])
+            categorySubcat[p.category.name]=0
+        categorySubcat[p.category.name]+=1
         }
+        // console.log("brand Sub cat",brandSubcat)
+        // console.log("category Sub cat",categorySubcat)
         setBrands(brands.length)
         setCategories(categories.length)
 
-        setProductsMap({
-                    labels1,
+        // setProductsMap({
+        //             labels1,
+        //             datasets: [
+        //               {
+        //                 label: 'Products',
+        //                 data: productsArr,
+        //                 borderColor: 'rgb(255, 99, 132)',
+        //                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        //               },
+        //             ]
+        //             })
+        var labels=Object.keys(brandSubcat)
+        setBrandsMap({
+                    labels,
                     datasets: [
                       {
-                        label: 'Products',
-                        data: productsArr,
+                        label: 'Brands',
+                        data: Object.values(brandSubcat),
                         borderColor: 'rgb(255, 99, 132)',
                         backgroundColor: 'rgba(255, 99, 132, 0.5)',
                       },
                     ]
                     })
-        
-        
+         labels=Object.keys(categorySubcat)
+                setCategoriesMap({
+                    labels,
+                    datasets: [
+                      {
+                        label: 'Categories',
+                        data: Object.values(categorySubcat),
+                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                      },
+                    ]
+                    })
+        // console.log("brand keys arr",Object.keys(brandSubcat))
+        // console.log("brand values arr",Object.values(brandSubcat))
+        labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July',"August","September","October","November","December"];
         for(var o of result.orders)
         {
           var d= new Date(o.created)
@@ -244,6 +290,7 @@ function MerchantAnalytics(props) {
           ordersArr[m]+=1
           revenueArr[m]+=o.total
         }
+
         setOrdersMap({
                     labels,
                     datasets: [
@@ -297,13 +344,12 @@ function MerchantAnalytics(props) {
             }, []);
 
     return(<>
-    <div style={{backgroundColor:"#e7e4e4",position:"fixed",height:"40vh",width:"100vw"}}></div>
-        <div style={{backgroundColor:"#FEBB15",position:"fixed",height:"35vh",width:"100vw"}}></div>
-        <div style={{height:"60vh",backgroundColor:"#e7e4e4",width:"100vw",marginTop:"40vh",position:"fixed"}}></div>
+     <div style={{ position: "relative" }}>
+                <img src={ma} style={{ width: "100%", height: "300px" }}></img>
+                <h1 style={{ position: "absolute", bottom: "8px", left: "16px", color: "white", backgroundColor: "#063970", padding: '5px', borderRadius: "10px" }}>&nbsp;Analytics&nbsp;</h1>
+            </div>
 
-        <div style={{position:"relative"}}>
-
-        <div style={{padding:"15px"}}>
+        {/* <div style={{padding:"15px"}}>
             <Grid container spacing={0} sx={{paddingLeft:"30px"}}>
               <Grid item xs={8} >
                 <Grid item xs={12} style={{fontSize:"40px",fontWeight:"600px",textAlign:"left",marginBottom:"15px"}}>
@@ -312,15 +358,13 @@ function MerchantAnalytics(props) {
                 <Grid item xs={12} style={{fontSize:"16px",textAlign:'left',fontWeight:"600",marginBottom:"15px"}}>
                     Welcome to your dashboard.
                 </Grid>
-                {/* <Grid item xs={12} style={{color:"white",fontSize:"16px",textAlign:'left'}}>
-                    See quick links and overviews of Loka platform, new accounts, total vendors, users and more.
-                </Grid> */}
+               
                 </Grid>
                 <Grid item xs={4}>
                     <Lottie options={defaultOptions} height={200} width={400} />
                 </Grid>
             </Grid>
-          </div>
+          </div> */}
 
     <Grid container spacing={1}  sx={{ padding: '10px',paddingTop: '0px !important' }}>
 
@@ -331,10 +375,10 @@ function MerchantAnalytics(props) {
             <Grid item xs={12} sx={{  paddingTop: '5px' }}><h4 style={{ fontWeight: 'bold' }}>PRODUCTS</h4></Grid>
             <Grid item xs={12} sx={{ fontSize:"6vh"}}>{products.length}</Grid>
           </Paper>
-          <Paper elevation={3} className="flip-card-back" style={{height:"20vh"}}>
-            <Grid container spacing={1}>
-            <Grid item xs={6} sx={{  marginTop: '10px' }}><h4 style={{ fontWeight: 'bold' }}>Brands</h4></Grid>
-            <Grid item xs={6} sx={{  marginTop: '10px' }}><h4 style={{ fontWeight: 'bold' }}>Categories</h4></Grid>
+          <Paper elevation={3} className="flip-card-back" style={{height:"20vh",backgroundColor:"rgb(13 92 177)"}}>
+            <Grid container spacing={1} sx={{color:"white"}}>
+            <Grid item xs={6} sx={{  marginTop: '10px' }}><h4 style={{ fontWeight: 'bold',color:"white" }}>Brands</h4></Grid>
+            <Grid item xs={6} sx={{  marginTop: '10px' }}><h4 style={{ fontWeight: 'bold',color:"white" }}>Categories</h4></Grid>
             <Grid item xs={6} sx={{ fontSize:"4vh"}}>{brands}</Grid>
             <Grid item xs={6} sx={{ fontSize:"4vh"}}>{categories}</Grid>
             </Grid>
@@ -389,23 +433,37 @@ function MerchantAnalytics(props) {
                     <TabContext value={value}>
                       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                         <TabList onChange={handleChange} aria-label="lab API tabs example">
-                            <Tab label="Products" value="1" />
-                            <Tab label="Orders" value="2" />
-                            <Tab label="Revenue" value="3" />
-                            <Tab label="Reviews" value="4" />
+                            <Tab label="Brands" value="1" />
+                            <Tab label="Categories" value="2" />
+                            <Tab label="Orders" value="3" />
+                            <Tab label="Revenue" value="4" />
+                            <Tab label="Reviews" value="5" />
                         </TabList>
                       </Box>
         <TabPanel value="1">
           <Grid container style={{height:"90%",width:"90%"}}>
                       <Grid item xs={12} >
-                          <div style={{fontSize:"20px",textAlign:"left"}}>Product distribution</div>
+                          <div style={{fontSize:"20px",textAlign:"left"}}>Brands distribution</div>
                       </Grid>
                       <Grid item xs={12} >
-                          <Line height="100%" weight="70%" options={options} data={productsMap} />
+                          {/* <Line height="100%" weight="70%" options={options} data={brandsMap} /> */}
+                          <Bar height="100%" weight="70%" options={options} data={brandsMap} />
+
                       </Grid>
                   </Grid>
         </TabPanel>
         <TabPanel value="2">
+          <Grid container style={{height:"90%",width:"90%"}}>
+                      <Grid item xs={12} >
+                          <div style={{fontSize:"20px",textAlign:"left"}}>Category distribution</div>
+                      </Grid>
+                      <Grid item xs={12} >
+                        <Bar height="100%" weight="70%" options={options} data={categoriesMap} />
+
+                      </Grid>
+                  </Grid>
+        </TabPanel>
+        <TabPanel value="3">
           <Grid container style={{height:"90%",width:"90%"}}>
                       <Grid item xs={12} >
                           <div style={{fontSize:"20px",textAlign:"left"}}>Orders distribution</div>
@@ -417,7 +475,7 @@ function MerchantAnalytics(props) {
                       </Grid>
                   </Grid>
         </TabPanel>
-        <TabPanel value="3">
+        <TabPanel value="4">
           <Grid container style={{height:"90%",width:"90%"}}>
                       <Grid item xs={12} >
                           <div style={{fontSize:"20px",textAlign:"left"}}>Revnue accrual</div>
@@ -429,7 +487,7 @@ function MerchantAnalytics(props) {
                       </Grid>
                   </Grid>
         </TabPanel>
-        <TabPanel value="4">
+        <TabPanel value="5">
           <Grid container style={{height:"90%",width:"90%"}}>
                       <Grid item xs={12} >
                           <div style={{fontSize:"20px",textAlign:"left"}}>Review frequency</div>
@@ -448,7 +506,7 @@ function MerchantAnalytics(props) {
               </Paper>
             </Grid>
       </Grid>
-      </div>
+      
     </>)
 }
 

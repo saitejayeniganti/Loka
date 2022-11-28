@@ -38,6 +38,7 @@ import newsletter from "../images/admin/news.png";
 import { Link } from "@mui/material";
 import markpng from "../images/admin/mark.png";
 import marketpng from "../images/admin/market.png";
+import { displayError, displayMessage } from "../utils/messages";
 
 function MenuAppBar(props) {
   console.log("props - ", props);
@@ -76,6 +77,7 @@ function MenuAppBar(props) {
       setAnchorEl(null);
       doSignIn(Date.now());
       navigate("/login");
+
       // console.log("loggedOut");
       // window.location.reload();
     });
@@ -91,33 +93,53 @@ function MenuAppBar(props) {
 
   const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState(false);
+
   const hideError = () => {
     setTimeout(() => {
       setShowError(false);
+      displayError("");
+      // setErrorMsg("");
     }, 3000);
   };
 
   const hideMessage = () => {
     setTimeout(() => {
       setShowMessage(false);
+      displayMessage("");
+      // setMessage("");
     }, 3000);
   };
 
   useEffect(() => {
     if (errorState[REDUCER.ERR_MSG] !== "") {
       setErrorMsg(errorState[REDUCER.ERR_MSG]);
-      setShowError(true);
-      hideError();
+      // setShowError(true);
+      // hideError();
     }
   }, [errorState]);
 
   useEffect(() => {
+    if (errorMsg != "") {
+      setShowError(true);
+      hideError();
+    }
+  }, [errorMsg]);
+
+  useEffect(() => {
+    console.log("msg triggered");
     if (messageState[REDUCER.MESSAGE] !== "") {
       setMessage(messageState[REDUCER.MESSAGE]);
+      // setShowMessage(true);
+      // hideMessage();
+    }
+  }, [messageState]);
+
+  useEffect(() => {
+    if (message != "") {
       setShowMessage(true);
       hideMessage();
     }
-  }, [messageState]);
+  }, [message]);
 
   useEffect(() => {
     if (props.isLoggedIn) {
@@ -278,26 +300,34 @@ function MenuAppBar(props) {
                   )}
                   {props.isLoggedIn && (
                     <div>
-                      {props.user.role == 1?<>
-                        <MenuItem
-                        onClick={() => {
-                          navigate("/merchantpostad");
-                          setAnchorEl(null);
-                        }}
-                      >
-                        Ads
-                      </MenuItem>
-                      </>:""}
-                       {props.user.role == 1?<>
-                        <MenuItem
-                        onClick={() => {
-                          navigate("/merchantanalytics");
-                          setAnchorEl(null);
-                        }}
-                      >
-                        Analytics
-                      </MenuItem>
-                      </>:""}
+                      {props.user.role == 1 ? (
+                        <>
+                          <MenuItem
+                            onClick={() => {
+                              navigate("/merchantpostad");
+                              setAnchorEl(null);
+                            }}
+                          >
+                            Ads
+                          </MenuItem>
+                        </>
+                      ) : (
+                        ""
+                      )}
+                      {props.user.role == 1 ? (
+                        <>
+                          <MenuItem
+                            onClick={() => {
+                              navigate("/merchantanalytics");
+                              setAnchorEl(null);
+                            }}
+                          >
+                            Analytics
+                          </MenuItem>
+                        </>
+                      ) : (
+                        ""
+                      )}
                       <MenuItem
                         onClick={() => {
                           navigate("/profile");
@@ -306,7 +336,7 @@ function MenuAppBar(props) {
                       >
                         Profile
                       </MenuItem>
-                      
+
                       <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </div>
                   )}

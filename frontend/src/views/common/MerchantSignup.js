@@ -192,7 +192,7 @@ function MerchantSignup(userDetails) {
 
   return (
     <>
-       <Grid container sx={{ height: "100%", position: "absolute" }}>
+      <Grid container sx={{ height: "100%", position: "absolute" }}>
         <Grid item xs={6} sx={{ backgroundColor: "#FEBB15" }}></Grid>
         <Grid item xs={6} sx={{ backgroundColor: "white" }}></Grid>
       </Grid>
@@ -238,7 +238,12 @@ function MerchantSignup(userDetails) {
             <Grid item xs={7}>
               <Paper
                 elevation={10}
-                sx={{ borderRadius: "10px", paddingTop: "8px",overflowY: "scroll",height:"80vh" }}
+                sx={{
+                  borderRadius: "10px",
+                  paddingTop: "8px",
+                  overflowY: "scroll",
+                  height: "80vh",
+                }}
               >
                 <div style={{ fontSize: "smaller" }}>
                   Signup as a Customer ?{" "}
@@ -264,7 +269,7 @@ function MerchantSignup(userDetails) {
                 <div
                   style={{
                     padding: "10px",
-                    
+
                     position: "relative",
                     // height: "450px",
                   }}
@@ -307,7 +312,7 @@ function MerchantSignup(userDetails) {
                       Signup with Google
                     </Button>
                   </div>
-                  
+
                   <div style={{ margin: "20px" }}>
                     <TextField
                       fullWidth
@@ -463,11 +468,11 @@ function MerchantSignup(userDetails) {
                   <div>
                     {filledData.image && (
                       <Avatar
-                        size={128}
+                        size={64}
                         src={
                           <Image
                             src={filledData.image}
-                            style={{ width: 256 }}
+                            style={{ width: "64px", height: "64px" }}
                           />
                         }
                       />
@@ -503,7 +508,6 @@ function MerchantSignup(userDetails) {
                       SignIn{" "}
                     </u>
                   </div>
-
                 </div>
               </Paper>
             </Grid>

@@ -214,10 +214,10 @@ function Signup(userDetails) {
               fontFamily: "math",
               marginTop: "20px",
               padding: "20px",
-              
             }}
           >
-            sign up as a customer on to LOKA platform and discover the available products near you.
+            sign up as a customer on to LOKA platform and discover the available
+            products near you.
           </div>
         </Grid>
 
@@ -438,11 +438,11 @@ function Signup(userDetails) {
                   <div>
                     {filledData.image && (
                       <Avatar
-                        size={128}
+                        size={64}
                         src={
                           <Image
                             src={filledData.image}
-                            style={{ width: 256 }}
+                            style={{ width: "64px", height: "64px" }}
                           />
                         }
                       />

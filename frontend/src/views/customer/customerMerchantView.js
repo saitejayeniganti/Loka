@@ -3,7 +3,7 @@ import shopLanding from "../../images/merchant/shopLandingPage.jpg";
 import { Link } from "react-scroll";
 import CustomerMerchantFooter from "../../components/footer/customerMerchantFooter";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import ubereatslogo from "../../images/theme/UberEatsWhite.png";
+import soldOut from "../../images/admin/sold-out.png";
 import kiwi from "../../images/customer/kiwi.png";
 import { Carousel } from 'antd';
 import { get, post,put } from "../../utils/serverCall.js";
@@ -197,13 +197,20 @@ const renderImages=()=>{
                   {products[header].map((dish) => {
                     return (
                       <>
-                         <Card sx={{ maxWidth: 180, textAlign: 'left',marginLeft:"20px",marginBottom:"20px",cursor:"pointer",
-                                      borderRadius:"7px",boxShadow: "0 4px 4px 0 rgba(0,0,0,0.2)",transition: "0.3s", "&:hover": {
-                                      boxShadow: "0 8px 16px 0 rgba(2, 25, 77, 0.5)"
-                            
-                            } }} raised onClick={()=>{setSelectedProduct(dish);setRedirProductDetail(true)}}>
-                            <CardMedia component="img" height="130" src={kiwi}/>
-                            <Stack spacing={1} sx={{ padding: "5px" }}>
+                      
+
+                         <Card sx={{padding:"0px !important", maxWidth: 180, textAlign: 'left',backgroundColor:dish.quantity==0?"rgb(150 150 150 / 38%)":"white", marginLeft:"20px",marginBottom:"20px",cursor:dish.quantity==0?'default':'pointer',
+                                      borderRadius:"7px",boxShadow: "0 4px 4px 0 rgba(0,0,0,0.2)",transition: "0.3s", "&:hover":dish.quantity!=0? {
+                                      boxShadow: "0 8px 16px 0 rgba(2, 25, 77, 0.5)",
+                            }:{} }} raised onClick={()=>{ 
+                              if(dish.quantity==0)
+                              {}
+                              else{
+                              setSelectedProduct(dish);setRedirProductDetail(true)}
+                              }}>
+                              {dish.quantity==0?<><div style={{position:"absolute",zIndex:"2",marginLeft:"120px",marginTop:"10"}}><img src={soldOut} height="50px" width="50px"></img></div></>:""}
+                            <CardMedia component="img" height="130" src={dish.image}/>
+                            <Stack spacing={1} sx={{ padding: "5px !important" }}>
                               <div style={{textTransform: "capitalize",fontSize:"16px",fontWeight:"500"}}>{dish.name}</div>
                                 <Stack
                                     direction="row"
@@ -213,19 +220,16 @@ const renderImages=()=>{
                                 </Stack>
                                 <div>{`Brand: `}{dish.brand.name}</div>
                                 <Divider sx={{ opacity: '1' }} />
-                                <div style={{overflow:"hidden"}}>
-                                    {dish.desription}
+                                <div title={dish.description} style={{overflow:"hidden",whiteSpace: "nowrap",paddingBottom:"5px"}}>
+                                    {dish.description}
                                 </div>
                                     
                                 
                                 
                                 {/* <Divider sx={{ opacity: '1' }} /> */}
-                                <CardActions>
-                                    {/* <Grid container spacing={1} justifyContent="flex-end">
-                                        <Grid item>{props.isMerchant && <Button size="small" variant="outlined" onClick={() => props.handleOpenUpdateModal(props.singleItem)} >Edit</Button>}</Grid>
-                                        <Grid item> {props.isMerchant && <Button size="small" variant="outlined" onClick={() => props.handleOpenDeleteDialog(props.singleItem._id)} color="error">Delete</Button>}</Grid>
-                                    </Grid> */}
-                                </CardActions>
+                                {/* <CardActions>
+                                  
+                                </CardActions> */}
                             </Stack>
                           </Card>
                           

@@ -1,15 +1,15 @@
-const Mongoose = require('mongoose');
+const Mongoose = require("mongoose");
 const { Schema } = Mongoose;
 
 // Cart Item Schema
 const OrderItemSchema = new Schema({
   product: {
     type: Schema.Types.ObjectId,
-    ref: 'Product'
+    ref: "Product",
   },
   name: {
     type: String,
-    trim: true
+    trim: true,
   },
   image: {
     type: String,
@@ -17,7 +17,7 @@ const OrderItemSchema = new Schema({
   },
   description: {
     type: String,
-    trim: true
+    trim: true,
   },
   quantity: Number,
   price: {
@@ -30,20 +30,20 @@ const OrderItemSchema = new Schema({
   },
   taxable: {
     type: Boolean,
-    default: true
+    default: true,
   },
   isActive: {
     type: Boolean,
-    default: true
+    default: true,
   },
   brand: {
     type: Schema.Types.ObjectId,
-    ref: 'Brand',
-    default: null
+    ref: "Brand",
+    default: null,
   },
   merchant: {
     type: Schema.Types.ObjectId,
-    ref: 'Merchant'
+    ref: "Merchant",
   },
   numReviews: {
     type: Number,
@@ -53,33 +53,33 @@ const OrderItemSchema = new Schema({
   category: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'category'
-    }
+      ref: "category",
+    },
   ],
   purchasePrice: {
     type: Number,
-    default: 0
+    default: 0,
   },
   totalPrice: {
     type: Number,
-    default: 0
+    default: 0,
   },
   priceWithTax: {
     type: Number,
-    default: 0
+    default: 0,
   },
   totalTax: {
     type: Number,
-    default: 0
+    default: 0,
   },
   status: {
     type: String,
-    default: 'Not processed',
-    enum: ['Not processed', 'Processing', 'Shipped', 'Delivered', 'Cancelled']
-  }
+    default: "Not processed",
+    enum: ["Not processed", "Processing", "Shipped", "Delivered", "Cancelled"],
+  },
 });
 
-module.exports = Mongoose.model('OrderItem', OrderItemSchema);
+module.exports = Mongoose.model("OrderItem", OrderItemSchema);
 // Order Schema
 const OrderSchema = new Schema({
   // cart: {
@@ -89,17 +89,21 @@ const OrderSchema = new Schema({
   products: [OrderItemSchema],
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: "User",
   },
   total: {
     type: Number,
-    default: 0
+    default: 0,
+  },
+  merchant: {
+    type: Schema.Types.ObjectId,
+    ref: "Merchant",
   },
   updated: Date,
   created: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
-module.exports = Mongoose.model('Order', OrderSchema);
+module.exports = Mongoose.model("Order", OrderSchema);
