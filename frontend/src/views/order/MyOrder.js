@@ -43,7 +43,7 @@ const MyOrder = (props) => {
               <>
                 <Typography variant="h5" sx={{
                   p: 2
-                }}>{`Order No ${i + 1}`}</Typography>
+                }}>{`Order Id: ${order._id}`}</Typography>
                 <Paper
                   elevation={3}
                   sx={{
@@ -77,9 +77,10 @@ const MyOrder = (props) => {
                             </Typography>
                           </Grid>
                           <Grid item>
-                            <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2">
-                              Cancel
-                            </Typography>
+                            {((product.status !== "Delivered" && product.status !== "Cancelled") &&
+                              <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2">
+                                Cancel
+                            </Typography>)}
                           </Grid>
                           <Grid item>
                             <Divider />

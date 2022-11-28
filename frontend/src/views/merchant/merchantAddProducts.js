@@ -60,6 +60,16 @@ function MerchantAddProducts(props) {
             return
         }
 
+        if (parseInt(productData.quantity) < 0) {
+            displayError("Please Enter Valid Data For Quantity")
+            return
+        }
+
+        if (parseInt(productData.price) < 0) {
+            displayError("Please Enter Valid Data For Price")
+            return
+        }
+
         const brandName = productData.brand
         const foundBrand = brandData.filter(data => data.label === brandName)
         if (foundBrand.length === 0) {

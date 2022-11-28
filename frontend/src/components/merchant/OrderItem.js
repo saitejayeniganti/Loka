@@ -1,13 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardMedia, CardActions, Button, Typography, Grid, Divider, FormControl, InputLabel, Select, MenuItem, TextField } from '@mui/material'
 import { useOrders } from "../../views/merchant/customhooks/useOrders";
 import { connect } from "react-redux";
 import { displayMessage, displayError } from '../../utils/messages'
 import { put } from '../../utils/serverCall'
 
+const statusOptionsMap = {
+    'Not processed': 0,
+    'Processing': 1,
+    'Shipped': 2,
+    'Delivered': 3,
+    'Cancelled': 4
+}
+
+const statusOptionsArray = ['Not processed', 'Processing', 'Shipped', 'Delivered', 'Cancelled']
+
 function OrderItem(props) {
     console.log(props)
     const [status, setStatus] = useState(props.product.status);
+    const [statusOptions, setStatusOptions] = useState(statusOptionsArray.slice(statusOptionsMap[props.product.status]))
+
+    useEffect(() => {
+        setStatus(props.product.status)
+        setStatusOptions(statusOptionsArray.slice(statusOptionsMap[props.product.status]))
+    }, [props.product.status])
 
     const handleStatusChange = (event) => {
         setStatus(event.target.value);
@@ -20,11 +36,13 @@ function OrderItem(props) {
     const updateStatusChange = async () => {
         const orderId = props.orderId
         const productId = props.product._id
+        const quantity = props.product.quantity
 
         const newOrderStatus = {
             orderId,
             productId,
-            status
+            status,
+            quantity
         }
         try {
             const updatedOrderStatus = await put(`/order/merchant/myOrder/update/`, newOrderStatus)
@@ -56,17 +74,14 @@ function OrderItem(props) {
                                 value={status}
                                 label="Status"
                                 onChange={handleStatusChange}
+                                disabled={props.product.status === 'Delivered' || props.product.status === 'Cancelled'}
                             >
-                                <MenuItem value={'Not processed'}>Not processed</MenuItem>
-                                <MenuItem value={'Processing'}>Processing</MenuItem>
-                                <MenuItem value={'Shipped'}>Shipped</MenuItem>
-                                <MenuItem value={'Delivered'}>Delivered</MenuItem>
-                                <MenuItem value={'Cancelled'}>Cancelled</MenuItem>
+                                {statusOptions.map(option => <MenuItem value={option}>{option}</MenuItem>)}
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={6} sx={{ paddingTop: '10px', paddingRight: '5px' }}>{<Button size="small" variant="outlined" onClick={revertStatusChange} color="error">Revert Status</Button>}</Grid>
-                    <Grid item xs={6} sx={{ paddingTop: '10px', paddingLeft: '5px' }}>{<Button size="small" variant="outlined" onClick={updateStatusChange}>Update Status</Button>}</Grid>
+                    <Grid item xs={6} sx={{ paddingTop: '10px', paddingRight: '5px' }}><Button size="small" variant="outlined" onClick={revertStatusChange} color="error" disabled={props.product.status === 'Delivered' || props.product.status === 'Cancelled'}>Revert Status</Button></Grid>
+                    <Grid item xs={6} sx={{ paddingTop: '10px', paddingLeft: '5px' }}><Button size="small" variant="outlined" onClick={updateStatusChange} disabled={props.product.status === 'Delivered' || props.product.status === 'Cancelled'}>Update Status</Button></Grid>
                 </Grid>
             </Card>
         </>

@@ -66,9 +66,11 @@ const Order = (props) => {
                         </Typography>
                       </Grid>
                       <Grid item mb="5px">
-                        <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2">
-                          Cancel
-                      </Typography>
+                        {product.status != "Delivered" &&
+                          <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2">
+                            Cancel
+                          </Typography>
+                        }
                       </Grid>
                     </Grid>
                     <Grid item>
