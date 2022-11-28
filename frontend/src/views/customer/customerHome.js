@@ -167,13 +167,13 @@ function CustomerHome() {
         <Grid container spacing={0} sx={{ height: "100%" }}>
           <Grid
             item
-            xs={4}
+            xs={12}
             sx={{
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               height: "140px",
-              padding: "10px",
+              padding: "0px",
               cursor: "pointer",
             }}
             title="Redirect to merchant"
@@ -181,10 +181,10 @@ function CustomerHome() {
           >
             <div
               style={{
-                borderStyle: "solid",
-                borderWidth: "0.1rem",
-                borderColor: "#d3d3d3",
-                borderRadius: "50%",
+                // borderStyle: "solid",
+                // borderWidth: "0.1rem",
+                // borderColor: "#d3d3d3",
+                // borderRadius: "50%",
                 // marginLeft: "10px",
                 overflow: "hidden",
               }}
@@ -200,15 +200,14 @@ function CustomerHome() {
                 style={{
                   borderColor: "black",
                   padding: "0px !important",
-                  height: "64px",
-                  width: "64px",
+                  maxHeight: "-webkit-fill-available",
                 }}
               ></img>
             </div>
           </Grid>
           <Grid
             container
-            xs={8}
+            xs={12}
             sx={{
               background: "#e5e8e8",
               padding: "0px !important",
