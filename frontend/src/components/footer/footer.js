@@ -8,7 +8,7 @@ import ubereatslogo from "../../images/theme/UberEatsWhite.png";
 import deliveryHome from "../../animations/deliveryHome.json";
 import Lottie from "react-lottie";
 import nearBy from "../../images/theme/nearby.jpeg";
-import adsNew from "../../images/admin/adsnew.png";
+import adsNeww from "../../images/admin/addds.png";
 import searching from "../../images/admin/search.jpeg";
 import preview from "../../images/admin/preview.jpeg";
 import CommonFooter from "./CommonFooter";
@@ -67,7 +67,7 @@ function Footer() {
                 </div>
                 <p>You can subscribe to LOKA's newsletter to get latest updates</p>
               </div>
-              <img src={adsNew}></img>
+              <img src={adsNeww}></img>
             </div>
           </div>
         </div>
