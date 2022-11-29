@@ -34,7 +34,7 @@ export default function MapDistance({ leg, vendor }) {
           image={vendor.image}
           alt="green iguana"
         />
-        <CardContent>
+        <CardContent sx={{ textAlign: "left" }}>
           <Typography gutterBottom variant="h5" component="div">
             {vendor.storeName}
           </Typography>
