@@ -80,15 +80,15 @@ export default function MapView(props) {
     return ref.current;
   }
 
-  const searchInitialRender = useRef(true);
-  const prevNavigatorState = usePrevious(navigatorState);
+  // const searchInitialRender = useRef(true);
+  // const prevNavigatorState = usePrevious(navigatorState);
   useEffect(() => {
-    if (searchInitialRender.current) {
-      searchInitialRender.current = false;
-      return;
-    }
+    // if (searchInitialRender.current) {
+    //   searchInitialRender.current = false;
+    //   return;
+    // }
     if (
-      !isEqual(prevNavigatorState, navigatorState) &&
+      // !isEqual(prevNavigatorState, navigatorState) &&
       navigatorState.location
     ) {
       console.log("navigator changed", navigatorState);
@@ -103,7 +103,8 @@ export default function MapView(props) {
       setLocation(geoLocation);
       mapRef.current?.panTo(geoLocation);
     }
-  }, [navigatorState, prevNavigatorState]);
+  }, [navigatorState]);
+  // }, [navigatorState, prevNavigatorState]);
 
   const fetchDirections = (house, details) => {
     if (!location) return; // if home is not set then no directions.
