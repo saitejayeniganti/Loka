@@ -44,7 +44,7 @@ const Bill = (props) => {
       .addNewOrder(items)
       .then((result) => {
         displayMessage("Order Confirmed");
-        navigate("/myorder");
+        navigate("/order");
       })
       .catch((err) => {
         console.log(err);

@@ -65,8 +65,9 @@ export default function AdminUserOrders() {
         {
           var ob={
             "id":u._id,
-            "total":u.total,
-            "placed":u.created.substr(0, 10)
+            "total":u.total.toFixed(2),
+            "placed":u.created.substr(0, 10),
+            "vendor":u.merchant.storeName
           }
           arr.push(ob)
         }

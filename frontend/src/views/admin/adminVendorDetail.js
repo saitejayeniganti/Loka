@@ -284,7 +284,7 @@ function AdminVendorDetail() {
                                 <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Total revenue</div>
                             </Grid>
                              <Grid item xs={12} >
-                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>$ {moneyVal}</div>
+                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>$ {moneyVal.toFixed(2)}</div>
                             </Grid>
                       </Grid>
                     </Paper>
@@ -310,7 +310,7 @@ function AdminVendorDetail() {
                     <Paper elevation={3} style={{height:"70vh",padding:"10px"}}>
                           <Grid container spacing={3} >
                                 <Grid item xs={12}>
-                                    <img src={testBanner} height="150" width="100%"></img>
+                                    <img src={vendorDetails.image} height="150" width="100%"></img>
                                 </Grid>
                                 {/* <Grid item xs={12}>
                                 <div style={{marginTop:"1vh",textAlign:"left",paddingLeft:"24px"}}>

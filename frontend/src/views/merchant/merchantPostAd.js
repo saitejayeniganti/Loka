@@ -20,6 +20,7 @@ import Paper from '@mui/material/Paper';
 import dataAnalysis from "../../animations/ads-promotion.json";
 import advert from '../../images/admin/advert.jpeg'
 import Lottie from "react-lottie";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   DatePicker,
 } from 'antd';
@@ -30,7 +31,7 @@ import adReqImg from '../../images/admin/business-advertisement.png'
 window.Buffer = window.Buffer || require("buffer").Buffer;
 
 function MerchantPostAd(props) {
-
+const navigate = useNavigate();
       const defaultOptions = {
     loop: false,
     autoplay: true,
@@ -59,6 +60,15 @@ function MerchantPostAd(props) {
       var arr=[...imageList]
       var filtered=arr.filter(el => el!=e)
       setImageList([...filtered])
+
+    put(`/admin/merchantdeletead`,{"id":props.id,"ads":filtered})
+      .then((result) => {
+        console.log("result ads",result.ads)
+        setImageList([...result.ads])
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
         const saveAds = () => {
@@ -71,7 +81,8 @@ function MerchantPostAd(props) {
             put(`/admin/savemerchantads`,requestdetails)
                 .then((result) => { 
                     console.log(result)
-                    alert("Saved!")
+                    navigate("/home");
+                    // alert("Saved!")
                  })
                 .catch((err) => {
         

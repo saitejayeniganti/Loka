@@ -303,7 +303,7 @@ function AdminHome() {
                       </Grid>
                       <Grid item xs={12} >
                         <div style={{height:"90%",width:"90%"}}>
-                          <Line options={options} data={usersMap} />
+                          <Line height="130%" weight="70%" options={options} data={usersMap} />
                           </div>
                       </Grid>
                   </Grid>
@@ -315,7 +315,7 @@ function AdminHome() {
                       </Grid>
                       <Grid item xs={12} >
                         <div style={{height:"90%",width:"90%"}}>
-                          <Line options={options} data={vendorsMap} />
+                          <Line height="130%" weight="70%" options={options} data={vendorsMap} />
                           </div>
                       </Grid>
                   </Grid>
@@ -327,7 +327,7 @@ function AdminHome() {
                       </Grid>
                       <Grid item xs={12} >
                         <div style={{height:"90%",width:"90%"}}>
-                          <Line options={options} data={ordersMap} />
+                          <Line height="130%" weight="70%" options={options} data={ordersMap} />
                           </div>
                       </Grid>
                   </Grid>
@@ -339,7 +339,7 @@ function AdminHome() {
                       </Grid>
                       <Grid item xs={12} >
                         <div style={{height:"90%",width:"90%"}}>
-                          <Line options={options} data={reviewsMap} />
+                          <Line height="130%" weight="70%" options={options} data={reviewsMap} />
                           </div>
                       </Grid>
                   </Grid>

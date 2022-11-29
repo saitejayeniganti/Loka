@@ -77,7 +77,7 @@ export default function AdminOrders() {
             "id":u._id,
             "customerName":userTemp.firstName+" "+userTemp.lastName,
             // "vendorName":"",
-            "total":"$ "+u.total,
+            "total":"$ "+u.total.toFixed(2),
             "placed":u.created.substr(0, 10),
             "allData":u
           }
@@ -219,7 +219,7 @@ export default function AdminOrders() {
                                           TOTAL
                                         </Grid>
                                         <Grid item xs={2} style={{fontWeight:"800"}}>
-                                            $&nbsp;{selectedOrder.total}
+                                            $&nbsp;{selectedOrder.total.toFixed(2)}
                                         </Grid>
                                     </Grid>
                             </Grid>

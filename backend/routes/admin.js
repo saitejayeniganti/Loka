@@ -372,6 +372,21 @@ router.post('/adrequest', async (req, res) => {
     });
   }})
 
+ //get all products for merchant page
+  router.put('/merchantdeletead', async (req, res) => {
+  try {
+      console.log(req.body)
+      const filter = { _id: req.body.id };
+      const update = {"ads":req.body.ads};
+      const merchantDoc = await Merchant.findByIdAndUpdate(filter, update)
+      res.status(200).json(merchantDoc);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
    //get merchant analytics
   router.get('/merchantanalytics', async (req, res) => {
   try {

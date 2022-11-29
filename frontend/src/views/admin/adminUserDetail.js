@@ -296,7 +296,7 @@ function AdminUserDetail() {
                                 <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Total money spent</div>
                             </Grid>
                              <Grid item xs={12} >
-                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>$ {moneyVal}</div>
+                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>$ {moneyVal.toFixed(2)}</div>
                             </Grid>
                       </Grid>
                     </Paper>
@@ -322,7 +322,7 @@ function AdminUserDetail() {
                     <Paper elevation={3} style={{height:"70vh",padding:"10px"}}>
                           <Grid container spacing={3} >
                                 <Grid item xs={5}>
-                                    <img src={money} height="100" width="100" style={{borderRadius:"50%"}}></img>
+                                    <img src={userDetails.image} height="100" width="100" style={{borderRadius:"50%"}}></img>
                                 </Grid>
                                 <Grid item xs={7}>
                                   <div style={{marginTop:"3vh",textAlign:"left"}}>
