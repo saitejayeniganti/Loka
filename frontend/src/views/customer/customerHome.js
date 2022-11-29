@@ -210,31 +210,12 @@ function CustomerHome() {
                   borderColor: "black",
                   padding: "0px !important",
                   maxHeight: "-webkit-fill-available",
-                  width:"fill",
-                  borderTopRightRadius:"10px",
-                  borderTopLeftRadius:"10px"
+                  width: "fill",
+                  borderTopRightRadius: "10px",
+                  borderTopLeftRadius: "10px",
                 }}
               ></img>
             </div>
-            {/* {(new Date().getTime()-new Date(vendorDetails.created).getTime())/(1000 * 3600 * 24)>3
-            ?<>
-                 <div
-                                style={{
-                                  position: "absolute",
-                                  zIndex: "2",
-                                  // marginLeft: "290px",
-                                  marginTop:"-100px"
-                                }}
-                              >
-                                <img
-                                  src={soldOut}
-                                  height="65px"
-                                  width="65px"
-                                ></img>
-                                </div>
-            </>:""
-            } */}
-                           
           </Grid>
           <Grid
             container
@@ -262,56 +243,8 @@ function CustomerHome() {
               </div>
             </Grid>
 
-            {/* <Grid item xs={4}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  backgroundColor: "#ffffff",
-                  borderRadius: "45px",
-                  paddingTop: "2px",
-                  paddingBottom: "3px",
-                }}
-              >
-                <div
-                  style={{
-                    textAlign: "left",
-                    marginTop: "2px",
-                    fontSize: "14px",
-                  }}
-                >
-                  {vendor.rating} &nbsp;
-                </div>
-                <div style={{ color: "#FFD700" }}>
-                  <StarPurple500SharpIcon fontSize="medium" />
-                </div>
-              </div>
-            </Grid> */}
             <Grid item xs={1}></Grid>
-            {/* <Grid
-              item
-              xs={1}
-              sx={{ marginTop: "2px", opacity: "60%" }}
-              title="Save Merchant"
-            >
-              <BookmarkRoundedIcon
-                color=""
-                onClick={() => saveMerchantIcon()}
-              />
-            </Grid> */}
-            {/* vendor.categories && <Grid item xs={12}>
-        <div style={{ textAlign: "left", fontSize: "13px" }}>
-          {vendor.categories[0]}
-          {vendor.categories.slice(1, 2).map((v) => (
-            <>
-              {" - "}
-              {v}{" "}
-            </>
-          ))}{" "}
-          ..
-        </div>
-      </Grid> */}
+
             {productDetails && (
               <>
                 <Grid item xs={12}>
@@ -477,7 +410,7 @@ function CustomerHome() {
         Select a store nearby
       </div>
 
-      {productVendors?.length == 0 && vendorsOnly?.length == 0 ? (
+      {Object.keys(vendorDetails).length == 0 ? (
         "No Merchants matching your search criteria"
       ) : (
         <div className="row" style={{ paddingLeft: "20px" }}>
