@@ -40,7 +40,7 @@ export default function MapView(props) {
 
   const fetchMerchants = (location, searchInput) => {
     location &&
-      get("/customer/merchants", {
+      get("/customer/multisearch", {
         location,
         searchInput,
       }).then((result) => {
@@ -48,27 +48,29 @@ export default function MapView(props) {
         const productVendors = result.productVendors;
         const vendorDetails = result.vendorDetails;
         let vendorsTemp = [];
-        let vendors;
+        let vendorsLocal;
         productVendors &&
           (vendorsTemp = productVendors.map((each) => {
             return vendorDetails[each.merchant];
           }));
-        console.log(vendorsTemp);
-        vendors = [...vendorsTemp];
+
+        vendorsLocal = [...vendorsTemp];
+
         if (vendorsOnly) {
           vendorsTemp = vendorsOnly.map((vendor) => {
             return vendorDetails[vendor];
           });
         } else {
           // Object.keys(obj)
-          let vendors = Object.keys(vendorDetails);
-          vendorsTemp = vendors.map((vendor) => {
+          let vendorsLocationOnly = Object.keys(vendorDetails);
+          vendorsTemp = vendorsLocationOnly.map((vendor) => {
             return vendorDetails[vendor];
           });
         }
-        vendors = [...vendorsTemp];
-        console.log("nearby stores", result);
-        setVendors(vendors);
+        console.log("pvendors : ", vendorsLocal);
+        vendorsLocal = [...vendorsLocal, ...vendorsTemp];
+        console.log("nearby stores", vendorsLocal);
+        setVendors(vendorsLocal);
       });
   };
 
