@@ -9,6 +9,7 @@ const store = require("../../utils/store");
 import { useNavigate } from "react-router-dom";
 import PayPalTest from "../paypalTest.js";
 import shopInventory from "../../images/merchant/shopInventory.jpg";
+import React from "react";
 
 const Bill = (props) => {
   const navigate = useNavigate();
@@ -86,7 +87,7 @@ const Bill = (props) => {
             <>
               <OrderItems items={items} />
               <div style={{ marginTop: "10px" }}>
-                <h3 align="right">
+                <h3>
                   Order Total: {totalPrice == 0 ? "$0.00" : "$ " + totalPrice}
                 </h3>
               </div>
