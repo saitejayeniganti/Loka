@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const CommonFooter = () => {
+  const navigate = useNavigate();
   return (
     <div className="footer">
       <div className="container" style={{ marginTop: "0px" }}>
@@ -18,7 +20,7 @@ const CommonFooter = () => {
               <br />
               <label className="txt margin15">Search Products</label>
               <br />
-              <label className="txt margin15">Post Ads</label>
+              <label className="txt margin15" style={{cursor:"pointer"}} onClick={()=>navigate("/ads")}>Post Ads</label>
               <br />
               <label className="txt margin15">Subscribe to newsletter</label>
               <br />
