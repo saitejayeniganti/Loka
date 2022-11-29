@@ -184,12 +184,8 @@ export default function MapView(props) {
                   }
                 </MarkerClusterer>
               )}
-              <Circle center={location} radius={5000} options={closeOptions} />
-              <Circle
-                center={location}
-                radius={10000}
-                options={middleOptions}
-              />
+              <Circle center={location} radius={7000} options={closeOptions} />
+
               <Circle center={location} radius={15000} options={farOptions} />
             </>
           )}
@@ -214,13 +210,7 @@ const closeOptions = {
   strokeColor: "#00cc00",
   fillColor: "#00e600",
 };
-const middleOptions = {
-  ...defaultOptions,
-  zIndex: 2,
-  fillOpacity: 0.05,
-  strokeColor: "#0000ff",
-  fillColor: "#0000ff",
-};
+
 const farOptions = {
   ...defaultOptions,
   zIndex: 1,
