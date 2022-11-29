@@ -268,7 +268,7 @@ function AdminVendorDetail() {
                                 <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Total reviews</div>
                             </Grid>
                              <Grid item xs={12} >
-                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>56</div>
+                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>0</div>
                             </Grid>
                       </Grid>
                     </Paper>
