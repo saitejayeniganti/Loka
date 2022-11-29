@@ -1,18 +1,21 @@
-import { useState, useEffect } from 'react'
-import { get } from '../../../utils/serverCall'
+import { useState, useEffect } from "react";
+import { get } from "../../../utils/serverCall";
 
 export const useInventory = (merchantId) => {
-    const [inventory, setInventory] = useState([])
+  const [inventory, setInventory] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetchAllProductsByMerchantId()
-    }, [])
+  useEffect(() => {
+    fetchAllProductsByMerchantId();
+  }, []);
 
-    const fetchAllProductsByMerchantId = () => {
-        get(`/product/merchant/` + merchantId).then(data => {
-            setInventory(data.product)
-        })
-    }
+  const fetchAllProductsByMerchantId = () => {
+    setLoading(true);
+    get(`/product/merchant/` + merchantId).then((data) => {
+      setInventory(data.product);
+      setLoading(false);
+    });
+  };
 
-    return { inventory, fetchAllProductsByMerchantId }
-}
+  return { inventory, fetchAllProductsByMerchantId, loading };
+};
