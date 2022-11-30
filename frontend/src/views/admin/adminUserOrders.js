@@ -22,6 +22,7 @@ import cardShopping from "../../animations/card-shopping.json";
 import { Button, MenuItem, Select, TextField } from "@mui/material";
 import { get, post } from "../../utils/serverCall.js";
 import { Navigate } from "react-router-dom";
+import Divider from '@mui/material/Divider';
 
 const columns = [
   {
@@ -46,6 +47,7 @@ export default function AdminUserOrders() {
   const location = useLocation();
   console.log("state in orders",location.state)
   const [redirToUserDetail, setRedirToUserDetail] = useState(false);
+  const [selectedOrder,setSelectedOrder]=useState("")
 
   const [rows, setRows] = React.useState([]);
     const defaultOptions = {
@@ -67,7 +69,8 @@ export default function AdminUserOrders() {
             "id":u._id,
             "total":u.total.toFixed(2),
             "placed":u.created.substr(0, 10),
-            "vendor":u.merchant.storeName
+            "vendor":u.merchant.storeName,
+            "allDate":u
           }
           arr.push(ob)
         }
@@ -79,7 +82,44 @@ export default function AdminUserOrders() {
     }, []); 
 
    const rowSelected = (e) => {
-        console.log(e)
+        console.log(e.allDate)
+        setSelectedOrder(e.allDate)
+    };
+
+
+      const renderProducts = () => {
+      return( <>
+        <Grid container>
+          <Grid container style={{marginBottom:"2vh",fontWeight:"800"}}>
+          <Grid item xs={7.5} sx={{alignSelf: "center",textAlign:"center"}}>
+              ITEM 
+          </Grid>
+          <Grid item xs={2.5} sx={{textAlign:"left",alignSelf: "center"}}>
+            QUANTITY
+          </Grid>
+          <Grid item xs={2} sx={{alignSelf: "center"}}>
+            PRICE
+          </Grid>
+            </Grid>
+            {selectedOrder.products.map((p)=><>
+            <Grid item xs={3} sx={{textAlign:"left",marginTop:"5px",marginBottom:"5px"}}>
+                <img src={p.image} height="64px" width="64px" style={{borderRadius:"10px"}}/>
+            </Grid>
+          <Grid item xs={5} sx={{textAlign:"left",alignSelf: "center"}}>
+              {p.name}
+          </Grid>
+          <Grid item xs={2} sx={{textAlign:"left",alignSelf: "center"}}>
+            X&nbsp;&nbsp;{p.quantity}
+          </Grid>
+          <Grid item xs={2} sx={{alignSelf: "center"}}>
+            $&nbsp;{p.totalPrice}
+          </Grid>
+        </>)}
+        
+        </Grid>
+      </>
+        
+        )
     };
 
     if (redirToUserDetail) {
@@ -140,12 +180,32 @@ export default function AdminUserOrders() {
                 <Grid item xs={3.5} sx={{}}>
                     <div style={{ height: '75vh', width: '100%',background:"white",padding:"20px",borderRadius:"10px",marginLeft:"15px"}}>
                           <Grid container spacing={2}>
+                            {selectedOrder==""?<>
                             <Grid item xs={12}>
                                   <Lottie options={defaultOptions} height={380} width={380} />
                             </Grid>
                                 <Grid item xs={12} sx={{}}>
                                     Click an order to know the order details.
                                 </Grid>
+                                </>:
+                                <>
+                                  <Grid item xs={12}>
+                                    {renderProducts()}
+                                  </Grid>
+                                   <Grid item xs={12} sx={{marginTop:"5vh",marginBottom:"3vh"}}>
+                                                <Divider style={{opacity:"500%"}}/>
+                                                <Divider style={{opacity:"500%"}}/>
+                                    </Grid>
+                                    <Grid container>
+                                        <Grid item xs={7.2}></Grid>
+                                        <Grid item xs={2.8} style={{fontWeight:"800"}}>
+                                          TOTAL
+                                        </Grid>
+                                        <Grid item xs={2} style={{fontWeight:"800"}}>
+                                            $&nbsp;{selectedOrder.total.toFixed(2)}
+                                        </Grid>
+                                    </Grid>
+                                </>}
                           </Grid>
                     </div>
                 </Grid>

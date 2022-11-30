@@ -384,8 +384,8 @@ function AdminVendorDetail() {
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                                          <Tab label="Orders" value="1" />
-                                        <Tab label="Reviews" value="2" />
-                                        <Tab label="Revenue Generated" value="3" />
+                                         <Tab label="Revenue Generated" value="2" />
+                                        <Tab label="Reviews" value="3" />
                                         <Tab label="Ads Clicked" value="4" />
                                     </TabList>
                                 </Box>
@@ -395,45 +395,46 @@ function AdminVendorDetail() {
                                             <div style={{fontSize:"30px",textAlign:"left"}}>Order frequency</div>
                                          </Grid>
                                         <Grid item xs={12} >
-                                             <div style={{height:"90%",width:"90%"}}>
-                                             <Line options={options} data={ordersMap} />
-                                             </div>
+                                             
+                                             <Line height="110%" weight="70%" options={options} data={ordersMap} />
+                                             
                                           </Grid>
                                     </Grid>
                                  </TabPanel>
-                                 <TabPanel value="2">
-                                    <Grid container style={{height:"90%",width:"90%"}}>
-                                         <Grid item xs={12} >
-                                             <div style={{fontSize:"30px",textAlign:"left"}}>Review frequency</div>
-                                        </Grid>
-                                         <Grid item xs={12} >
-                                             <div style={{height:"90%",width:"90%"}}>
-                                             <Line options={options} data={reviewsMap} />
-                                             </div>
-                                          </Grid>
-                                     </Grid>
-                                 </TabPanel>
-                                 <TabPanel value="3">
+                                  <TabPanel value="2">
                                     <Grid container style={{height:"90%",width:"90%"}}>
                                         <Grid item xs={12} >
                                             <div style={{fontSize:"30px",textAlign:"left"}}>Revenue accrued over different months</div>
                                          </Grid>
                                         <Grid item xs={12} >
-                                             <div style={{height:"90%",width:"90%"}}>
-                                             <Line options={options} data={spentMap} />
-                                             </div>
+                                             
+                                             <Line height="110%" weight="70%" options={options} data={spentMap} />
+                                             
                                           </Grid>
                                     </Grid>
                                  </TabPanel>
+                                 <TabPanel value="3">
+                                    <Grid container style={{height:"90%",width:"90%"}}>
+                                         <Grid item xs={12} >
+                                             <div style={{fontSize:"30px",textAlign:"left"}}>Review frequency</div>
+                                        </Grid>
+                                         <Grid item xs={12} >
+                                             
+                                             <Line height="110%" weight="70%" options={options} data={reviewsMap} />
+                                             
+                                          </Grid>
+                                     </Grid>
+                                 </TabPanel>
+                                
                                  <TabPanel value="4">
                                     <Grid container style={{height:"90%",width:"90%"}}>
                                          <Grid item xs={12} >
                                              <div style={{fontSize:"30px",textAlign:"left"}}>Review frequency</div>
                                         </Grid>
                                          <Grid item xs={12} >
-                                             <div style={{height:"90%",width:"90%"}}>
-                                             <Line options={options} data={adsMap} />
-                                             </div>
+                                             
+                                             <Line height="110%" weight="70%" options={options} data={adsMap} />
+                                             
                                           </Grid>
                                      </Grid>
                                  </TabPanel>

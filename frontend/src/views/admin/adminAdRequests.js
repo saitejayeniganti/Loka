@@ -233,7 +233,7 @@ function AdminHome() {
                                 </>:""}
                              
                                   <Button variant="outlined" startIcon={<KeyboardBackspaceTwoToneIcon />} sx={{marginLeft:"10px"}} onClick={()=>setRedirToHome(true)}>
-                                     Go Back
+                                     Home
                                      </Button>
                                  
                                  </div>
