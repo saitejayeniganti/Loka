@@ -278,6 +278,26 @@ router.post('/adrequest', async (req, res) => {
     });
   }})
 
+  router.put('/adviewed', async (req, res) => {
+      // console.log(req.body)
+  try {
+    if(req.body.id!=undefined){
+      const filter = { _id: req.body.id };
+      
+      const ad=await AdRequest.findById(filter)
+      const update = {"views":ad.views+1};
+      const adrequestDoc = await AdRequest.findByIdAndUpdate(filter, update)
+       res.status(200).json(adrequestDoc);
+       }
+       else
+       res.status(200).json("");
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
   //save ads in marchant
     router.put('/savemerchantads', async (req, res) => {
       console.log("API: savemerchantads",req.body)
@@ -296,13 +316,19 @@ router.post('/adrequest', async (req, res) => {
    router.put('/adclick', async (req, res) => {
       // console.log("click api server",req.body)
   try {
+
+      if(req.body.id==undefined || req.body.userId==undefined || req.body.userId=="")
+      {
+        res.status(200).json("");
+      }
+      else{
       const filter = { _id: req.body.id };
       const ad = await AdRequest.find({_id: req.body.id})
       let clicks=0
       if(ad[0]!=undefined)
           clicks= parseInt(ad[0].clicks==undefined?0:ad[0].clicks) +1
       else
-        clicks= 0
+        clicks= 1
       const update = {"clicks":clicks};
       const adrequestDoc = await AdRequest.findByIdAndUpdate(filter, update)
 
@@ -314,6 +340,7 @@ router.post('/adrequest', async (req, res) => {
       // const adClickDoc = await AdClicks.findByIdAndUpdate(filter, update)
 
       res.status(200).json(adrequestDoc);
+      }
   } catch (error) {
     console.log(error);
     res.status(400).json({
@@ -371,6 +398,8 @@ router.post('/adrequest', async (req, res) => {
       error: 'Your request could not be processed. Please try again.'
     });
   }})
+
+
 
  //get all products for merchant page
   router.put('/merchantdeletead', async (req, res) => {
