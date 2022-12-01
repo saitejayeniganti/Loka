@@ -125,7 +125,6 @@ router.get("/me", async (req, res) => {
 router.get("/:orderId", async (req, res) => {
   try {
     const orderId = req.params.orderId;
-
     let orderDoc = null;
 
     // if (req.user?.role === role.ROLES.Admin) {

@@ -56,6 +56,7 @@ export const fetchOrderById = (id, withLoading = true) => {
       if (withLoading) {
         // dispatch(setOrderLoading(true));
       }
+
       const response = await get(`/order/${id}`);
       dispatch({
         type: ACTION.FETCH_ORDER,
@@ -96,7 +97,7 @@ export const fetchOrders = (id, withLoading = true) => {
   };
 };
 
-export const updateOrderItemStatus = (product, status="Cancelled", orderId) => {
+export const updateOrderItemStatus = (product, status = "Cancelled", orderId) => {
   return async (dispatch, getState) => {
     try {
       const newOrderStatus = {
@@ -107,6 +108,23 @@ export const updateOrderItemStatus = (product, status="Cancelled", orderId) => {
     }
       const response = await put(`/order/status/`, newOrderStatus)
       dispatch(fetchOrders());
+    } catch (error) {
+      // handleError(error, dispatch);
+    }
+  };
+};
+
+export const updateOrderItemStatusForSingleProduct = (product, status = "Cancelled", orderId) => {
+  return async (dispatch, getState) => {
+    try {
+      const newOrderStatus = {
+        orderId,
+        productId: product._id,
+        status,
+        quantity: product.quantity
+    }
+      const response = await put(`/order/status/`, newOrderStatus)
+      dispatch(fetchOrderById(orderId));
     } catch (error) {
       // handleError(error, dispatch);
     }

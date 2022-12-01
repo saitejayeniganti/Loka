@@ -135,7 +135,7 @@ const Product = (props) => {
         <Grid item xs={5} sx={{ borderRadius: "10px", textAlign: "left" }}>
           <img
             src={props.product?.image}
-            height="650"
+            height="625"
             width="650"
             style={{ borderRadius: "16px" }}
           ></img>
@@ -186,21 +186,27 @@ const Product = (props) => {
             $&nbsp;{props.product?.price}
           </Grid>
 
-          <Grid item xs={12} sx={{ marginLeft: "5px", marginTop: "10vh" }}>
+          <Grid item xs={12} sx={{ marginLeft: "5px", marginTop: "7vh" }}>
             {props.product && props.product.quantity > 0 && (
               <>
-                <div className="App" style={{ marginBottom: "50px", padding: "4px 0px", width: "90px", height: "30px", backgroundColor: "#00b853", borderRadius: "50px" }}>
+                <div className="App" style={{ marginBottom: "40px", padding: "4px 0px", width: "90px", height: "30px", backgroundColor: "#00b853", borderRadius: "50px" }}>
                   <Typography variant="h7" color="#054d26">
                     &nbsp;IN STOCK
                   </Typography>
                 </div>
+                <Typography gutterBottom variant="h7" component="div" fontWeight="bold" sx={{ marginTop: "20px" }}>
+                    {props.product.merchant.storeName}
+                  </Typography>
+                <Typography gutterBottom variant="h7" color="grey" component="div" >
+                    {props.product.merchant.location.address}
+                  </Typography>
                 <Button
-                  fullWidth
                   onClick={addToCart}
                   variant="contained"
-                  style={{ textTransform: "none", padding: "14px 0px", borderRadius: "50px" }}
+                  sx={{ marginTop: "20px" }}
+                  style={{ textTransform: "none", padding: "13px 50px", borderRadius: "50px" }}
                 >
-                  Add to Cart
+                  ADD TO CART
               </Button>
               </>
             )}

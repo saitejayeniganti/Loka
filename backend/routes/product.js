@@ -164,10 +164,9 @@ router.get(
           })
           .where('brand', brandId);
       } else {
-        productDoc = await Product.findOne({ _id: productId })//.populate({
-        //   path: 'brand',
-        //   select: 'name'
-        // });
+        productDoc = await Product.findOne({ _id: productId }).populate({
+          path: 'merchant'
+        })
       }
 
       if (!productDoc) {

@@ -1,4 +1,4 @@
-import { Grid, Rating, Typography, Link, Paper, ButtonBase, styled, Box } from "@mui/material";
+import { Grid, Rating, Typography, Link, Paper, ButtonBase, styled, Box, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button} from "@mui/material";
 import React, { useEffect } from "react";
 import cartImage from "../../images/products/Cart.jpeg";
 import productImage from "../../images/products/apple.jpeg";
@@ -15,6 +15,22 @@ const Order = (props) => {
   useEffect(() => {
     props.fetchOrderById(orderId);
   }, []);
+  const [open, setOpen] = React.useState(false);
+  const [product, setProduct] = React.useState(false);
+
+  const openModalWithItem = (product) => {
+    setProduct(product);
+    setOpen(true);
+  };
+
+  const handleCancel = () => {
+    props.updateOrderItemStatus(product, "Cancelled", orderId);
+    setOpen(false);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const Img = styled('img')({
     margin: 'auto',
@@ -24,7 +40,7 @@ const Order = (props) => {
   });
   return (
     <>
-     <div style={{ position: "relative" }}>
+      <div style={{ position: "relative" }}>
         <img
           src={shopInventory}
           style={{ width: "100%", height: "250px" }}
@@ -83,11 +99,12 @@ const Order = (props) => {
                         </Typography>
                       </Grid>
                       <Grid item mb="5px">
-                        {product.status != "Delivered" &&
-                          <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2">
-                            Cancel
-                          </Typography>
-                        }
+                        {((product.status !== "Delivered" && product.status !== "Cancelled") &&
+                          <ButtonBase onClick={() => openModalWithItem(product)}>
+                            <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2" >
+                              Cancel
+                            </Typography>
+                          </ButtonBase>)}
                       </Grid>
                     </Grid>
                     <Grid item>
@@ -109,6 +126,25 @@ const Order = (props) => {
           </Grid>
         </Grid>
       </Grid>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Delete product?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {`Are you sure you want to remove ${product.name} ?`}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleCancel} autoFocus>
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
@@ -121,5 +157,6 @@ const mapStateToProps = state => {
 
 const actionCreators = {
   fetchOrderById: actions.fetchOrderById,
+  updateOrderItemStatus: actions.updateOrderItemStatusForSingleProduct,
 };
 export default connect(mapStateToProps, actionCreators)(Order);

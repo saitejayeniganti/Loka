@@ -6,6 +6,7 @@ import * as actions from '../../reducers/actions';
 import { connect } from 'react-redux';
 import shopInventory from "../../images/merchant/shopInventory.jpg";
 import updateOrderItemStatus from "../../reducers/orderActions"
+import noOrderImage from "../../images/customer/no_order1.png"
 
 const MyOrder = (props) => {
   useEffect(() => {
@@ -80,7 +81,8 @@ const MyOrder = (props) => {
                   theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
               }}
             > */}
-            {props.orders?.map((order, i) => (
+            {props.orders?.length === 0 && <img src={noOrderImage} width="600px" height="450px"></img>}
+            {props.orders?.length > 0 && props.orders?.map((order, i) => (
               <>
                 <Typography variant="h5" sx={{
                   p: 2
