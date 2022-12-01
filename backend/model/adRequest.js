@@ -40,7 +40,8 @@ const AdRequestSchema = new Schema({
   isPaid:{type:String},
   created:{type:Date},
   status:{type:String},
-  clicks:{type:String}
+  clicks:{type:String},
+  views:{type:Number,default:0}
 });
 const AdRequest = Mongoose.model("AdRequest", AdRequestSchema);
 AdRequest.syncIndexes();

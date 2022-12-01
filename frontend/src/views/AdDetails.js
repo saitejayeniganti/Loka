@@ -55,7 +55,7 @@ const columns = [
   {
     field: 'amount',
     headerName: 'Amount',
-    width: 150,
+    width: 100,
   },
   {
     field: 'from',
@@ -75,7 +75,12 @@ const columns = [
 {
     field: 'isPaid',
     headerName: 'Payment',
-    width: 150,
+    width: 100,
+  },
+  {
+    field: 'Clickthrough rate (CTR)',
+    headerName: 'Clickthrough rate (CTR)',
+    width: 200,
   },
 ];
 
@@ -117,7 +122,8 @@ const defaultOptions = {
                         "isApproved":u.isApproved,
                         "isPaid":u.isPaid,
                         "created":u.created,
-                        "phone":u.phone
+                        "phone":u.phone,
+                        "Clickthrough rate (CTR)":u.status=="PAID"?u.clicks==0 || u.views==0?0:(parseInt(u.clicks)/u.views).toFixed(1)+" %":"NA"
                 }     
                 arr.push(ob)
             }

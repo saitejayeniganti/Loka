@@ -17,7 +17,7 @@ import {
   CardMedia,
   CardActions,
   Button,
-  Typography,
+  Typography, 
   Grid,
   Stack,
   Divider,
@@ -62,6 +62,7 @@ export default function CustomerMerchantView() {
 
   //To get ads from external sources
   useEffect(() => {
+    console.log("props in merchant page",props)
     let today = new Date();
     //merchant id in the API
     get(`/admin/adimages?id=${searchParams.get("id")}&date=${today}`)
@@ -105,6 +106,14 @@ export default function CustomerMerchantView() {
             arr.push(obj);
             // console.log("after outside iteration")
           }
+          // console.log("before view event",ads)
+            put(`/admin/adviewed`,{"id":ads._id})
+              .then((result) => {
+                console.log("stored a view event")
+               })
+              .catch((err) => {
+               console.log(err);
+              });
           // console.log("after outside ads",arr)
         }
         setAllImages([...arr]);
@@ -113,6 +122,7 @@ export default function CustomerMerchantView() {
         console.log(err);
       });
   }, []);
+  
 
   if (loading) {
     return <Progress></Progress>;
