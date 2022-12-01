@@ -250,6 +250,31 @@ router.put("/merchant/myOrder/update", async (req, res) => {
   }
 });
 
+router.put('/status', async (req, res) => {
+  try {
+    const { orderId, productId, status, quantity } = req.body;
+    console.log("Req X",req.body);
+    const ordersDoc = await Order.updateOne(
+      { _id: orderId, "products._id": productId },
+      { $set: { "products.$.status": status } }
+    );
+    const orders = ordersDoc;
+
+    if (status === "Cancelled") {
+      await increaseQuantity(productId, quantity);
+    }
+
+    res.status(200).json({
+      orders,
+    });
+  } catch (error) {
+    console.log("X ", error);
+    res.status(400).json({
+      error: "Your request could not be processed. Please try again.",
+    });
+  }
+});
+
 const decreaseQuantity = (products) => {
   let bulkOptions = products.map((item) => {
     return {
