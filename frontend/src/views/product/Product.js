@@ -103,7 +103,7 @@ const Product = (props) => {
       <div style={{ position: "relative" }}>
         <img
           src={shopInventory}
-          style={{ width: "100%", height: "250px" }}
+          style={{ width: "100%", height: "300px" }}
         ></img>
         <h1
           style={{
@@ -131,27 +131,27 @@ const Product = (props) => {
       </div>
 
       <Grid container spacing={1} sx={{ margin: "10px" }}>
-        <Grid item xs={4} sx={{ borderRadius: "10px", textAlign: "left" }}>
+        <Grid item xs={2} />
+        <Grid item xs={5} sx={{ borderRadius: "10px", textAlign: "left" }}>
           <img
             src={props.product?.image}
-            height="500"
-            width="500"
-            style={{ borderRadius: "15px" }}
+            height="650"
+            width="650"
+            style={{ borderRadius: "16px" }}
           ></img>
         </Grid>
-        <Grid item xs={4} sx={{ textAlign: "left" }}>
+        <Grid item xs={4} sx={{ borderRadius: "10px", textAlign: "left" }}>
           <Grid
             item
             xs={12}
             style={{
               fontWeight: "500",
-              fontSize: "36px",
+              fontSize: "50px",
               textTransform: "capitalize",
             }}
           >
             {props.product?.name}
           </Grid>
-
           <Grid
             item
             xs={12}
@@ -160,10 +160,10 @@ const Product = (props) => {
             {props.product?.description}
           </Grid>
 
-          <Grid
+          {/* <Grid
             item
             xs={12}
-            style={{ fontSize: "16px", marginTop: "20px", marginTop: "5vh" }}
+            style={{ fontSize: "16px", marginTop: "5px", marginTop: "5vh" }}
           >
             <Rating
               name="half-rating-read"
@@ -171,30 +171,38 @@ const Product = (props) => {
               precision={0.5}
               readOnly
             />
-          </Grid>
+          </Grid> */}
 
           <Grid
             item
             xs={12}
             style={{
               marginLeft: "5px",
-              fontSize: "18px",
-              marginTop: "20px",
-              marginTop: "5vh",
+              fontSize: "21px",
+              marginTop: "5px",
+              marginTop: "1vh",
             }}
           >
             $&nbsp;{props.product?.price}
           </Grid>
 
-          <Grid item xs={12} sx={{ marginLeft: "5px", marginTop: "15vh" }}>
+          <Grid item xs={12} sx={{ marginLeft: "5px", marginTop: "10vh" }}>
             {props.product && props.product.quantity > 0 && (
-              <Button
-                onClick={addToCart}
-                justifyContent="left"
-                variant="contained"
-              >
-                Add to Cart
+              <>
+                <div className="App" style={{ marginBottom: "50px", padding: "4px 0px", width: "90px", height: "30px", backgroundColor: "#00b853", borderRadius: "50px" }}>
+                  <Typography variant="h7" color="#054d26">
+                    &nbsp;IN STOCK
+                  </Typography>
+                </div>
+                <Button
+                  fullWidth
+                  onClick={addToCart}
+                  variant="contained"
+                  style={{ textTransform: "none", padding: "14px 0px", borderRadius: "50px" }}
+                >
+                  Add to Cart
               </Button>
+              </>
             )}
             {props.product && props.product.quantity <= 0 && (
               <Typography variant="h5">Out of Stock</Typography>
@@ -208,7 +216,8 @@ const Product = (props) => {
             message="Added to the cart"
           />
         </Grid>
-        <Grid item xs={4} sx={{ textAlign: "left" }}>
+      </Grid>
+      {/* <Grid item xs={4} sx={{ textAlign: "left" }}>
           <Grid item xs={4} style={{ fontWeight: "bold", margin: "10px" }}>
             <h5>Review this product</h5>
           </Grid>
@@ -244,7 +253,7 @@ const Product = (props) => {
         <Grid item xs={6}>
           <ProductReviews data="sai" />
         </Grid>
-      </Grid>
+      </Grid> */}
 
       {/* <Grid sx={{ mb: 5, mt: 5 }} container spacing={2}>
         <Grid md={3}></Grid>
