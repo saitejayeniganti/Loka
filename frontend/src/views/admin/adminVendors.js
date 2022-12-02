@@ -73,11 +73,11 @@ const columns = [
     headerName: 'Address',
     width: 250,
   },
-    {
-    field: 'status',
-    headerName: 'Status',
-    width: 250,
-  },
+  //   {
+  //   field: 'status',
+  //   headerName: 'Status',
+  //   width: 250,
+  // },
 ];
 
 
