@@ -198,7 +198,7 @@ const Product = (props) => {
                     {props.product.merchant.storeName}
                   </Typography>
                 <Typography gutterBottom variant="h7" color="grey" component="div" >
-                    {props.product.merchant.location.address}
+                    {/* {props.product.merchant.location.address} */}
                   </Typography>
                 <Button
                   onClick={addToCart}
