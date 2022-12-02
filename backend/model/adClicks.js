@@ -16,7 +16,7 @@ const AdClicksSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "AdRequest",
   },
-  clicks:{type:String}
+  clicks:{type:Number,default:0}
 });
 const AdClicks = Mongoose.model("AdClicks", AdClicksSchema);
 AdClicks.syncIndexes();

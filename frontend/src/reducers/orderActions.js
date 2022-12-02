@@ -1,4 +1,4 @@
-import { get, post } from "../utils/serverCall";
+import { get, post, put } from "../utils/serverCall";
 import { ACTION } from '../utils/consts';
 const store = require('../utils/store');
 
@@ -56,6 +56,7 @@ export const fetchOrderById = (id, withLoading = true) => {
       if (withLoading) {
         // dispatch(setOrderLoading(true));
       }
+
       const response = await get(`/order/${id}`);
       dispatch({
         type: ACTION.FETCH_ORDER,
@@ -92,6 +93,40 @@ export const fetchOrders = (id, withLoading = true) => {
       if (withLoading) {
         // dispatch(setOrderLoading(false));
       }
+    }
+  };
+};
+
+export const updateOrderItemStatus = (product, status = "Cancelled", orderId) => {
+  return async (dispatch, getState) => {
+    try {
+      const newOrderStatus = {
+        orderId,
+        productId: product._id,
+        status,
+        quantity: product.quantity
+    }
+      const response = await put(`/order/status/`, newOrderStatus)
+      dispatch(fetchOrders());
+    } catch (error) {
+      // handleError(error, dispatch);
+    }
+  };
+};
+
+export const updateOrderItemStatusForSingleProduct = (product, status = "Cancelled", orderId) => {
+  return async (dispatch, getState) => {
+    try {
+      const newOrderStatus = {
+        orderId,
+        productId: product._id,
+        status,
+        quantity: product.quantity
+    }
+      const response = await put(`/order/status/`, newOrderStatus)
+      dispatch(fetchOrderById(orderId));
+    } catch (error) {
+      // handleError(error, dispatch);
     }
   };
 };

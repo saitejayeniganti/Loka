@@ -1,10 +1,10 @@
-import { Grid, Rating, Typography, Link, Paper, ButtonBase, styled, Box } from "@mui/material";
+import { Grid, Rating, Typography, Link, Paper, ButtonBase, styled, Box, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button} from "@mui/material";
 import React, { useEffect } from "react";
 import cartImage from "../../images/products/Cart.jpeg";
 import productImage from "../../images/products/apple.jpeg";
 import * as actions from '../../reducers/actions';
 import { connect } from 'react-redux';
-
+import shopInventory from "../../images/merchant/shopInventory.jpg";
 
 const Order = (props) => {
   const windowUrl = window.location.search;
@@ -15,6 +15,22 @@ const Order = (props) => {
   useEffect(() => {
     props.fetchOrderById(orderId);
   }, []);
+  const [open, setOpen] = React.useState(false);
+  const [product, setProduct] = React.useState(false);
+
+  const openModalWithItem = (product) => {
+    setProduct(product);
+    setOpen(true);
+  };
+
+  const handleCancel = () => {
+    props.updateOrderItemStatus(product, "Cancelled", orderId);
+    setOpen(false);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const Img = styled('img')({
     margin: 'auto',
@@ -24,13 +40,30 @@ const Order = (props) => {
   });
   return (
     <>
+      <div style={{ position: "relative" }}>
+        <img
+          src={shopInventory}
+          style={{ width: "100%", height: "250px" }}
+        ></img>
+        <h1
+          style={{
+            position: "absolute",
+            bottom: "8px",
+            left: "16px",
+            color: "white",
+            backgroundColor: "#063970",
+            padding: "5px",
+            borderRadius: "10px",
+          }}
+        >
+          Your Order Detail
+        </h1>
+      </div>
+
       <Grid >
-        <Box>
-          <Typography variant="h4"> Your Order Detail </Typography>
-        </Box>
         <Grid container spacing={2} mt={1} >
           <Grid xs={3}>
-            <Img alt="complex" src={cartImage} />
+            {/* <Img alt="complex" src={cartImage} /> */}
           </Grid>
           <Grid xs={6}>
             <Paper
@@ -66,9 +99,12 @@ const Order = (props) => {
                         </Typography>
                       </Grid>
                       <Grid item mb="5px">
-                        <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2">
-                          Cancel
-                      </Typography>
+                        {((product.status !== "Delivered" && product.status !== "Cancelled") &&
+                          <ButtonBase onClick={() => openModalWithItem(product)}>
+                            <Typography sx={{ cursor: 'pointer' }} color="red" variant="body2" >
+                              Cancel
+                            </Typography>
+                          </ButtonBase>)}
                       </Grid>
                     </Grid>
                     <Grid item>
@@ -90,6 +126,25 @@ const Order = (props) => {
           </Grid>
         </Grid>
       </Grid>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Delete product?"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {`Are you sure you want to remove ${product.name} ?`}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleCancel} autoFocus>
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
@@ -102,5 +157,6 @@ const mapStateToProps = state => {
 
 const actionCreators = {
   fetchOrderById: actions.fetchOrderById,
+  updateOrderItemStatus: actions.updateOrderItemStatusForSingleProduct,
 };
 export default connect(mapStateToProps, actionCreators)(Order);

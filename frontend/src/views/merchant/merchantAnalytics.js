@@ -402,7 +402,7 @@ function MerchantAnalytics(props) {
         <Grid item xs={12} className="flip-card-inner">
           <Paper elevation={3} className="flip-card-front" style={{height:"20vh",backgroundColor:"white"}}>
             <Grid item xs={12} sx={{  paddingTop: '5px' }}><h4 style={{ fontWeight: 'bold' }}>REVENUE</h4></Grid>
-            <Grid item xs={12} sx={{ fontSize:"6vh"}}>${revenue}</Grid>
+            <Grid item xs={12} sx={{ fontSize:"6vh"}}>${parseFloat(revenue).toFixed(2)}</Grid>
           </Paper>
           <Paper elevation={3} className="flip-card-back" style={{height:"20vh"}}>
             sai teja

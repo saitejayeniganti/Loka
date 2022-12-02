@@ -22,11 +22,13 @@ router.get('/dashboard', async (req, res) => {
     })
     const vendors=await Merchant.find({
     })
+     const adRequests=await AdRequest.find({
+    })
      res.status(200).json({
         users,
         reviews,
         orders,
-        vendors
+        vendors,adRequests
     });
   } catch (error) {
     console.log(error);
@@ -58,10 +60,12 @@ router.get('/user', async (req, res) => {
     const user=await User.find({_id:req.query.id,role:0})
     const reviews=await Review.find({user:req.query.id})
     const orders=await Order.find({user:req.query.id})
+    const adRequests=await AdClicks.find({userId:req.query.id})
     res.status(200).json({
         "user":user,
         "reviews":reviews,
-        "orders":orders
+        "orders":orders,
+        "adRequests":adRequests
       });
   } catch (error) {
     console.log(error);
@@ -207,10 +211,12 @@ router.get('/vendor', async (req, res) => {
     const vendor=await Merchant.find({_id:req.query.id})
     // const reviews=await Review.find({user:req.query.id})
     const orders=await Order.find({merchant:req.query.id})
+    const adClicks=await AdClicks.find({merchantId:req.query.id})
     res.status(200).json({
         "vendor":vendor,
         // "reviews":reviews,
-        "orders":orders
+        "orders":orders,
+        "adClicks":adClicks
       });
   } catch (error) {
     console.log(error);
@@ -278,6 +284,26 @@ router.post('/adrequest', async (req, res) => {
     });
   }})
 
+  router.put('/adviewed', async (req, res) => {
+      // console.log(req.body)
+  try {
+    if(req.body.id!=undefined){
+      const filter = { _id: req.body.id };
+      
+      const ad=await AdRequest.findById(filter)
+      const update = {"views":ad.views+1};
+      const adrequestDoc = await AdRequest.findByIdAndUpdate(filter, update)
+       res.status(200).json(adrequestDoc);
+       }
+       else
+       res.status(200).json("");
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
   //save ads in marchant
     router.put('/savemerchantads', async (req, res) => {
       console.log("API: savemerchantads",req.body)
@@ -296,24 +322,46 @@ router.post('/adrequest', async (req, res) => {
    router.put('/adclick', async (req, res) => {
       // console.log("click api server",req.body)
   try {
+
+      if(req.body.id==undefined || req.body.userId==undefined || req.body.userId=="")
+      {
+        res.status(200).json("");
+      }
+      else{
       const filter = { _id: req.body.id };
       const ad = await AdRequest.find({_id: req.body.id})
       let clicks=0
       if(ad[0]!=undefined)
           clicks= parseInt(ad[0].clicks==undefined?0:ad[0].clicks) +1
       else
-        clicks= 0
+        clicks= 1
       const update = {"clicks":clicks};
       const adrequestDoc = await AdRequest.findByIdAndUpdate(filter, update)
 
-      // const filter1={adRequestId: req.body.id,userId:req.body.userId}
-      // const adClick = await AdRequest.find(filter1)
-      // if(
-      //   console.log("adclick schema data",adClick)
-      // )
-      // const adClickDoc = await AdClicks.findByIdAndUpdate(filter, update)
+      if(req.body.userId!=null || req.body.userId!="" || req.body.merchantId!=null ||req.body.merchantId!=undefined)
+      {
+        let filter = {userId: req.body.userId,merchantId:req.body.merchantId,adRequestId:req.body.id };
+        let adClick = await AdClicks.find(filter)
+
+        if(adClick.length==0)
+        {
+          let insertAdClick=new AdClicks({userId: req.body.userId,merchantId:req.body.merchantId,adRequestId:req.body.id,clicks:1})
+              insertAdClick.save((err, result) => {
+
+              })
+        }
+        else
+        {
+          // console.log(adClick)
+          let c=adClick[0].clicks+1
+          let f = {userId: req.body.userId,merchantId:req.body.userId,adRequestId:req.body.id,clicks:c };
+          let u=adClick[0]._id
+          const adClickRecordDoc = await AdClicks.findByIdAndUpdate(u, f)
+        }
+      }
 
       res.status(200).json(adrequestDoc);
+      }
   } catch (error) {
     console.log(error);
     res.status(400).json({
@@ -365,6 +413,23 @@ router.post('/adrequest', async (req, res) => {
       console.log(req.query)
       const product = await Product.find({merchant:req.query.id}).populate("category",["_id","name"]).populate("brand")
       res.status(200).json(product);
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({
+      error: 'Your request could not be processed. Please try again.'
+    });
+  }})
+
+
+
+ //get all products for merchant page
+  router.put('/merchantdeletead', async (req, res) => {
+  try {
+      console.log(req.body)
+      const filter = { _id: req.body.id };
+      const update = {"ads":req.body.ads};
+      const merchantDoc = await Merchant.findByIdAndUpdate(filter, update)
+      res.status(200).json(merchantDoc);
   } catch (error) {
     console.log(error);
     res.status(400).json({

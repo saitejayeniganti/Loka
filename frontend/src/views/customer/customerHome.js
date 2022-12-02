@@ -14,6 +14,7 @@ import Lottie from "react-lottie";
 import { useSelector } from "react-redux";
 import { CONSTANTS, REDUCER } from "../../utils/consts";
 import { useNavigate } from "react-router-dom";
+import soldOut from "../../images/admin/new-brand-badge.png";
 import { get } from "../../utils/serverCall";
 import isEqual from "lodash/isEqual";
 import { Navigate } from "react-router-dom";
@@ -23,6 +24,7 @@ import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded
 import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 import { over } from "lodash";
+import Progress from "../../components/Progress";
 
 function CustomerHome() {
   const defaultOptions = {
@@ -71,19 +73,27 @@ function CustomerHome() {
   const [vendorsOnly, setVendorsOnly] = useState([]);
   const [productVendors, setProductVendors] = useState([]);
   const [vendorDetails, setVendorDetails] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const onVendorClick = (vendorId) => {
     console.log(vendorId);
   };
 
   const fetchMerchants = (location, searchInput) => {
+    setLoading(true);
     location &&
-      get("/customer/multiSearch", { location, searchInput }).then((result) => {
-        console.log("nearby stores", result);
-        setVendorsOnly(result.vendorsOnly);
-        setProductVendors(result.productVendors);
-        setVendorDetails(result.vendorDetails);
-      });
+      get("/customer/multiSearch", { location, searchInput })
+        .then((result) => {
+          console.log("nearby stores", result);
+          setVendorsOnly(result.vendorsOnly);
+          setProductVendors(result.productVendors);
+          setVendorDetails(result.vendorDetails);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
+        });
   };
 
   const saveMerchantIcon = () => {
@@ -151,6 +161,10 @@ function CustomerHome() {
     return <Navigate to={"/customermerchant?id=" + selectedMerchant} />;
   }
 
+  if (loading) {
+    return <Progress></Progress>;
+  }
+
   const createBaseCard = (vendor, productDetails) => {
     return (
       <Paper
@@ -167,13 +181,13 @@ function CustomerHome() {
         <Grid container spacing={0} sx={{ height: "100%" }}>
           <Grid
             item
-            xs={4}
+            xs={12}
             sx={{
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               height: "140px",
-              padding: "10px",
+              padding: "0px",
               cursor: "pointer",
             }}
             title="Redirect to merchant"
@@ -181,11 +195,6 @@ function CustomerHome() {
           >
             <div
               style={{
-                borderStyle: "solid",
-                borderWidth: "0.1rem",
-                borderColor: "#d3d3d3",
-                borderRadius: "50%",
-                // marginLeft: "10px",
                 overflow: "hidden",
               }}
             >
@@ -200,20 +209,22 @@ function CustomerHome() {
                 style={{
                   borderColor: "black",
                   padding: "0px !important",
-                  height: "64px",
-                  width: "64px",
+                  maxHeight: "-webkit-fill-available",
+                  width: "fill",
+                  borderTopRightRadius: "10px",
+                  borderTopLeftRadius: "10px",
                 }}
               ></img>
             </div>
           </Grid>
           <Grid
             container
-            xs={8}
+            xs={12}
             sx={{
               background: "#e5e8e8",
               padding: "0px !important",
-              borderTopRightRadius: "10px",
               borderBottomRightRadius: "10px",
+              borderBottomLeftRadius: "10px",
               padding: "10px",
             }}
           >
@@ -232,56 +243,8 @@ function CustomerHome() {
               </div>
             </Grid>
 
-            {/* <Grid item xs={4}>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  backgroundColor: "#ffffff",
-                  borderRadius: "45px",
-                  paddingTop: "2px",
-                  paddingBottom: "3px",
-                }}
-              >
-                <div
-                  style={{
-                    textAlign: "left",
-                    marginTop: "2px",
-                    fontSize: "14px",
-                  }}
-                >
-                  {vendor.rating} &nbsp;
-                </div>
-                <div style={{ color: "#FFD700" }}>
-                  <StarPurple500SharpIcon fontSize="medium" />
-                </div>
-              </div>
-            </Grid> */}
             <Grid item xs={1}></Grid>
-            {/* <Grid
-              item
-              xs={1}
-              sx={{ marginTop: "2px", opacity: "60%" }}
-              title="Save Merchant"
-            >
-              <BookmarkRoundedIcon
-                color=""
-                onClick={() => saveMerchantIcon()}
-              />
-            </Grid> */}
-            {/* vendor.categories && <Grid item xs={12}>
-        <div style={{ textAlign: "left", fontSize: "13px" }}>
-          {vendor.categories[0]}
-          {vendor.categories.slice(1, 2).map((v) => (
-            <>
-              {" - "}
-              {v}{" "}
-            </>
-          ))}{" "}
-          ..
-        </div>
-      </Grid> */}
+
             {productDetails && (
               <>
                 <Grid item xs={12}>
@@ -367,7 +330,7 @@ function CustomerHome() {
                     display: "inline-block",
                   }}
                 ></img>
-                &nbsp;
+                &nbsp;&nbsp;
                 <div
                   style={{
                     color: "rgb(10 173 10)",
@@ -430,8 +393,8 @@ function CustomerHome() {
       </div>
 
       <div className="homeBanner1">
-        <h1>Order products for pickup or delivery today</h1>
-        <p>Whatever you want from local stores, brought right to your door.</p>
+        <h1>Welcome back to LOKA</h1>
+        <p>A Hyperlocal Shopping Platform.</p>
       </div>
 
       <div
@@ -447,7 +410,7 @@ function CustomerHome() {
         Select a store nearby
       </div>
 
-      {productVendors?.length == 0 && vendorsOnly?.length == 0 ? (
+      {Object.keys(vendorDetails).length == 0 ? (
         "No Merchants matching your search criteria"
       ) : (
         <div className="row" style={{ paddingLeft: "20px" }}>

@@ -34,29 +34,34 @@ const OrderItems = (props) => {
             <Grid
               key={`${i._id}${i.count}`}
               container
-              direction="row">
+              direction="row"
+              style={{margin:"10px",marginBottom:"0px !important"}}
+              >
               <Grid container
-                direction="column">
+                direction="column"
+                style={{alignSelf:"center"}}
+                >
                 <img
                   component="img"
-                  style={{ marginLeft: "0" }}
+                  style={{ marginLeft: "0",borderRadius:"10px" }}
                   src={i.image}
                   align="left"
+
                 />
                 <Grid container item>
                   <Typography variant="h7" textAlign="center" paddingLeft="15px">{i.name}</Typography>
                 </Grid>
               </Grid>
-              <Grid item align="left" paddingTop="10px">
+              <Grid item align="left" paddingTop="10px" style={{alignSelf:"center"}}>
                 <Typography variant="h7" textAlign="left">${i.price}</Typography>
               </Grid>
-              <Grid item align="left" paddingTop="10px">
+              <Grid item align="left" paddingTop="10px" style={{alignSelf:"center"}}>
                 <Typography variant="h7" textAlign="left">{i.count} </Typography>
               </Grid>
-              <Grid item align="left" paddingTop="10px">
+              <Grid item align="left" paddingTop="10px" style={{alignSelf:"center"}}>
                 <Typography variant="h7" textAlign="left">${(i.count * i.price).toFixed(2)} </Typography>
               </Grid>
-              <Grid item align="left" paddingTop="10px">
+              <Grid item align="left" paddingTop="10px" style={{alignSelf:"center"}}>
                 <Typography variant="h7" textAlign="left">${i.totalTax} </Typography>
               </Grid>
             </Grid>

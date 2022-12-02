@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { displayError, displayMessage } from "../../utils/messages";
 import { get, post } from "../../utils/serverCall";
-
+import delivery from "../../animations/delivery.json";
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import LocationSearchInput from "../../components/LocationAuto";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -19,7 +19,7 @@ import { showError, showMessage } from "../../reducers/errorActions";
 import Grid from "@mui/material/Grid";
 import Lottie from "react-lottie";
 import merchant from "../../animations/merchantLogin1.json";
-import yourStore from "../../animations/yourStore.json";
+import ofr from "../../animations/ofr.json";
 import LocalPostOfficeIcon from "@mui/icons-material/LocalPostOffice";
 import PhoneIcon from "@mui/icons-material/Phone";
 import KeyIcon from "@mui/icons-material/Key";
@@ -47,7 +47,7 @@ function Signup(userDetails) {
   const defaultOptions1 = {
     loop: true,
     autoplay: true,
-    animationData: yourStore,
+    animationData: ofr,
     rendererSettings: {
       preserveAspectRatio: "xMidYMid slice",
     },
@@ -194,19 +194,16 @@ function Signup(userDetails) {
       <Grid container sx={{ height: "100%", position: "absolute" }}>
         <Grid
           item
-          xs={3}
-          sx={
-            {
-              // background: "linear-gradient(35deg, #F9EA8F 40%, #AFF1DA 70%)",
-            }
-          }
+          xs={4}
+          sx={{marginTop:"25vh"}}
         >
+
           <div
-            style={{ fontSize: "80px", fontFamily: "math", marginTop: "10px" }}
+            style={{fontSize: "80px", fontFamily: "math" }}
           >
             Sign Up
           </div>
-          <Lottie options={defaultOptions} height={420} width={420} />
+          
 
           <div
             style={{
@@ -223,15 +220,15 @@ function Signup(userDetails) {
 
         <Grid
           item
-          xs={6}
+          xs={4}
           sx={{
             // background: "rgb(243, 233, 100)"
             paddingTop: "40px",
           }}
         >
           <Grid container sx={{ height: "100%" }}>
-            <Grid item xs={2.5}></Grid>
-            <Grid item xs={7}>
+            
+            <Grid item xs={12}>
               <Paper
                 elevation={10}
                 sx={{ borderRadius: "10px", paddingTop: "8px" }}
@@ -245,7 +242,7 @@ function Signup(userDetails) {
                       navigate("/merchantSignup");
                     }}
                   >
-                    Merchant Signup{" "}
+                    Vendor Signup{" "}
                   </u>
                 </div>
                 <div
@@ -483,6 +480,14 @@ function Signup(userDetails) {
             </Grid>
           </Grid>
         </Grid>
+        <Grid
+          item
+          xs={4}
+          sx={{marginTop:"25vh"}}
+        >
+<Lottie options={defaultOptions1} height={270} width={270} />
+        </Grid>
+        
       </Grid>
     </>
   );

@@ -77,7 +77,7 @@ export default function AdminOrders() {
             "id":u._id,
             "customerName":userTemp.firstName+" "+userTemp.lastName,
             // "vendorName":"",
-            "total":"$ "+u.total,
+            "total":"$ "+u.total.toFixed(2),
             "placed":u.created.substr(0, 10),
             "allData":u
           }
@@ -101,7 +101,7 @@ export default function AdminOrders() {
 
     const renderProducts = () => {
       return( <>
-        <Grid container>
+        <Grid container style={{maxHeight:"40vh",overflowY:"scroll"}}>
           <Grid container style={{marginBottom:"2vh",fontWeight:"800"}}>
           <Grid item xs={7.5} sx={{alignSelf: "center",textAlign:"center"}}>
               ITEM 
@@ -115,7 +115,7 @@ export default function AdminOrders() {
             </Grid>
             {selectedOrder.products.map((p)=><>
             <Grid item xs={3} sx={{textAlign:"left",marginTop:"5px",marginBottom:"5px"}}>
-                <img src={p.image} height="64px" width="64px"/>
+                <img src={p.image} height="64px" width="64px" style={{borderRadius:"10px"}}/>
             </Grid>
           <Grid item xs={5} sx={{textAlign:"left",alignSelf: "center"}}>
               {p.name}
@@ -204,7 +204,7 @@ export default function AdminOrders() {
                             <Grid item xs={12}>
                                   <div style={{fontSize:"20px"}}>Order Details</div>
                             </Grid>
-                            <Grid item xs={12} sx={{marginTop:"5vh",maxHeight:"40vh",overflowY:"scroll"}}>
+                            <Grid item xs={12} sx={{marginTop:"5vh"}}>
                                     <Grid item xs={12}>
                                       {renderProducts()}
                                     </Grid>
@@ -219,7 +219,7 @@ export default function AdminOrders() {
                                           TOTAL
                                         </Grid>
                                         <Grid item xs={2} style={{fontWeight:"800"}}>
-                                            $&nbsp;{selectedOrder.total}
+                                            $&nbsp;{selectedOrder.total.toFixed(2)}
                                         </Grid>
                                     </Grid>
                             </Grid>

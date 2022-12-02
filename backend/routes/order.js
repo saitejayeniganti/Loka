@@ -77,10 +77,10 @@ router.post("/add", async (req, res) => {
 router.get("/me", async (req, res) => {
   try {
     // console.log("me ", req);
-    console.log("req.user", req.user);
+    // console.log("req.user", req.user);
     const { page = 1, limit = 10 } = req.query;
     const user = req.user.id;
-    // const user = "634fb3e27bcc0d0fe139ce7c";
+    // const user = "6383b7612f8dae5b24943919";
     // const user = "637446b8c4c910caff00e6bc";
     const query = { user };
     console.log("query", query);
@@ -103,6 +103,9 @@ router.get("/me", async (req, res) => {
     const count = await Order.countDocuments(query);
     console.log("count ", count);
     const orders = store.formatOrders(ordersDoc);
+    const ordersDocWithMerchant = await Order.populate(ordersDoc, {
+      path: "products.merchant",
+    });
 
     res.status(200).json({
       orders,
@@ -122,7 +125,6 @@ router.get("/me", async (req, res) => {
 router.get("/:orderId", async (req, res) => {
   try {
     const orderId = req.params.orderId;
-
     let orderDoc = null;
 
     // if (req.user?.role === role.ROLES.Admin) {
@@ -202,7 +204,7 @@ router.get("/merchant/myOrder/:id", async (req, res) => {
         },
       },
       {
-        $sort: { created: 1 },
+        $sort: { created: -1 },
       },
     ]);
 
@@ -226,8 +228,8 @@ router.put("/merchant/myOrder/update", async (req, res) => {
   try {
     const { orderId, productId, status, quantity } = req.body;
 
-    if (status === 'Cancelled') {
-      await increaseQuantity(productId, quantity)
+    if (status === "Cancelled") {
+      await increaseQuantity(productId, quantity);
     }
 
     const ordersDoc = await Order.updateOne(
@@ -235,6 +237,31 @@ router.put("/merchant/myOrder/update", async (req, res) => {
       { $set: { "products.$.status": status } }
     );
     const orders = ordersDoc;
+
+    res.status(200).json({
+      orders,
+    });
+  } catch (error) {
+    console.log("X ", error);
+    res.status(400).json({
+      error: "Your request could not be processed. Please try again.",
+    });
+  }
+});
+
+router.put('/status', async (req, res) => {
+  try {
+    const { orderId, productId, status, quantity } = req.body;
+    console.log("Req X",req.body);
+    const ordersDoc = await Order.updateOne(
+      { _id: orderId, "products._id": productId },
+      { $set: { "products.$.status": status } }
+    );
+    const orders = ordersDoc;
+
+    if (status === "Cancelled") {
+      await increaseQuantity(productId, quantity);
+    }
 
     res.status(200).json({
       orders,
@@ -261,8 +288,10 @@ const decreaseQuantity = (products) => {
 };
 
 const increaseQuantity = async (productId, newQuantity) => {
-  await Product.updateOne({ _id: productId }, { $inc: { quantity: newQuantity } })
-}
-
+  await Product.updateOne(
+    { _id: productId },
+    { $inc: { quantity: newQuantity } }
+  );
+};
 
 module.exports = router;

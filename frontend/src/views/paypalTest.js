@@ -24,7 +24,7 @@ function PayPalTest(props) {
             const details = await actions.order.capture();
             const name = details.payer.name.given_name;
             props.paid(props.id)
-            alert("Transaction completed. Paid by " + props.name);
+            // alert("Transaction completed. Paid by " + props.name);
           }}
         />
       </PayPalScriptProvider>

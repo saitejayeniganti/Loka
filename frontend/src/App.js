@@ -26,7 +26,7 @@ import MerchantHome from "./views/merchant/merchantHome";
 import Signup from "./views/common/Signup";
 import LocationSearch from "./components/LocationSearch";
 
-import RouteMap from "./views/routeMap";
+// import RouteMap from "./views/routeMap";
 import MerchantLogin from "./views/merchant/merchantLogin";
 import MerchantAddProducts from "./views/merchant/merchantAddProducts";
 import MerchantInventory from "./views/merchant/merchantInventory";
@@ -67,6 +67,7 @@ import AdminAdRequests from "./views/admin/adminAdRequests";
 import MerchantPostAd from "./views/merchant/merchantPostAd";
 import MerchantSignup from "./views/common/MerchantSignup";
 import MerchantAnalytics from "./views/merchant/merchantAnalytics";
+import Future from "./views/common/Future";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -201,7 +202,11 @@ function App() {
         <Route path="/adminusers" exact element={<AdminUsers />}></Route>
         <Route path="/adminvendors" exact element={<AdminVendors />}></Route>
         <Route path="/adminorders" exact element={<AdminOrders />}></Route>
-        <Route path="/merchantanalytics" exact element={<MerchantAnalytics />}></Route>
+        <Route
+          path="/merchantanalytics"
+          exact
+          element={<MerchantAnalytics />}
+        ></Route>
 
         <Route
           path="/adminuserdetail"
@@ -251,8 +256,7 @@ function App() {
         <Route path="/bill" exact element={<Bill />}></Route>
         <Route path="/order" exact element={<Order />}></Route>
         <Route path="/myorder" exact element={<MyOrder />}></Route>
-        <Route path="/route" exact element={<RouteMap />}></Route>
-        {/* <Route path="/map" exact element={<SimpleMap />}></Route> */}
+        {/* <Route path="/route" exact element={<RouteMap />}></Route> */}
         <Route path="/location" exact element={<LocationSearch />}></Route>
         <Route
           path="/profile"
@@ -272,6 +276,7 @@ function App() {
         <Route path="/review" element={<ReviewsTest />}></Route>
         <Route path="/savedmerchants" element={<SavedMerchants />}></Route>
         <Route path="/fb" element={<Fb />}></Route>
+        <Route path="/inprogress" element={<Future></Future>}></Route>
         <Route path="*" element={<ErrorPath></ErrorPath>}></Route>
       </Routes>
     );

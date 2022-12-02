@@ -90,6 +90,17 @@ const columns = [
     headerName: 'Payment',
     width: 150,
   },
+  // {
+  //   field: 'clicks',
+  //   headerName: 'Clicks',
+  //   width: 150,
+  // },
+
+   {
+    field: 'Clickthrough rate (CTR)',
+    headerName: 'Clickthrough rate (CTR)',
+    width: 450,
+  },
 ];
 
 
@@ -119,12 +130,14 @@ function AdminHome() {
                         "isApproved":u.isApproved,
                         "isPaid":u.isPaid,
                         "created":u.created,
-                        "phone":u.phone
+                        "phone":u.phone,
+                        // "clicks":u.status=="PAID"?u.clicks:"NA",
+                        "Clickthrough rate (CTR)":u.status=="PAID"?u.clicks==0 || u.views==0?0:(parseInt(u.clicks)/u.views).toFixed(1)+" %":"NA"
                 }     
                 arr.push(ob)
             }
             setRows([...arr])
-       })
+       }) 
         .catch((err) => {
         
       });
@@ -233,7 +246,7 @@ function AdminHome() {
                                 </>:""}
                              
                                   <Button variant="outlined" startIcon={<KeyboardBackspaceTwoToneIcon />} sx={{marginLeft:"10px"}} onClick={()=>setRedirToHome(true)}>
-                                     Go Back
+                                     Home
                                      </Button>
                                  
                                  </div>

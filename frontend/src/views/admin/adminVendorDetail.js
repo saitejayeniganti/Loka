@@ -70,6 +70,7 @@ function AdminVendorDetail() {
   const [redirToOrders, setRedirToOrders] = useState(false);
   const [redirToReviews, setRedirToReviews] = useState(false);
   const [redirToAds, setRedirToAds] = useState(false);
+  const [totalClicks,setTotalClicks]=useState(0)
   const [vendorDetails, setVendorDetails] = useState({
                                                     storeName:"",
                                                     location:{address:""},
@@ -163,6 +164,12 @@ function AdminVendorDetail() {
         var reviewsArr=new Array(12).fill(0)
         var spentArr=new Array(12).fill(0)
         var adsArr=new Array(12).fill(0)
+          let clickss=0
+        for(var u of result.adRequests)
+        {
+            clickss+=u.clicks
+        }
+        setTotalClicks(clickss)
         for(var u of result.orders)
         {
           var d= new Date(u.created)
@@ -268,7 +275,7 @@ function AdminVendorDetail() {
                                 <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Total reviews</div>
                             </Grid>
                              <Grid item xs={12} >
-                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>56</div>
+                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>0</div>
                             </Grid>
                       </Grid>
                     </Paper>
@@ -284,7 +291,7 @@ function AdminVendorDetail() {
                                 <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Total revenue</div>
                             </Grid>
                              <Grid item xs={12} >
-                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>$ {moneyVal}</div>
+                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>$ {moneyVal.toFixed(2)}</div>
                             </Grid>
                       </Grid>
                     </Paper>
@@ -297,10 +304,10 @@ function AdminVendorDetail() {
                                  <img src={ads} style={{height:"4vh",width:"4vh",textAlign:"left"}} title="Approved users"/>
                             </Grid>
                              <Grid item xs={10}>
-                                <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Total Ad revenue</div>
+                                <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Total Ad Clicks</div>
                             </Grid>
                              <Grid item xs={12}>
-                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>0</div>
+                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>{totalClicks}</div>
                             </Grid>
                       </Grid>
                     </Paper>
@@ -310,7 +317,7 @@ function AdminVendorDetail() {
                     <Paper elevation={3} style={{height:"70vh",padding:"10px"}}>
                           <Grid container spacing={3} >
                                 <Grid item xs={12}>
-                                    <img src={testBanner} height="150" width="100%"></img>
+                                    <img src={vendorDetails.image} height="150" width="100%"></img>
                                 </Grid>
                                 {/* <Grid item xs={12}>
                                 <div style={{marginTop:"1vh",textAlign:"left",paddingLeft:"24px"}}>
@@ -384,9 +391,8 @@ function AdminVendorDetail() {
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                                          <Tab label="Orders" value="1" />
-                                        <Tab label="Reviews" value="2" />
-                                        <Tab label="Revenue Generated" value="3" />
-                                        <Tab label="Ads Clicked" value="4" />
+                                         <Tab label="Revenue Generated" value="2" />
+                                        {/* <Tab label="Ads Clicked" value="3" /> */}
                                     </TabList>
                                 </Box>
                                 <TabPanel value="1">
@@ -395,48 +401,38 @@ function AdminVendorDetail() {
                                             <div style={{fontSize:"30px",textAlign:"left"}}>Order frequency</div>
                                          </Grid>
                                         <Grid item xs={12} >
-                                             <div style={{height:"90%",width:"90%"}}>
-                                             <Line options={options} data={ordersMap} />
-                                             </div>
+                                             
+                                             <Line height="110%" weight="70%" options={options} data={ordersMap} />
+                                             
                                           </Grid>
                                     </Grid>
                                  </TabPanel>
-                                 <TabPanel value="2">
-                                    <Grid container style={{height:"90%",width:"90%"}}>
-                                         <Grid item xs={12} >
-                                             <div style={{fontSize:"30px",textAlign:"left"}}>Review frequency</div>
-                                        </Grid>
-                                         <Grid item xs={12} >
-                                             <div style={{height:"90%",width:"90%"}}>
-                                             <Line options={options} data={reviewsMap} />
-                                             </div>
-                                          </Grid>
-                                     </Grid>
-                                 </TabPanel>
-                                 <TabPanel value="3">
+                                  <TabPanel value="2">
                                     <Grid container style={{height:"90%",width:"90%"}}>
                                         <Grid item xs={12} >
                                             <div style={{fontSize:"30px",textAlign:"left"}}>Revenue accrued over different months</div>
                                          </Grid>
                                         <Grid item xs={12} >
-                                             <div style={{height:"90%",width:"90%"}}>
-                                             <Line options={options} data={spentMap} />
-                                             </div>
+                                             
+                                             <Line height="110%" weight="70%" options={options} data={spentMap} />
+                                             
                                           </Grid>
                                     </Grid>
                                  </TabPanel>
-                                 <TabPanel value="4">
+                             
+                                
+                                 {/* <TabPanel value="3">
                                     <Grid container style={{height:"90%",width:"90%"}}>
                                          <Grid item xs={12} >
                                              <div style={{fontSize:"30px",textAlign:"left"}}>Review frequency</div>
                                         </Grid>
                                          <Grid item xs={12} >
-                                             <div style={{height:"90%",width:"90%"}}>
-                                             <Line options={options} data={adsMap} />
-                                             </div>
+                                             
+                                             <Line height="110%" weight="70%" options={options} data={adsMap} />
+                                             
                                           </Grid>
                                      </Grid>
-                                 </TabPanel>
+                                 </TabPanel> */}
                              </TabContext>
                         </Grid>
                     </Paper>

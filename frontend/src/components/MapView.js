@@ -14,28 +14,17 @@ import { isEqual } from "lodash";
 import MapDistance from "./MapDistance";
 import homeIcon from "../images/maps/home.png";
 
-// import HomeIcon from "@mui/icons-material/Home";
-// import homePng from "../images/customer/mapHome.png";
-// import Places from "./places";
-// import Distance from "./distance";
-
-//home is dynamic but center is fixed. we can merge the both to same.
 export default function MapView(props) {
   const navigatorState = useSelector((state) => state.navigatorReducer);
-  // const [location, setLocation] = useState({
-  //   lat: CONSTANTS.DEFAULT_ADDRESS.coordinates[1],
-  //   lng: CONSTANTS.DEFAULT_ADDRESS.coordinates[0],
-  // });
+
   const [location, setLocation] = useState();
-  const [searchInput, setSearchInput] = useState("");
   const [vendors, setVendors] = useState([]);
 
   const [currentVendor, setCurrentVendor] = useState();
 
-  // const [home, setHome] = useState(); // delivery address. set by getting location from navigator.
   const [directions, setDirections] = useState();
   const mapRef = useRef();
-  // const location = useMemo(() => ({ lat: 37.33, lng: -121.88 }), []); // It is the map center ? San Jose by Default or same as the home.
+
   const center = useMemo(() => ({ lat: 37.33, lng: -121.88 }), []);
   const options = useMemo(
     () => ({
@@ -46,18 +35,12 @@ export default function MapView(props) {
     []
   );
 
-  // useEffect(() => {
-  //   setLocation({
-  //     lat: CONSTANTS.DEFAULT_ADDRESS.coordinates[1],
-  //     lng: CONSTANTS.DEFAULT_ADDRESS.coordinates[0],
-  //   });
-  // }, []);
   const onLoad = useCallback((map) => (mapRef.current = map), []);
   // const houses = useMemo(() => generateHouses(center), [center]); // need to get nearby restaurants here.
 
   const fetchMerchants = (location, searchInput) => {
     location &&
-      get("/customer/merchants", {
+      get("/customer/multisearch", {
         location,
         searchInput,
       }).then((result) => {
@@ -65,51 +48,31 @@ export default function MapView(props) {
         const productVendors = result.productVendors;
         const vendorDetails = result.vendorDetails;
         let vendorsTemp = [];
-        let vendors;
+        let vendorsLocal;
         productVendors &&
           (vendorsTemp = productVendors.map((each) => {
             return vendorDetails[each.merchant];
           }));
-        console.log(vendorsTemp);
-        vendors = [...vendorsTemp];
+
+        vendorsLocal = [...vendorsTemp];
+
         if (vendorsOnly) {
           vendorsTemp = vendorsOnly.map((vendor) => {
             return vendorDetails[vendor];
           });
         } else {
           // Object.keys(obj)
-          let vendors = Object.keys(vendorDetails);
-          vendorsTemp = vendors.map((vendor) => {
+          let vendorsLocationOnly = Object.keys(vendorDetails);
+          vendorsTemp = vendorsLocationOnly.map((vendor) => {
             return vendorDetails[vendor];
           });
         }
-        vendors = [...vendorsTemp];
-        console.log("nearby stores", result);
-        setVendors(vendors);
-        // setVendorsOnly(result.vendorsOnly);
-        // setProductVendors(result.productVendors);
-        // setVendorDetails(result.vendorDetails);
-        // setVendors(result);
+        console.log("pvendors : ", vendorsLocal);
+        vendorsLocal = [...vendorsLocal, ...vendorsTemp];
+        console.log("nearby stores", vendorsLocal);
+        setVendors(vendorsLocal);
       });
   };
-
-  // useEffect(() => {
-  //   // console.log("navigator Change", navigatorState);
-  //   const newLoc = navigatorState[REDUCER.LOCATION];
-  //   const newSearch = navigatorState[REDUCER.SEARCHINPUT];
-  //   if (newLoc) {
-  //     console.log("new Location", {
-  //       lng: newLoc.coordinates[0],
-  //       lat: newLoc.coordinates[1],
-  //     });
-  //     // setLocation({ lng: newLoc.coordinates[0], lat: newLoc.coordinates[1] });
-  //   }
-  //   if (newSearch) {
-  //     console.log("new Search", newSearch);
-  //     setSearchInput(newSearch);
-  //   }
-  //   // fetchMerchants(newLoc, newSearch);
-  // }, [navigatorState]);
 
   function usePrevious(value) {
     const ref = useRef();
@@ -119,27 +82,15 @@ export default function MapView(props) {
     return ref.current;
   }
 
-  // const initialRender = useRef(true);
-  // const prevLocation = usePrevious(location);
-  // useEffect(() => {
-  //   if (initialRender.current) {
-  //     initialRender.current = false;
-  //     return;
-  //   }
-  //   if (!isEqual(prevLocation, location)) {
-  //     fetchMerchants(location, searchInput);
-  //   }
-  // }, [location, prevLocation]);
-
-  const searchInitialRender = useRef(true);
-  const prevNavigatorState = usePrevious(navigatorState);
+  // const searchInitialRender = useRef(true);
+  // const prevNavigatorState = usePrevious(navigatorState);
   useEffect(() => {
-    if (searchInitialRender.current) {
-      searchInitialRender.current = false;
-      return;
-    }
+    // if (searchInitialRender.current) {
+    //   searchInitialRender.current = false;
+    //   return;
+    // }
     if (
-      !isEqual(prevNavigatorState, navigatorState) &&
+      // !isEqual(prevNavigatorState, navigatorState) &&
       navigatorState.location
     ) {
       console.log("navigator changed", navigatorState);
@@ -154,19 +105,8 @@ export default function MapView(props) {
       setLocation(geoLocation);
       mapRef.current?.panTo(geoLocation);
     }
-  }, [navigatorState, prevNavigatorState]);
-
-  // const navInitialRender = useRef(true);
-  // const prevSearchInput = usePrevious(searchInput);
-  // useEffect(() => {
-  //   if (navInitialRender.current) {
-  //     navInitialRender.current = false;
-  //     return;
-  //   }
-  //   if (!isEqual(prevSearchInput, searchInput)) {
-  //     fetchMerchants(location, searchInput);
-  //   }
-  // }, [searchInput, prevSearchInput]);
+  }, [navigatorState]);
+  // }, [navigatorState, prevNavigatorState]);
 
   const fetchDirections = (house, details) => {
     if (!location) return; // if home is not set then no directions.
@@ -191,12 +131,6 @@ export default function MapView(props) {
   return (
     <div className="container">
       <div className="controls">
-        {/* <Places
-          setHome={(position) => {
-            setHome(position);
-            mapRef.current?.panTo(position);
-          }}
-        /> */}
         {!location && <p>Enter the address of your home.</p>}
         {directions && (
           <MapDistance
@@ -207,7 +141,7 @@ export default function MapView(props) {
       </div>
       <div className="map">
         <GoogleMap
-          zoom={11}
+          zoom={13}
           center={center}
           mapContainerClassName="map-container"
           options={options}
@@ -227,11 +161,7 @@ export default function MapView(props) {
           )}
           {location && (
             <>
-              <Marker
-                position={location}
-                // icon="https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png"
-                icon={homeIcon}
-              />
+              <Marker position={location} icon={homeIcon} />
               {vendors && (
                 <MarkerClusterer>
                   {(clusterer) =>
@@ -257,12 +187,8 @@ export default function MapView(props) {
                   }
                 </MarkerClusterer>
               )}
-              <Circle center={location} radius={5000} options={closeOptions} />
-              <Circle
-                center={location}
-                radius={10000}
-                options={middleOptions}
-              />
+              <Circle center={location} radius={7000} options={closeOptions} />
+
               <Circle center={location} radius={15000} options={farOptions} />
             </>
           )}
@@ -287,13 +213,7 @@ const closeOptions = {
   strokeColor: "#00cc00",
   fillColor: "#00e600",
 };
-const middleOptions = {
-  ...defaultOptions,
-  zIndex: 2,
-  fillOpacity: 0.05,
-  strokeColor: "#0000ff",
-  fillColor: "#0000ff",
-};
+
 const farOptions = {
   ...defaultOptions,
   zIndex: 1,
@@ -301,15 +221,3 @@ const farOptions = {
   strokeColor: "#b32d00",
   fillColor: "#ff4000",
 };
-
-// const generateHouses = (position) => {
-//   const _houses = [];
-//   for (let i = 0; i < 100; i++) {
-//     const direction = Math.random() < 0.5 ? -2 : 2;
-//     _houses.push({
-//       lat: position.lat + Math.random() / direction,
-//       lng: position.lng + Math.random() / direction,
-//     });
-//   }
-//   return _houses;
-// };

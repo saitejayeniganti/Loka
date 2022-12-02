@@ -314,6 +314,20 @@ function MenuAppBar(props) {
                       ) : (
                         ""
                       )}
+                        {props.user.role == 2 ? (
+                        <>
+                          <MenuItem
+                            onClick={() => {
+                              navigate("/adminads");
+                              setAnchorEl(null);
+                            }}
+                          >
+                            Ad Requests
+                          </MenuItem>
+                        </>
+                      ) : (
+                        ""
+                      )}
                       {props.user.role == 1 ? (
                         <>
                           <MenuItem

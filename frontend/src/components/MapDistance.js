@@ -3,11 +3,8 @@ const litresPerKM = 10 / 100;
 const gasLitreCost = 1.5;
 const litreCostKM = litresPerKM * gasLitreCost;
 const secondsPerDay = 60 * 60 * 24;
-import { Grid, Paper } from "@mui/material";
+
 import React from "react";
-import StarPurple500SharpIcon from "@mui/icons-material/StarPurple500Sharp";
-import BookmarkRoundedIcon from "@mui/icons-material/BookmarkRounded";
-import delivery from "../images/merchant/delivery.png";
 
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -15,7 +12,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function MapDistance({ leg, vendor }) {
   const navigate = useNavigate();
@@ -37,7 +34,7 @@ export default function MapDistance({ leg, vendor }) {
           image={vendor.image}
           alt="green iguana"
         />
-        <CardContent>
+        <CardContent sx={{ textAlign: "left" }}>
           <Typography gutterBottom variant="h5" component="div">
             {vendor.storeName}
           </Typography>
@@ -62,16 +59,5 @@ export default function MapDistance({ leg, vendor }) {
     );
   };
 
-  return (
-    <div>
-      {/* <div>
-        <p>
-          This Merchant is{" "}
-          <span className="highlight">{leg.distance.text}</span> away from your
-          location.
-        </p>
-      </div> */}
-      {vendorCard()}
-    </div>
-  );
+  return <div>{vendorCard()}</div>;
 }
