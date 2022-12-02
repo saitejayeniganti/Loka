@@ -70,6 +70,7 @@ function AdminVendorDetail() {
   const [redirToOrders, setRedirToOrders] = useState(false);
   const [redirToReviews, setRedirToReviews] = useState(false);
   const [redirToAds, setRedirToAds] = useState(false);
+  const [totalClicks,setTotalClicks]=useState(0)
   const [vendorDetails, setVendorDetails] = useState({
                                                     storeName:"",
                                                     location:{address:""},
@@ -163,6 +164,12 @@ function AdminVendorDetail() {
         var reviewsArr=new Array(12).fill(0)
         var spentArr=new Array(12).fill(0)
         var adsArr=new Array(12).fill(0)
+          let clickss=0
+        for(var u of result.adRequests)
+        {
+            clickss+=u.clicks
+        }
+        setTotalClicks(clickss)
         for(var u of result.orders)
         {
           var d= new Date(u.created)
@@ -297,10 +304,10 @@ function AdminVendorDetail() {
                                  <img src={ads} style={{height:"4vh",width:"4vh",textAlign:"left"}} title="Approved users"/>
                             </Grid>
                              <Grid item xs={10}>
-                                <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Total Ad revenue</div>
+                                <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Total Ad Clicks</div>
                             </Grid>
                              <Grid item xs={12}>
-                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>0</div>
+                                <div style={{fontSize: "4vh",textAlign: "center",marginTop:"2vh"}}>{totalClicks}</div>
                             </Grid>
                       </Grid>
                     </Paper>
@@ -385,8 +392,7 @@ function AdminVendorDetail() {
                                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                                          <Tab label="Orders" value="1" />
                                          <Tab label="Revenue Generated" value="2" />
-                                        <Tab label="Reviews" value="3" />
-                                        <Tab label="Ads Clicked" value="4" />
+                                        {/* <Tab label="Ads Clicked" value="3" /> */}
                                     </TabList>
                                 </Box>
                                 <TabPanel value="1">
@@ -413,20 +419,9 @@ function AdminVendorDetail() {
                                           </Grid>
                                     </Grid>
                                  </TabPanel>
-                                 <TabPanel value="3">
-                                    <Grid container style={{height:"90%",width:"90%"}}>
-                                         <Grid item xs={12} >
-                                             <div style={{fontSize:"30px",textAlign:"left"}}>Review frequency</div>
-                                        </Grid>
-                                         <Grid item xs={12} >
-                                             
-                                             <Line height="110%" weight="70%" options={options} data={reviewsMap} />
-                                             
-                                          </Grid>
-                                     </Grid>
-                                 </TabPanel>
+                             
                                 
-                                 <TabPanel value="4">
+                                 {/* <TabPanel value="3">
                                     <Grid container style={{height:"90%",width:"90%"}}>
                                          <Grid item xs={12} >
                                              <div style={{fontSize:"30px",textAlign:"left"}}>Review frequency</div>
@@ -437,7 +432,7 @@ function AdminVendorDetail() {
                                              
                                           </Grid>
                                      </Grid>
-                                 </TabPanel>
+                                 </TabPanel> */}
                              </TabContext>
                         </Grid>
                     </Paper>

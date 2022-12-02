@@ -77,10 +77,12 @@ function AdminHome() {
   const [orders, setOrders] = React.useState('');
   const [vendors, setVendors] = React.useState('');
   const [users, setUsers] = React.useState("");
+  const [adRequests, setAdRequests] = React.useState("");
   const [redirToUsers, setRedirToUsers] = useState(false);
   const [redirToReviews, setRedirToReviews] = useState(false);
   const [redirToOrders, setRedirToOrders] = useState(false);
   const [redirToVendors, setRedirToVendors] = useState(false);
+  const [redirToAdRequests, setRedirToAdRequests] = useState(false);
   
   const [usersMap, setUsersMap] = React.useState(
                                                     {
@@ -164,6 +166,7 @@ function AdminHome() {
         setOrders(result.orders)
         setUsers(result.users)
         setVendors(result.vendors)
+        setAdRequests(result.adRequests)
         var usersArr=new Array(12).fill(0)
         var ordersArr=new Array(12).fill(0)
         var reviewsArr=new Array(12).fill(0)
@@ -259,6 +262,10 @@ function AdminHome() {
     return <Navigate to={"/adminorders"} />;
    }  
 
+    if (redirToAdRequests) {
+    return <Navigate to={"/adminads"} />;
+   }  
+
     return (
       <>
         <div style={{backgroundColor:"#e7e4e4",position:"fixed",height:"40vh",width:"100vw"}}></div>
@@ -293,7 +300,7 @@ function AdminHome() {
                             <Tab label="Customers" value="1" />
                             <Tab label="Vendors" value="2" />
                             <Tab label="Orders" value="3" />
-                            <Tab label="Reviews" value="4" />
+                            {/* <Tab label="Reviews" value="4" /> */}
                         </TabList>
                       </Box>
         <TabPanel value="1">
@@ -332,7 +339,7 @@ function AdminHome() {
                       </Grid>
                   </Grid>
         </TabPanel>
-        <TabPanel value="4">
+        {/* <TabPanel value="4">
           <Grid container style={{height:"90%",width:"90%"}}>
                       <Grid item xs={12} >
                           <div style={{fontSize:"30px",textAlign:"left"}}>Review frequency on LOKA</div>
@@ -343,7 +350,7 @@ function AdminHome() {
                           </div>
                       </Grid>
                   </Grid>
-        </TabPanel>
+        </TabPanel> */}
         
       </TabContext>
 
@@ -361,6 +368,9 @@ function AdminHome() {
                       <Grid item xs={10} >
                             <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Users</div>
                       </Grid>
+                      <Grid item xs={12} style={{marginTop:"4vh"}} >
+
+                      </Grid>
                       <Grid item xs={12} >
                             <div style={{fontSize: "7vh",textAlign: "center",marginTop:"2vh"}}>{users.length}</div>
                       </Grid>
@@ -369,10 +379,10 @@ function AdminHome() {
 
                       </Grid>
 
-                       <Grid item xs={2} >
+                       {/* <Grid item xs={2} >
                             <img src={testingDone} style={{height:"4vh",width:"4vh",textAlign:"left"}} title="Approved users"/>
-                      </Grid>
-                      <Grid item xs={2}  >
+                      </Grid> */}
+                      {/* <Grid item xs={2}  >
                             <div style={{fontSize: "20px",marginLeft:"20px",marginTop:"10px"}}>20</div>
                       </Grid>
                        <Grid item xs={4}  >
@@ -384,7 +394,7 @@ function AdminHome() {
 
                       <Grid item xs={2} >
                             <div style={{fontSize: "20px",marginLeft:"20px",marginTop:"10px"}}>4</div>
-                      </Grid>
+                      </Grid> */}
                   </Grid>
                   </Paper>
               </Grid>
@@ -400,13 +410,14 @@ function AdminHome() {
                       <Grid item xs={10} >
                             <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Orders</div>
                       </Grid>
+                      <Grid item xs={12} style={{marginTop:"4vh"}} >
+
+                      </Grid>
                       <Grid item xs={12} >
                             <div style={{fontSize: "7vh",textAlign: "center",marginTop:"2vh"}}>{orders.length}</div>
                       </Grid>
                       
-                      <Grid item xs={12} style={{marginTop:"1.5vh"}} >
-
-                      </Grid>
+                    
 
                        {/* <Grid item xs={2} >
                             <img src={testingDone} style={{height:"4vh",width:"4vh",textAlign:"left"}} title="Approved users"/>
@@ -434,21 +445,22 @@ function AdminHome() {
         
 
                <Grid item xs={12} style={{marginBottom:"20px",cursor:"pointer"}}>
-                  <Paper style={{height:"29vh",borderRadius:"15px"}}>
+                  <Paper style={{height:"29vh",borderRadius:"15px"}} onClick={()=>setRedirToAdRequests(true)}>
                        <Grid container sx={{padding:"20px"}}>
                       <Grid item xs={2} >
                           <img src={reviewsimg} style={{height:"4vh",width:"4vh",textAlign:"left"}} />
                       </Grid>
                       <Grid item xs={10} >
-                            <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Reviews</div>
+                            <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Ad Requests</div>
                       </Grid>
-                      <Grid item xs={12} >
-                            <div style={{fontSize: "7vh",textAlign: "center",marginTop:"2vh"}}>{reviews.length}</div>
-                      </Grid>
-                      
                       <Grid item xs={12} style={{marginTop:"4vh"}} >
 
                       </Grid>
+                      <Grid item xs={12} >
+                            <div style={{fontSize: "7vh",textAlign: "center",marginTop:"2vh"}}>{adRequests.length}</div>
+                      </Grid>
+                      
+                      
 
                        {/* <Grid item xs={2} >
                             <img src={testingDone} style={{height:"4vh",width:"4vh",textAlign:"left"}} title="Approved users"/>
@@ -479,15 +491,16 @@ function AdminHome() {
                       <Grid item xs={10} >
                             <div style={{fontSize: "30px",marginTop: "-0.5vh",textAlign: "right"}}>Vendors</div>
                       </Grid>
+                      <Grid item xs={12} style={{marginTop:"5vh"}} >
+
+                      </Grid>
                       <Grid item xs={12} >
-                            <div style={{fontSize: "60px",textAlign: "center",marginTop:"2vh"}}>{vendors.length}</div>
+                            <div style={{fontSize: "7vh",textAlign: "center",marginTop:"2vh"}}>{vendors.length}</div>
                       </Grid>
                       
-                        <Grid item xs={12} style={{marginTop:"4vh"}}>
 
-                      </Grid>
 
-                       <Grid item xs={2} >
+                       {/* <Grid item xs={2} >
                             <img src={approved} style={{height:"4.5vh",width:"4.5vh",textAlign:"left"}} title="Approved vendors"/>
                       </Grid>
                       <Grid item xs={2}  >
@@ -502,7 +515,7 @@ function AdminHome() {
                     
                       <Grid item xs={2} >
                             <div style={{fontSize: "20px",marginLeft:"20px",marginTop:"10px"}}>4</div>
-                      </Grid>
+                      </Grid> */}
                   </Grid></Paper>
               </Grid>
             </Grid>

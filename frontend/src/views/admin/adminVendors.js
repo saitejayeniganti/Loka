@@ -144,6 +144,7 @@ export default function AdminVendors() {
             }
             if(e.id==o._id)
             {
+              checkZero=true
             orderMapDetails.unshift(o.count)
             mapOrder.unshift(e.id)
             }
@@ -168,7 +169,7 @@ export default function AdminVendors() {
           {
             for(var j=0;j<result.allOrders.length;j++)
             {
-              if(mapOrder[i]==result.allOrders[j].user)
+              if(mapOrder[i]==result.allOrders[j].merchant)
                 {spentMapDetails[i]+=result.allOrders[j].total}
             }
           }

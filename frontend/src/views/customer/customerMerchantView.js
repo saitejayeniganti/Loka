@@ -12,6 +12,7 @@ import { doSignIn, showMessage } from "../../reducers/actions.js";
 import { actionCreators } from "../../reducers/actionCreators.js";
 import { useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 import {
   Card,
   CardMedia,
@@ -26,9 +27,10 @@ import { Navigate } from "react-router-dom";
 import Footer from "../../components/footer/footer";
 import Progress from "../../components/Progress";
 
-export default function CustomerMerchantView() {
+function CustomerMerchantView(props) {
   const [searchParams, setSearchParams] = useSearchParams();
   searchParams.get("id");
+  console.log("props in merchatn view",props)
   const [redirAdLink, setRedirAdLink] = React.useState("");
   const [products, setProducts] = React.useState({});
   const [allImages, setAllImages] = React.useState([1, 2, 3]);
@@ -62,7 +64,7 @@ export default function CustomerMerchantView() {
 
   //To get ads from external sources
   useEffect(() => {
-    console.log("props in merchant page",props)
+
     let today = new Date();
     //merchant id in the API
     get(`/admin/adimages?id=${searchParams.get("id")}&date=${today}`)
@@ -136,12 +138,15 @@ export default function CustomerMerchantView() {
             return (
               <>
                 <div
+                style={{cursor:image.src == "vendor"?"default":"pointer"}}
                   onClick={() => {
                     if (image.src == "vendor") {
                     } else {
                       console.log(image);
                       let requestdetails = {
-                        id: image.id,
+                        "id": image.id,
+                        'userId':props.id!=null?(props.id.id!=undefined||props.id.id!=null)?props.id.id:"":"",
+                        "merchantId":searchParams.get("id")
                       };
                       put(`/admin/adclick`, requestdetails)
                         .then((result) => {
@@ -397,3 +402,12 @@ export default function CustomerMerchantView() {
     </>
   );
 }
+
+const mapStateToProps = (state) => {
+    return {
+        id: state.sessionReducer.user,
+    };
+};
+
+
+export default connect(mapStateToProps)(CustomerMerchantView);
