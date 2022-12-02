@@ -284,6 +284,7 @@ const updateUser = (body, req, res) => {
           {
             location: body.location,
             storeName: body.storeName,
+            image: body.image,
           },
           { new: true }
         )
