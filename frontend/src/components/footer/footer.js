@@ -63,7 +63,7 @@ function Footer() {
             <div className="div3">
               <div style={{ padding: "5px" }}>
                 <div>
-                  <h3>Subscribe/Ads</h3>
+                  <h3>Subscribe</h3>
                 </div>
                 <p>You can subscribe to LOKA's newsletter to get latest updates</p>
               </div>
